@@ -2,26 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer utilities {
+  .h1-bold {
+    @apply text-[26px] leading-[38px] font-bold;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  .h1-semibold {
+    @apply text-[26px] leading-[38px] font-semibold;
+  }
+  .h2-bold {
+    @apply text-[18px] leading-7 font-bold;
+  }
+  .h3-semibold {
+    @apply text-[18px] leading-[26px] font-semibold;
+  }
+  .h3-regular {
+    @apply text-[18px] leading-[26px] font-normal;
+  }
+  .display-bold {
+    @apply text-base font-bold;
+  }
+  .display-semibold {
+    @apply text-base font-semibold;
+  }
+  .display-regular {
+    @apply text-base font-normal;
+  }
+  .body-bold {
+    @apply text-sm leading-[22px] font-bold;
+  }
+  .body-semibold {
+    @apply text-sm leading-[22px] font-semibold;
+  }
+  .body-regular {
+    @apply text-sm leading-[22px] font-normal;
+  }
+  .caption-semibold {
+    @apply text-xs leading-[18px] font-semibold;
+  }
+  .caption-regular {
+    @apply text-xs leading-[18px] font-normal;
+  }
+  .text-sm-semibold {
+    @apply text-[10px] leading-4 font-semibold;
+  }
+  .text-sm-regular {
+    @apply text-[10px] leading-4 font-normal;
+  }
+  .text-xs-semibold {
+    @apply text-[9px] leading-[14px] font-semibold;
+  }
+  .text-xs-regular {
+    @apply text-[9px] leading-[14px] font-normal;
+  }
 }
