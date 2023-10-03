@@ -1,7 +1,8 @@
 import React from "react";
-import "./globals.css";
 import type { Metadata } from "next";
 import { Source_Sans_3 } from "next/font/google";
+
+import "./globals.css";
 
 const SourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
