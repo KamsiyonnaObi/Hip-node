@@ -4,5 +4,6 @@
     "standard",
     "plugin:tailwindcss/recommended",
     "prettier"
-  ]
+  ],
+  "rules": { "react/display-name": "off" }
 }
