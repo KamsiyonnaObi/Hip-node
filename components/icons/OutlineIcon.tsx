@@ -54,7 +54,7 @@ interface Props {
   children?: ReactNode;
   className?: string;
 }
-const FillIcon = ({ children, className }: Props) => {
+const OutlineIcon = ({ children, className }: Props) => {
   const styles = className || "fill-secondary2 dark:fill-background2";
   return (
     <svg
@@ -69,298 +69,298 @@ const FillIcon = ({ children, className }: Props) => {
   );
 };
 
-FillIcon.ArrowLeft = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.ArrowLeft = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <ArrowLeft />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Arrow = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Arrow = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Arrow />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.BackArrow = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.BackArrow = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <BackArrow />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Bitcoin = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Bitcoin = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Bitcoin />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Blogging = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Blogging = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Blogging />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Bold = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Bold = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Bold />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Checkmark = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Checkmark = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Checkmark />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Close = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Close = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Close />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Comment = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Comment = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Comment />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Design = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Design = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Design />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Dev = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Dev = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Dev />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.DownArrow = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.DownArrow = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <DownArrow />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Edit = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Edit = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Edit />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Expand = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Expand = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Expand />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Facebook = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Facebook = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Facebook />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Follow = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Follow = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Follow />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Following = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Following = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Following />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Headline = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Headline = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Headline />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Image1 = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Image1 = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Image1 />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Image2 = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Image2 = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Image2 />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Info = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Info = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Info />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Instagram = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Instagram = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Instagram />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Italic = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Italic = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Italic />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Left = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Left = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Left />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.LinkIcon = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.LinkIcon = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <LinkIcon />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Linkedin = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Linkedin = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <LinkedIn />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Mention = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Mention = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Mention />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Middle = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Middle = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Middle />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.More = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.More = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <More />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.New = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.New = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <New />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.New2 = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.New2 = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <New2 />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Number = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Number = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Number />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Point = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Point = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Point />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Popular = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Popular = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Popular />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Post = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Post = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Post />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Right = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Right = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Right />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.SearchIcon = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.SearchIcon = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <SearchIcon />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Seo = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Seo = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Seo />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Share2 = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Share2 = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Share2 />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Strikethrough = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Strikethrough = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Strikethrough />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Tutorial = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Tutorial = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Tutorial />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Twitter = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Twitter = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Twitter />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Uncheck = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Uncheck = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Uncheck />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Underline = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Underline = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Underline />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Upload = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Upload = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Upload />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Vector = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Vector = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Vector />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.View = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.View = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <View />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Voice = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Voice = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Voice />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-FillIcon.Web = ({ className }: Props) => (
-  <FillIcon className={className}>
+OutlineIcon.Web = ({ className }: Props) => (
+  <OutlineIcon className={className}>
     <Web />
-  </FillIcon>
+  </OutlineIcon>
 );
 
-export default FillIcon;
+export default OutlineIcon;
