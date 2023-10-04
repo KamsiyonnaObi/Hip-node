@@ -51,11 +51,11 @@ import { Web } from "./outlineIcons/Web";
 import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 const FillIcon = ({ children, className }: Props) => {
-  const styles = className || "fill-secondary2";
+  const styles = className || "fill-secondary2 dark:fill-background2";
   return (
     <svg
       width="20"
