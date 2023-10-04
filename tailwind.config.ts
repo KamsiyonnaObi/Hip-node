@@ -19,7 +19,7 @@ const config: Config = {
         dark3: "#262D34",
         dark4: "#2C353D",
         background: "#FFFFFF",
-        background1: "#F7F7F7",
+        background2: "#F7F7F7",
         secondary1: "#192351",
         secondary2: "#3F4354",
         secondary3: "#97989D",
