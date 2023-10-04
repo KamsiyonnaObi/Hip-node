@@ -9,6 +9,8 @@ export default function Home() {
         Tailwind CSS.
       </p>
       <FillIcon.ArrowLeft />
+      <FillIcon.Linkedin />
+      <FillIcon.Edit />
     </div>
   );
 }
