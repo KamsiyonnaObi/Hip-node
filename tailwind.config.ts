@@ -26,7 +26,7 @@ const config: Config = {
         secondary4: "#858EAD",
         secondary5: "#C5D0E6",
         secondary6: "#F4F6F8",
-        red40: "#661B00",
+        redblack40: "#661B00",
         red90: "#FF571A",
         red80: "#FF6934",
         red60: "#FF8F67",
