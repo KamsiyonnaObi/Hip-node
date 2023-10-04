@@ -1,3 +1,5 @@
+import FillIcon from "@/components/icons/OutlineIcon";
+
 export default function Home() {
   return (
     <div>
@@ -6,6 +8,7 @@ export default function Home() {
         Welcome to the Breaking Bugs Hipnode! This is a Next.js project with
         Tailwind CSS.
       </p>
+      <FillIcon.ArrowLeft />
     </div>
   );
 }
