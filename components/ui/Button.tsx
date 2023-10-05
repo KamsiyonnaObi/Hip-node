@@ -1,34 +1,44 @@
 import React from "react";
+type Props = {
+  children?: React.ReactNode;
+  className?: string;
+  color?: "orange" | "blue" | "transparent";
+  disabled?: boolean;
+  rounded?: boolean;
+  full?: boolean;
+  padded?: boolean;
+};
 
-interface Props {
-  text: string;
-  color: string;
-  textColor: string;
-  round: string;
-  width: string;
-  height: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  extraStyles?: string;
-}
-
-const Button = ({
-  text,
-  color,
-  textColor,
-  round,
-  width,
-  height,
-  onClick,
-  extraStyles,
+export const Button = ({
+  children,
+  className,
+  disabled = false,
+  full = false,
+  rounded = false,
+  color = "orange",
+  padded = false,
 }: Props) => {
+  const colorMap = {
+    orange: "bg-red80",
+    blue: "bg-blue",
+    transparent: "bg-transparent",
+  };
+  const textColorMap = {
+    orange: "text-background2",
+    blue: "text-background",
+    transparent: "text-secondary3",
+  };
+
   return (
     <button
-      className={`h3-semibold flex items-center justify-center px-10 py-2 ${color} ${textColor} ${round} ${width} ${height} ${extraStyles}`}
-      onClick={onClick}
+      disabled={disabled}
+      className={`${className} flex gap-x-2 ${rounded && "rounded-[20px]"} ${
+        full && "w-full"
+      } h3-semibold rounded-lg ${colorMap[color]} ${
+        padded && "px-[10px] py-[2.5px]"
+      } ${textColorMap[color]} disabled:bg-red60`}
     >
-      {text}
+      {children}
     </button>
   );
 };
-
-export default Button;
