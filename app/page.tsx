@@ -59,6 +59,7 @@ export default function Home() {
       <Button
         text="test"
         color="bg-purple"
+        textColor="text-white"
         round="rounded-lg"
         width="w-[50px]"
         height="h-[30px]"
