@@ -20,7 +20,7 @@ export const Logo = () => (
       />
       <path
         d="M23 24.5103C20.6988 26.7292 18.5 28.0001 15 28.0001C11.7138 28.0001 9.08988 26.5254 7 24.5103"
-        className="fill-white dark:stroke-[#1E252B]"
+        className="stroke-white dark:stroke-[#1E252B]"
         stroke-width="3"
         stroke-linecap="round"
       />
