@@ -32,6 +32,7 @@ const config: Config = {
         red80: "#FF6934",
         red60: "#FF8F67",
         red10: "#FFECE6",
+        red: "#FF4401",
         yellow90: "#EC9F41",
         yellow80: "#EEA956",
         yellow30: "#F9DFC0",
