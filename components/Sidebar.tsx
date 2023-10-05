@@ -11,7 +11,7 @@ const Sidebar = () => {
   };
 
   const liClass = (index: number) => {
-    return `flex p-[6px] flex-row items-center gap-[10px] rounded-[6px] ${
+    return `flex p-[6px] flex-row items-center gap-[6px] rounded-[6px] ${
       selectedItem === index ? "bg-secondary6" : ""
     } md:w-[186px]`;
   };
