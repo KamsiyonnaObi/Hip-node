@@ -6,7 +6,6 @@ type Props = {
   disabled?: boolean;
   rounded?: boolean;
   full?: boolean;
-  padded?: boolean;
 };
 
 export const Button = ({
@@ -16,7 +15,6 @@ export const Button = ({
   full = false,
   rounded = false,
   color = "orange",
-  padded = false,
 }: Props) => {
   const colorMap = {
     orange: "bg-red80",
@@ -35,8 +33,8 @@ export const Button = ({
       className={`${className} flex gap-x-2 ${rounded && "rounded-[20px]"} ${
         full && "w-full"
       } h3-semibold rounded-lg ${colorMap[color]} ${
-        padded && "px-[10px] py-[2.5px]"
-      } ${textColorMap[color]} disabled:bg-red60`}
+        textColorMap[color]
+      } disabled:bg-red60`}
     >
       {children}
     </button>
