@@ -40,8 +40,7 @@ interface FillIconProps {
 }
 
 const FillIcon = ({ children, className }: FillIconProps) => {
-  const styles =
-    className || "fill-secondary2 dark:fill-background2 w-6 h-6 mr-2";
+  const styles = className || "fill-secondary6 dark:fill-background2 w-6 h-6";
   return (
     <svg
       width="20"
