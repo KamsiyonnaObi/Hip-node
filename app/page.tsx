@@ -56,7 +56,7 @@ export default function Home() {
       <div className="flex w-[500px] flex-wrap gap-4 py-6">
         <OutlineIcon.Bitcoin className="fill-red-900" />
       </div>
-      <Button color="orange" padded rounded>
+      <Button color="orange" className="px-[10px] py-[3px]" rounded>
         Submit
       </Button>
     </div>
