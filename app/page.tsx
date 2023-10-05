@@ -2,6 +2,7 @@ import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
 import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
+import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
@@ -55,6 +56,9 @@ export default function Home() {
       <div className="flex w-[500px] flex-wrap gap-4 py-6">
         <OutlineIcon.Bitcoin className="fill-red-900" />
       </div>
+      <Button color="orange" className="px-[10px] py-[3px]" rounded>
+        Submit
+      </Button>
     </div>
   );
 }
