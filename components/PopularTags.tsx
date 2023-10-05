@@ -12,36 +12,36 @@ const PopularTags = () => {
           title="java"
           icon={<OutlineIcon.Dev className="fill-green" />}
           desc="placeholder"
-          bgcolor="bg-green10"
-          postNum={82430}
+          className="bg-green10"
+          postNum="82,430"
         />
         <Tag
           title="bitcoin"
           icon={<OutlineIcon.Bitcoin className="fill-blue" />}
           desc="placeholder"
-          bgcolor="bg-blue10"
-          postNum={5354}
+          className="bg-blue10"
+          postNum="5,354"
         />
         <Tag
           title="design"
           icon={<OutlineIcon.Design className="fill-purple" />}
           desc="placeholder"
-          bgcolor="bg-purple10"
-          postNum={5354}
+          className="bg-purple10"
+          postNum="5,354"
         />
         <Tag
           title="blogging"
           icon={<OutlineIcon.Blogging className="fill-primary" />}
           desc="placeholder"
-          bgcolor="bg-red10"
-          postNum={5354}
+          className="bg-red10"
+          postNum="5,354"
         />
         <Tag
           title="tutorial"
           icon={<OutlineIcon.Tutorial className="fill-yellow" />}
           desc="placeholder"
-          bgcolor="bg-yellow10"
-          postNum={5354}
+          className="bg-yellow10"
+          postNum="5,354"
         />
       </div>
     </div>

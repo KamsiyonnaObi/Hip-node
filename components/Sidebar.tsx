@@ -22,8 +22,8 @@ const Sidebar = () => {
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
           <OutlineIcon.New className="fill-green" />
         </div>
-        <div className="flex flex-col gap-[2px]">
-          <p className="body-semibold hidden text-secondary2 md:flex">
+        <div className="flex flex-col">
+          <p className="caption-semibold hidden text-secondary2 md:flex">
             Newest and Recent
           </p>
           <p className="body-semibold text-secondary2 md:hidden">Newest</p>
@@ -36,8 +36,8 @@ const Sidebar = () => {
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
           <OutlineIcon.Popular className="fill-yellow" />
         </div>
-        <div className="flex flex-col gap-[2px]">
-          <p className="body-semibold hidden text-secondary2 md:flex">
+        <div className="flex flex-col ">
+          <p className="caption-semibold hidden text-secondary2 md:flex">
             Popular of the day
           </p>
           <p className="body-semibold text-secondary2 md:hidden">Popular</p>
@@ -50,12 +50,12 @@ const Sidebar = () => {
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
           <FillIcon.Follow className="fill-primary" />
         </div>
-        <div className="flex flex-col gap-[2px]">
+        <div className="flex flex-col">
           <div className="flex flex-row items-center gap-[4px]">
-            <p className="body-semibold text-secondary2">Following</p>
-            <div className="gap-[10px] rounded-[6px] bg-primary px-[2px] text-background">
+            <p className="caption-semibold text-secondary2">Following</p>
+            <p className="text-xs-semibold gap-[10px] rounded-[2px] bg-primary px-[6px] py-[3px] text-background">
               24
-            </div>
+            </p>
           </div>
 
           <p className="text-xs-semibold hidden text-secondary3 md:flex">
