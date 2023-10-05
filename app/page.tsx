@@ -1,14 +1,24 @@
 import FillIcon from "@/components/icons/FillIcon";
+import { Logo } from "@/components/icons/Logo";
+import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 
 export default function Home() {
   return (
     <div className="m-6">
-      <h1 className="h1-bold ">Breaking Bugs Hipnode</h1>
-      <p className="body-semibold">
-        Welcome to the Breaking Bugs Hipnode! This is a Next.js project with
-        Tailwind CSS.
-      </p>
+      <div className="flex justify-between">
+        <div className="flex flex-col">
+          <h1 className="h1-bold ">Breaking Bugs Hipnode</h1>
+          <p className="body-semibold">
+            Welcome to the Breaking Bugs Hipnode! This is a Next.js project with
+            Tailwind CSS.
+          </p>
+        </div>
+        <div>
+          <Logo />
+          <LogoIcon />
+        </div>
+      </div>
       <div className="flex w-[500px] flex-wrap gap-4 py-6">
         <FillIcon.Rocket className="fill-red-900 stroke-slate-500" />
         <FillIcon.Comment />
