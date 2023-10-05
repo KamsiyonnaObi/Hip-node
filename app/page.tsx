@@ -1,3 +1,4 @@
+import PopularTags from "@/components/PopularTags";
 import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
@@ -66,6 +67,7 @@ export default function Home() {
         height="h-[30px]"
       />
       <Sidebar />
+      <PopularTags />
     </div>
   );
 }
