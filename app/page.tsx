@@ -1,3 +1,4 @@
+import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
 import { LogoIcon } from "@/components/icons/LogoIcon";
@@ -64,6 +65,7 @@ export default function Home() {
         width="w-[50px]"
         height="h-[30px]"
       />
+      <Sidebar />
     </div>
   );
 }
