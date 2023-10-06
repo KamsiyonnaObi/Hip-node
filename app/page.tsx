@@ -1,4 +1,6 @@
 import CreatePost from "@/components/CreatePost";
+import Meetups from "@/components/Meetups";
+import PinnedGroup from "@/components/PinnedGroup";
 import PopularTags from "@/components/PopularTags";
 import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
@@ -66,6 +68,8 @@ export default function Home() {
         Submit
       </Button>
       <CreatePost />
+      <PinnedGroup />
+      <Meetups />
     </div>
   );
 }
