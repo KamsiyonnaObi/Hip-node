@@ -9,6 +9,7 @@ const CreatePost = () => {
       <div className="flex flex-row gap-[10px] md:gap-[20px]">
         <div className="mt-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full bg-yellow30 md:mt-[7px] md:h-[40px] md:w-[40px]">
           <Image
+            className="w-[22px] md:w-[32px]"
             src="/ExampleAvatar.png"
             alt="profile"
             width="32"
