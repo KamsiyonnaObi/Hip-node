@@ -88,8 +88,14 @@ export default function Home() {
           Submit
         </Button>
         <Input>
-          <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:stroke-background" />
+          <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
         </Input>
+        <button
+          className="rounded-full bg-[#ff9d00c9] p-2"
+          onClick={handleButtonClick}
+        >
+          {swap ? "Light" : "Dark"} Mode
+        </button>
       </div>
     </div>
   );
