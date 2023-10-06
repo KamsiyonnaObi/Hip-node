@@ -11,8 +11,8 @@ interface Props {
 
 const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
   return (
-    <article className="flex flex-row gap-[14px]">
-      <section className="flex flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[10px] text-center">
+    <article className="flex flex-row gap-4">
+      <section className="flex flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center">
         <p className="body-semibold">{month}</p>
         <h1 className="h1-bold text-blue80">{day}</h1>
       </section>
@@ -22,7 +22,7 @@ const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
           <Image src="/MeetupIcon.svg" alt="meetup" width={16} height={16} />
           <p className="text-sm-semibold text-secondary3">{desc}</p>
         </div>
-        <div className="flex flex-row gap-[10px]">
+        <div className="mt-2 flex flex-row gap-[10px]">
           {jobType.map((type, index) => (
             <div
               key={index}

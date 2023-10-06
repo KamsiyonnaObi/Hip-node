@@ -5,12 +5,10 @@ import MeetupCard from "./MeetupCard";
 
 const Meetups = () => {
   return (
-    <div className="flex w-[325px] flex-col gap-[10px] rounded-[16px] bg-background p-[20px] dark:bg-dark3">
-      <section className="display-semibold mb-5 flex flex-row gap-2">
+    <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] dark:bg-dark3">
+      <section className="display-semibold mb-5 flex flex-row items-center gap-[3px]">
         <p>Meetups</p>
-        <div className="mt-0.5">
-          <OutlineIcon.ArrowLeft />
-        </div>
+        <OutlineIcon.ArrowLeft />
       </section>
       <div className="flex flex-col gap-[20px] rounded-[16px] dark:bg-dark3">
         <MeetupCard

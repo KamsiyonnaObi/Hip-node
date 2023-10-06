@@ -1,4 +1,3 @@
-import CreatePost from "@/components/CreatePost";
 import Meetups from "@/components/Meetups";
 import PinnedGroup from "@/components/PinnedGroup";
 import PopularTags from "@/components/PopularTags";
@@ -8,7 +7,6 @@ import { Logo } from "@/components/icons/Logo";
 import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
 
 export default function Home() {
   return (
@@ -67,7 +65,6 @@ export default function Home() {
       <Button color="orange" className="px-[10px] py-[3px]" rounded>
         Submit
       </Button>
-      <CreatePost />
       <PinnedGroup />
       <Meetups />
     </div>
