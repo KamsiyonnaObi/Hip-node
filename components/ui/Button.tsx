@@ -19,11 +19,15 @@ export const Button = ({
   const colorMap = {
     orange: "bg-red80",
     blue: "bg-blue",
+    black: "bg-dark4",
+    white: "bg-background",
     transparent: "bg-transparent",
   };
   const textColorMap = {
     orange: "text-background2",
     blue: "text-background",
+    black: "text-background2",
+    white: "text-secondary2",
     transparent: "text-secondary3",
   };
 
