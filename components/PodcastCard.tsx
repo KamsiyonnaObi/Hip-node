@@ -11,11 +11,11 @@ interface Props {
 const PodcastCard = ({ image, title, author }: Props) => {
   return (
     <article className="flex flex-row gap-[14px]">
-      <Image src={image} alt="" width={58} height={58} />
+      <Image src={image} alt="" width={58} height={58} className="shadow-md" />
       <div className="flex flex-col gap-[6px]">
         <div className="flex flex-row">
           <p className="caption-semibold w-[193px]">{title}</p>
-          <OutlineIcon.ArrowLeft className="fill-secondary3" />
+          <OutlineIcon.ArrowLeft className=" mt-4 fill-secondary3" />
         </div>
         <p className="text-xs-regular text-secondary3">by {author}</p>
       </div>
