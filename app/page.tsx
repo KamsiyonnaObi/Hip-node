@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
-import CreatePost from "@/components/CreatePost";
-import PopularTags from "@/components/PopularTags";
-import Sidebar from "@/components/Sidebar";
+import CreatePost from "@/components/home/CreatePost";
+import PopularTags from "@/components/home/PopularTags";
+import Sidebar from "@/components/home/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
 import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
-import PinnedGroup from "@/components/PinnedGroup";
+import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 
