@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
-    <div className="m-6">
+    <div className="m-6 bg-background2">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <h1 className="h1-bold ">Breaking Bugs Hipnode</h1>
