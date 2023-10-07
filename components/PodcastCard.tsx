@@ -15,7 +15,7 @@ const PodcastCard = ({ image, title, author }: Props) => {
       <div className="flex flex-col gap-[6px]">
         <div className="flex flex-row">
           <p className="caption-semibold w-[193px]">{title}</p>
-          <OutlineIcon.ArrowLeft className=" mt-4 fill-secondary3" />
+          <OutlineIcon.ArrowLeft className=" mt-4 stroke-secondary3" />
         </div>
         <p className="text-xs-regular text-secondary3">by {author}</p>
       </div>
