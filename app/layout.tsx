@@ -1,6 +1,6 @@
 import React from "react";
 
-import NextAuthProvider from "./NextAuthProvider";
+import NextAuthProvider from "../providers/NextAuthProvider";
 import { getServerSession } from "next-auth";
 
 import type { Metadata } from "next";
