@@ -1,3 +1,4 @@
+import Podcasts from "@/components/Podcasts";
 import PopularTags from "@/components/PopularTags";
 import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
@@ -63,6 +64,7 @@ export default function Home() {
       <Button color="orange" className="px-[10px] py-[3px]" rounded>
         Submit
       </Button>
+      <Podcasts />
     </div>
   );
 }
