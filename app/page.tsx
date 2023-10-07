@@ -12,10 +12,7 @@ import { Input } from "@/components/form/Input";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
-  const { data: session, status } = useSession();
-
-  console.log(session);
-  console.log(status);
+  const { data: session } = useSession();
 
   const [swap, setSwap] = React.useState(false);
 
@@ -25,9 +22,77 @@ export default function Home() {
   return (
     <div className="m-6">
       <div className={`container ${swap ? "light" : "dark"}`}>
+        <header>
+          <nav>
+            <ul className="flex items-center justify-between ">
+              <li>
+                <a href="#" className="h1-bold">
+                  Breaking Bugs
+                </a>
+              </li>
+              <li>
+                <ul className="flex items-center justify-between gap-5">
+                  <li>
+                    <a href="#" className="body-semibold">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="body-semibold">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="body-semibold">
+                      Contact
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="body-semibold">
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="body-semibold">
+                      Careers
+                    </a>
+                  </li>
+                  {session ? (
+                    <li>
+                      <button
+                        onClick={() => signOut()}
+                        className="display-semibold"
+                      >
+                        Sign Out
+                      </button>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        <button
+                          onClick={() => signIn()}
+                          className="display-semibold rounded-full bg-[#ff9d00c9] px-4 py-2"
+                        >
+                          Login
+                        </button>
+                      </li>
+                      <li>
+                        <button onClick={() => {}} className="display-semibold">
+                          Sign Up
+                        </button>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </header>
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <h1 className="h1-bold ">Breaking Bugs Hipnode</h1>
+            {session && (
+              <h1 className="h1-bold ">Welcome {session.user?.name}!</h1>
+            )}
             <p className="body-semibold">
               Welcome to the Breaking Bugs Hipnode! This is a Next.js project
               with Tailwind CSS.
