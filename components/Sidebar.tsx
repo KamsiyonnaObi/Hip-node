@@ -48,7 +48,7 @@ const Sidebar = () => {
       </li>
       <li className={liClass(2)} onClick={() => handleItemClick(2)}>
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
-          <FillIcon.Follow className="fill-primary" />
+          <FillIcon.Follow className="fill-primary stroke-primary" />
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row items-center gap-[4px]">
