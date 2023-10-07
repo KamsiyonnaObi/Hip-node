@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 import PopularTags from "@/components/PopularTags";
@@ -9,6 +8,7 @@ import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
+import PinnedGroup from "@/components/PinnedGroup";
 
 export default function Home() {
   const [swap, setSwap] = React.useState(false);
@@ -17,7 +17,7 @@ export default function Home() {
     setSwap(!swap);
   };
   return (
-    <div className="m-6">
+    <div className="m-6 bg-background2">
       <div className={`container ${swap ? "light" : "dark"}`}>
         <div className="flex justify-between">
           <div className="flex flex-col">
@@ -85,6 +85,7 @@ export default function Home() {
         </div>
         <Sidebar />
         <PopularTags />
+        <PinnedGroup />
         <Button color="orange" className="px-[10px] py-[3px]" rounded>
           Submit
         </Button>
@@ -98,7 +99,6 @@ export default function Home() {
           {swap ? "Light" : "Dark"} Mode
         </button>
       </div>
-
     </div>
   );
 }

@@ -16,7 +16,7 @@ const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
         <p className="body-semibold">{month}</p>
         <h1 className="h1-bold text-blue80">{day}</h1>
       </section>
-      <section className="flex flex-col gap-[10px]">
+      <section className="flex flex-col gap-[2px]">
         <p className="body-semibold">{title}</p>
         <div className="flex flex-row gap-[6px]">
           <Image src="/MeetupIcon.svg" alt="meetup" width={16} height={16} />
