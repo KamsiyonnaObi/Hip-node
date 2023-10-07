@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Input from "./ui/Input";
+import { Input } from "./form/Input";
 import React from "react";
 import { Button } from "./ui/Button";
 
@@ -19,6 +19,8 @@ const CreatePost = () => {
         <Input
           className="caption-regular md:body-regular w-[174px] gap-[10px] rounded-[6px] bg-secondary6 px-3 md:w-[553px] md:p-3"
           placeholder="Let's share what is going on..."
+          value=""
+          onChange=""
         />
         <Button
           color="orange"

@@ -8,6 +8,7 @@ import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
+import CreatePost from "@/components/CreatePost";
 
 export default function Home() {
   const [swap, setSwap] = React.useState(false);
@@ -87,7 +88,8 @@ export default function Home() {
         <Button color="orange" className="px-[10px] py-[3px]" rounded>
           Submit
         </Button>
-        <Input>
+        <CreatePost />
+        <Input divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2">
           <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
         </Input>
         <button
