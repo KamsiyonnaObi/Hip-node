@@ -9,7 +9,14 @@ import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
 
+import { useSession, signIn, signOut } from "next-auth/react";
+
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  console.log(session);
+  console.log(status);
+
   const [swap, setSwap] = React.useState(false);
 
   const handleButtonClick = () => {
