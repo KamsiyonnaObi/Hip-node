@@ -1,4 +1,5 @@
 import PopularTags from "@/components/PopularTags";
+import Post from "@/components/Post";
 import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
-    <div className="m-6">
+    <div className="m-6 bg-background2">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <h1 className="h1-bold ">Breaking Bugs Hipnode</h1>
@@ -63,6 +64,17 @@ export default function Home() {
       <Button color="orange" className="px-[10px] py-[3px]" rounded>
         Submit
       </Button>
+      <Post
+        postImage="/PostImage.png"
+        title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+        tags={["finance", "crypto", "bitcoin"]}
+        avatar="/avatar.png"
+        name="Louis Liu"
+        createdAt="2 weeks ago"
+        views={420}
+        likes={69}
+        comments={7}
+      />
     </div>
   );
 }
