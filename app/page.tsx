@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import CreatePost from "@/components/CreatePost";
 import PopularTags from "@/components/PopularTags";
 import Sidebar from "@/components/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
@@ -161,7 +162,8 @@ export default function Home() {
         <Button color="orange" className="px-[10px] py-[3px]" rounded>
           Submit
         </Button>
-        <Input>
+        <CreatePost />
+        <Input divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2">
           <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
         </Input>
         <button
