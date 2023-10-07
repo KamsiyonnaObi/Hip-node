@@ -3,8 +3,8 @@ type Props = {
   children?: React.ReactNode;
   className?: string;
   placeholder?: string;
-  value: any;
-  onChange: any;
+  value?: any;
+  onChange?: any;
 };
 
 export const Input = ({ onChange, value, placeholder, children }: Props) => {
