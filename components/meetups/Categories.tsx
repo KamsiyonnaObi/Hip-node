@@ -32,7 +32,7 @@ const Categories = () => {
         {categories.map((category, index) => (
           <div
             key={index}
-            className="mt-[12px] flex flex-row justify-between md:w-[170px]"
+            className="mt-[10px] select-none flex flex-row justify-between md:w-[170px]"
           >
             <p
               className={`caption-semibold ${
