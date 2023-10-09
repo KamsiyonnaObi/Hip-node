@@ -51,7 +51,7 @@ const MeetupCardBig = ({
           is a design resources platform for UX/UI designers, developers, and
           founders.
         </section>
-        <section className="mt-2 flex flex-row gap-[10px]">
+        <section className="flex flex-row gap-[10px]">
           {jobType.map((type, index) => (
             <div
               key={index}
