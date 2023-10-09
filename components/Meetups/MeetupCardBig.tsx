@@ -30,7 +30,7 @@ const MeetupCardBig = ({
               alt="meetup"
               width={92}
               height={92}
-              className=" h-[48px] w-[48px] rounded-[6px] shadow-md md:h-[72px] md:w-[72px]"
+              className=" h-[48px] w-[48px] rounded-[6px]  shadow-meetup-card md:h-[72px] md:w-[72px]"
             />
             <div className="flex flex-col justify-center gap-1 md:gap-2">
               <h3 className="md:h3-semibold caption-semibold w-[177px] text-secondary2 dark:text-background2 md:w-full">
