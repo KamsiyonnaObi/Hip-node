@@ -9,13 +9,17 @@ import React from "react";
 
 const Page = () => {
   return (
-    <main className="flex flex-row md:ml-10 md:mt-5 md:gap-5">
+    <main className="mt-2.5 flex flex-col items-center justify-center gap-5 md:ml-10 md:mt-5 md:flex-row md:items-start md:justify-start">
       <section className="flex flex-col md:gap-5">
         <Sidebar />
-        <PopularTags />
-        <PinnedGroup />
+        <div className="hidden md:flex">
+          <PopularTags />
+        </div>
+        <div className="hidden md:flex">
+          <PinnedGroup />
+        </div>
       </section>
-      <section className="flex flex-col md:gap-5">
+      <section className="flex flex-col gap-5">
         <CreatePost />
         <Post
           postImage="/PostImage.png"
@@ -73,7 +77,7 @@ const Page = () => {
           comments={75}
         />
       </section>
-      <section className="flex flex-col md:gap-5">
+      <section className="flex flex-col gap-5">
         <Meetups />
         <Podcasts />
       </section>
