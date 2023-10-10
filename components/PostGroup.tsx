@@ -29,13 +29,13 @@ const PostGroup = ({
   };
 
   return (
-    <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 md:w-[248px]">
+    <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 dark:text-background2 md:w-[248px]">
       <div className="mx-auto flex flex-col gap-[10px]">
         <section className="flex flex-row md:gap-[10px]">
           <Image src={avatar} alt="avatar" width={34} height={34} />
           <div className="flex flex-col">
-            <p className="caption-semibold">{title}</p>
-            <p className="text-sm-regular">{name}</p>
+            <p className="caption-semibold line-clamp-1">{title}</p>
+            <p className="text-sm-regular line-clamp-1">{name}</p>
           </div>
         </section>
         <Image
@@ -56,8 +56,12 @@ const PostGroup = ({
           <FillIcon.Share className="fill-secondary5" />
         </section>
         <section className="flex flex-col gap-[10px]">
-          <p className="body-semibold w-[315px] md:w-[228px]">{descTitle}</p>
-          <p className="caption-regular w-[315px] md:w-[228px]">{desc}</p>
+          <p className="body-semibold line-clamp-2 w-[315px] md:w-[228px]">
+            {descTitle}
+          </p>
+          <p className="caption-regular line-clamp-4 w-[315px] md:w-[228px]">
+            {desc}
+          </p>
           <p className="caption-regular text-secondary3">{date}</p>
         </section>
       </div>
