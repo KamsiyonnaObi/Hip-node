@@ -26,8 +26,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={SourceSansPro.className}>
         <NextAuthProvider session={session}>
-          <Navbar />
-          {children}
+          <div className="bg-background2 dark:bg-dark3">
+            <Navbar />
+            {children}
+          </div>
         </NextAuthProvider>
       </body>
     </html>
