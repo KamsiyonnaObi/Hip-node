@@ -1,4 +1,4 @@
-import { Info } from "@/components/Info";
+import { Info } from "@/components/home/Info";
 import FillIcon from "@/components/icons/FillIcon";
 import React from "react";
 
