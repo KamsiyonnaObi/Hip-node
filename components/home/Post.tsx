@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import FillIcon from "./icons/FillIcon";
+import FillIcon from "../icons/FillIcon";
 
 interface Props {
   postImage: string;

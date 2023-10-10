@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Input } from "./form/Input";
+import { Input } from "../form/Input";
 import React from "react";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 
 const CreatePost = () => {
   return (
