@@ -12,7 +12,7 @@ interface Props {
 
 const cover = ({ cover, icon, title, author }: Props) => {
   return (
-    <article className="w-[335px] gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 md:w-[785px]">
+    <article className="h-[152px] w-[335px] gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 md:h-[294px] md:w-[785px]">
       <div className="flex flex-col gap-[14px] md:gap-[20px]">
         <Image
           src={cover}
