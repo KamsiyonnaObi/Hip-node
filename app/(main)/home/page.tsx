@@ -1,9 +1,9 @@
-import CreatePost from "@/components/CreatePost";
-import Meetups from "@/components/Meetups";
-import PinnedGroup from "@/components/PinnedGroup";
-import PopularTags from "@/components/PopularTags";
-import Post from "@/components/Post";
-import Sidebar from "@/components/Sidebar";
+import CreatePost from "@/components/home/CreatePost";
+import Meetups from "@/components/home/Meetups";
+import PinnedGroup from "@/components/home/PinnedGroup";
+import PopularTags from "@/components/home/PopularTags";
+import Post from "@/components/home/Post";
+import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
 import React from "react";
 
