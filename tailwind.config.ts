@@ -50,6 +50,9 @@ const config: Config = {
         green80: "#3ED6A4",
         green10: "#E7FAF4",
       },
+      boxShadow: {
+        "meetup-card": "0px 6px 8px 2px #3582E01F",
+      },
     },
   },
   plugins: [],

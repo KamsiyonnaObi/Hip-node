@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import OutlineIcon from "./icons/OutlineIcon";
-import FillIcon from "./icons/FillIcon";
+import OutlineIcon from "../icons/OutlineIcon";
+import FillIcon from "../icons/FillIcon";
 
 const Sidebar = () => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
