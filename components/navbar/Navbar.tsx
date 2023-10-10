@@ -13,7 +13,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <article className=" gap-[10px] bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
+    <article className=" bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
       <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-[84px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
