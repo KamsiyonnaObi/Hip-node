@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import OutlineIcon from "./icons/OutlineIcon";
+import OutlineIcon from "../icons/OutlineIcon";
 import MeetupCard from "./MeetupCard";
 
 const Meetups = () => {
