@@ -12,7 +12,7 @@ interface Props {
 
 const cover = ({ cover, icon, title, author }: Props) => {
   return (
-    <article className="h-[152px] w-[335px] gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 md:h-[294px] md:w-[785px]">
+    <article className="h-[152px] w-[335px] gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 dark:text-background2 md:h-[294px] md:w-[785px]">
       <div className="flex flex-col gap-[14px] md:gap-[20px]">
         <Image
           src={cover}
@@ -21,8 +21,8 @@ const cover = ({ cover, icon, title, author }: Props) => {
           height={174}
           className="w-[315px] rounded-[10px] md:w-[765px]"
         />
-        <div className="flex w-[315px] flex-row justify-between md:w-[745px]">
-          <div className="flex flex-row gap-[14px] md:gap-[20px]">
+        <div className="flex w-[315px] flex-row items-center justify-between md:w-[745px] md:px-3">
+          <div className="flex flex-row items-center justify-center gap-[14px] md:gap-[20px]">
             <Image
               src={icon}
               alt="icon"
@@ -33,7 +33,7 @@ const cover = ({ cover, icon, title, author }: Props) => {
             <div className="flex flex-col">
               <h1 className="md:h1-semibold display-semibold">{title}</h1>
               <p className="text-sm-regular md:body-regular text-secondary3">
-                Created At{" "}
+                Created By{" "}
                 <span className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
                   {author}
                 </span>
