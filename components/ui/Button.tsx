@@ -2,7 +2,7 @@ import React from "react";
 type Props = {
   children?: React.ReactNode;
   className?: string;
-  color?: "orange" | "blue" | "transparent";
+  color?: "orange" | "blue" | "white" | "transparent";
   disabled?: boolean;
   rounded?: boolean;
   full?: boolean;
