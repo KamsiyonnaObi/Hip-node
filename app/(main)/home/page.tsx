@@ -11,11 +11,13 @@ const Page = () => {
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
-        <Sidebar />
-        <div className="medium:flex hidden">
+        <div className="flex md:hidden medium:flex">
+          <Sidebar />
+        </div>
+        <div className="hidden medium:flex">
           <PopularTags />
         </div>
-        <div className="medium:flex hidden">
+        <div className="hidden medium:flex">
           <PinnedGroup />
         </div>
       </section>
