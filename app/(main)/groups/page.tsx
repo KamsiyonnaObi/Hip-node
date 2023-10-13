@@ -10,7 +10,7 @@ const page = () => {
       <section>
         <GroupName />
       </section>
-      <section className="flex flex-col md:gap-5">
+      <section className="flex flex-col md:flex-row md:gap-5">
         <PostGroup
           avatar={"/Avatar.png"}
           image={"/bird.png"}
