@@ -13,13 +13,13 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <article className=" bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
-      <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-[84px]">
+    <article className="flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
+      <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-5 lg:gap-[84px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
             <LogoIcon className="fill-background stroke-background dark:fill-dark2 dark:stroke-dark2" />
           </div>
-          <h1 className="h1-bold hidden text-primary md:flex">
+          <h1 className="h1-bold hidden text-primary lg:flex">
             Hipnode
             <span className="text-secondary1 dark:text-secondary2">.</span>
           </h1>
@@ -46,7 +46,7 @@ const Navbar = () => {
           </div>
         </section>
         {/* DESKTOP */}
-        <div className="hidden flex-row md:flex md:gap-[65px]">
+        <div className="hidden flex-row md:flex md:gap-5 md2:gap-[65px]">
           <section className="hidden flex-row items-center gap-[20px] bg-background  dark:bg-dark3 md:flex">
             <Link href="/home">
               <Button
@@ -137,7 +137,7 @@ const Navbar = () => {
               </Button>
             </Link>
           </section>
-          <div className="flex flex-row md:gap-[58px]">
+          <div className="flex flex-row md:gap-5 md2:gap-[58px]">
             <Input
               divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
