@@ -1,9 +1,10 @@
 import { Input } from "@/components/form/Input";
-import { Info } from "@/components/home/Info";
+import { Info } from "@/components/login/Info";
 import FillIcon from "@/components/icons/FillIcon";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import React from "react";
+import Divider from "@/components/login/Divider";
 
 const signIn = () => {
   return (
@@ -38,7 +39,7 @@ const signIn = () => {
             </Info>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-[29px]">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2.5">
               <h1 className="h3-semibold text-secondary2 dark:text-background2">
@@ -60,10 +61,13 @@ const signIn = () => {
               </Link>
             </p>
           </div>
+          <div>
+            <Divider />
+          </div>
           <div className="flex flex-col gap-5">
             <Button
               full
-              color="white"
+              color="blackWhite"
               className="items-center justify-center py-3"
             >
               <FillIcon.Google className="fill-secondary2" />
@@ -72,7 +76,7 @@ const signIn = () => {
             </Button>
             <Button
               full
-              color="white"
+              color="blackWhite"
               className="items-center justify-center py-3"
             >
               <FillIcon.Facebook className="fill-secondary2" />
