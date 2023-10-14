@@ -11,15 +11,20 @@ const Page = () => {
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
-        <Sidebar />
-        <div className="hidden md:flex">
+        <div className="flex md:hidden lg:flex">
+          <Sidebar />
+        </div>
+        <div className="hidden lg:flex">
           <PopularTags />
         </div>
-        <div className="hidden md:flex">
+        <div className="hidden lg:flex">
           <PinnedGroup />
         </div>
       </section>
       <section className="flex flex-col gap-5">
+        <div className="hidden md:flex lg:hidden">
+          <Sidebar small />
+        </div>
         <CreatePost />
         <Post
           postImage="/PostImage.png"
