@@ -11,7 +11,7 @@ export const Info = ({ children, className, fillIcon }: Props) => (
         {fillIcon}
       </div>
       <div className="flex">
-        <p className="body-semibold lg:h3-semibold text-secondary2 dark:text-secondary6">
+        <p className="body-semibold md:h3-semibold text-secondary2 dark:text-secondary6">
           {children}
         </p>
       </div>
