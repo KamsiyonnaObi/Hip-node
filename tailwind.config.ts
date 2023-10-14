@@ -53,6 +53,11 @@ const config: Config = {
       boxShadow: {
         "meetup-card": "0px 6px 8px 2px #3582E01F",
       },
+      screens: {
+        lg: "1440px",
+        md2: "1208px",
+        md: "1100px",
+      },
     },
   },
   plugins: [],
