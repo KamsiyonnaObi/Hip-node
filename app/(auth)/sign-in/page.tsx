@@ -8,12 +8,12 @@ import Divider from "@/components/login/Divider";
 
 const signIn = () => {
   return (
-    <main className="bg-background2 px-6 dark:bg-dark2">
-      <article className="flex flex-col gap-y-20">
+    <main className="flex bg-background2 px-6 dark:bg-dark2 lg:h-[100vh] xl:px-[148px]">
+      <article className="m-auto flex max-w-[327px] flex-col gap-y-20 md:max-w-[409px] lg:w-full lg:max-w-[1122px] lg:flex-row lg:items-center lg:justify-between">
         {/* Header */}
-        <div>
-          <div className="mb-10 max-w-[250px]">
-            <h1 className="h3-semibold">
+        <section>
+          <div className="mb-10 max-w-[250px] md:max-w-[411px]">
+            <h1 className="h3-semibold md:text-[30px] md:font-bold md:leading-[40px]">
               Join a thriving community of entrepreneurs and developers.
             </h1>
           </div>
@@ -38,9 +38,9 @@ const signIn = () => {
               Get the best new stories from founders in your inbox
             </Info>
           </div>
-        </div>
-        <div className="flex flex-col gap-[29px]">
-          <div className="flex flex-col gap-5">
+        </section>
+        <section className="flex flex-col gap-[29px] lg:w-[420px] lg:items-center ">
+          <div className="flex w-full flex-col gap-5">
             <div className="flex flex-col gap-2.5">
               <h1 className="h3-semibold text-secondary2 dark:text-background2">
                 Choose a username
@@ -54,17 +54,17 @@ const signIn = () => {
             <div>
               <Button className="px-10 py-2.5">Next</Button>
             </div>
-            <p className="body-regular">
+            <p className="body-regular text-secondary2 dark:text-background2">
               Already have an account?{" "}
               <Link href={"/"}>
                 <span className="font-semibold text-red80">Sign in</span>
               </Link>
             </p>
           </div>
-          <div>
+          <div className="w-full">
             <Divider />
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex w-full flex-col gap-5">
             <Button
               full
               color="blackWhite"
@@ -84,7 +84,7 @@ const signIn = () => {
               <p>Sign Up With Facebook</p>
             </Button>
           </div>
-        </div>
+        </section>
       </article>
     </main>
   );
