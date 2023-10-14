@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const GroupName = () => {
   return (
-    <div className="mx-auto w-[325px] lg:w-[225px]">
+    <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
       <section>
         <div className="h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3">
           <div className="flex h-[3.75rem] w-auto shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
