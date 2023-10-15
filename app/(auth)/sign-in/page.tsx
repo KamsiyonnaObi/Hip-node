@@ -1,91 +1,20 @@
-import { Input } from "@/components/form/Input";
-import { Info } from "@/components/login/Info";
-import FillIcon from "@/components/icons/FillIcon";
-import { Button } from "@/components/ui/Button";
-import Link from "next/link";
 import React from "react";
-import Divider from "@/components/login/Divider";
+
+import InfoSection from "@/components/login/InfoSection";
+import Login from "@/components/login/Login";
 
 const signIn = () => {
   return (
-    <main className="flex bg-background2 px-6 dark:bg-dark2 lg:h-[100vh] xl:px-[148px]">
-      <article className="m-auto flex max-w-[327px] flex-col gap-y-20 md:max-w-[409px] lg:w-full lg:max-w-[1122px] lg:flex-row lg:items-center lg:justify-between">
-        {/* Header */}
-        <section>
-          <div className="mb-10 max-w-[250px] md:max-w-[411px]">
-            <h1 className="h3-semibold md:text-[30px] md:font-bold md:leading-[40px]">
-              Join a thriving community of entrepreneurs and developers.
-            </h1>
-          </div>
-          {/* Info cards */}
-          <div className="flex flex-col gap-5">
-            <Info
-              className="bg-red10"
-              fillIcon={<FillIcon.Business className="fill-red90" />}
-            >
-              Connect with other indie hackers running online businesses.
-            </Info>
-            <Info
-              className="bg-yellow10"
-              fillIcon={<FillIcon.Feedback className="fill-yellow" />}
-            >
-              Get feedback on your business ideas, landing pages, and more.
-            </Info>
-            <Info
-              className="bg-blue10"
-              fillIcon={<FillIcon.Inbox className="fill-blue" />}
-            >
-              Get the best new stories from founders in your inbox
-            </Info>
-          </div>
-        </section>
-        <section className="flex flex-col gap-[29px] lg:w-[420px] lg:items-center ">
-          <div className="flex w-full flex-col gap-5">
-            <div className="flex flex-col gap-2.5">
-              <h1 className="h3-semibold text-secondary2 dark:text-background2">
-                Choose a username
-              </h1>
-              <Input
-                divClassName="bg-background rounded-lg px-5 py-[13px]"
-                className="w-full bg-transparent"
-                placeholder="e.g Hipnode123"
-              />
-            </div>
-            <div>
-              <Button className="px-10 py-2.5">Next</Button>
-            </div>
-            <p className="body-regular text-secondary2 dark:text-background2">
-              Already have an account?{" "}
-              <Link href={"/"}>
-                <span className="font-semibold text-red80">Sign in</span>
-              </Link>
-            </p>
-          </div>
-          <div className="w-full">
-            <Divider />
-          </div>
-          <div className="flex w-full flex-col gap-5">
-            <Button
-              full
-              color="blackWhite"
-              className="items-center justify-center py-3"
-            >
-              <FillIcon.Google className="fill-secondary2" />
-
-              <p>Sign Up With Google</p>
-            </Button>
-            <Button
-              full
-              color="blackWhite"
-              className="items-center justify-center py-3"
-            >
-              <FillIcon.Facebook className="fill-secondary2" />
-
-              <p>Sign Up With Facebook</p>
-            </Button>
-          </div>
-        </section>
-      </article>
+    <main className="flex h-screen w-screen flex-col md:flex-row">
+      {/* Info Section */}
+      <section className="flex h-full flex-col gap-[60px] bg-background2 px-6 dark:bg-dark2 md:w-1/2">
+        {" "}
+        <InfoSection />
+      </section>
+      {/* Login Section */}
+      <section className=" flex h-full flex-col bg-background2 px-6 pt-20 dark:bg-dark2 md:w-1/2 md:bg-background md:py-0 md:dark:bg-dark3 ">
+        <Login />
+      </section>
     </main>
   );
 };
