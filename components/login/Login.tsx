@@ -15,7 +15,7 @@ const Login = () => {
               Choose a username
             </h1>
             <Input
-              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2"
+              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
               className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="e.g Hipnode123"
             />

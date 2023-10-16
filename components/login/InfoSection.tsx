@@ -11,7 +11,7 @@ const InfoSection = () => {
       </div>
       <article className="mx-auto max-w-[327px] sm:max-w-[442px]">
         <div className="mb-10 max-w-[250px] sm:max-w-[411px]">
-          <h1 className="h3-semibold sm:text-[30px] sm:font-bold sm:leading-[40px]">
+          <h1 className="h3-semibold dark:text-background2 sm:text-[30px] sm:font-bold sm:leading-[40px]">
             Join a thriving community of entrepreneurs and developers.
           </h1>
         </div>
