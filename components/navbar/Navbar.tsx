@@ -83,10 +83,10 @@ const Navbar = () => {
               </Button>
             </Link>
 
-            <Link href="/group">
+            <Link href="/groups">
               <Button
                 className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/group"
+                  pathname === "/groups"
                     ? "bg-primary"
                     : "bg-secondary6  dark:bg-dark4"
                 }`}
