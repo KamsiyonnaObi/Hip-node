@@ -22,7 +22,7 @@ export const Button = ({
     orange: "bg-red80",
     blue: "bg-blue",
     white: "bg-background2",
-    gray: "bg-secondary6 dark:bg-dark4",
+    gray: "bg-background dark:bg-dark4",
     blackWhite: "bg-background2 dark:bg-dark4",
     transparent: "bg-transparent",
   };
