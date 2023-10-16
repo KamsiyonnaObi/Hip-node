@@ -3,7 +3,7 @@ import React from "react";
 
 const DropDown = () => {
   return (
-    <div className="md:flex md:flex-col">
+    <div className="md:hidden">
       <div className="bg-white dark:bg-dark3">
         <div className="flex gap-[.5rem] p-[.62rem]">
           <div className="my-auto">
