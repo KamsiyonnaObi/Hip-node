@@ -19,17 +19,17 @@ const GroupName = () => {
             <div className="flex-col">
               <div className="flex gap-[.38rem]">
                 <FillIcon.Growing className="fill-black" />
-                <h2 className="display-semibold md:h3-semibold">
+                <h2 className="display-semibold md:h3-semibold text-secondary2">
                   Fastest Growing
                 </h2>
               </div>
               <div>
-                <p className="text-sm-regular md:caption-regular">
+                <p className="text-sm-regular md:caption-regular text-secondary3">
                   List updated daily at midnight PST.
                 </p>
               </div>
             </div>
-            <div className="my-auto flex md:hidden">
+            <div className="my-auto">
               <button onClick={() => setFastestGrowing((prev) => !prev)}>
                 {!isFastestGrowing ? (
                   <OutlineIcon.DownArrow2 />
@@ -50,12 +50,12 @@ const GroupName = () => {
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
                   <FillIcon.Growing className="fill-black" />
-                  <h2 className="display-semibold md:h3-semibold">
+                  <h2 className="display-semibold md:h3-semibold text-secondary2">
                     Fastest Growing
                   </h2>
                 </div>
                 <div>
-                  <p className="text-sm-regular md:caption-regular">
+                  <p className="text-sm-regular md:caption-regular text-secondary3">
                     List updated daily at midnight PST.
                   </p>
                 </div>
@@ -63,7 +63,7 @@ const GroupName = () => {
             </div>
           </div>
           <div className="md:flex md:flex-col">
-            <div className="bg-white dark:bg-dark3">
+            <div className="bg-white px-[.62rem] dark:bg-dark3">
               <div className="flex gap-[.5rem] p-[.62rem]">
                 <div className="my-auto">
                   <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -79,7 +79,7 @@ const GroupName = () => {
               </div>
             </div>
             {/* Demo Two */}
-            <div className="bg-white dark:bg-dark3">
+            <div className="bg-white px-[.62rem] dark:bg-dark3">
               <div className="flex gap-[.5rem] p-[.62rem]">
                 <div className="my-auto">
                   <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -95,7 +95,7 @@ const GroupName = () => {
               </div>
             </div>
             {/* Demo Three */}
-            <div className="bg-white dark:bg-dark3">
+            <div className="bg-white px-[.62rem] dark:bg-dark3">
               <div className="flex gap-[.5rem] p-[.62rem]">
                 <div className="my-auto">
                   <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -111,7 +111,7 @@ const GroupName = () => {
               </div>
             </div>
             {/* See All */}
-            <div className="bg-white p-[.625rem] dark:bg-dark3">
+            <div className="bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
               <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
                 <p className="text-xs-semibold text-purple">See all</p>
               </button>
@@ -127,12 +127,12 @@ const GroupName = () => {
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
                   <FillIcon.Fire className="fill-black" />
-                  <h2 className="display-semibold md:h3-semibold">
+                  <h2 className="display-semibold md:h3-semibold text-secondary2">
                     Most Popular
                   </h2>
                 </div>
                 <div>
-                  <p className="text-sm-regular md:caption-regular">
+                  <p className="text-sm-regular md:caption-regular text-secondary3">
                     List updated daily at midnight PST.
                   </p>
                 </div>
@@ -140,7 +140,8 @@ const GroupName = () => {
               <div className="my-auto flex md:hidden"></div>
             </div>
           </div>
-          <div className="bg-white dark:bg-dark3">
+          {/* Demo One */}
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -156,7 +157,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* Demo Two */}
-          <div className="bg-white dark:bg-dark3">
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -172,7 +173,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* Demo Three */}
-          <div className="bg-white dark:bg-dark3">
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -188,7 +189,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* See All */}
-          <div className="bg-white p-[.625rem] dark:bg-dark3">
+          <div className="bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
             <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
               <p className="text-xs-semibold text-purple">See all</p>
             </button>
@@ -203,12 +204,12 @@ const GroupName = () => {
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
                   <FillIcon.Rocket className="fill-black" />
-                  <h2 className="display-semibold md:h3-semibold">
+                  <h2 className="display-semibold md:h3-semibold text-secondary2">
                     Newly Launched
                   </h2>
                 </div>
                 <div>
-                  <p className="text-sm-regular md:caption-regular">
+                  <p className="text-sm-regular md:caption-regular text-secondary3">
                     List updated daily at midnight PST.
                   </p>
                 </div>
@@ -216,7 +217,8 @@ const GroupName = () => {
               <div className="my-auto flex md:hidden"></div>
             </div>
           </div>
-          <div className="bg-white dark:bg-dark3">
+          {/* Demo One */}
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -232,7 +234,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* Demo Two */}
-          <div className="bg-white dark:bg-dark3">
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -248,7 +250,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* Demo Three */}
-          <div className="bg-white dark:bg-dark3">
+          <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">
               <div className="my-auto">
                 <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -264,7 +266,7 @@ const GroupName = () => {
             </div>
           </div>
           {/* See All */}
-          <div className="bg-white p-[.625rem] dark:bg-dark3">
+          <div className="bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
             <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
               <p className="text-xs-semibold text-purple">See all</p>
             </button>
