@@ -48,14 +48,14 @@ const Footer = () => {
         <Link href="/group">
           <Button
             className={`items-center  gap-2.5 p-2.5 ${
-              pathname === "/group"
+              pathname === "/groups"
                 ? "bg-primary"
                 : "bg-secondary6  dark:bg-dark4"
             }`}
           >
             <FillIcon.Group
               className={`${
-                pathname === "/group"
+                pathname === "/groups"
                   ? "fill-background"
                   : "fill-secondary4 dark:fill-secondary6"
               }`}
