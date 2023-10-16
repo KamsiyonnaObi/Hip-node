@@ -45,7 +45,7 @@ const GroupName = () => {
       </section>
       <section>
         <div className="hidden md:flex md:flex-col">
-          <div className="h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3">
+          <div className="h-[5rem] shrink-0 gap-[.625rem] rounded-t-[1rem] bg-background p-[.63rem] dark:bg-dark3">
             <div className="flex h-[3.75rem] w-auto shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
@@ -62,7 +62,7 @@ const GroupName = () => {
               </div>
             </div>
           </div>
-          <div className="md:flex md:flex-col">
+          <div className="dark:bg-dark3 md:flex md:flex-col">
             <div className="bg-white px-[.62rem] dark:bg-dark3">
               <div className="flex gap-[.5rem] p-[.62rem]">
                 <div className="my-auto">
@@ -122,7 +122,7 @@ const GroupName = () => {
       {/* Most Popular */}
       <section>
         <div className="hidden md:flex md:flex-col">
-          <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3">
+          <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] bg-background p-[.63rem] dark:bg-dark3">
             <div className="flex h-[3.75rem] w-auto shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-red10 p-[.63rem]">
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
@@ -199,7 +199,7 @@ const GroupName = () => {
       {/* Newly Launched */}
       <section>
         <div className="hidden md:flex md:flex-col">
-          <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3">
+          <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] bg-background p-[.63rem] dark:bg-dark3">
             <div className="flex h-[3.75rem] w-auto shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-blue10 p-[.63rem]">
               <div className="flex-col">
                 <div className="flex gap-[.38rem]">
