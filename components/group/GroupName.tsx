@@ -10,7 +10,9 @@ import NewlyLaunched from "./NewlyLaunched";
 // interface Props {}
 
 const GroupName = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFastestGrowing, setFastestGrowing] = useState(false);
+  const [isMostPopular, setIsMostPopular] = useState(false);
+  const [isNewlyLaunched, setIsNewlyLaunched] = useState(false);
 
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
@@ -31,14 +33,18 @@ const GroupName = () => {
               </div>
             </div>
             <div className="my-auto">
-              <button onClick={() => setIsOpen((prev) => !prev)}>
-                {!isOpen ? <OutlineIcon.DownArrow2 /> : <OutlineIcon.Close />}
+              <button onClick={() => setFastestGrowing((prev) => !prev)}>
+                {!isFastestGrowing ? (
+                  <OutlineIcon.DownArrow2 />
+                ) : (
+                  <OutlineIcon.Close />
+                )}
               </button>
             </div>
           </div>
         </div>
         {/* Dropdown */}
-        {isOpen && <FastestGrowing />}
+        {isFastestGrowing && <FastestGrowing />}
       </section>
       {/* Most Popular */}
       <section>
@@ -59,14 +65,18 @@ const GroupName = () => {
                 </div>
               </div>
               <div className="my-auto">
-                <button onClick={() => setIsOpen((prev) => !prev)}>
-                  {!isOpen ? <OutlineIcon.DownArrow2 /> : <OutlineIcon.Close />}
+                <button onClick={() => setIsMostPopular((prev) => !prev)}>
+                  {!isMostPopular ? (
+                    <OutlineIcon.DownArrow2 />
+                  ) : (
+                    <OutlineIcon.Close />
+                  )}
                 </button>
               </div>
             </div>
           </div>
           {/* Dropdown */}
-          {isOpen && <MostPopular />}
+          {isMostPopular && <MostPopular />}
         </div>
       </section>
       {/* Newly Launched */}
@@ -88,14 +98,18 @@ const GroupName = () => {
                 </div>
               </div>
               <div className="my-auto">
-                <button onClick={() => setIsOpen((prev) => !prev)}>
-                  {!isOpen ? <OutlineIcon.DownArrow2 /> : <OutlineIcon.Close />}
+                <button onClick={() => setIsNewlyLaunched((prev) => !prev)}>
+                  {!isNewlyLaunched ? (
+                    <OutlineIcon.DownArrow2 />
+                  ) : (
+                    <OutlineIcon.Close />
+                  )}
                 </button>
               </div>
             </div>
           </div>
           {/* Dropdown */}
-          {isOpen && <NewlyLaunched />}
+          {isNewlyLaunched && <NewlyLaunched />}
         </div>
       </section>
     </div>
