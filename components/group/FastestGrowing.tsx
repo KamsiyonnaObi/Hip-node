@@ -10,7 +10,7 @@ const DropDown = () => {
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
           </div>
           <div className="flex-col">
-            <h3 className="caption-regular text-secondary2 dark:text-background2">
+            <h3 className="caption-semibold text-secondary2 dark:text-background2">
               Looking to Partner Up
             </h3>
             <p className="text-sm-regular text-secondary3">
@@ -26,7 +26,7 @@ const DropDown = () => {
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
           </div>
           <div className="flex-col">
-            <h3 className="caption-regular text-secondary2 dark:text-background2">
+            <h3 className="caption-semibold text-secondary2 dark:text-background2">
               Looking to Partner Up
             </h3>
             <p className="text-sm-regular text-secondary3">
@@ -42,7 +42,7 @@ const DropDown = () => {
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
           </div>
           <div className="flex-col">
-            <h3 className="caption-regular text-secondary2 dark:text-background2">
+            <h3 className="caption-semibold text-secondary2 dark:text-background2">
               Looking to Partner Up
             </h3>
             <p className="text-sm-regular text-secondary3">
