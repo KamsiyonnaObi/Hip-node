@@ -6,9 +6,11 @@ type Props = {
   disabled?: boolean;
   rounded?: boolean;
   full?: boolean;
+  onclock?: () => void;
 };
 
 export const Button = ({
+  onclock,
   children,
   className,
   disabled = false,
@@ -37,6 +39,7 @@ export const Button = ({
   return (
     <button
       disabled={disabled}
+      onClick={onclock}
       className={`${className} flex gap-x-2.5 ${rounded && "rounded-[20px]"} ${
         full && "w-full"
       } h3-semibold rounded-lg ${colorMap[color]} ${

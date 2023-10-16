@@ -1,5 +1,8 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+
+import { signIn } from "next-auth/react";
 import Divider from "@/components/login/Divider";
 import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
@@ -35,6 +38,7 @@ const Login = () => {
         </div>
         <div className="flex w-full flex-col gap-5">
           <Button
+            onclock={() => signIn("google", { callbackUrl: "/" })}
             full
             color="gray"
             className="items-center justify-center py-3"
@@ -44,6 +48,7 @@ const Login = () => {
             <p>Sign Up With Google</p>
           </Button>
           <Button
+            onclock={() => signIn("facebook", { callbackUrl: "/" })}
             full
             color="gray"
             className="items-center justify-center py-3"
