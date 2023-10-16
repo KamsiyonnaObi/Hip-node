@@ -36,19 +36,19 @@ const Login = () => {
         <div className="flex w-full flex-col gap-5">
           <Button
             full
-            color="blackWhite"
+            color="gray"
             className="items-center justify-center py-3"
           >
-            <FillIcon.Google className="fill-secondary2" />
+            <FillIcon.Google className="fill-secondary2 dark:fill-background2" />
 
             <p>Sign Up With Google</p>
           </Button>
           <Button
             full
-            color="blackWhite"
+            color="gray"
             className="items-center justify-center py-3"
           >
-            <FillIcon.Facebook className="fill-secondary2" />
+            <FillIcon.Facebook className="fill-secondary2 dark:fill-background2" />
 
             <p>Sign Up With Facebook</p>
           </Button>
