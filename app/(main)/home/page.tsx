@@ -31,7 +31,7 @@ const Page = () => {
           title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
           tags={["remote", "part time", "test"]}
           avatar="/Avatar.png"
-          name={"John Smith"}
+          username={"John Smith"}
           createdAt={"2 month ago"}
           views={420}
           likes={69}
@@ -42,7 +42,7 @@ const Page = () => {
           title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
           tags={["remote", "part time", "test"]}
           avatar="/Avatar.png"
-          name={"Louis Liu"}
+          username={"Louis Liu"}
           createdAt={"2 month ago"}
           views={420}
           likes={69}
@@ -53,7 +53,7 @@ const Page = () => {
           title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
           tags={["remote", "part time", "test"]}
           avatar="/Avatar.png"
-          name={"Louis Liu"}
+          username={"Louis Liu"}
           createdAt={"2 month ago"}
           views={420}
           likes={69}
@@ -64,7 +64,7 @@ const Page = () => {
           title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
           tags={["remote", "part time", "test"]}
           avatar="/Avatar.png"
-          name={"Louis Liu"}
+          username={"Louis Liu"}
           createdAt={"2 month ago"}
           views={420}
           likes={69}
@@ -75,7 +75,7 @@ const Page = () => {
           title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
           tags={["remote", "part time", "test"]}
           avatar="/Avatar.png"
-          name={"Louis Liu"}
+          username={"Louis Liu"}
           createdAt={"2 month ago"}
           views={420}
           likes={69}
