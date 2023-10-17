@@ -5,15 +5,13 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import FastestGrowing from "./FastestGrowing";
 import Image from "next/image";
-import MostPopular from "./MostPopular";
-import NewlyLaunched from "./NewlyLaunched";
+import MostPopularButton from "./MostPopularButton";
+import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
 // interface Props {}
 
 const GroupName = () => {
   const [isFastestGrowing, setFastestGrowing] = useState(false);
-  const [isMostPopular, setMostPopular] = useState(false);
-  const [isNewlyLaunched, setNewlyLaunched] = useState(false);
 
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
@@ -46,6 +44,8 @@ const GroupName = () => {
         </div>
         {/* Dropdown */}
         {isFastestGrowing && <FastestGrowing />}
+        {isFastestGrowing && <MostPopularButton />}
+        {isFastestGrowing && <NewlyLaunchedButton />}
       </section>
       <section>
         <div className="hidden md:flex md:flex-col">
@@ -124,36 +124,7 @@ const GroupName = () => {
         </div>
       </section>
       {/* Most Popular */}
-      <section>
-        <div className="flex h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3 md:hidden">
-          <div className="flex h-[3.75rem] w-full shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
-            <div className="flex-col">
-              <div className="flex gap-[.38rem]">
-                <FillIcon.Growing className="fill-black" />
-                <h2 className="display-semibold md:h3-semibold text-secondary2">
-                  Most Popular
-                </h2>
-              </div>
-              <div>
-                <p className="text-sm-regular md:caption-regular text-secondary3">
-                  List updated daily at midnight PST.
-                </p>
-              </div>
-            </div>
-            <div className="my-auto">
-              <button onClick={() => setMostPopular((prev) => !prev)}>
-                {!isMostPopular ? (
-                  <OutlineIcon.DownArrow2 />
-                ) : (
-                  <OutlineIcon.Close />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        {/* Dropdown */}
-        {isMostPopular && <MostPopular />}
-      </section>
+      <section>{/* Dropdown */}</section>
       <section>
         <div className="hidden md:flex md:flex-col">
           <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] bg-background p-[.63rem] dark:bg-dark3">
@@ -231,36 +202,6 @@ const GroupName = () => {
         </div>
       </section>
       {/* Newly Launched */}
-      <section>
-        <div className="flex h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3 md:hidden">
-          <div className="flex h-[3.75rem] w-full shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
-            <div className="flex-col">
-              <div className="flex gap-[.38rem]">
-                <FillIcon.Growing className="fill-black" />
-                <h2 className="display-semibold md:h3-semibold text-secondary2">
-                  Newly Launched
-                </h2>
-              </div>
-              <div>
-                <p className="text-sm-regular md:caption-regular text-secondary3">
-                  List updated daily at midnight PST.
-                </p>
-              </div>
-            </div>
-            <div className="my-auto">
-              <button onClick={() => setNewlyLaunched((prev) => !prev)}>
-                {!isNewlyLaunched ? (
-                  <OutlineIcon.DownArrow2 />
-                ) : (
-                  <OutlineIcon.Close />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        {/* Dropdown */}
-        {isNewlyLaunched && <NewlyLaunched />}
-      </section>
       <section>
         <div className="hidden md:flex md:flex-col">
           <div className="h-[5rem] w-auto min-w-[11.875rem] shrink-0 gap-[.625rem] bg-background p-[.63rem] dark:bg-dark3">
