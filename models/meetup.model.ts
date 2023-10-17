@@ -5,8 +5,7 @@ export interface IMeetup extends Document {
   image: string;
   subtitle: string;
   desc: string;
-  month: string;
-  day: number;
+  createdAt: Date;
   jobType: string[];
 }
 
@@ -26,13 +25,9 @@ const MeetupSchema = new Schema({
     type: String,
     required: true,
   },
-  month: {
-    type: String,
-    required: true,
-  },
-  day: {
-    type: Number,
-    required: true,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
   jobType: {
     type: [String],

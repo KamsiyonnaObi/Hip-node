@@ -1,19 +1,13 @@
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IPinnedGroup extends Document {
-  userId: string;
-  title: string;
-  image: string;
-  postNum: string;
-  desc: string;
+  userId: Schema.Types.ObjectId;
+  groupId: Schema.Types.ObjectId;
 }
 
 const PinnedGroupSchema = new Schema({
-  userId: { type: String, required: true }, // For each user, the pinned group would be unique
-  title: { type: String, required: true },
-  image: { type: String },
-  postNum: { type: String, required: true },
-  desc: { type: String, required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  groupId: { type: Schema.Types.ObjectId, ref: "Group", required: true },
 });
 
 const PinnedGroup =
