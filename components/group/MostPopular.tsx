@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const FastestGrowing = () => {
+const DropDown = () => {
   return (
     <div className="md:hidden">
       <div className="bg-white dark:bg-dark3">
@@ -61,4 +61,4 @@ const FastestGrowing = () => {
   );
 };
 
-export default FastestGrowing;
+export default DropDown;
