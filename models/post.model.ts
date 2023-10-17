@@ -1,11 +1,10 @@
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IPost extends Document {
-  postId: string;
   title: string;
   postImage: string;
-  tags: Schema.Types.ObjectId[];
-  userId: Schema.Types.ObjectId;
+  tags: string[];
+  userId: string;
   createdAt: Date;
   views: number;
   likes: number;
@@ -13,17 +12,16 @@ export interface IPost extends Document {
 }
 
 const PostSchema = new Schema({
-  postId: { type: String, required: true },
   title: { type: String, required: true },
   postImage: { type: String },
-  tags: { type: Schema.Types.ObjectId, ref: "Tag" },
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  tags: { type: [String], ref: "Tag" },
+  userId: { type: String, ref: "User" },
   createdAt: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   comments: { type: Number, default: 0 },
 });
 
-const Post = models.Question || model("Question", PostSchema);
+const Post = models.Post || model("Post", PostSchema);
 
 export default Post;
