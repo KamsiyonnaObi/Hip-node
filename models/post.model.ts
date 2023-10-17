@@ -4,7 +4,7 @@ export interface IPost extends Document {
   title: string;
   postImage: string;
   tags: string[];
-  userId: string;
+  userId: Schema.Types.ObjectId;
   createdAt: Date;
   views: number;
   likes: number;
@@ -14,8 +14,8 @@ export interface IPost extends Document {
 const PostSchema = new Schema({
   title: { type: String, required: true },
   postImage: { type: String },
-  tags: { type: [String], ref: "Tag" },
-  userId: { type: String, ref: "User" },
+  tags: { type: [String] },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
