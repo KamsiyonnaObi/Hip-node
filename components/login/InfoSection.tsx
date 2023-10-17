@@ -7,7 +7,7 @@ const InfoSection = () => {
   return (
     <>
       <div className="mt-[30px] max-md:text-center md:absolute">
-        <Logo />
+        <Logo className="w-[120px] md:w-fit"/>
       </div>
       <article className="mx-auto max-w-[327px] sm:max-w-[442px] md:my-auto">
         <div className="mb-10 max-w-[250px] sm:max-w-[411px]">
