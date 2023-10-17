@@ -131,7 +131,7 @@ const GroupName = () => {
               <div className="flex gap-[.38rem]">
                 <FillIcon.Growing className="fill-black" />
                 <h2 className="display-semibold md:h3-semibold text-secondary2">
-                  Fastest Growing
+                  Most Popular
                 </h2>
               </div>
               <div>
@@ -238,7 +238,7 @@ const GroupName = () => {
               <div className="flex gap-[.38rem]">
                 <FillIcon.Growing className="fill-black" />
                 <h2 className="display-semibold md:h3-semibold text-secondary2">
-                  Fastest Growing
+                  Newly Launched
                 </h2>
               </div>
               <div>

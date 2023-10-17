@@ -4,7 +4,7 @@ import React from "react";
 const DropDown = () => {
   return (
     <div className="md:hidden">
-      <div className="bg-white dark:bg-dark3">
+      <div className="bg-white px-[.62rem] dark:bg-dark3">
         <div className="flex gap-[.5rem] p-[.62rem]">
           <div className="my-auto">
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -20,7 +20,7 @@ const DropDown = () => {
         </div>
       </div>
       {/* Demo Two */}
-      <div className="bg-white dark:bg-dark3">
+      <div className="bg-white px-[.62rem] dark:bg-dark3">
         <div className="flex gap-[.5rem] p-[.62rem]">
           <div className="my-auto">
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -36,7 +36,7 @@ const DropDown = () => {
         </div>
       </div>
       {/* Demo Three */}
-      <div className="bg-white dark:bg-dark3">
+      <div className="bg-white px-[.62rem] dark:bg-dark3">
         <div className="flex gap-[.5rem] p-[.62rem]">
           <div className="my-auto">
             <Image src="/Ellipse.png" alt="icon" width={34} height={34} />
@@ -52,7 +52,7 @@ const DropDown = () => {
         </div>
       </div>
       {/* See All */}
-      <div className="bg-white p-[.625rem] dark:bg-dark3">
+      <div className="bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
         <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
           <p className="text-xs-semibold text-purple">See all</p>
         </button>
