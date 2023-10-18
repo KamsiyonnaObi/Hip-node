@@ -57,6 +57,7 @@ const config: Config = {
         lg: "1440px",
         md2: "1208px",
         md: "1100px",
+        sm: "768px",
       },
     },
   },
