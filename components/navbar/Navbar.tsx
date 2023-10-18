@@ -93,7 +93,7 @@ const Navbar = () => {
               >
                 <FillIcon.Group
                   className={`${
-                    pathname === "/group"
+                    pathname === "/groups"
                       ? "fill-background"
                       : "fill-secondary4 dark:fill-secondary6"
                   }`}
