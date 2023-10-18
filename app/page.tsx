@@ -7,8 +7,8 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div className="m-6 bg-background2">
-      <div className="flex justify-between">
+    <div className="mx-auto flex bg-background2">
+      <div className="flex flex-col">
         <ActiveMembers />
         <Admin />
         <Frame />
