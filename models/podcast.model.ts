@@ -5,7 +5,7 @@ export interface IPodcast extends Document {
   desc: string;
   userId: Schema.Types.ObjectId;
   image: string;
-  sound: string;
+  audioPath: string;
 }
 
 const PodcastSchema = new Schema({
@@ -13,7 +13,7 @@ const PodcastSchema = new Schema({
   desc: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   image: { type: String, required: true },
-  sound: { type: String, required: true },
+  audioPath: { type: String, required: true },
 });
 
 const Podcast = models.Podcast || model("Podcast", PodcastSchema);
