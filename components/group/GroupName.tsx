@@ -16,7 +16,9 @@ const GroupName = () => {
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
       <section>
-        <div className="flex h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3 md:hidden">
+<div
+className={`${ isFastestGrowing && "rounded-b-none"} flex h-[5rem] shrink-0 gap-[.625rem] rounded-[1rem] bg-background p-[.63rem] dark:bg-dark3 md:hidden`}
+ >
           <div className="flex h-[3.75rem] w-full shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
             <div className="flex-col">
               <div className="flex gap-[.38rem]">
