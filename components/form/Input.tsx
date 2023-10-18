@@ -5,12 +5,14 @@ type Props = {
   divClassName?: string;
   placeholder?: string;
   value?: any;
+  name?: string;
   onChange?: any;
 };
 
 export const Input = ({
   onChange,
   value,
+  name,
   placeholder,
   children,
   className,
@@ -19,7 +21,8 @@ export const Input = ({
   return (
     <div className={`${divClassName}`}>
       <input
-        className={`rounded-lg bg-secondary6 text-secondary2 outline-none placeholder:text-secondary3 dark:bg-dark2 dark:text-background2 dark:placeholder:text-secondary3 ${className}`}
+        name={name}
+        className={` bg-secondary6 text-secondary2 outline-none placeholder:text-secondary3 dark:bg-dark2 dark:text-background2 dark:placeholder:text-secondary3 ${className}`}
         placeholder={placeholder || "Type here"}
         value={value}
         onChange={onChange}
