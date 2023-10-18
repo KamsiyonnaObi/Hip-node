@@ -1,7 +1,7 @@
 import React from "react";
 
-import InfoSection from "@/components/login/InfoSection";
-import SignUp from "@/components/login/Signup";
+import InfoSection from "@/components/signup/InfoSection";
+import SignUp from "@/components/signup/Signup";
 
 const signIn = () => {
   return (

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
-import Divider from "@/components/login/Divider";
+import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
