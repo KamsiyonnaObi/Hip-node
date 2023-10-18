@@ -1,8 +1,8 @@
 import Podcasts from "@/components/Podcasts";
 import PostGroup from "@/components/group/PostGroup";
-import Meetups from "@/components/group/Meetups";
 import React from "react";
 import GroupName from "@/components/group/GroupName";
+import Meetups from "@/components/home/Meetups";
 
 const page = () => {
   return (
