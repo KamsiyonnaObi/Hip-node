@@ -1,18 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import OutlineIcon from "../icons/OutlineIcon";
+import OutlineIcon from "@/components/icons/OutlineIcon";
 
-const Categories = () => {
-  const initialCategories = [
-    { name: "Full Time", checked: false },
-    { name: "Part Time", checked: false },
-    { name: "Internship", checked: false },
-    { name: "Remote", checked: false },
-    { name: "Contract", checked: false },
-    { name: "Free", checked: false },
-  ];
+interface Props {
+  title: string;
+  categoryList: { name: string; checked: boolean }[];
+}
 
-  const [categories, setCategories] = useState(initialCategories);
+const Categories = ({ title, categoryList }: Props) => {
+  const [categories, setCategories] = useState(categoryList);
 
   const toggleCategory = (index: any) => {
     setCategories((prevCategories) =>
@@ -26,13 +22,13 @@ const Categories = () => {
     <article className="rounded-[16px] bg-background dark:bg-dark3 md:w-[210px] md:gap-[10px] md:p-[20px]">
       <div className="w-[331px] gap-[20px] p-[20px] dark:text-background md:gap-[12px] md:p-0">
         <div className="flex flex-row justify-between">
-          <h3 className="h3-semibold ">Categories</h3>
+          <h3 className="h3-semibold ">{title}</h3>
           <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
         </div>
         {categories.map((category, index) => (
           <div
             key={index}
-            className="mt-[10px] select-none flex flex-row justify-between md:w-[170px]"
+            className="mt-[10px] flex select-none flex-row justify-between md:w-[170px]"
           >
             <p
               className={`caption-semibold ${
