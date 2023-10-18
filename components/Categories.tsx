@@ -10,7 +10,7 @@ interface Props {
 const Categories = ({ title, categoryList }: Props) => {
   const [categories, setCategories] = useState(categoryList);
 
-  const toggleCategory = (index: any) => {
+  const toggleCategory = (index: number) => {
     setCategories((prevCategories) =>
       prevCategories.map((category, i) =>
         i === index ? { ...category, checked: !category.checked } : category
