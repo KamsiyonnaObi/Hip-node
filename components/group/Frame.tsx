@@ -3,18 +3,22 @@ import OutlineIcon from "../icons/OutlineIcon";
 
 const Frame = () => {
   return (
-    <div className="flex w-auto min-w-[20.9rem] justify-between gap-[.625rem] rounded-[1rem] bg-white p-[.625rem]">
+    <div className="flex w-auto min-w-[20.9rem] justify-between gap-[.625rem] rounded-[1rem] bg-white p-[.625rem] dark:bg-dark3">
       <div className="my-auto flex">
-        <h3 className="display-semibold text-secondary2">Explore</h3>
+        <h3 className="display-semibold text-secondary2 dark:text-white">
+          Explore
+        </h3>
       </div>
       <div className="flex gap-[.88rem]">
-        <div className="flex gap-[.62rem] p-[.375rem]">
+        <div className="flex gap-[.62rem] rounded-[.25rem] bg-background2 p-[.375rem] dark:bg-dark4">
           <div className="my-auto">
-            <OutlineIcon.New />
+            <OutlineIcon.New className="fill-black dark:fill-white" />
           </div>
-          <p className="display-semibold text-secondary2">New</p>
+          <p className="display-semibold text-secondary2 dark:text-background2">
+            New
+          </p>
         </div>
-        <div className="flex gap-[.62rem] p-[.375rem]">
+        <div className="flex gap-[.62rem] rounded-[.25rem] bg-red10 p-[.375rem]">
           <div className="my-auto">
             <OutlineIcon.Popular className="fill-red90" />
           </div>
