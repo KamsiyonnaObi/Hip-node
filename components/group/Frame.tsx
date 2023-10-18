@@ -12,7 +12,10 @@ const Frame = () => {
       <div className="flex gap-[.88rem]">
         <div className="flex gap-[.62rem] rounded-[.25rem] bg-background2 p-[.375rem] dark:bg-dark4">
           <div className="flex items-center">
-            <OutlineIcon.New className="fill-black dark:fill-white" />
+            <OutlineIcon.New
+              className="fill-black dark:fill-white"
+              textColor="fill-white dark:fill-black"
+            />
           </div>
           <p className="display-semibold text-secondary2 dark:text-background2">
             New

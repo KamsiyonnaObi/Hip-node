@@ -250,9 +250,15 @@ OutlineIcon.More = ({ className }: Props) => (
   </OutlineIcon>
 );
 
-OutlineIcon.New = ({ className }: Props) => (
+OutlineIcon.New = ({
+  className,
+  textColor,
+}: {
+  className: string;
+  textColor?: string;
+}) => (
   <OutlineIcon className={className}>
-    <New />
+    <New textColor={textColor || ""} />
   </OutlineIcon>
 );
 
