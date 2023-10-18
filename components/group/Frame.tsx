@@ -11,7 +11,7 @@ const Frame = () => {
       </div>
       <div className="flex gap-[.88rem]">
         <div className="flex gap-[.62rem] rounded-[.25rem] bg-background2 p-[.375rem] dark:bg-dark4">
-          <div className="my-auto">
+          <div className="flex items-center">
             <OutlineIcon.New className="fill-black dark:fill-white" />
           </div>
           <p className="display-semibold text-secondary2 dark:text-background2">
@@ -19,7 +19,7 @@ const Frame = () => {
           </p>
         </div>
         <div className="flex gap-[.62rem] rounded-[.25rem] bg-red10 p-[.375rem]">
-          <div className="my-auto">
+          <div className="flex items-center">
             <OutlineIcon.Popular className="fill-red90" />
           </div>
           <p className="display-semibold text-red80">Popular</p>
