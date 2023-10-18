@@ -5,7 +5,7 @@ export interface IPodcast extends Document {
   desc: string;
   userId: Schema.Types.ObjectId;
   image: string;
-  sound: string;
+  audioPath: string;
 }
 
 const PodcastSchema = new Schema({
