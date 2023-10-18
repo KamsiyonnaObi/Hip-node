@@ -11,6 +11,7 @@ import { Comment } from "./outlineIcons/Comment";
 import { Design } from "./outlineIcons/Design";
 import { Dev } from "./outlineIcons/Dev";
 import { DownArrow } from "./outlineIcons/DownArrow";
+import { DownArrow2 } from "./outlineIcons/DownArrow2";
 import { Edit } from "./outlineIcons/Edit";
 import { Expand } from "./outlineIcons/Expand";
 import { Facebook } from "./outlineIcons/Facebook";
@@ -138,6 +139,12 @@ OutlineIcon.Dev = ({ className }: Props) => (
 OutlineIcon.DownArrow = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <DownArrow />
+  </OutlineIcon>
+);
+
+OutlineIcon.DownArrow2 = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <DownArrow2 />
   </OutlineIcon>
 );
 
