@@ -11,7 +11,7 @@ import NewlyLaunchedButton from "./NewlyLaunchedButton";
 // interface Props {}
 
 const GroupName = () => {
-  const [isFastestGrowing, setFastestGrowing] = useState(false);
+  const [isDropDown, setDropDown] = useState(false);
 
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
@@ -32,8 +32,8 @@ const GroupName = () => {
               </div>
             </div>
             <div className="my-auto">
-              <button onClick={() => setFastestGrowing((prev) => !prev)}>
-                {!isFastestGrowing ? (
+              <button onClick={() => setDropDown((prev) => !prev)}>
+                {!isDropDown ? (
                   <OutlineIcon.DownArrow2 />
                 ) : (
                   <OutlineIcon.Close />
@@ -43,9 +43,9 @@ const GroupName = () => {
           </div>
         </div>
         {/* Dropdown */}
-        {isFastestGrowing && <FastestGrowing />}
-        {isFastestGrowing && <MostPopularButton />}
-        {isFastestGrowing && <NewlyLaunchedButton />}
+        {isDropDown && <FastestGrowing />}
+        {isDropDown && <MostPopularButton />}
+        {isDropDown && <NewlyLaunchedButton />}
       </section>
       <section>
         <div className="hidden md:flex md:flex-col">
