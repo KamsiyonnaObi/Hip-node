@@ -8,7 +8,7 @@ import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
 
-const Login = () => {
+const SignUp = () => {
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
@@ -85,4 +85,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
