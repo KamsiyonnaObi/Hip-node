@@ -1,3 +1,4 @@
+export { Admin } from "./Admin";
 export { Calendar } from "./Calendar";
 export { Comment } from "./Comment";
 export { Home } from "./Home";

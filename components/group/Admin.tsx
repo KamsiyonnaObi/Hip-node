@@ -3,12 +3,16 @@ import Admins from "./Admins";
 
 const Admin = () => {
   return (
-    <div className="flex w-[210px] flex-col rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3">
+    <div className="flex w-[20.9375rem] flex-col rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 md:w-[13.125rem] md:p-[1.25rem]">
       <p className="display-semibold mb-[1.25rem] text-secondary2 dark:text-background2">
         Admins
       </p>
       <div className="flex flex-col gap-[.52rem] dark:bg-dark3">
-        <Admins username={"Austin M"} avatar={""} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
       </div>
     </div>
   );

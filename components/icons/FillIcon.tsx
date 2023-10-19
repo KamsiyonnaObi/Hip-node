@@ -1,4 +1,5 @@
 import {
+  Admin,
   Calendar,
   Home,
   Comment,
@@ -55,6 +56,11 @@ const FillIcon = ({ children, className }: FillIconProps) => {
   );
 };
 
+FillIcon.Admin = ({ className }: FillIconProps) => (
+  <FillIcon className={className}>
+    <Admin />
+  </FillIcon>
+);
 FillIcon.Calendar = ({ className }: FillIconProps) => (
   <FillIcon className={className}>
     <Calendar />
