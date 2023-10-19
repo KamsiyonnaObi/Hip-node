@@ -2,7 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("../styles/theme.css");
+
 @layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
   .h1-bold {
     @apply text-[26px] leading-[38px] font-bold;
   }
