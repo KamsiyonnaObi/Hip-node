@@ -88,7 +88,7 @@ const SignUp = () => {
             </div>
             <div>
               <Button
-                onclock={nextStage}
+                onClick={nextStage}
                 disabled={!formData.username}
                 className="px-10 py-2.5"
               >
@@ -107,7 +107,7 @@ const SignUp = () => {
           </div>
           <div className="flex w-full flex-col gap-5">
             <Button
-              onclock={() => signIn("google", { callbackUrl: "/" })}
+              onClick={() => signIn("google", { callbackUrl: "/" })}
               full
               color="gray"
               className="display-semibold items-center justify-center py-3 md:bg-secondary6"
@@ -117,7 +117,7 @@ const SignUp = () => {
               <p>Sign Up With Google</p>
             </Button>
             <Button
-              onclock={() => signIn("facebook", { callbackUrl: "/" })}
+              onClick={() => signIn("facebook", { callbackUrl: "/" })}
               full
               color="gray"
               className="display-semibold items-center justify-center py-3 md:bg-secondary6"
@@ -135,7 +135,7 @@ const SignUp = () => {
             <div className="flex w-full flex-col gap-5">
               <div>
                 <Button
-                  onclock={nextStage}
+                  onClick={nextStage}
                   disabled={!formData.username}
                   className="px-10 py-2.5"
                 >
