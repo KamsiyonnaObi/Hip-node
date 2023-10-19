@@ -16,19 +16,19 @@ export const BusinessStage = () => {
         </Button>
         <Button
           color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 focus:bg-red80 focus:text-background2 md:bg-secondary6"
+          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
         >
           Actively getting started on something new
         </Button>
         <Button
           color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 focus:bg-red80 focus:text-background2 md:bg-secondary6"
+          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
         >
           No interest in starting a business
         </Button>
         <Button
           color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 focus:bg-red80 focus:text-background2 md:bg-secondary6"
+          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
         >
           Earnings from my business fully support me
         </Button>
