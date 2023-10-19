@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import FillIcon from "../icons/FillIcon";
+import OutlineIcon from "../icons/OutlineIcon";
 
 interface Props {
   postImage: string;
@@ -26,7 +27,7 @@ const Post = ({
   comments,
 }: Props) => {
   return (
-    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] md:w-[785px] md:rounded-[16px] md:p-[20px]">
+    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:rounded-[16px] md:p-[20px]">
       <div className="flex flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -38,12 +39,14 @@ const Post = ({
         <div className="flex flex-col gap-[30px]">
           <div className="flex flex-row gap-5">
             <section className="flex w-[187px] flex-col md:w-[512px]">
-              <h3 className="md:h3-semibold caption-semibold">{title}</h3>
+              <h3 className="md:h3-semibold caption-semibold dark:text-background2">
+                {title}
+              </h3>
               <div className="mt-2 flex flex-row gap-[10px]">
                 {tags.map((tag, index) => (
                   <div
                     key={index}
-                    className="text-xs-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4"
+                    className="text-xs-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4 dark:bg-dark4 dark:text-secondary5"
                   >
                     {tag}
                   </div>
@@ -67,12 +70,17 @@ const Post = ({
             </section>
             <section className="flex flex-row justify-between md:w-[521px]">
               <div className="hidden flex-col md:flex">
-                <p className="md:body-semibold">{username}</p>
-                <p className="md:text-sm-regular text-secondary3">
+                <div className="flex gap-[.25rem]">
+                  <p className="md:body-semibold dark:text-secondary6">
+                    {username}
+                  </p>
+                  <OutlineIcon.Ellipse />
+                </div>
+                <p className="md:text-sm-regular text-secondary3 dark:text-secondary5">
                   {createdAt}
                 </p>
               </div>
-              <div className="md:body-regular text-xs-regular flex flex-row items-center justify-center gap-[40px] text-secondary3">
+              <div className="md:body-regular text-xs-regular flex flex-row items-center justify-center gap-[40px] text-secondary3 dark:text-secondary5">
                 <p>{views} Views</p>
                 <p>{likes} Likes</p>
                 <p>{comments} Comments</p>
