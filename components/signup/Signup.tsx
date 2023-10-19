@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { create } from "zustand";
 
 import {
   BusinessStage,
@@ -13,6 +14,19 @@ import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
 
+type CurrentStage = {
+  currentStage: "signUp" | "businessStage" | "codingLevel" | "businessType";
+};
+
+type Action = {
+  setCurrentStage: (currentStage: CurrentStage) => void;
+};
+
+export const useStageStore = create<CurrentStage & Action>()((set) => ({
+  currentStage: "signUp",
+  setCurrentStage: (currentStage: CurrentStage) =>
+    set((state) => ({ currentStage: state.currentStage })),
+}));
 // define sign up stages
 const STAGES = {
   SIGNUP: "signUp",
