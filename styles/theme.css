@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .selected {
+    @apply bg-red80 text-background2 dark:bg-red80 !important;
+  }
+  .btn-focus {
+    @apply focus:bg-red80 focus:text-background2 dark:focus:bg-red80;
+  }
+}
