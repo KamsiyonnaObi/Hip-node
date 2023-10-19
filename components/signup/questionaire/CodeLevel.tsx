@@ -1,5 +1,12 @@
-import { Button } from "@/components/ui/Button";
 import React from "react";
+import { Button } from "@/components/ui/Button";
+
+const codeLevels = [
+  "No, and coding is totally unfamiliar",
+  "No, but I understand a few concepts",
+  "Yes, and I am a beginner",
+  "Yes, and I'm intermediate or a professional",
+];
 
 export const CodeLevel = () => {
   return (
@@ -8,30 +15,15 @@ export const CodeLevel = () => {
         Do you know how to code?
       </h1>
       <div className="flex w-full flex-col gap-5">
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          No, and coding is totally unfamiliar
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          No, but I understand a few concepts
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          Yes, and I am a beginner
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          Yes, and I&apos;m intermediate or a professional
-        </Button>
+        {codeLevels.map((level, index) => (
+          <Button
+            key={index}
+            color="gray"
+            className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
+          >
+            {level}
+          </Button>
+        ))}
       </div>
     </>
   );
