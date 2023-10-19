@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
@@ -13,59 +13,63 @@ import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
 
+// define sign up stages
+const STAGES = {
+  SIGNUP: "signUp",
+  BUSINESS_STAGE: "businessStage",
+  CODING_LEVEL: "codingLevel",
+  BUSINESS_TYPE: "businessType",
+};
+
 const SignUp = () => {
-  const [disabled, setDisabled] = useState(true);
-  const [stage, setStage] = useState("signUp");
+  // set initial stage to sign up
+  const [currentStage, setCurrentStage] = useState(STAGES.SIGNUP);
+
   const [formData, setFormData] = useState({
     username: "",
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  useEffect(() => {
-    if (formData.username === "") {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  }, [formData]);
-
+  // handle next stage flow
   const nextStage = () => {
-    switch (stage) {
-      case "signUp":
-        setStage("stageone");
+    switch (currentStage) {
+      case STAGES.SIGNUP:
+        setCurrentStage(STAGES.BUSINESS_STAGE);
         break;
-      case "stageone":
-        setStage("stagetwo");
+      case STAGES.BUSINESS_STAGE:
+        setCurrentStage(STAGES.CODING_LEVEL);
         break;
-      case "stagetwo":
-        setStage("stagethree");
+      case STAGES.CODING_LEVEL:
+        setCurrentStage(STAGES.BUSINESS_TYPE);
         break;
-      case "stagethree":
-        setStage("stageone");
+      case STAGES.BUSINESS_TYPE:
+        setCurrentStage(STAGES.SIGNUP); // Loop back to the start for a continuous flow
         break;
       default:
-        setStage("signUp");
+        setCurrentStage(STAGES.SIGNUP);
         break;
     }
   };
 
+  // render signup stages based on current stage
   const RenderStage = () => {
-    if (stage === "stageone") {
-      return <BusinessStage />;
-    }
-    if (stage === "stagetwo") {
-      return <CodeLevel />;
-    }
-    if (stage === "stagethree") {
-      return <BusinessType />;
+    switch (currentStage) {
+      case STAGES.BUSINESS_STAGE:
+        return <BusinessStage />;
+      case STAGES.CODING_LEVEL:
+        return <CodeLevel />;
+      case STAGES.BUSINESS_TYPE:
+        return <BusinessType />;
     }
   };
+
   return (
     <>
-      {stage === "signUp" ? (
+      {currentStage === "signUp" ? (
         <article className="mx-auto flex w-[327px] flex-col gap-[29px] sm:w-[442px] md:my-auto">
           <div className="flex w-full flex-col gap-5">
             <div className="flex flex-col gap-2.5">
@@ -84,7 +88,7 @@ const SignUp = () => {
             <div>
               <Button
                 onclock={nextStage}
-                disabled={disabled}
+                disabled={!formData.username}
                 className="px-10 py-2.5"
               >
                 Next
@@ -131,7 +135,7 @@ const SignUp = () => {
               <div>
                 <Button
                   onclock={nextStage}
-                  disabled={disabled}
+                  disabled={!formData.username}
                   className="px-10 py-2.5"
                 >
                   Next
