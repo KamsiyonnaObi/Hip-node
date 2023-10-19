@@ -1,0 +1,140 @@
+@tailwind base;
+
+@layer base {
+  /* Default */
+  :root {
+    /*Secondary Color/Background 2*/
+    --color-bkg: 247 247 247;
+    /*Secondary Color/Background*/
+    --color-bkg2: 255 255 255;
+    /*Secondary Color/Secondary 6*/
+    --color-bkg3: 244 246 248;
+    /*Secondary Color/Secondary 6*/
+    --color-tagBkg: 244 246 248;
+    /*Secondary Color/Secondary 2*/
+    --color-contents: 63 67 84;
+    /*Secondary Color/Secondary 3*/
+    --color-contents2: 151 152 157;
+    /*Secondary Color/Secondary 1*/
+    --color-contents3: 25 35 81;
+    /*Secondary Color/Secondary 4*/
+    --color-tagContent: 133 142 173;
+
+    /* White 600 */
+    --formInput: 244 246 248;
+    /* White Default */
+    --mobileInput: 255 255 255;
+    /* Secondary 2  */
+    --default-text: 63 67 84;
+  }
+
+  /* if system is dark mode */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /*Dark 2*/
+      --color-bkg: 30 37 43;
+      /*Dark 3*/
+      --color-bkg2: 38 45 52;
+      /*Dark 4*/
+      --color-bkg3: 44 53 61;
+      /*Dark 4*/
+      --color-tagBkg: 44 53 61;
+      /*Secondary Color/Background 2*/
+      --color-contents: 247 247 247;
+      /*Secondary Color/Secondary 6*/
+      --color-contents2: 244 246 248;
+      /*Secondary Color/Background*/
+      --color-contents3: 255 255 255;
+      /*Secondary Color/Secondary 4*/
+      --color-tagContent: 133 142 173;
+
+      /* Dark 800 */
+      --formInput: 30 37 43;
+      /* Dark 700 */
+      --mobileInput: 38 45 52;
+      /* Background 2 */
+      --default-text: 247 247 247;
+    }
+  }
+  /* If system is light mode */
+  @media (prefers-color-scheme: light) {
+    :root {
+      /*Secondary Color/Background 2*/
+      --color-bkg: 247 247 247;
+      /*Secondary Color/Background*/
+      --color-bkg2: 255 255 255;
+      /*Secondary Color/Secondary 6*/
+      --color-bkg3: 244 246 248;
+      /*Secondary Color/Secondary 6*/
+      --color-tagBkg: 244 246 248;
+      /*Secondary Color/Secondary 2*/
+      --color-contents: 63 67 84;
+      /*Secondary Color/Secondary 3*/
+      --color-contents2: 151 152 157;
+      /*Secondary Color/Secondary 1*/
+      --color-contents3: 25 35 81;
+      /*Secondary Color/Secondary 4*/
+      --color-tagContent: 133 142 173;
+
+      /* White 600 */
+      --formInput: 244 246 248;
+      /* White Default */
+      --mobileInput: 255 255 255;
+      /* Secondary 2  */
+      --default-text: 63 67 84;
+    }
+  }
+  /* If they pick dark mode */
+  :root[data-theme="dark"] {
+    /*Dark 2*/
+    --color-bkg: 30 37 43;
+    /*Dark 3*/
+    --color-bkg2: 38 45 52;
+    /*Dark 4*/
+    --color-bkg3: 44 53 61;
+    /*Dark 4*/
+    --color-tagBkg: 44 53 61;
+    /*Secondary Color/Background 2*/
+    --color-contents: 247 247 247;
+    /*Secondary Color/Secondary 6*/
+    --color-contents2: 244 246 248;
+    /*Secondary Color/Background*/
+    --color-contents3: 255 255 255;
+    /*Secondary Color/Secondary 4*/
+    --color-tagContent: 133 142 173;
+
+    /* Dark 800 */
+    --formInput: 30 37 43;
+    /* Dark 700 */
+    --mobileInput: 38 45 52;
+    /* Background 2 */
+    --default-text: 247 247 247;
+  }
+
+  /* If they pick light mode */
+  :root[data-theme="light"] {
+    /*Secondary Color/Background 2*/
+    --color-bkg: 247 247 247;
+    /*Secondary Color/Background*/
+    --color-bkg2: 255 255 255;
+    /*Secondary Color/Secondary 6*/
+    --color-bkg3: 244 246 248;
+    /*Secondary Color/Secondary 6*/
+    --color-tagBkg: 244 246 248;
+    /*Secondary Color/Secondary 2*/
+    --color-contents: 63 67 84;
+    /*Secondary Color/Secondary 3*/
+    --color-contents2: 151 152 157;
+    /*Secondary Color/Secondary 1*/
+    --color-contents3: 25 35 81;
+    /*Secondary Color/Secondary 4*/
+    --color-tagContent: 133 142 173;
+
+    /* White 600 */
+    --formInput: 244 246 248;
+    /* White Default */
+    --mobileInput: 255 255 255;
+    /* Secondary 2  */
+    --default-text: 63 67 84;
+  }
+}

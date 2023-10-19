@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url("../styles/theme.css");
+@import url("../styles/divine.css");
 
 @layer utilities {
   .flex-center {
