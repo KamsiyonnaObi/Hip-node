@@ -48,7 +48,7 @@ export const BusinessType = () => {
               className={`sm:h3-semibold p-4 md:bg-secondary6 ${
                 isButtonSelected(index) ? "selected" : ""
               }`}
-              onclock={() => handleSelect(index)}
+              onClick={() => handleSelect(index)}
             >
               {buttonText}
             </Button>
