@@ -6,7 +6,9 @@ import Tag from "./Tag";
 const PopularTags = () => {
   return (
     <div className="flex w-[210px] flex-col gap-[10px] rounded-[16px] bg-background p-[20px] dark:bg-dark3">
-      <p className="display-semibold mb-5">Popular Tags</p>
+      <p className="display-semibold mb-5 text-secondary2 dark:text-background2">
+        Popular Tags
+      </p>
       <div className="flex flex-col rounded-[16px] dark:bg-dark3">
         <Tag
           title="java"
