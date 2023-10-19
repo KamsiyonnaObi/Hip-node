@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer utilities {
-  .background-light850_dark100 {
-    @apply bg-light-850 dark:bg-dark-100;
+  .btn-focus {
+    @apply focus:bg-red80 focus:text-background2 dark:focus:bg-red80;
   }
 }
