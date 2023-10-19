@@ -7,7 +7,7 @@ interface Props {
   title: string;
   tags: string[];
   avatar: string;
-  name: string;
+  username: string;
   createdAt: string;
   views: number;
   likes: number;
@@ -19,7 +19,7 @@ const Post = ({
   title,
   tags,
   avatar,
-  name,
+  username,
   createdAt,
   views,
   likes,
@@ -67,7 +67,7 @@ const Post = ({
             </section>
             <section className="flex flex-row justify-between md:w-[521px]">
               <div className="hidden flex-col md:flex">
-                <p className="md:body-semibold">{name}</p>
+                <p className="md:body-semibold">{username}</p>
                 <p className="md:text-sm-regular text-secondary3">
                   {createdAt}
                 </p>

@@ -5,6 +5,7 @@ import Cover from "@/components/group/Cover";
 import About from "@/components/group/About";
 import PopularTags from "@/components/group/PopularTags";
 import RecentMedia from "@/components/group/RecentMedia";
+import Post from "@/components/group/Post";
 import React from "react";
 import CreateGroup from "@/components/group/CreateGroup";
 
@@ -27,7 +28,17 @@ const page = () => {
               <div className="w-full">
                 <Frame />
               </div>
-              {/* <Post /> */}
+              <Post
+                postImage="/PostImage.png"
+                title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+                tags={["remote", "part time", "test"]}
+                avatar="/Avatar.png"
+                username={"John Smith"}
+                createdAt={"2 month ago"}
+                views={420}
+                likes={69}
+                comments={75}
+              />
             </div>
           </section>
           <section>
@@ -56,7 +67,17 @@ const page = () => {
           buttonText={"Create Group"}
         />
         <Frame />
-        {/* <Post /> */}
+        <Post
+          postImage="/PostImage.png"
+          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+          tags={["remote", "part time", "test"]}
+          avatar="/Avatar.png"
+          username={"John Smith"}
+          createdAt={"2 month ago"}
+          views={420}
+          likes={69}
+          comments={75}
+        />
         <ActiveMembers />
         <RecentMedia />
         <About />
