@@ -7,7 +7,7 @@ const signIn = () => {
   return (
     <main className="flex h-screen w-screen flex-col md:flex-row">
       {/* Info Section */}
-      <section className="flex h-full flex-col bg-background2 px-6 dark:bg-dark2 md:w-1/2">
+      <section className="flex h-full flex-col gap-[60px] bg-background2 px-6 dark:bg-dark2 md:w-1/2">
         <InfoSection />
       </section>
       {/* Login Section */}
