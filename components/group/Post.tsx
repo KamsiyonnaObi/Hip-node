@@ -53,7 +53,7 @@ const Post = ({
                 ))}
               </div>
             </section>
-            <section className="flex h-[30px] w-[30px] items-center justify-center rounded-[15px] bg-secondary6 md:gap-[5px] md:p-[5px]">
+            <section className="flex h-[30px] w-[30px] items-center justify-center rounded-[15px] bg-secondary6 dark:bg-dark4 md:gap-[5px] md:p-[5px]">
               <FillIcon.Heart className="hidden fill-secondary5 md:flex" />
               <Image
                 className="md:hidden"
