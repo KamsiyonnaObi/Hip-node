@@ -1,5 +1,13 @@
-import { Button } from "@/components/ui/Button";
 import React from "react";
+import { Button } from "@/components/ui/Button";
+
+const stages = [
+  "Considering or planning to start a business",
+  "Actively getting started on something new",
+  "No interest in starting a business",
+  "Earnings from my business fully support me",
+  "Working on a business, no revenue yet",
+];
 
 export const BusinessStage = () => {
   return (
@@ -8,36 +16,15 @@ export const BusinessStage = () => {
         Which best describes the stage you&apos;re at right now?
       </h1>
       <div className="flex w-full flex-col gap-5">
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 focus:bg-red80 focus:text-background2 md:bg-secondary6"
-        >
-          Considering or planning to start a business
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          Actively getting started on something new
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          No interest in starting a business
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          Earnings from my business fully support me
-        </Button>
-        <Button
-          color="gray"
-          className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
-        >
-          Working on a business, no revenue yet
-        </Button>
+        {stages.map((stage, index) => (
+          <Button
+            key={index}
+            color="gray"
+            className="body-semibold sm:h3-semibold btn-focus p-4 md:bg-secondary6"
+          >
+            {stage}
+          </Button>
+        ))}
       </div>
     </>
   );
