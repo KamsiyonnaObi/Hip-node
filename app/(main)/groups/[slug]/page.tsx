@@ -15,7 +15,7 @@ const page = () => {
       {/* Desktop */}
       <div className="mx-auto hidden items-center justify-center gap-5 md:mt-5 md:flex md:max-w-[700px] md:flex-row md:items-start xl:max-w-[1100px] lg:max-w-[950px]">
         <section>
-          <div>
+          <div className="flex flex-col gap-[1.25rem]">
             <About />
             <Admin />
             <PopularTags />
