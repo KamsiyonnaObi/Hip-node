@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { create } from "zustand";
 
 import {
   BusinessStage,
@@ -13,20 +12,8 @@ import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
+import { useStageStore } from "@/store/useStageStore";
 
-type CurrentStage = {
-  currentStage: "signUp" | "businessStage" | "codingLevel" | "businessType";
-};
-
-type Action = {
-  setCurrentStage: (currentStage: CurrentStage) => void;
-};
-
-export const useStageStore = create<CurrentStage & Action>()((set) => ({
-  currentStage: "signUp",
-  setCurrentStage: (currentStage: CurrentStage) =>
-    set((state) => ({ currentStage: state.currentStage })),
-}));
 // define sign up stages
 const STAGES = {
   SIGNUP: "signUp",
@@ -37,7 +24,7 @@ const STAGES = {
 
 const SignUp = () => {
   // set initial stage to sign up
-  const [currentStage, setCurrentStage] = useState(STAGES.SIGNUP);
+  const { currentStage, setCurrentStage } = useStageStore();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -52,19 +39,19 @@ const SignUp = () => {
   const nextStage = () => {
     switch (currentStage) {
       case STAGES.SIGNUP:
-        setCurrentStage(STAGES.BUSINESS_STAGE);
+        setCurrentStage("businessStage");
         break;
       case STAGES.BUSINESS_STAGE:
-        setCurrentStage(STAGES.CODING_LEVEL);
+        setCurrentStage("codingLevel");
         break;
       case STAGES.CODING_LEVEL:
-        setCurrentStage(STAGES.BUSINESS_TYPE);
+        setCurrentStage("businessType");
         break;
       case STAGES.BUSINESS_TYPE:
-        setCurrentStage(STAGES.SIGNUP); // Loop back to the start for a continuous flow
+        setCurrentStage("signUp"); // Loop back to the start for a continuous flow
         break;
       default:
-        setCurrentStage(STAGES.SIGNUP);
+        setCurrentStage("signUp");
         break;
     }
   };
