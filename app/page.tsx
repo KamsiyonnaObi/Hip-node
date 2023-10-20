@@ -118,7 +118,7 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-center">
-          <ActiveMembers />
+          <ActiveMembers avatar={"/Avatar.png"} />
         </div>
         <div className="flex w-[500px] flex-wrap gap-4 py-6">
           <FillIcon.Rocket />
