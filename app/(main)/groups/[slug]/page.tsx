@@ -1,13 +1,16 @@
-import ActiveMembers from "@/components/group/ActiveMembers";
-import Admin from "@/components/group/Admin";
-import Frame from "@/components/group/Frame";
-import Cover from "@/components/group/Cover";
-import About from "@/components/group/About";
-import PopularTags from "@/components/group/PopularTags";
-import RecentMedia from "@/components/group/RecentMedia";
-import Post from "@/components/group/Post";
 import React from "react";
-import CreateGroup from "@/components/group/CreateGroup";
+
+import {
+  About,
+  Admin,
+  Cover,
+  ActiveMembers,
+  PopularTags,
+  RecentMedia,
+  Post,
+  CreateGroup,
+} from "@/components/group";
+import Frame from "@/components/group/Frame";
 
 const page = () => {
   return (
