@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useStageStore } from "@/store/useStageStore";
+import { useStageStore } from "@/store";
 
 import { Info } from "./Info";
 import FillIcon from "../icons/FillIcon";
