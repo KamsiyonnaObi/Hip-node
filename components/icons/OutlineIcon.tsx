@@ -31,7 +31,6 @@ import { Mention } from "./outlineIcons/Mention";
 import { Middle } from "./outlineIcons/Middle";
 import { More } from "./outlineIcons/More";
 import { New } from "./outlineIcons/New";
-import { New2 } from "./outlineIcons/New2";
 import { Number } from "./outlineIcons/Number";
 import { Point } from "./outlineIcons/Point";
 import { Popular } from "./outlineIcons/Popular";
@@ -266,12 +265,6 @@ OutlineIcon.New = ({
 }) => (
   <OutlineIcon className={className}>
     <New textColor={textColor || ""} />
-  </OutlineIcon>
-);
-
-OutlineIcon.New2 = ({ className }: Props) => (
-  <OutlineIcon className={className}>
-    <New2 />
   </OutlineIcon>
 );
 

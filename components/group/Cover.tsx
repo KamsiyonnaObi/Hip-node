@@ -12,7 +12,7 @@ const Cover = () => {
         <Image
           src="/GroupCover.png"
           alt="GroupCover"
-          width={765}
+          width={780}
           height={174}
         />
       </div>
@@ -42,7 +42,8 @@ const Cover = () => {
             </div>
           </div>
         </div>
-        <button className="flex items-center gap-[.62rem] bg-background2 p-[.62rem] dark:bg-dark4">
+        <button className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4">
+          {" "}
           <div>
             <FillIcon.Leave className="fill-secondary3" />
           </div>

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import FillIcon from "../icons/FillIcon";
+import OutlineIcon from "../icons/OutlineIcon";
+import Link from "next/link";
 
 type Props = { username: string; avatar: string; link: string };
 
@@ -14,9 +14,9 @@ const Admins = ({ avatar, username, link }: Props) => {
           {username}
         </div>
       </div>
-      <div>
+      <div className="h-[1.875rem] w-[1.875rem] shrink-0 rounded-full bg-blue10">
         <Link href={link}>
-          <FillIcon.Admin />
+          <OutlineIcon.Follow className="mx-auto mt-[.25rem] fill-blue80" />
         </Link>
       </div>
     </div>
