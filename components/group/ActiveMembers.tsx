@@ -95,7 +95,7 @@ const ActiveMembers = ({ avatar }: Props) => {
             className="m-auto mt-1"
           />
         </div>
-        <div>
+        <div className="mx-auto">
           <div className="absolute h-[2.5rem] w-[2.5rem] rounded-full bg-purple10 fill-blueblack10 opacity-[.5]">
             <Image
               src={avatar}
