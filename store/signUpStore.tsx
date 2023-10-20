@@ -17,7 +17,7 @@ interface Action {
 export const useSignUpStore = create<IUser & Action>((set) => ({
   username: "",
   Stage: "",
-  CodingLevel: 0,
+  CodingLevel: null,
   BusinessInterest: [],
   updateUsername: (newUsername) => {
     set({ username: newUsername });
