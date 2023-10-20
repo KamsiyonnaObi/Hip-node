@@ -1,4 +1,5 @@
 import React from "react";
+
 import OutlineIcon from "../icons/OutlineIcon";
 
 const Frame = () => {

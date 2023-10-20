@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 

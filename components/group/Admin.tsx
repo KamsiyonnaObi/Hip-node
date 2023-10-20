@@ -1,4 +1,5 @@
 import React from "react";
+
 import Admins from "./Admins";
 
 const Admin = () => {
