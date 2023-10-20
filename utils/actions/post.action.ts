@@ -1,14 +1,9 @@
 "use server";
 
-import Post from "@/models/post.model";
+import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
-import {
-  CreatePostParams,
-  DeletePostParams,
-  GetPostByIdParams,
-} from "./shared.types";
 
-export async function createPost(params: CreatePostParams) {
+export async function createPost(params: Partial<IPost>) {
   try {
     await dbConnect();
     const { title, content, image, tags, userId } = params;
@@ -27,10 +22,9 @@ export async function createPost(params: CreatePostParams) {
   }
 }
 
-export async function getPostById(params: GetPostByIdParams) {
+export async function getPostById(postId: number) {
   try {
     await dbConnect();
-    const { postId } = params;
     const post = await Post.findById(postId);
     return post;
   } catch (error) {
@@ -40,7 +34,7 @@ export async function getPostById(params: GetPostByIdParams) {
 }
 
 // TODO, might not be needed (no edit functionality in figma)
-export async function updatePost(params: any) {
+export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
   } catch (error) {
@@ -49,10 +43,9 @@ export async function updatePost(params: any) {
   }
 }
 
-export async function deletePost(params: DeletePostParams) {
+export async function deletePost(postId: number) {
   try {
     await dbConnect();
-    const { postId } = params;
     const deletedPost = await Post.findByIdAndDelete(postId);
     return deletedPost;
   } catch (error) {
