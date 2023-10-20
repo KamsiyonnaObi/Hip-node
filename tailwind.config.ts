@@ -99,12 +99,11 @@ const config: Config = {
           300: "#3ED6A4",
           DEFAULT: "#0ECC8D",
         },
-        "d-white": {
+        white: {
           DEFAULT: "#FFFFFF",
           500: "#f7f7f7",
           600: "#f4f6f8",
         },
-        black: "#000000",
         "d-dark": {
           900: "#151A1E",
           800: "#1E252B",
