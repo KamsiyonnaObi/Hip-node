@@ -2,25 +2,28 @@ import { create } from "zustand";
 
 interface IUser {
   username: string;
-  BusinessStage: string;
+  Stage: string;
   CodingLevel: number;
   BusinessInterest: string[];
+}
+
+interface Action {
   updateUsername: (username: string) => void;
   updateBusinessStage: (businessStage: string) => void;
   updateCodingLevel: (codingLevel: number) => void;
   updateBusinessInterest: (businessInterest: string[]) => void;
 }
 
-export const useSignUpStore = create<IUser>((set) => ({
+export const useSignUpStore = create<IUser & Action>((set) => ({
   username: "",
-  BusinessStage: "",
+  Stage: "",
   CodingLevel: 0,
   BusinessInterest: [],
   updateUsername: (newUsername) => {
     set({ username: newUsername });
   },
   updateBusinessStage: (businessStage) => {
-    set({ BusinessStage: businessStage });
+    set({ Stage: businessStage });
   },
   updateCodingLevel: (level) => {
     set({ CodingLevel: level });
