@@ -1,8 +1,6 @@
 const MainContent = () => {
   return (
     <section className="flex w-full flex-col">
-      {/* Create Post */}
-      {/* Post Previews */}
       <section className="flex flex-col gap-5">
         <div className="h-[86px] animate-pulse rounded-2xl bg-bkg-2" />
         {[...Array(5)].map((item, index) => (
