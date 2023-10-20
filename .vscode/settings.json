@@ -1,14 +1,25 @@
 {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.addMissingImports": true
-    },
-    "prettier.jsxSingleQuote": false,
-    "prettier.singleQuote": false,
-    "[typescriptreact]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.addMissingImports": true
+  },
+  "prettier.jsxSingleQuote": false,
+  "prettier.singleQuote": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "css": "css",
+    "jsx": "jsx",
+    "typescript": "typescript",
+    "tsx": "tsx",
+    "svg": "svg"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
   }
-  
+}
