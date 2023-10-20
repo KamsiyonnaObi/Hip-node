@@ -28,7 +28,7 @@ const Post = ({
   comments,
 }: Props) => {
   return (
-    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-full md:rounded-[16px] md:p-[20px]">
+    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[44rem] lg:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
       <div className="flex flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -39,8 +39,8 @@ const Post = ({
         />
         <div className="flex flex-col gap-[30px]">
           <div className="flex flex-row gap-5">
-            <section className="flex w-[187px] flex-col md:w-[512px]">
-              <h3 className="md:h3-semibold caption-semibold dark:text-background2">
+            <section className="flex w-[187px] flex-col md:w-[420px] lg:w-[512px]">
+              <h3 className="lg:h3-semibold caption-semibold dark:text-background2">
                 {title}
               </h3>
               <div className="mt-2 flex flex-row gap-[10px]">
@@ -69,7 +69,7 @@ const Post = ({
             <section className="hidden items-center justify-center rounded-full bg-purple10 md:flex md:h-[40px] md:w-[40px]">
               <Image src={avatar} alt="avatar" width={28} height={32} />
             </section>
-            <section className="flex flex-row justify-between md:w-[521px]">
+            <section className="flex flex-row justify-between md:w-[420px] lg:w-[521px]">
               <div className="hidden flex-col md:flex">
                 <div className="flex gap-[.25rem]">
                   <p className="md:body-semibold dark:text-secondary6">
