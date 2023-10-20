@@ -120,6 +120,8 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <ActiveMembers avatar={"/Avatar.png"} />
+        </div>
+        <div>
           <RecentMdeia media={"/bird.png"} />s
         </div>
         <div className="flex w-[500px] flex-wrap gap-4 py-6">
