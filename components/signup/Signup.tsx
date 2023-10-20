@@ -12,7 +12,7 @@ import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
-import { useStageStore } from "@/store/useStageStore";
+import { useSignUpStore, useStageStore } from "@/store";
 
 // define sign up stages
 const STAGES = {
@@ -25,7 +25,8 @@ const STAGES = {
 const SignUp = () => {
   // set initial stage to sign up
   const { currentStage, setCurrentStage } = useStageStore();
-
+  const { username, BusinessInterest, CodingLevel, Stage, updateUsername } =
+    useSignUpStore();
   const [formData, setFormData] = useState({
     username: "",
   });
@@ -35,11 +36,20 @@ const SignUp = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const userResponse = () => {
+    return {
+      username,
+      Stage,
+      CodingLevel,
+      BusinessInterest,
+    };
+  };
   // handle next stage flow
   const nextStage = () => {
     switch (currentStage) {
       case STAGES.SIGNUP:
         setCurrentStage("businessStage");
+        updateUsername(formData.username);
         break;
       case STAGES.BUSINESS_STAGE:
         setCurrentStage("codingLevel");
@@ -49,6 +59,7 @@ const SignUp = () => {
         break;
       case STAGES.BUSINESS_TYPE:
         setCurrentStage("signUp"); // Loop back to the start for a continuous flow
+        console.log(userResponse());
         break;
       default:
         setCurrentStage("signUp");
