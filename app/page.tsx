@@ -5,13 +5,13 @@ import PopularTags from "@/components/home/PopularTags";
 import Sidebar from "@/components/home/Sidebar";
 import FillIcon from "@/components/icons/FillIcon";
 import { Logo } from "@/components/icons/Logo";
-import { LogoIcon } from "@/components/icons/LogoIcon";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
 import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+import ActiveMembers from "@/components/group/ActiveMembers";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -102,10 +102,8 @@ export default function Home() {
           </div>
           <div>
             <Logo />
-            <LogoIcon />
           </div>
         </div>
-
         <div className="mx-auto flex h-fit w-[1024px] justify-center border py-9 dark:bg-dark3">
           <div>
             <button
@@ -119,7 +117,9 @@ export default function Home() {
             <Logo />
           </div>
         </div>
-
+        <div className="flex justify-center">
+          <ActiveMembers />
+        </div>
         <div className="flex w-[500px] flex-wrap gap-4 py-6">
           <FillIcon.Rocket />
           <FillIcon.Comment />
