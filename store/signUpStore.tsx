@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface IUser {
   username: string;
   Stage: string;
-  CodingLevel: number;
+  CodingLevel: number | null;
   BusinessInterest: string[];
 }
 
