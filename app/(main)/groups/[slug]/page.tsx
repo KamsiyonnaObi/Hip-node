@@ -42,6 +42,28 @@ const page = () => {
                 likes={69}
                 comments={75}
               />
+              <Post
+                postImage="/PostImage.png"
+                title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+                tags={["remote", "part time", "test"]}
+                avatar="/Avatar.png"
+                username={"John Smith"}
+                createdAt={"2 month ago"}
+                views={420}
+                likes={69}
+                comments={75}
+              />
+              <Post
+                postImage="/PostImage.png"
+                title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+                tags={["remote", "part time", "test"]}
+                avatar="/Avatar.png"
+                username={"John Smith"}
+                createdAt={"2 month ago"}
+                views={420}
+                likes={69}
+                comments={75}
+              />
             </div>
           </section>
           <section>
