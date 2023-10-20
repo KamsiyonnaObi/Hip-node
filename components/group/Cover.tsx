@@ -42,7 +42,7 @@ const Cover = () => {
             </div>
           </div>
         </div>
-        <button className="flex items-center gap-[.62rem] bg-background2 p-[.62rem] dark:bg-dark4">
+        <button className="flex self-center h-10 items-center gap-[.62rem] bg-background2 p-[.62rem] dark:bg-dark4">
           <div>
             <FillIcon.Leave className="fill-secondary3" />
           </div>
