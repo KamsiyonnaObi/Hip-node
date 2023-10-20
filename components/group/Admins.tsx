@@ -16,7 +16,7 @@ const Admins = ({ avatar, username, link }: Props) => {
       </div>
       <div className="h-[1.875rem] w-[1.875rem] shrink-0 rounded-full bg-blue10">
         <Link href={link}>
-          <OutlineIcon.Follow className="mx-auto mt-[.25rem] fill-blue80" />
+          <OutlineIcon.Follow className="mx-auto mt-1 fill-blue80" />
         </Link>
       </div>
     </div>
