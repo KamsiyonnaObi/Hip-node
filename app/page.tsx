@@ -12,6 +12,7 @@ import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import ActiveMembers from "@/components/group/ActiveMembers";
+import RecentMdeia from "@/components/group/RecentMdeia";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -119,6 +120,7 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <ActiveMembers avatar={"/Avatar.png"} />
+          <RecentMdeia media={"/bird.png"} />s
         </div>
         <div className="flex w-[500px] flex-wrap gap-4 py-6">
           <FillIcon.Rocket />
