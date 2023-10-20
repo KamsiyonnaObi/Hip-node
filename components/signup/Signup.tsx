@@ -29,8 +29,10 @@ const SignUp = () => {
     useSignUpStore();
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
+    password: "",
   });
-
+  const flag = false;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -85,17 +87,46 @@ const SignUp = () => {
         <article className="mx-auto flex w-[327px] flex-col gap-[29px] sm:w-[442px] md:my-auto">
           <div className="flex w-full flex-col gap-5">
             <div className="flex flex-col gap-2.5">
-              <h1 className="h3-semibold text-secondary2 dark:text-background2">
-                Choose a username
-              </h1>
-              <Input
-                name="username"
-                divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
-                className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
-                onChange={handleChange}
-                value={formData.username}
-                placeholder="e.g Hipnode123"
-              />
+              {flag ? (
+                <>
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Choose a username
+                  </h1>
+                  <Input
+                    name="username"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.username}
+                    placeholder="e.g Hipnode123"
+                  />
+                </>
+              ) : (
+                <>
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Email
+                  </h1>
+                  <Input
+                    name="email"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.email}
+                    placeholder="hello@gmail.com"
+                  />
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Password
+                  </h1>
+                  <Input
+                    name="password"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.password}
+                    placeholder="uikit.to074#"
+                  />
+                </>
+              )}
             </div>
             <div>
               <Button
