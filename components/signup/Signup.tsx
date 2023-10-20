@@ -132,6 +132,7 @@ const SignUp = () => {
                   </h1>
                   <Input
                     name="email"
+                    type="email"
                     divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
                     className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
@@ -143,6 +144,7 @@ const SignUp = () => {
                   </h1>
                   <Input
                     name="password"
+                    type="password"
                     divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
                     className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
