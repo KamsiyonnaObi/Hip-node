@@ -24,6 +24,7 @@ const STAGES = {
 
 const SignUp = () => {
   // set initial stage to sign up
+  const [flag, setFlag] = useState(true);
   const { currentStage, setCurrentStage } = useStageStore();
   const {
     username,
@@ -33,13 +34,15 @@ const SignUp = () => {
     CodingLevel,
     Stage,
     updateUsername,
+    updateEmail,
+    updatePassword,
   } = useSignUpStore();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const flag = false;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -55,13 +58,25 @@ const SignUp = () => {
       BusinessInterest,
     };
   };
+
+  const signUpStage = () => {
+    switch (flag) {
+      case true:
+        updateUsername(formData.username);
+        setFlag(false);
+        break;
+      case false:
+        updateEmail(formData.email);
+        updatePassword(formData.password);
+        setFlag(true);
+        setCurrentStage("businessStage");
+        break;
+    }
+  };
+
   // handle next stage flow
   const nextStage = () => {
     switch (currentStage) {
-      case STAGES.SIGNUP:
-        setCurrentStage("businessStage");
-        updateUsername(formData.username);
-        break;
       case STAGES.BUSINESS_STAGE:
         setCurrentStage("codingLevel");
         break;
@@ -139,7 +154,7 @@ const SignUp = () => {
             </div>
             <div>
               <Button
-                onClick={nextStage}
+                onClick={signUpStage}
                 disabled={!formData.username}
                 className="px-10 py-2.5"
               >

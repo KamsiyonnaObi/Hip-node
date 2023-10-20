@@ -11,6 +11,8 @@ interface IUser {
 
 interface Action {
   updateUsername: (username: string) => void;
+  updateEmail: (Email: string) => void;
+  updatePassword: (Pass: string) => void;
   updateBusinessStage: (businessStage: string) => void;
   updateCodingLevel: (codingLevel: number) => void;
   updateBusinessInterest: (businessInterest: string[]) => void;
@@ -25,6 +27,12 @@ export const useSignUpStore = create<IUser & Action>((set) => ({
   BusinessInterest: [],
   updateUsername: (newUsername) => {
     set({ username: newUsername });
+  },
+  updatePassword: (Pass) => {
+    set({ password: Pass });
+  },
+  updateEmail: (Email) => {
+    set({ email: Email });
   },
   updateBusinessStage: (businessStage) => {
     set({ Stage: businessStage });
