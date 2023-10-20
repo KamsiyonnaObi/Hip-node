@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 interface IUser {
   username: string;
+  email: string;
+  password: string;
   Stage: string;
   CodingLevel: number | null;
   BusinessInterest: string[];
@@ -16,6 +18,8 @@ interface Action {
 
 export const useSignUpStore = create<IUser & Action>((set) => ({
   username: "",
+  email: "",
+  password: "",
   Stage: "",
   CodingLevel: null,
   BusinessInterest: [],
