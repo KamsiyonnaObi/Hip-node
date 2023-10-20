@@ -25,8 +25,15 @@ const STAGES = {
 const SignUp = () => {
   // set initial stage to sign up
   const { currentStage, setCurrentStage } = useStageStore();
-  const { username, BusinessInterest, CodingLevel, Stage, updateUsername } =
-    useSignUpStore();
+  const {
+    username,
+    email,
+    password,
+    BusinessInterest,
+    CodingLevel,
+    Stage,
+    updateUsername,
+  } = useSignUpStore();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -41,6 +48,8 @@ const SignUp = () => {
   const userResponse = () => {
     return {
       username,
+      email,
+      password,
       Stage,
       CodingLevel,
       BusinessInterest,
