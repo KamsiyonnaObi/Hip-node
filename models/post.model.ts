@@ -2,8 +2,9 @@ import { Schema, models, model, Document } from "mongoose";
 
 export interface IPost extends Document {
   title: string;
-  postImage: string;
+  image: string;
   tags: string[];
+  content: string;
   userId: Schema.Types.ObjectId;
   createdAt: Date;
   views: number;
@@ -13,8 +14,9 @@ export interface IPost extends Document {
 
 const PostSchema = new Schema({
   title: { type: String, required: true },
-  postImage: { type: String },
+  image: { type: String },
   tags: { type: [String] },
+  content: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },

@@ -6,7 +6,7 @@ type Props = {
 };
 export const Info = ({ children, className, fillIcon }: Props) => (
   <>
-    <div className="flex max-w-[402px] items-center gap-5 rounded-lg bg-white p-5 dark:bg-dark3">
+    <div className="flex items-center gap-5 rounded-lg bg-white p-5 dark:bg-dark3">
       <div className={`${className} flex rounded-lg  p-5 dark:bg-dark4`}>
         {fillIcon}
       </div>

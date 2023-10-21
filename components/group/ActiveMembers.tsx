@@ -112,6 +112,7 @@ const ActiveMembers = ({ avatar }: Props) => {
       </div>
     </div>
   );
+
 };
 
 export default ActiveMembers;
