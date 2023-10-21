@@ -5,11 +5,11 @@ import FillIcon from "../icons/FillIcon";
 
 const Cover = () => {
   return (
-    <div className="flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 md:h-[18.375rem] md:w-full">
-      <div className="flex md:hidden">
+    <div className="flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
+      <div className="flex sm:hidden">
         <Image src="/GroupCover.png" alt="GroupCover" width={315} height={75} />
       </div>
-      <div className="hidden md:flex">
+      <div className="hidden sm:flex">
         <Image
           src="/GroupCover.png"
           alt="GroupCover"
@@ -17,7 +17,7 @@ const Cover = () => {
           height={174}
         />
       </div>
-      <div className="mt-[.88rem] flex justify-between md:mt-[1.25rem]">
+      <div className="mt-[.88rem] flex justify-between sm:mt-[1.25rem]">
         <div className="flex items-center gap-[.86rem]">
           <div>
             <Image
@@ -34,10 +34,10 @@ const Cover = () => {
               </h2>
             </div>
             <div className="flex gap-[.31rem]">
-              <p className="text-sm-regular md:body-regular text-secondary3">
+              <p className="text-sm-regular sm:body-regular text-secondary3">
                 Created by
               </p>
-              <p className="caption-semibold md:body-semibold text-secondary2 dark:text-background2 ">
+              <p className="caption-semibold sm:body-semibold text-secondary2 dark:text-background2 ">
                 AR Jakir
               </p>
             </div>
