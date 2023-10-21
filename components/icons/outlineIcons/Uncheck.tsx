@@ -7,7 +7,7 @@ export const Uncheck = () => (
       height="14"
       rx="1"
       stroke="#97989D"
-      stroke-width="2"
+      strokeWidth="2"
     />
   </>
 );

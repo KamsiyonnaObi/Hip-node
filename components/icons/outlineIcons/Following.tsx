@@ -6,9 +6,9 @@ export const Following = () => (
     <path
       d="M14 15L15.5 16L19.5 13"
       stroke="#6570F7"
-      stroke-width="1.2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </>
 );
