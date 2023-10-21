@@ -150,7 +150,7 @@ const page = () => {
         </div>
       </div>
       {/* Mobile */}
-      <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[650px] md:hidden">
+      <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[600px] md:hidden">
         <div className="flex flex-col gap-5 sm:w-[99%]">
           <Cover />
           <CreateGroup
