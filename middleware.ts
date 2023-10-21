@@ -10,16 +10,24 @@ export const config = {
     "/podcasts",
     "/interviews",
     "/profile",
+    "/",
   ],
 };
 
 export async function middleware(request: NextRequest) {
+  const url = request.nextUrl.clone();
+
   const token = await getToken({
     req: request,
   });
-  const url = request.nextUrl.clone();
-  url.pathname = "/sign-in";
+
   if (!token) {
+    url.pathname = "/sign-in";
+    return NextResponse.redirect.(url);
+  }
+
+  if (url.pathname === "/") {
+    url.pathname = "/home";
     return NextResponse.redirect(url);
   }
 }
