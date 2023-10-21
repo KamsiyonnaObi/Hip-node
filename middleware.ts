@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
   if (!token) {
     url.pathname = "/sign-in";
-    return NextResponse.redirect.(url);
+    return NextResponse.redirect(url);
   }
 
   if (url.pathname === "/") {
