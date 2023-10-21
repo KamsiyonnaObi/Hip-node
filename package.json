@@ -13,12 +13,13 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "mongodb": "^6.1.0",
+    "mongoose": "^7.4.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "prettier": "^3.0.3",
     "react": "^18",
     "react-dom": "^18",
-    "mongoose": "^7.4.2"
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^20",

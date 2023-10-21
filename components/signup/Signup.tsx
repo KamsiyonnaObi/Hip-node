@@ -12,6 +12,7 @@ import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
+import { useSignUpStore, useStageStore } from "@/store";
 
 // define sign up stages
 const STAGES = {
@@ -23,10 +24,23 @@ const STAGES = {
 
 const SignUp = () => {
   // set initial stage to sign up
-  const [currentStage, setCurrentStage] = useState(STAGES.SIGNUP);
-
+  const [flag, setFlag] = useState(true);
+  const { currentStage, setCurrentStage } = useStageStore();
+  const {
+    username,
+    email,
+    password,
+    BusinessInterest,
+    CodingLevel,
+    Stage,
+    updateUsername,
+    updateEmail,
+    updatePassword,
+  } = useSignUpStore();
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,23 +48,47 @@ const SignUp = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const userResponse = () => {
+    return {
+      username,
+      email,
+      password,
+      Stage,
+      CodingLevel,
+      BusinessInterest,
+    };
+  };
+
+  const signUpStage = () => {
+    switch (flag) {
+      case true:
+        updateUsername(formData.username);
+        setFlag(false);
+        break;
+      case false:
+        updateEmail(formData.email);
+        updatePassword(formData.password);
+        setFlag(true);
+        setCurrentStage("businessStage");
+        break;
+    }
+  };
+
   // handle next stage flow
   const nextStage = () => {
     switch (currentStage) {
-      case STAGES.SIGNUP:
-        setCurrentStage(STAGES.BUSINESS_STAGE);
-        break;
       case STAGES.BUSINESS_STAGE:
-        setCurrentStage(STAGES.CODING_LEVEL);
+        setCurrentStage("codingLevel");
         break;
       case STAGES.CODING_LEVEL:
-        setCurrentStage(STAGES.BUSINESS_TYPE);
+        setCurrentStage("businessType");
         break;
       case STAGES.BUSINESS_TYPE:
-        setCurrentStage(STAGES.SIGNUP); // Loop back to the start for a continuous flow
+        setCurrentStage("signUp"); // Loop back to the start for a continuous flow
+        console.log(userResponse());
         break;
       default:
-        setCurrentStage(STAGES.SIGNUP);
+        setCurrentStage("signUp");
         break;
     }
   };
@@ -73,21 +111,52 @@ const SignUp = () => {
         <article className="mx-auto flex w-[327px] flex-col gap-[29px] sm:w-[442px] md:my-auto">
           <div className="flex w-full flex-col gap-5">
             <div className="flex flex-col gap-2.5">
-              <h1 className="h3-semibold text-secondary2 dark:text-background2">
-                Choose a username
-              </h1>
-              <Input
-                name="username"
-                divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
-                className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
-                onChange={handleChange}
-                value={formData.username}
-                placeholder="e.g Hipnode123"
-              />
+              {flag ? (
+                <>
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Choose a username
+                  </h1>
+                  <Input
+                    name="username"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.username}
+                    placeholder="e.g Hipnode123"
+                  />
+                </>
+              ) : (
+                <>
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Email
+                  </h1>
+                  <Input
+                    name="email"
+                    type="email"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.email}
+                    placeholder="hello@gmail.com"
+                  />
+                  <h1 className="h3-semibold text-secondary2 dark:text-background2">
+                    Password
+                  </h1>
+                  <Input
+                    name="password"
+                    type="password"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    onChange={handleChange}
+                    value={formData.password}
+                    placeholder="uikit.to074#"
+                  />
+                </>
+              )}
             </div>
             <div>
               <Button
-                onClick={nextStage}
+                onClick={signUpStage}
                 disabled={!formData.username}
                 className="px-10 py-2.5"
               >

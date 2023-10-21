@@ -1,20 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useSignUpStore } from "@/store";
+
 import { Button } from "@/components/ui/Button";
 
 export const BusinessType = () => {
-  const [selectedButtons, setSelectedButtons] = useState<number[]>([]);
+  const { BusinessInterest, updateBusinessInterest } = useSignUpStore();
 
-  const handleSelect = (index: number) => {
-    if (selectedButtons.includes(index)) {
-      setSelectedButtons(selectedButtons.filter((item) => item !== index));
+  const handleSelect = (interest: string) => {
+    if (BusinessInterest.includes(interest)) {
+      updateBusinessInterest(
+        BusinessInterest.filter((item) => item !== interest)
+      );
     } else {
-      setSelectedButtons([...selectedButtons, index]);
+      updateBusinessInterest([...BusinessInterest, interest]);
     }
   };
 
-  const isButtonSelected = (index: number): boolean => {
-    return selectedButtons.includes(index);
+  const isButtonSelected = (interest: string): boolean => {
+    return BusinessInterest.includes(interest);
   };
 
   const buttonsData: string[] = [
@@ -41,14 +45,14 @@ export const BusinessType = () => {
           Choose as many as you like.
         </p>
         <div className="flex w-full flex-wrap gap-5 md2:w-[490px]">
-          {buttonsData.map((buttonText, index) => (
+          {buttonsData.map((buttonText) => (
             <Button
-              key={index}
+              key={buttonText}
               color="gray"
               className={`sm:h3-semibold p-4 md:bg-secondary6 ${
-                isButtonSelected(index) ? "selected" : ""
+                isButtonSelected(buttonText) && "selected"
               }`}
-              onClick={() => handleSelect(index)}
+              onClick={() => handleSelect(buttonText)}
             >
               {buttonText}
             </Button>
