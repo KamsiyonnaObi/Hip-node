@@ -1,0 +1,1 @@
+export { InputPost } from "./InputPost";

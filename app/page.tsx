@@ -12,14 +12,16 @@ import { Input } from "@/components/form/Input";
 import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+import { InputPost } from "@/components/form";
 
 export default function Home() {
   const { data: session } = useSession();
-
+  const [darkMode, setDarkMode] = React.useState(false);
   const [swap, setSwap] = React.useState(false);
 
   const handleButtonClick = () => {
     setSwap(!swap);
+    setDarkMode((prev) => !prev);
   };
   return (
     <div className="m-6 bg-background2">
@@ -127,7 +129,7 @@ export default function Home() {
           <FillIcon.Home />
           <FillIcon.Message />
           <FillIcon.Profile />
-          <FillIcon.Facebook className="fill-blue stroke-slate-500" />
+          <FillIcon.Facebook className="stroke-slate-500 fill-blue" />
           <FillIcon.Google className="fill-blue stroke-green" />
           <FillIcon.Twitter className="fill-black stroke-white" />
           <FillIcon.Send />
@@ -172,6 +174,7 @@ export default function Home() {
         >
           {swap ? "Light" : "Dark"} Mode
         </button>
+        <InputPost darkMode={darkMode} />
       </div>
     </div>
   );
