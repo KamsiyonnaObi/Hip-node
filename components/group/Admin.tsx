@@ -9,11 +9,11 @@ const Admin = () => {
         Admins
       </p>
       <div className="flex flex-col gap-[.52rem] dark:bg-dark3">
-        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
-        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
-        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
-        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
-        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={""} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={"#"} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={"#"} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={"#"} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={"#"} />
+        <Admins username={"Austin M"} avatar={"/Avatar.png"} link={"#"} />
       </div>
     </div>
   );
