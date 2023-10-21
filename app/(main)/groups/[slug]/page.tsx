@@ -10,7 +10,6 @@ import {
   RecentMedia,
   Post,
   CreateGroup,
-  RecentMdeia,
 } from "@/components/group";
 
 const page = () => {
@@ -76,8 +75,8 @@ const page = () => {
                 }
                 buttonText={"Create Group"}
               />
-              <ActiveMembers avatar={""} />
-              <RecentMdeia media={""} />
+              <ActiveMembers avatar={"/Avatar.png"} />
+              <RecentMedia media={"/bird.png"} />
             </div>
           </section>
         </div>
@@ -136,8 +135,8 @@ const page = () => {
                   }
                   buttonText={"Create Group"}
                 />
-                <ActiveMembers avatar={""} />
-                <RecentMedia />
+                <ActiveMembers avatar={"/Avatar.png"} />
+                <RecentMedia media={"/bird.png"} />
               </div>
             </section>
             <section>
@@ -151,36 +150,32 @@ const page = () => {
         </div>
       </div>
       {/* Mobile */}
-      <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[550px] md:hidden">
-        <div className="gap-5 sm:flex">
-          <div className="flex flex-col gap-5">
-            <Cover />
-            <CreateGroup
-              title={"Create Group"}
-              desc={
-                "Create a community and unite with like-minded individuals. Embark on exciting journeys together."
-              }
-              buttonText={"Create Group"}
-            />
-            <Frame />
-            <Post
-              postImage="/PostImage.png"
-              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-              tags={["remote", "part time", "test"]}
-              avatar="/Avatar.png"
-              username={"John Smith"}
-              createdAt={"2 month ago"}
-              views={420}
-              likes={69}
-              comments={75}
-            />
-          </div>
-          <div className="flex flex-col gap-5">
-            <ActiveMembers avatar={""} />
-            <RecentMedia />
-            <About />
-            <Admin />
-          </div>
+      <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[600px] md:hidden">
+        <div className="flex flex-col gap-5 sm:w-[99%]">
+          <Cover />
+          <CreateGroup
+            title={"Create Group"}
+            desc={
+              "Create a community and unite with like-minded individuals. Embark on exciting journeys together."
+            }
+            buttonText={"Create Group"}
+          />
+          <Frame />
+          <Post
+            postImage="/PostImage.png"
+            title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+            tags={["remote", "part time", "test"]}
+            avatar="/Avatar.png"
+            username={"John Smith"}
+            createdAt={"2 month ago"}
+            views={420}
+            likes={69}
+            comments={75}
+          />
+          <ActiveMembers avatar={"/Avatar.png"} />
+          <RecentMedia media={"/bird.png"} />
+          <About />
+          <Admin />
         </div>
       </div>
     </main>
