@@ -21,7 +21,7 @@ const Sidebar = ({ small }: { small?: boolean }) => {
       <ul className="flex flex-row gap-[230px] rounded-[16px] bg-background p-2.5 text-secondary2 dark:bg-dark3 dark:text-background">
         <li className={liClass(0)} onClick={() => handleItemClick(0)}>
           <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
-            <OutlineIcon.New className="fill-green" />
+            <OutlineIcon.New className="fill-green" textColor="fill-white" />
           </div>
           <p className="body-semibold ">Newest</p>
         </li>
@@ -49,7 +49,7 @@ const Sidebar = ({ small }: { small?: boolean }) => {
     <ul className="flex w-[335px] flex-row gap-[10px] rounded-[16px] bg-background p-[10px] text-secondary2 dark:bg-dark3 dark:text-background md:w-[210px] md:flex-col">
       <li className={liClass(0)} onClick={() => handleItemClick(0)}>
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
-          <OutlineIcon.New className="fill-green" />
+          <OutlineIcon.New className="fill-green" textColor="fill-white" />
         </div>
         <div className="flex flex-col">
           <p className="caption-semibold hidden  md:flex">Newest and Recent</p>

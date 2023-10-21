@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import FillIcon from "../icons/FillIcon";
-import OutlineIcon from "../icons/OutlineIcon";
-import FastestGrowing from "./FastestGrowing";
 import Image from "next/image";
-import MostPopularButton from "./MostPopularButton";
+
+import FillIcon from "../icons/FillIcon";
+import { MostPopularButton, FastestGrowing } from "@/components/group";
+import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
 // interface Props {}

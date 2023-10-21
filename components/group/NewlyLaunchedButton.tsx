@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
-
 import NewlyLaunched from "./NewlyLaunched";
 
-const MostPopularButton = () => {
+const NewlyLaunchedButton = () => {
   const [isNewlyLaunched, setNewlyLaunched] = useState(false);
 
   return (
@@ -41,4 +41,4 @@ const MostPopularButton = () => {
   );
 };
 
-export default MostPopularButton;
+export default NewlyLaunchedButton;

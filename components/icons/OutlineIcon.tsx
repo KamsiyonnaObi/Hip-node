@@ -13,6 +13,7 @@ import { Dev } from "./outlineIcons/Dev";
 import { DownArrow } from "./outlineIcons/DownArrow";
 import { DownArrow2 } from "./outlineIcons/DownArrow2";
 import { Edit } from "./outlineIcons/Edit";
+import { Ellipse } from "./outlineIcons/Ellipse";
 import { Expand } from "./outlineIcons/Expand";
 import { Facebook } from "./outlineIcons/Facebook";
 import { Follow } from "./outlineIcons/Follow";
@@ -30,7 +31,6 @@ import { Mention } from "./outlineIcons/Mention";
 import { Middle } from "./outlineIcons/Middle";
 import { More } from "./outlineIcons/More";
 import { New } from "./outlineIcons/New";
-import { New2 } from "./outlineIcons/New2";
 import { Number } from "./outlineIcons/Number";
 import { Point } from "./outlineIcons/Point";
 import { Popular } from "./outlineIcons/Popular";
@@ -154,6 +154,12 @@ OutlineIcon.Edit = ({ className }: Props) => (
   </OutlineIcon>
 );
 
+OutlineIcon.Ellipse = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Ellipse />
+  </OutlineIcon>
+);
+
 OutlineIcon.Expand = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Expand />
@@ -250,15 +256,15 @@ OutlineIcon.More = ({ className }: Props) => (
   </OutlineIcon>
 );
 
-OutlineIcon.New = ({ className }: Props) => (
+OutlineIcon.New = ({
+  className,
+  textColor,
+}: {
+  className: string;
+  textColor?: string;
+}) => (
   <OutlineIcon className={className}>
-    <New />
-  </OutlineIcon>
-);
-
-OutlineIcon.New2 = ({ className }: Props) => (
-  <OutlineIcon className={className}>
-    <New2 />
+    <New textColor={textColor || ""} />
   </OutlineIcon>
 );
 
