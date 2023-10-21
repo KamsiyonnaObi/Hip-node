@@ -20,4 +20,3 @@ export { default as PostGroup } from "./PostGroup";
 export { default as RecentMedia } from "./RecentMedia";
 export { default as Tag } from "./Tag";
 export { default as Frame } from "./Frame";
-export { default as RecentMdeia } from "./RecentMdeia";

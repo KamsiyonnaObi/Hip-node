@@ -10,7 +10,6 @@ import {
   RecentMedia,
   Post,
   CreateGroup,
-  RecentMdeia,
 } from "@/components/group";
 
 const page = () => {
@@ -76,8 +75,8 @@ const page = () => {
                 }
                 buttonText={"Create Group"}
               />
-              <ActiveMembers avatar={""} />
-              <RecentMdeia media={""} />
+              <ActiveMembers avatar={"/Avatar.png"} />
+              <RecentMedia media={"/bird.png"} />
             </div>
           </section>
         </div>
@@ -136,8 +135,8 @@ const page = () => {
                   }
                   buttonText={"Create Group"}
                 />
-                <ActiveMembers avatar={""} />
-                <RecentMedia />
+                <ActiveMembers avatar={"/Avatar.png"} />
+                <RecentMedia media={"/bird.png"} />
               </div>
             </section>
             <section>
@@ -175,9 +174,9 @@ const page = () => {
               comments={75}
             />
           </div>
-          <div className="flex flex-col gap-5">
-            <ActiveMembers avatar={""} />
-            <RecentMedia />
+          <div className="mt-5 flex flex-col gap-5 sm:mt-0">
+            <ActiveMembers avatar={"/Avatar.png"} />
+            <RecentMedia media={"/bird.png"} />
             <About />
             <Admin />
           </div>
