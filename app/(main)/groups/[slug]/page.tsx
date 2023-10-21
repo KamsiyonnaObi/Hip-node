@@ -4,13 +4,14 @@ import {
   About,
   Admin,
   Cover,
+  Frame,
   ActiveMembers,
   PopularTags,
   RecentMedia,
   Post,
   CreateGroup,
+  RecentMdeia,
 } from "@/components/group";
-import Frame from "@/components/group/Frame";
 
 const page = () => {
   return (
@@ -75,8 +76,8 @@ const page = () => {
                 }
                 buttonText={"Create Group"}
               />
-              <ActiveMembers />
-              <RecentMedia />
+              <ActiveMembers avatar={""} />
+              <RecentMdeia media={""} />
             </div>
           </section>
         </div>
@@ -135,7 +136,7 @@ const page = () => {
                   }
                   buttonText={"Create Group"}
                 />
-                <ActiveMembers />
+                <ActiveMembers avatar={""} />
                 <RecentMedia />
               </div>
             </section>
@@ -175,7 +176,7 @@ const page = () => {
             />
           </div>
           <div className="flex flex-col gap-5">
-            <ActiveMembers />
+            <ActiveMembers avatar={""} />
             <RecentMedia />
             <About />
             <Admin />
