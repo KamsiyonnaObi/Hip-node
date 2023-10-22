@@ -4,7 +4,15 @@ const InterviewHomePage = () => {
   return (
     <main className="bg-bkg-2">
       <aside>
-        <InterviewCategory />
+        <InterviewCategory
+          categories={[
+            "technology",
+            "marketing",
+            "finance",
+            "education",
+            "healthcare",
+          ]}
+        />
       </aside>
       <section></section>
       <aside></aside>

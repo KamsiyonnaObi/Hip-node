@@ -1,1 +1,1 @@
-export { default as InterviewCategory } from "./InterviewCategory";
+export * from "./categories";
