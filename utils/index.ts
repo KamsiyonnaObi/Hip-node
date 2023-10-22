@@ -14,3 +14,5 @@ export function cn(...inputs: ClassValue[]) {
 export function findProperty(key: string, object: { [x: string]: any }) {
   return object[key];
 }
+
+export * from "./utils";
