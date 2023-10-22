@@ -13,6 +13,7 @@ import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { InputPost } from "@/components/form";
+import { BrowserRouter } from "react-router-dom";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -174,7 +175,9 @@ export default function Home() {
         >
           {swap ? "Light" : "Dark"} Mode
         </button>
-        <InputPost darkMode={darkMode} />
+        <BrowserRouter>
+          <InputPost darkMode={darkMode} />
+        </BrowserRouter>
       </div>
     </div>
   );

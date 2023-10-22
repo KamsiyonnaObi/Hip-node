@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Link from "next/link";
 import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -24,6 +25,8 @@ import OutlineIcon from "../icons/OutlineIcon";
 
 export function InputPost({ darkMode }: any) {
   const editorRef = useRef<TinyMCEEditor | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostSchema>>({
@@ -37,8 +40,13 @@ export function InputPost({ darkMode }: any) {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof PostSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    setIsSubmitting(true);
+    try {
+      // async call to API
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const handleInputKeydown = (
@@ -60,7 +68,6 @@ export function InputPost({ darkMode }: any) {
           form.setValue("tags", [...field.value, tagValue]);
           tagInput.value = "";
           form.clearErrors("tags");
-          console.log(field);
         }
       } else {
         form.trigger();
@@ -93,25 +100,29 @@ export function InputPost({ darkMode }: any) {
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <Button
                       color="blackWhite"
-                      className="text-xs-regular md:text-xs-semibold items-center justify-between px-2.5 py-2"
+                      className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
                     >
-                      <p>
-                        <OutlineIcon.Image1 />
+                      <OutlineIcon.Image1 />
+                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                        Set Cover
                       </p>
-                      Set Cover
                     </Button>
                     <Button
                       color="blackWhite"
-                      className="text-xs-regular md:text-xs-semibold items-center justify-between px-2.5 py-2"
+                      className="items-center justify-between px-2.5 py-2"
                     >
-                      <p>Select Group</p>
+                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                        Select Group
+                      </p>
                       <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                     </Button>
                     <Button
                       color="blackWhite"
-                      className="text-xs-regular md:text-xs-semibold items-center justify-between  px-2.5 py-2 "
+                      className="items-center justify-between px-2.5 py-2  "
                     >
-                      <p>Create- Post</p>
+                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                        <span className="text-secondary3">Create</span> - Post
+                      </p>
                       <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                     </Button>
                   </div>
@@ -127,7 +138,7 @@ export function InputPost({ darkMode }: any) {
           name="contents"
           render={({ field }) => (
             <FormItem>
-              <div className="flex flex-col">
+              <div className="flex">
                 <Link
                   href="/"
                   className="body-semibold md:display-semibold text-secondary2 dark:text-background2"
@@ -165,9 +176,9 @@ export function InputPost({ darkMode }: any) {
                       "help",
                       "wordcount",
                     ],
-                    toolbar_mode: "wrap",
+                    toolbar_mode: "floating",
                     mobile: {
-                      toolbar_mode: "wrap",
+                      toolbar_mode: "floating",
                     },
                     skin: darkMode ? "oxide-dark" : "oxide",
                     toolbar:
@@ -224,13 +235,15 @@ export function InputPost({ darkMode }: any) {
             type="submit"
             color="blue"
             className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
           >
-            Publish
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
           </Button>
           <Button
-            type="submit"
+            type="button"
             color="gray"
             className="md:display-semibold body-semibold px-10 py-2.5 text-secondary3"
+            onClick={() => navigate("/")}
           >
             Cancel
           </Button>
