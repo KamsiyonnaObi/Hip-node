@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 import CreatePost from "@/components/home/CreatePost";
 import PopularTags from "@/components/home/PopularTags";
 import Sidebar from "@/components/home/Sidebar";
@@ -10,10 +12,7 @@ import OutlineIcon from "@/components/icons/OutlineIcon";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/form/Input";
 import PinnedGroup from "@/components/home/PinnedGroup";
-
-import { useSession, signIn, signOut } from "next-auth/react";
 import { InputPost } from "@/components/form";
-import { BrowserRouter } from "react-router-dom";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -175,9 +174,7 @@ export default function Home() {
         >
           {swap ? "Light" : "Dark"} Mode
         </button>
-        <BrowserRouter>
-          <InputPost darkMode={darkMode} />
-        </BrowserRouter>
+        <InputPost darkMode={darkMode} />
       </div>
     </div>
   );

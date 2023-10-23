@@ -2,11 +2,10 @@
 
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
-import { Editor as TinyMCEEditor } from "tinymce";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Badge } from "../ui/badge";
@@ -24,9 +23,9 @@ import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 
 export function InputPost({ darkMode }: any) {
-  const editorRef = useRef<TinyMCEEditor | null>(null);
+  const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostSchema>>({
@@ -149,7 +148,11 @@ export function InputPost({ darkMode }: any) {
               <FormControl>
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                  onInit={(evt, editor) => (editorRef.current = editor)}
+                  onInit={(evt, editor) =>
+                    // @ts-ignore
+                    (editorRef.current = editor)
+                  }
+                  key={darkMode}
                   initialValue="<p>Tell your story...</p>"
                   init={{
                     height: 376,
@@ -243,7 +246,7 @@ export function InputPost({ darkMode }: any) {
             type="button"
             color="gray"
             className="md:display-semibold body-semibold px-10 py-2.5 text-secondary3"
-            onClick={() => navigate("/")}
+            onClick={() => router.push("/")}
           >
             Cancel
           </Button>
