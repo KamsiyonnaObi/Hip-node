@@ -11,6 +11,7 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
+import LeaveGroup from "@/components/group/LeaveGroup";
 
 const page = () => {
   return (
@@ -26,6 +27,9 @@ const page = () => {
         </section>
         <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
           <section>
+            <div className="absolute mx-auto">
+              <LeaveGroup />
+            </div>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
               <Cover />
               <div className="w-full">
