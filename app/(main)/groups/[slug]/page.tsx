@@ -11,13 +11,12 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
-import LeaveGroup from "@/components/group/LeaveGroup";
 
 const page = () => {
   return (
     <main>
       {/* Desktop */}
-      <div className="mx-auto hidden items-center justify-center gap-5 xl:max-w-[1100px] lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start">
+      <div className="mx-auto hidden items-center justify-center gap-5 lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start xl:max-w-[1100px]">
         <section>
           <div className="flex flex-col gap-[1.25rem]">
             <About />
@@ -27,9 +26,6 @@ const page = () => {
         </section>
         <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
           <section>
-            <div className="absolute mx-auto">
-              <LeaveGroup />
-            </div>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
               <Cover />
               <div className="w-full">
