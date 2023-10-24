@@ -3,7 +3,6 @@ import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import UserModel from "@/models/User";
-import email from "next-auth/providers/email";
 
 interface Profile {
   email: string;
@@ -28,10 +27,10 @@ export const authOptions = {
     async signIn( profile: Profile) {
       try{
         await dbConnect();
-        let user = await UserModel.findOne({ email });
+        let user = await UserModel.findOne({ email: profile.email });
 
         if(!user) {
-          user = await UserModel.create({username: profile.name, email: profile.email});
+          user = await UserModel.create({username: profile.name, fullName: profile.name, email: profile.email});
         }
       } catch (e) {
         console.log(e)
