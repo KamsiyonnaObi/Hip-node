@@ -6,6 +6,10 @@ const Popup = () => {
   const { theme, toggleTheme } = useThemeState();
   return (
     <div className="fixed mr-[160px] mt-[230px] flex h-[182px] w-[182px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mr-0 md:mt-[260px]">
+      {/* nub */}
+      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[400%]">
+        <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
+      </div>
       <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
         <li className="flex flex-row gap-[14px]">
           <FillIcon.Profile className="fill-secondary2 dark:fill-secondary6" />
