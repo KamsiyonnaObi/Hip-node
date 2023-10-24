@@ -1,4 +1,5 @@
 import { Schema, models, model, Document } from "mongoose";
+import { User } from ".";
 
 export interface IGroup extends Document {
   title: string;
@@ -33,6 +34,14 @@ const groupSchema = new Schema({
     type: String,
     required: true,
   },
+  admins: {
+    type: [User],
+    required: true,
+  },
+  members: {
+    type: [User],
+    required: true,
+  }
 });
 
 const Group = models.Group || model("Group", groupSchema);
