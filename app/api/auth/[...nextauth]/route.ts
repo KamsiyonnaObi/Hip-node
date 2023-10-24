@@ -2,7 +2,15 @@ import dbConnect from "@/utils/mongooseConnect";
 import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { User } from "next-auth";
+import UserModel from "@/models/User";
+import email from "next-auth/providers/email";
+
+interface Profile {
+  email: string;
+  name: string;
+  [key: string]: any;
+  profile: Profile;
+}  
 
 export const authOptions = {
   providers: [
@@ -17,13 +25,13 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }: {user: string, email: string, account: string, profile: string, credentials: string}) {
+    async signIn( profile: Profile) {
       try{
         await dbConnect();
-        let user = await User.findOne({ email });
+        let user = await UserModel.findOne({ email });
 
         if(!user) {
-          user = await User.create({username: profile.name, email: profile.email});
+          user = await UserModel.create({username: profile.name, email: profile.email});
         }
       } catch (e) {
         console.log(e)
@@ -33,6 +41,6 @@ export const authOptions = {
   },
 };
 
-export const handler = NextAuth(authOptions);
+export const handler = NextAuth(authOptions as any);
 
 export { handler as GET, handler as POST };
