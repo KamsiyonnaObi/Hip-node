@@ -8,7 +8,6 @@ interface Profile {
   email: string;
   name: string;
   [key: string]: any;
-  profile: Profile;
 }  
 
 export const authOptions = {
