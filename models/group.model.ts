@@ -8,6 +8,8 @@ export interface IGroup extends Document {
   createdAt: Date;
   descTitle: string;
   desc: string;
+  admins: String[];
+  members: String[];
 }
 
 const groupSchema = new Schema({

@@ -1,4 +1,4 @@
-import CreateGroupForm from "@/components/group/CreateGroupForm";
+import AddGroup from "@/components/group/AddGroup";
 import React from "react";
 
 type Props = {};
@@ -6,7 +6,7 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <div>
-      <CreateGroupForm />
+      <AddGroup />
     </div>
   );
 };
