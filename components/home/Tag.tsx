@@ -17,7 +17,7 @@ const Tag = ({ title, icon, className, postNum, desc }: Props) => {
         {icon}
       </section>
       <section className="flex flex-col gap-[1px] py-1">
-        <p className="caption-semibold ">#{title}</p>
+        <p className="caption-semibold dark:text-background2">#{title}</p>
         <p className="text-sm-regular">
           {postNum} {desc}
         </p>
