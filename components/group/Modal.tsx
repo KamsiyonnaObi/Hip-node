@@ -10,9 +10,9 @@ export default function Modal({ show, closeModal }: Props) {
   return (
     <>
       {createPortal(
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
           <div className="absolute flex items-center justify-center">
-            <div className="flex flex-col gap-4 rounded-lg bg-white p-4 dark:bg-gray-800">
+      <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
               <div className="mb-[1.875rem]">
                 <h2 className="h3-semibold text-center text-secondary2 dark:text-background2">
                   Are You Sure to Leave From This Group?
