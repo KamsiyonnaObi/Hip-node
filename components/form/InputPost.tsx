@@ -95,6 +95,7 @@ export function InputPost({ darkMode }: any) {
                   <Input
                     placeholder="Title..."
                     className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <Button
@@ -140,7 +141,7 @@ export function InputPost({ darkMode }: any) {
               <div className="flex">
                 <Link
                   href="/"
-                  className="body-semibold md:display-semibold text-secondary2 dark:text-background2"
+                  className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
                 >
                   Code of Conduct
                 </Link>
@@ -180,14 +181,28 @@ export function InputPost({ darkMode }: any) {
                       "wordcount",
                     ],
                     toolbar_mode: "floating",
+                    skin: darkMode ? "oxide" : "oxide-dark",
+                    toolbar:
+                      "codeofconduct h1 bold italic underline strikethrough link image alignleft aligncenter " +
+                      "alignright bullist numlist",
                     mobile: {
+                      toolbar:
+                        "h1 bold italic underline strikethrough link image alignleft aligncenter " +
+                        "alignright bullist numlist",
                       toolbar_mode: "floating",
                     },
-                    skin: darkMode ? "oxide-dark" : "oxide",
-                    toolbar:
-                      "header blocks bold italic underline strikethrough link image alignleft aligncenter " +
-                      "alignright bullist numlist",
-                    content_css: darkMode ? "dark" : "light",
+                    content_css: [
+                      darkMode ? "light" : "dark",
+                      "../styles/editor.css",
+                    ],
+                    setup: (editor) => {
+                      editor.ui.registry.addButton("codeofconduct", {
+                        text: "Code of Conduct",
+                        onAction: () => {
+                          window.open("/codeofconduct", "_blank");
+                        },
+                      });
+                    },
                   }}
                 />
               </FormControl>
@@ -245,10 +260,10 @@ export function InputPost({ darkMode }: any) {
           <Button
             type="button"
             color="gray"
-            className="md:display-semibold body-semibold px-10 py-2.5 text-secondary3"
+            className="md:display-semibold body-semibold px-10 py-2.5"
             onClick={() => router.push("/")}
           >
-            Cancel
+            <p className="text-secondary3">Cancel</p>
           </Button>
         </div>
       </form>
