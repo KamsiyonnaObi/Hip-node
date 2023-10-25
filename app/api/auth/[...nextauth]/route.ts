@@ -25,16 +25,18 @@ export const authOptions = {
 
   callbacks: {
     async signIn( profile: Profile) {
+      const { name, email, image } = profile.user
+      const { given_name } = profile.profile
 
       try{
         await dbConnect();
-        let user = await UserModel.findOne({ email: profile.email });
+        let user = await UserModel.findOne({ email });
 
         if(!user) {
-          user = await UserModel.create({username: profile.username, fullName: profile.fullName, email: profile.email});
+          user = await UserModel.create({username: name, fullName: given_name, profileImage: image, email});
         }
       } catch (e) {
-        console.log(e)
+        console.error("Sign-in error:", e);
       }
       console.log(profile)
 
