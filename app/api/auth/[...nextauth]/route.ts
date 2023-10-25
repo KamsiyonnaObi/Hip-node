@@ -6,7 +6,8 @@ import UserModel from "@/models/User";
 
 interface Profile {
   email: string;
-  name: string;
+  fullName: string;
+  username: string;
   [key: string]: any;
 }  
 
@@ -24,16 +25,19 @@ export const authOptions = {
 
   callbacks: {
     async signIn( profile: Profile) {
+
       try{
         await dbConnect();
         let user = await UserModel.findOne({ email: profile.email });
 
         if(!user) {
-          user = await UserModel.create({username: profile.name, fullName: profile.name, email: profile.email});
+          user = await UserModel.create({username: profile.username, fullName: profile.fullName, email: profile.email});
         }
       } catch (e) {
         console.log(e)
       }
+      console.log(profile)
+
       return true;
     }
   },
