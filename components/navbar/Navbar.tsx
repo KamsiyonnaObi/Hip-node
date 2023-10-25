@@ -9,14 +9,19 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import { LogoIcon } from "../icons/LogoIcon";
 import Popup from "./Popup";
+import MessageList from "./MessageList";
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(2);
 
   const toggleMenu = () => {
-    setExpanded(!expanded);
+    setExpanded(expanded !== 1 ? 1 : 0);
+  };
+
+  const toggleMessage = () => {
+    setExpanded(expanded !== 2 ? 2 : 0);
   };
 
   return (
@@ -50,7 +55,7 @@ const Navbar = () => {
                 height="32"
                 onClick={toggleMenu}
               />
-              {expanded && <Popup />}
+              {expanded === 1 && <Popup />}
             </div>
           </div>
         </section>
@@ -156,8 +161,12 @@ const Navbar = () => {
             </Input>
             <div className="flex flex-row md:gap-[25px]">
               <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-                <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
+                <div onClick={toggleMessage}>
+                  <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
+                </div>
+                {expanded === 2 && <MessageList />}
               </Button>
+
               <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
                 <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
               </Button>
@@ -173,7 +182,7 @@ const Navbar = () => {
                         height="32"
                         onClick={toggleMenu}
                       />
-                      {expanded && <Popup />}
+                      {expanded === 1 && <Popup />}
                     </div>
                   </div>
                   <p className="display-bold text-secondary1 dark:text-background2">
