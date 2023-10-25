@@ -39,9 +39,13 @@ const Navbar = () => {
         </section>
         {/* MOBILE */}
         <section className="flex flex-row gap-5 md:hidden">
-          <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+          <Button
+            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+            onClick={toggleMessage}
+          >
             <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
           </Button>
+          {expanded === 2 && <MessageList />}
           <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
             <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
           </Button>
@@ -160,13 +164,13 @@ const Navbar = () => {
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>
             <div className="flex flex-row md:gap-[25px]">
-              <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-                <div onClick={toggleMessage}>
-                  <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
-                </div>
-                {expanded === 2 && <MessageList />}
+              <Button
+                className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+                onClick={toggleMessage}
+              >
+                <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
               </Button>
-
+              {expanded === 2 && <MessageList />}
               <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
                 <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
               </Button>

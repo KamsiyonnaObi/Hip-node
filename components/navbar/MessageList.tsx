@@ -3,7 +3,7 @@ import NavMessage from "./NavMessage";
 
 const MessageList = () => {
   return (
-    <article className="fixed mr-[160px] mt-[530px] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:mr-0 md:mt-[560px]">
+    <article className="fixed mr-[160px] mt-[530px] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:mr-0 md:mt-[60px]">
       {/* nub */}
       <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[800%]">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
@@ -48,7 +48,9 @@ const MessageList = () => {
               count={0}
             />
           </ul>
-          <p className="body-semibold text-blue">See all in Messenger</p>
+          <p className="body-semibold flex justify-center text-blue">
+            See all in Messenger
+          </p>
         </div>
       </div>
     </article>
