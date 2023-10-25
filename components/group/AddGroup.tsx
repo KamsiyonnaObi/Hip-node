@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
+import { v2 as cloudinary } from "cloudinary";
 
 type Props = {};
 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cloudinary": "^1.41.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
