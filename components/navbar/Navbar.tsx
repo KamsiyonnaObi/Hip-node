@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,9 +8,16 @@ import { Input } from "../form/Input";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import { LogoIcon } from "../icons/LogoIcon";
+import Popup from "./Popup";
 
 const Navbar = () => {
   const pathname = usePathname();
+
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleMenu = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <article className="flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
@@ -41,7 +48,9 @@ const Navbar = () => {
                 alt="profile"
                 width="30"
                 height="32"
+                onClick={toggleMenu}
               />
+              {expanded && <Popup />}
             </div>
           </div>
         </section>
@@ -162,7 +171,9 @@ const Navbar = () => {
                         alt="profile"
                         width="30"
                         height="32"
+                        onClick={toggleMenu}
                       />
+                      {expanded && <Popup />}
                     </div>
                   </div>
                   <p className="display-bold text-secondary1 dark:text-background2">
