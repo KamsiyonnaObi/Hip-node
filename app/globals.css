@@ -4,8 +4,8 @@
 
 @import url("../styles/theme.css");
 
-.tox-toolbar__group:first-child {
-  margin-right: 140px !important;
+.tox-toolbar__group > button:first-child {
+  margin-right: 115px !important;
 }
 
 @layer utilities {

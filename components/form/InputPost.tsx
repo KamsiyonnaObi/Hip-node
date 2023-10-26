@@ -148,6 +148,7 @@ export function InputPost({ darkMode }: any) {
               </div>
               <FormControl>
                 <Editor
+                  onEditorChange={(content) => field.onChange(content)}
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) =>
                     // @ts-ignore
@@ -193,6 +194,9 @@ export function InputPost({ darkMode }: any) {
                     },
                     content_css: darkMode ? "light" : "dark",
                     setup: (editor) => {
+                      editor.on("change", function (e) {
+                        console.log(editor.getContent());
+                      });
                       editor.ui.registry.addButton("codeofconduct", {
                         text: "Code of Conduct",
                         onAction: () => {
