@@ -76,18 +76,14 @@ const InterviewHomePage = () => {
                       </div>
                     </div>
                   </div>
-                  <ShadButton className="bg-blue hover:bg-blue/50">
+                  <ShadButton className="bg-blue text-white hover:text-white">
                     Full Details
                   </ShadButton>
                 </div>
               </div>
             </div>
             <div className="hidden h-fit w-fit overflow-hidden rounded-lg sm:block">
-              <Image
-                src={InterviewImage}
-                alt="Interview Image"
-                className="min-h-[180px] min-w-[280px] object-cover"
-              />
+              <Image src={InterviewImage} alt="Interview Image" className="" />
             </div>
           </article>
         </section>
