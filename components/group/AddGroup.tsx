@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
+import TagInput from "./TagInput";
 
 type Props = {};
 
@@ -13,8 +14,6 @@ const AddGroup = (props: Props) => {
     description: "",
     admins: "",
     members: "",
-    image: "",
-    tags: "",
   });
 
   const handleChange = (
@@ -37,8 +36,6 @@ const AddGroup = (props: Props) => {
   newFormData.append("description", formData.description);
   newFormData.append("admins", formData.admins);
   newFormData.append("admins", formData.members);
-  newFormData.append("image", formData.image);
-  newFormData.append("tags", formData.tags);
 
   return (
     <>
@@ -107,6 +104,9 @@ const AddGroup = (props: Props) => {
               className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
             />
           </div>
+        </div>
+        <div>
+          <TagInput />
         </div>
         <div className="flex gap-[1.25rem]">
           <Link href={""}>
