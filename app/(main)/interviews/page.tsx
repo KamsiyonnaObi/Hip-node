@@ -76,7 +76,7 @@ const InterviewHomePage = () => {
                       </div>
                     </div>
                   </div>
-                  <ShadButton className="bg-blue text-white hover:text-white">
+                  <ShadButton className="bg-blue text-white hover:bg-blue/70 hover:text-white">
                     Full Details
                   </ShadButton>
                 </div>
