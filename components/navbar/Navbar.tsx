@@ -10,11 +10,12 @@ import { Button } from "../ui/Button";
 import { LogoIcon } from "../icons/LogoIcon";
 import Popup from "./Popup";
 import MessageList from "./MessageList";
+import Notification from "./Notification";
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  const [expanded, setExpanded] = useState(2);
+  const [expanded, setExpanded] = useState(3);
 
   const toggleMenu = () => {
     setExpanded(expanded !== 1 ? 1 : 0);
@@ -22,6 +23,10 @@ const Navbar = () => {
 
   const toggleMessage = () => {
     setExpanded(expanded !== 2 ? 2 : 0);
+  };
+
+  const toggleNotif = () => {
+    setExpanded(expanded !== 3 ? 3 : 0);
   };
 
   return (
@@ -46,9 +51,13 @@ const Navbar = () => {
             <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
           </Button>
           {expanded === 2 && <MessageList />}
-          <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+          <Button
+            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+            onClick={toggleNotif}
+          >
             <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
           </Button>
+          {expanded === 3 && <Notification />}
           <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
             <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
               <Image
@@ -171,9 +180,13 @@ const Navbar = () => {
                 <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
               </Button>
               {expanded === 2 && <MessageList />}
-              <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+              <Button
+                className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+                onClick={toggleNotif}
+              >
                 <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
               </Button>
+              {expanded === 3 && <Notification />}
               <section className="flex flex-row items-center md:gap-2.5">
                 <div className="flex flex-row md:gap-4">
                   <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
