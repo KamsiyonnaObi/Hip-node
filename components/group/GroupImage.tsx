@@ -1,25 +1,34 @@
 import React, { useCallback, useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone"; // Import FileRejection for rejected files
 import Image from "next/image";
 
 type Props = {};
 
-const GroupImage = (props: Props) => {
-  const [files, setFiles] = useState([]);
+interface FileWithPreview {
+  file: File;
+  previewUrl: string;
+}
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const newFiles = acceptedFiles.map((file) => {
-      const previewUrl = URL.createObjectURL(file);
-      return { file, previewUrl };
-    });
+const GroupImage: React.FC<Props> = (props: Props) => {
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+      const newFiles = acceptedFiles.map((file) => {
+        const previewUrl = URL.createObjectURL(file);
+        return { file, previewUrl };
+      });
+
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    },
+    []
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
+
   return (
     <div className="flex items-center">
       <div className="flex gap-[.62rem] my-[1.25rem]">
@@ -48,6 +57,7 @@ const GroupImage = (props: Props) => {
               Set Profile Photo
             </p>
           </button>
+          <input {...getInputProps()} />
         </div>
       </div>
     </div>

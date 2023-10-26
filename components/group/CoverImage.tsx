@@ -1,32 +1,39 @@
 import React, { useCallback, useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone"; // Import FileRejection for rejected files
 import Image from "next/image";
 
 type Props = {};
 
-const CoverImage = (props: Props) => {
-  const [files, setFiles] = useState([]);
+interface FileWithPreview {
+  file: File;
+  previewUrl: string;
+}
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const newFiles = acceptedFiles.map((file) => {
-      const previewUrl = URL.createObjectURL(file);
-      return { file, previewUrl };
-    });
+const CoverImage: React.FC<Props> = (props: Props) => {
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+      const newFiles = acceptedFiles.map((file) => {
+        const previewUrl = URL.createObjectURL(file);
+        return { file, previewUrl };
+      });
+
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    },
+    []
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
+
   return (
     <div>
-      {" "}
       <div>
         <div className="flex" {...getRootProps()}>
           <input {...getInputProps()} />
-
           <button className="w-[6rem] flex px-[.625rem] py-[.25rem] gap-[.625rem] items-center rounded-[.25rem] bg-background2 dark:bg-dark4">
             <OutlineIcon.Image1 className="fill-black dark:fill-white w-[22px]" />
             <p className="text-sm-regular text-secondary2 dark:text-background">
