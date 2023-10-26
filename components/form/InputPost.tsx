@@ -191,10 +191,7 @@ export function InputPost({ darkMode }: any) {
                         "alignright bullist numlist",
                       toolbar_mode: "floating",
                     },
-                    content_css: [
-                      darkMode ? "light" : "dark",
-                      "../styles/editor.css",
-                    ],
+                    content_css: darkMode ? "light" : "dark",
                     setup: (editor) => {
                       editor.ui.registry.addButton("codeofconduct", {
                         text: "Code of Conduct",

@@ -4,6 +4,10 @@
 
 @import url("../styles/theme.css");
 
+.tox-toolbar__group:first-child {
+  margin-right: 140px !important;
+}
+
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
