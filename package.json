@@ -24,6 +24,7 @@
     "mongoose": "^7.4.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
+    "next-themes": "^0.2.1",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
