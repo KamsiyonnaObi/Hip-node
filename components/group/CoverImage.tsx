@@ -15,15 +15,28 @@ const CoverImage: React.FC<Props> = (props: Props) => {
 
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      const newFiles = acceptedFiles.map((file) => {
-        const previewUrl = URL.createObjectURL(file);
-        return { file, previewUrl };
-      });
+      if (files.length === 0) {
+        // If there are no existing files, accept the new one
+        const newFiles = acceptedFiles.map((file) => {
+          const previewUrl = URL.createObjectURL(file);
+          return { file, previewUrl };
+        });
 
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+        setFiles(newFiles);
+      } else {
+        // If there is an existing file, replace it with the new one
+        const newFile = acceptedFiles[0]; // Assuming only one file is accepted
+        const previewUrl = URL.createObjectURL(newFile);
+        setFiles([{ file: newFile, previewUrl }]);
+      }
     },
-    []
+    [files]
   );
+  const [showImage1, setShowImage1] = useState(true);
+
+  const toggleImage = () => {
+    setShowImage1((prevShowImage1) => !prevShowImage1);
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -31,10 +44,13 @@ const CoverImage: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      <div>
+      <div className="mb-[1.25rem]">
         <div className="flex" {...getRootProps()}>
           <input {...getInputProps()} />
-          <button className="w-[6rem] flex px-[.625rem] py-[.25rem] gap-[.625rem] items-center rounded-[.25rem] bg-background2 dark:bg-dark4">
+          <button
+            onClick={toggleImage}
+            className="w-[6rem] flex px-[.625rem] py-[.25rem] gap-[.625rem] items-center rounded-[.25rem] bg-background2 dark:bg-dark4"
+          >
             <OutlineIcon.Image1 className="fill-black dark:fill-white w-[22px]" />
             <p className="text-sm-regular text-secondary2 dark:text-background">
               Set Cover
@@ -43,20 +59,22 @@ const CoverImage: React.FC<Props> = (props: Props) => {
         </div>
       </div>
       <div className="w-full h-[8.25rem] lg:h-[10.4rem] flex justify-center items-center dark:bg-dark4 dark:border-dark4 bg-background2 border-background">
-        <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
-        <div>
-          {files.map((file, index) => (
-            <div key={index}>
-              <Image
-                src={file.previewUrl}
-                alt={file.file.name}
-                width={80}
-                height={80}
-              />
-              <p>{file.file.name}</p>
-            </div>
-          ))}
-        </div>
+        {showImage1 ? (
+          <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
+        ) : (
+          <div>
+            {files.map((file, index) => (
+              <div key={index}>
+                <Image
+                  src={file.previewUrl}
+                  alt={file.file.name}
+                  width={840}
+                  height={167}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
