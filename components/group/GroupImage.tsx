@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import { useDropzone, FileRejection } from "react-dropzone"; // Import FileRejection for rejected files
+import { useDropzone, FileRejection } from "react-dropzone";
 import Image from "next/image";
 
 type Props = {};
@@ -42,15 +42,38 @@ const GroupImage: React.FC<Props> = (props: Props) => {
     setShowImage1((prevShowImage1) => !prevShowImage1);
   };
 
+  // async function action() {
+  //   const file = files[0];
+  //   if (!file) return;
+  //   const { timestamp, signature } = await getSignature();
+
+  //   const formData = new FormData();
+
+  //   formData.append("file", file);
+  //   formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+  //   formData.append("signature", signature);
+  //   formData.append("timestamp", timestamp);
+  //   formData.append("folder", "next");
+
+  //   const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;
+  //   const data = await fetch(endpoint, {
+  //     method: "POST",
+  //     body: formData,
+  //   }).then((res) => res.json());
+
+  //   await saveToDatabase({
+  //     version: data?.version,
+  //     signature: data?.signature,
+  //     public_id: data?.public_id,
+  //   });
+  // }
+
   return (
     <div className="flex items-center">
       <div className="flex gap-[.62rem] my-[1.25rem]">
         <div className="rounded-full w-[3.75rem] h-[3.75rem] bg-background2 dark:bg-dark4">
           {showImage1 ? (
-            <OutlineIcon.Image2
-              alt="Image 1"
-              className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]"
-            />
+            <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]" />
           ) : (
             <div>
               {files.map((file, index) => (
