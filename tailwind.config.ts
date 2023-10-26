@@ -112,6 +112,7 @@ const config: Config = {
         },
         formInput: "rgb(var(--formInput) / <alpha-value>)", // White-600 Dark-800
         mobileInput: "rgb(var(--mobileInput) / <alpha-value>)",
+        interviewText: "var(--interviewText)",
         // ShadCN
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
