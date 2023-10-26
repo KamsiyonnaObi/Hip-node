@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import OutlineIcon from "../icons/OutlineIcon";
-import Dropzone from "react-dropzone";
+
+import CoverImage from "./CoverImage";
+import GroupImage from "./GroupImage";
 
 type Props = {};
 
@@ -42,42 +43,12 @@ const AddGroup = (props: Props) => {
   return (
     <>
       <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
-            <div className="flex" {...getRootProps()}>
-              <input {...getInputProps()} />
-
-              <button className="w-[6rem] flex px-[.625rem] py-[.25rem] gap-[.625rem] items-center rounded-[.25rem] bg-background2 dark:bg-dark4">
-                <OutlineIcon.Image1 className="fill-black dark:fill-white w-[22px]" />
-                <p className="text-sm-regular text-secondary2 dark:text-background">
-                  Set Cover
-                </p>
-              </button>
-            </div>
-          )}
-        </Dropzone>
-
-        <div className="w-full h-[8.25rem] lg:h-[10.4rem] flex justify-center items-center dark:bg-dark4 dark:border-dark4 bg-background2 border-background">
-          <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
+        <div>
+          <CoverImage />
         </div>
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
-            <div className="flex" {...getRootProps()}>
-              <input {...getInputProps()} />
-              <div className="flex gap-[.62rem] my-[1.25rem]">
-                <div className="rounded-full w-[3.75rem] h-[3.75rem] bg-background2 dark:bg-dark4">
-                  <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]" />
-                </div>
-                <button className="flex gap-[.62rem] items-center">
-                  <OutlineIcon.Image1 className="dark:fill-background2 fill-secondary2 w-[22px]" />
-                  <p className="text-sm-regular dark:text-background2 text-secondary2">
-                    Set Profile Photo
-                  </p>
-                </button>
-              </div>
-            </div>
-          )}
-        </Dropzone>
+        <div>
+          <GroupImage />
+        </div>
         <div className="flex flex-col gap-[.62rem]">
           <label className="text-secondary2 caption-semibold dark:text-background2">
             Group Name
