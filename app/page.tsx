@@ -12,7 +12,7 @@ import PinnedGroup from "@/components/home/PinnedGroup";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import ActiveMembers from "@/components/group/ActiveMembers";
-import RecentMdeia from "@/components/group/RecentMdeia";
+import RecentMdeia from "@/components/group/RecentMedia";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -23,7 +23,7 @@ export default function Home() {
     setSwap(!swap);
   };
   return (
-    <div className="m-6 bg-background2">
+    <div className="bg-background2 m-6">
       <div className={`container ${swap ? "light" : "dark"}`}>
         <header>
           <nav>
@@ -179,5 +179,4 @@ export default function Home() {
       </div>
     </div>
   );
-
 }
