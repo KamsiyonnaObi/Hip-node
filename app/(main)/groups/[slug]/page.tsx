@@ -16,7 +16,7 @@ const page = () => {
   return (
     <main>
       {/* Desktop */}
-      <div className="mx-auto hidden items-center justify-center gap-5 xl:max-w-[1100px] lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start">
+      <div className="mx-auto hidden items-center justify-center gap-5 lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start xl:max-w-[1100px]">
         <section>
           <div className="flex flex-col gap-[1.25rem]">
             <About />
