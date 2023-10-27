@@ -4,6 +4,7 @@
 
 @import url("../styles/theme.css");
 @import url("../styles/divine.css");
+@import url("../styles/editor.css");
 
 @layer utilities {
   .flex-center {
