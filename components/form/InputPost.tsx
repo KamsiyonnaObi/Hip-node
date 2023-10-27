@@ -148,11 +148,7 @@ export function InputPost({ darkMode }: any) {
               </div>
               <FormControl>
                 <Editor
-                  onEditorChange={(content, editor) => {
-                    const raw = editor.getContent({ format: "text" });
-                    form.setValue("contents", raw);
-                    field.onChange(raw);
-                  }}
+                  onEditorChange={(content) => field.onChange(content)}
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) =>
                     // @ts-ignore
