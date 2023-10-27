@@ -70,6 +70,7 @@ const CoverImage: React.FC<Props> = (props: Props) => {
                   alt={file.file.name}
                   width={840}
                   height={167}
+                  className="w-[840px] h-[167px] lg:w-[1120px] lg:h-[223px]"
                 />
               </div>
             ))}
