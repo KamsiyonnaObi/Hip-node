@@ -9,7 +9,7 @@ export const PostSchema = z.object({
     .max(60, { message: "Title must be less than 60 characters." }),
   contents: z
     .string()
-    .min(12, {
+    .min(5, {
       message: "Contents must be at least 5 characters.",
     })
     .max(200, { message: "Contents must be less than 200 characters." }),

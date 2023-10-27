@@ -148,7 +148,11 @@ export function InputPost({ darkMode }: any) {
               </div>
               <FormControl>
                 <Editor
-                  onEditorChange={(content) => field.onChange(content)}
+                  onEditorChange={(content, editor) => {
+                    const raw = editor.getContent({ format: "text" });
+                    form.setValue("contents", raw);
+                    field.onChange(raw);
+                  }}
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) =>
                     // @ts-ignore
@@ -200,14 +204,6 @@ export function InputPost({ darkMode }: any) {
                           window.open("/codeofconduct", "_blank");
                         },
                       });
-                      editor.ui.registry.addContextToolbar(
-                        "codeOfConductToolbar",
-                        {
-                          predicate: () => window.innerWidth >= 1100,
-                          items: "codeOfConduct",
-                          scope: "editor",
-                        }
-                      );
                     },
                   }}
                 />
