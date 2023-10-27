@@ -4,6 +4,8 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { newUser } from "@/utils/actions/user.action";
+
 import {
   BusinessStage,
   BusinessType,
@@ -50,6 +52,13 @@ const SignUp = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const validator = () => {
+    if (flag) {
+      return !formData.username;
+    } else {
+      return !formData.email || !formData.password;
+    }
+  };
   const handleSignUp = async () => {
     try {
       const newFormData = new FormData();
@@ -61,19 +70,9 @@ const SignUp = () => {
       newFormData.append("codingLevel", JSON.stringify(CodingLevel));
       newFormData.append("interests", JSON.stringify(BusinessInterest));
 
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        body: newFormData,
-      });
+      const data = await newUser(newFormData);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData || "unable to login");
-      }
-
-      const data = await response.json();
-      console.log(data.message);
-      if (data.message === "success") {
+      if (data.status === "success") {
         router.push("/");
       }
     } catch (error) {
@@ -191,7 +190,7 @@ const SignUp = () => {
             <div>
               <Button
                 onClick={signUpStage}
-                disabled={!formData.username}
+                disabled={validator()}
                 className="px-10 py-2.5"
               >
                 Next
