@@ -7,12 +7,14 @@ type Props = {
   value?: any;
   name?: string;
   onChange?: any;
+  type?: "text" | "password" | "email";
 };
 
 export const Input = ({
   onChange,
   value,
   name,
+  type,
   placeholder,
   children,
   className,
@@ -26,6 +28,7 @@ export const Input = ({
         placeholder={placeholder || "Type here"}
         value={value}
         onChange={onChange}
+        type={type}
       />
       {children}
     </div>

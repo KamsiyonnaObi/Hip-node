@@ -7,7 +7,7 @@ interface Props {
   buttonText: string;
 }
 
-const HostCard = ({ title, desc, buttonText }: Props) => {
+const GroupCard = ({ title, desc, buttonText }: Props) => {
   return (
     <article className="flex w-[335px] flex-col gap-2.5 rounded-[16px] bg-[#FF7C4D] bg-[url('https://i.ibb.co/ch6kNrt/Host-Meetup.png')] p-5 text-background">
       <div className="flex flex-col gap-5">
@@ -31,4 +31,4 @@ const HostCard = ({ title, desc, buttonText }: Props) => {
   );
 };
 
-export default HostCard;
+export default GroupCard;

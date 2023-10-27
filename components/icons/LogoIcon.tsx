@@ -20,8 +20,8 @@ export const LogoIcon = ({ className }: Props) => (
           <path
             id="Vector 5"
             d="M19 16.5103C16.6988 18.7292 14.5 20.0001 11 20.0001C7.71377 20.0001 5.08988 18.5254 3 16.5103"
-            stroke-width="3"
-            stroke-linecap="round"
+            strokeWidth="3"
+            strokeLinecap="round"
           />
         </g>
       </g>

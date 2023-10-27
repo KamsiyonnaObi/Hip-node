@@ -92,6 +92,69 @@ const config: Config = {
         purple10: "#F0F1FE",
         green80: "#3ED6A4",
         green10: "#E7FAF4",
+        // Divine Domain Classes
+        defaultText: "rgb(var(--default-text) / <alpha-value>)",
+        bkg: {
+          DEFAULT: "rgb(var(--color-bkg) / <alpha-value>)", // Dark 2 && Background 2
+          2: "rgb(var(--color-bkg2) / <alpha-value>)", // Dark 3 && Background
+          3: "rgb(var(--color-bkg3) / <alpha-value>)", // Dark 4 && Secondary 6
+          tag: "rgb(var(--color-tagBkg) / <alpha-value>)", // Dark 4 && Secondary 4
+        },
+        contents: {
+          DEFAULT: "rgb(var(--color-contents) / <alpha-value>)", // Background 2
+          2: "rgb(var(--color-contents2) / <alpha-value>)", // Secondary 6
+          3: "rgb(var(--color-contents3) / <alpha-value>)", // Background
+          tag: "rgb(var(--color-tagContents) / <alpha-value>)", // Secondary 4
+        },
+        "d-red": {
+          50: "#FFECE6",
+          100: "#FF8F67",
+          200: "#FF6934",
+          300: "#FF571A",
+          DEFAULT: "#FF4401",
+          500: "#661B00",
+        },
+        "d-yellow": {
+          100: "#FDF4EA",
+          200: "#F9DFC0",
+          300: "#EEA956",
+          DEFAULT: "#EC9F41",
+          500: "#EA942C",
+        },
+        "d-blue": {
+          50: "#EBF2FC",
+          100: "#D6E4F9",
+          200: "#5D95E8",
+          300: "#4887E5",
+          DEFAULT: "#347AE2",
+          500: "#2A62B5",
+          900: "#0A182D",
+        },
+        "d-purple": {
+          100: "#F0F1FE",
+          200: "#E0E2FD",
+          300: "#848DF9",
+          DEFAULT: "#6570F7",
+          900: "#141631",
+        },
+        "d-green": {
+          100: "#E7FAF4",
+          300: "#3ED6A4",
+          DEFAULT: "#0ECC8D",
+        },
+        white: {
+          DEFAULT: "#FFFFFF",
+          500: "#f7f7f7",
+          600: "#f4f6f8",
+        },
+        "d-dark": {
+          900: "#151A1E",
+          800: "#1E252B",
+          600: "#2C353D",
+          700: "#262D34",
+        },
+        formInput: "rgb(var(--formInput) / <alpha-value>)", // White-600 Dark-800
+        mobileInput: "rgb(var(--mobileInput) / <alpha-value>)",
       },
       boxShadow: {
         "meetup-card": "0px 6px 8px 2px #3582E01F",

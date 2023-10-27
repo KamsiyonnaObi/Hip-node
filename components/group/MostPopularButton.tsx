@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from "react";
+
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import MostPopular from "./MostPopular";

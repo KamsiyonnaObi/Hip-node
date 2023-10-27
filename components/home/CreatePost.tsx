@@ -19,8 +19,6 @@ const CreatePost = () => {
         <Input
           className="caption-regular md:body-regular w-[174px] gap-[10px] rounded-[6px] bg-secondary6 py-2 pl-2.5 md:w-[553px] md:p-3"
           placeholder="Let's share what is going on..."
-          value=""
-          onChange=""
         />
         <Button
           color="orange"
