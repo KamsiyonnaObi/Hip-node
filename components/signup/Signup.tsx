@@ -57,7 +57,9 @@ const SignUp = () => {
       newFormData.append("username", username);
       newFormData.append("email", email);
       newFormData.append("password", password);
-      newFormData.append("Stage", Stage);
+      newFormData.append("stage", Stage);
+      newFormData.append("codingLevel", JSON.stringify(CodingLevel));
+      newFormData.append("interests", JSON.stringify(BusinessInterest));
 
       const response = await fetch("/api/auth/signup", {
         method: "POST",

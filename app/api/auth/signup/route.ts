@@ -8,6 +8,8 @@ export async function POST(request: Request) {
   const password = formData.get("password");
   const username = formData.get("username");
   const stage = formData.get("Stage");
+  const codingLevel = formData.get("codingLevel");
+  const interests = formData.get("interests");
 
   try {
     await dbConnect();
@@ -22,6 +24,8 @@ export async function POST(request: Request) {
         password,
         username,
         stage,
+        codingLevel,
+        interests,
       });
       return new Response(JSON.stringify({ message: "success" }), {
         status: 200,
