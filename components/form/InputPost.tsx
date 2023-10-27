@@ -194,15 +194,20 @@ export function InputPost({ darkMode }: any) {
                     },
                     content_css: darkMode ? "light" : "dark",
                     setup: (editor) => {
-                      editor.on("change", function (e) {
-                        console.log(editor.getContent());
-                      });
                       editor.ui.registry.addButton("codeofconduct", {
                         text: "Code of Conduct",
                         onAction: () => {
                           window.open("/codeofconduct", "_blank");
                         },
                       });
+                      editor.ui.registry.addContextToolbar(
+                        "codeOfConductToolbar",
+                        {
+                          predicate: () => window.innerWidth >= 1100,
+                          items: "codeOfConduct",
+                          scope: "editor",
+                        }
+                      );
                     },
                   }}
                 />

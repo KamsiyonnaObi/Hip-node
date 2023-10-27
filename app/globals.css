@@ -3,10 +3,7 @@
 @tailwind utilities;
 
 @import url("../styles/theme.css");
-
-.tox-toolbar__group > button:first-child {
-  margin-right: 115px !important;
-}
+@import url("../styles/editor.css");
 
 @layer utilities {
   .flex-center {
