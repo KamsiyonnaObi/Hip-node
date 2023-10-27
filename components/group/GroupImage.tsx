@@ -2,15 +2,14 @@ import React, { useCallback, useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useDropzone, FileRejection } from "react-dropzone";
 import Image from "next/image";
-
-type Props = {};
+import { CldUploadWidget } from "next-cloudinary";
 
 interface FileWithPreview {
   file: File;
   previewUrl: string;
 }
 
-const GroupImage: React.FC<Props> = (props: Props) => {
+const GroupImage: React.FC = () => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const onDrop = useCallback(
@@ -38,36 +37,6 @@ const GroupImage: React.FC<Props> = (props: Props) => {
 
   const [showImage1, setShowImage1] = useState(true);
 
-  const toggleImage = () => {
-    setShowImage1((prevShowImage1) => !prevShowImage1);
-  };
-
-  // async function action() {
-  //   const file = files[0];
-  //   if (!file) return;
-  //   const { timestamp, signature } = await getSignature();
-
-  //   const formData = new FormData();
-
-  //   formData.append("file", file);
-  //   formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
-  //   formData.append("signature", signature);
-  //   formData.append("timestamp", timestamp);
-  //   formData.append("folder", "next");
-
-  //   const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL;
-  //   const data = await fetch(endpoint, {
-  //     method: "POST",
-  //     body: formData,
-  //   }).then((res) => res.json());
-
-  //   await saveToDatabase({
-  //     version: data?.version,
-  //     signature: data?.signature,
-  //     public_id: data?.public_id,
-  //   });
-  // }
-
   return (
     <div className="flex items-center">
       <div className="flex gap-[.62rem] my-[1.25rem]">
@@ -77,7 +46,7 @@ const GroupImage: React.FC<Props> = (props: Props) => {
           ) : (
             <div>
               {files.map((file, index) => (
-                <div key={index} className="m-auto">
+                <div key={file.previewUrl} className="m-auto">
                   <Image
                     src={file.previewUrl}
                     alt={file.file.name}
@@ -92,18 +61,28 @@ const GroupImage: React.FC<Props> = (props: Props) => {
         </div>
       </div>
       <div className="ml-[.62rem]">
-        <div className="flex" {...getRootProps()}>
-          <button
-            className="flex gap-[.62rem] items-center"
-            onClick={toggleImage}
-          >
-            <OutlineIcon.Image1 className="dark:fill-background2 fill-secondary2 w-[22px]" />
-            <p className="text-sm-regular dark:text-background2 text-secondary2">
-              Set Profile Photo
-            </p>
-          </button>
-          <input {...getInputProps()} />
-        </div>
+        <CldUploadWidget uploadPreset="<Upload Preset>">
+          {({ open }) => {
+            function handleOnClick(e: React.MouseEvent) {
+              e.preventDefault();
+              open();
+            }
+            return (
+              <div className="flex" {...getRootProps()}>
+                <button
+                  className="flex gap-[.62rem] items-center"
+                  onClick={handleOnClick}
+                >
+                  <OutlineIcon.Image1 className="dark:fill-background2 fill-secondary2 w-[22px]" />
+                  <p className="text-sm-regular dark:text-background2 text-secondary2">
+                    Set Profile Photo
+                  </p>
+                </button>
+                <input {...getInputProps()} />
+              </div>
+            );
+          }}
+        </CldUploadWidget>
       </div>
     </div>
   );
