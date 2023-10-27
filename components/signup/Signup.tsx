@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import {
   BusinessStage,
@@ -23,6 +24,7 @@ const STAGES = {
 };
 
 const SignUp = () => {
+  const router = useRouter();
   // set initial stage to sign up
   const [flag, setFlag] = useState(true);
   const { currentStage, setCurrentStage } = useStageStore();
@@ -46,6 +48,35 @@ const SignUp = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const newFormData = new FormData();
+
+      newFormData.append("username", username);
+      newFormData.append("email", email);
+      newFormData.append("password", password);
+      newFormData.append("Stage", Stage);
+
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: newFormData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData || "unable to login");
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+      if (data.message === "success") {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const userResponse = () => {
@@ -85,6 +116,7 @@ const SignUp = () => {
         break;
       case STAGES.BUSINESS_TYPE:
         setCurrentStage("signUp"); // Loop back to the start for a continuous flow
+        handleSignUp();
         console.log(userResponse());
         break;
       default:
