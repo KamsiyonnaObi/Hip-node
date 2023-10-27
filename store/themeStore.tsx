@@ -5,11 +5,13 @@ interface ThemeStore {
   toggleTheme: () => void;
 }
 let defaultTheme = "light";
-if (
-  window.matchMedia &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-) {
-  defaultTheme = "dark";
+if (typeof window !== "undefined") {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    defaultTheme = "dark";
+  }
 }
 const useThemeState = create<ThemeStore>((set) => ({
   theme: defaultTheme,
