@@ -3,9 +3,9 @@ import NavMessage from "./NavMessage";
 
 const MessageList = () => {
   return (
-    <article className="fixed mr-[160px] mt-[530px] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:mr-0 md:mt-[60px]">
+    <article className="fixed left-[66%] top-[9%] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:mr-0 ">
       {/* nub */}
-      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[800%]">
+      <div className="absolute w-5 translate-x-[730%] translate-y-[-100%] overflow-hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
       <div className="mt-2.5 gap-2.5 rounded-[8px] bg-background p-5 text-secondary2 dark:bg-dark4 dark:text-background2">

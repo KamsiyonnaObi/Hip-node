@@ -1,13 +1,20 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import NotifCard from "./NotifCard";
 
 const Notification = () => {
+  const [select, setSelect] = useState(0);
+
+  const toggleSelect = (val: number) => {
+    setSelect(val);
+  };
   return (
-    <article className="absolute left-[57%] top-[9%] flex h-[649px] w-[589px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2">
+    <article className="fixed left-[56%] top-[9%] flex h-[649px] w-[589px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2">
       {/* nub */}
-      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[800%]">
+      <div className="absolute w-5 translate-x-[2000%] translate-y-[-100%] overflow-hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
       <div className="mt-2.5 gap-2.5 py-[30px]">
@@ -28,34 +35,127 @@ const Notification = () => {
             </div>
             <div className="flex flex-col">
               <ul className="flex flex-row justify-center gap-[26px] text-secondary2 dark:text-secondary3">
-                <li className="flex flex-col gap-2.5">
-                  <p className="display-semibold">All notifications</p>
-                  <hr className="border-blue dark:border-blue80" />
+                <li
+                  className="flex flex-col gap-2.5"
+                  onClick={() => toggleSelect(0)}
+                >
+                  <p
+                    className={`display-semibold ${
+                      select === 0 && "text-blue dark:text-blue80"
+                    }`}
+                  >
+                    All notifications
+                  </p>
+                  <hr
+                    className={`${
+                      select === 0
+                        ? "border-blue dark:border-blue80"
+                        : "border-background2 dark:border-dark3"
+                    } `}
+                  />
                 </li>
-                <li className="flex flex-col gap-2.5">
+                <li
+                  className="flex flex-col gap-2.5"
+                  onClick={() => toggleSelect(1)}
+                >
                   <div className="flex flex-row gap-2">
-                    <OutlineIcon.Like className="fill-secondary2 dark:fill-secondary3" />
-                    <p className="display-semibold">Reactions</p>
+                    <OutlineIcon.Like
+                      className={`${
+                        select === 1
+                          ? "fill-blue dark:fill-blue80"
+                          : "fill-secondary2 dark:fill-secondary3"
+                      }`}
+                    />
+                    <p
+                      className={`display-semibold ${
+                        select === 1 && "text-blue dark:text-blue80"
+                      }`}
+                    >
+                      Reactions
+                    </p>
                   </div>
-                  <hr className="border-background2 dark:border-dark3" />
+                  <hr
+                    className={`${
+                      select === 1
+                        ? "border-blue dark:border-blue80"
+                        : "border-background2 dark:border-dark3"
+                    } `}
+                  />
                 </li>
-                <li className="flex flex-col gap-2.5">
+                <li
+                  className="flex flex-col gap-2.5"
+                  onClick={() => toggleSelect(2)}
+                >
                   <div className="flex flex-row gap-2">
-                    <OutlineIcon.Comment className="fill-background stroke-secondary2 dark:fill-dark4 dark:stroke-secondary3" />
-                    <p className="display-semibold">Comments</p>
+                    <OutlineIcon.Comment
+                      className={`${
+                        select === 2
+                          ? "stroke-blue dark:stroke-blue80"
+                          : "stroke-secondary2 dark:stroke-secondary3"
+                      } fill-background dark:fill-dark4`}
+                    />
+                    <p
+                      className={`display-semibold ${
+                        select === 2 && "text-blue dark:text-blue80"
+                      }`}
+                    >
+                      Comments
+                    </p>
                   </div>
-                  <hr className="border-background2 dark:border-dark3" />
+                  <hr
+                    className={`${
+                      select === 2
+                        ? "border-blue dark:border-blue80"
+                        : "border-background2 dark:border-dark3"
+                    } `}
+                  />
                 </li>
-                <li className="flex flex-col gap-2.5">
+                <li
+                  className="flex flex-col gap-2.5"
+                  onClick={() => toggleSelect(3)}
+                >
                   <div className="flex flex-row gap-2">
-                    <OutlineIcon.Mention className="fill-secondary2 dark:fill-secondary3" />
-                    <p className="display-semibold">Mentions</p>
+                    <OutlineIcon.Mention
+                      className={`${
+                        select === 3
+                          ? "fill-blue dark:fill-blue80"
+                          : "fill-secondary2 dark:fill-secondary3"
+                      }`}
+                    />
+                    <p
+                      className={`display-semibold ${
+                        select === 3 && "text-blue dark:text-blue80"
+                      }`}
+                    >
+                      Mentions
+                    </p>
                   </div>
-                  <hr className="border-background2 dark:border-dark3" />
+                  <hr
+                    className={`${
+                      select === 3
+                        ? "border-blue dark:border-blue80"
+                        : "border-background2 dark:border-dark3"
+                    } `}
+                  />
                 </li>
-                <li className="flex flex-col gap-3">
-                  <OutlineIcon.Post className="fill-secondary2 dark:fill-secondary3" />
-                  <hr className="border-background2 dark:border-dark3" />
+                <li
+                  className="flex flex-col gap-3"
+                  onClick={() => toggleSelect(4)}
+                >
+                  <OutlineIcon.Post
+                    className={`${
+                      select === 4
+                        ? "fill-blue dark:fill-blue80"
+                        : "fill-secondary2 dark:fill-secondary3"
+                    }`}
+                  />
+                  <hr
+                    className={`${
+                      select === 4
+                        ? "border-blue dark:border-blue80"
+                        : "border-background2 dark:border-dark3"
+                    } `}
+                  />
                 </li>
               </ul>
               <hr className="border-background2 dark:border-dark3" />
