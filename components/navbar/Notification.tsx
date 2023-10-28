@@ -12,17 +12,19 @@ const Notification = () => {
     setSelect(val);
   };
   return (
-    <article className="fixed left-[56%] top-[9%] flex h-[649px] w-[589px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2">
+    <article className="fixed right-[10%] top-[6%] flex h-[582px] w-[335px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2 md:left-[56%] md:top-[9%] md:h-[649px] md:w-[589px]">
       {/* nub */}
       <div className="absolute w-5 translate-x-[2000%] translate-y-[-100%] overflow-hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
-      <div className="mt-2.5 gap-2.5 py-[30px]">
+      <div className="mt-2.5 gap-2.5 py-5 md:py-[30px]">
         <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-[30px]">
-            <div className="flex flex-col gap-[30px]">
-              <div className="flex flex-row justify-center gap-[223px]">
-                <p className="h1-semibold">3 Notifications</p>
+          <div className="flex flex-col gap-5 md:gap-[30px]">
+            <div className="flex flex-col gap-5 md:gap-[30px]">
+              <div className="flex flex-row justify-center gap-[63px] md:gap-[223px]">
+                <p className="display-semibold md:h1-semibold">
+                  3 Notifications
+                </p>
                 <Button
                   color="blackBlue"
                   className="caption-semibold md:body-semibold gap-2.5 rounded-[6px] px-[10px] py-[7px] text-center"
@@ -69,7 +71,7 @@ const Notification = () => {
                     <p
                       className={`display-semibold ${
                         select === 1 && "text-blue dark:text-blue80"
-                      }`}
+                      } hidden md:flex`}
                     >
                       Reactions
                     </p>
@@ -97,7 +99,7 @@ const Notification = () => {
                     <p
                       className={`display-semibold ${
                         select === 2 && "text-blue dark:text-blue80"
-                      }`}
+                      } hidden md:flex`}
                     >
                       Comments
                     </p>
@@ -125,7 +127,7 @@ const Notification = () => {
                     <p
                       className={`display-semibold ${
                         select === 3 && "text-blue dark:text-blue80"
-                      }`}
+                      } hidden md:flex`}
                     >
                       Mentions
                     </p>
@@ -161,7 +163,7 @@ const Notification = () => {
               <hr className="border-background2 dark:border-dark3" />
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-[30px]">
+          <div className="flex flex-col items-center justify-center gap-5 md:gap-[30px]">
             <NotifCard
               type="comment"
               avatar="/Avatar.png"

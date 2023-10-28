@@ -1,8 +1,10 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -15,7 +17,7 @@ import Notification from "./Notification";
 const Navbar = () => {
   const pathname = usePathname();
 
-  const [expanded, setExpanded] = useState(3);
+  const [expanded, setExpanded] = useState(0);
 
   const toggleMenu = () => {
     setExpanded(expanded !== 1 ? 1 : 0);
@@ -28,6 +30,20 @@ const Navbar = () => {
   const toggleNotif = () => {
     setExpanded(expanded !== 3 ? 3 : 0);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      if (currentScrollPos > 50) {
+        setExpanded(0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <article className=" flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">

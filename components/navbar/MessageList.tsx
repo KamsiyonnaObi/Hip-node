@@ -3,7 +3,7 @@ import NavMessage from "./NavMessage";
 
 const MessageList = () => {
   return (
-    <article className="fixed left-[66%] top-[9%] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:mr-0 ">
+    <article className="fixed right-[10%] top-[6%] flex h-[428px] w-[336px] flex-col rounded-[8px] bg-background dark:bg-dark4 md:top-[9%] md:mr-0 ">
       {/* nub */}
       <div className="absolute w-5 translate-x-[730%] translate-y-[-100%] overflow-hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
