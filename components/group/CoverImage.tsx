@@ -2,20 +2,27 @@
 import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
-import { CldUploadWidget, getCldImageUrl } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 
-const CoverImage: React.FC = () => {
-  const [showImage1, setShowImage1] = useState(true);
+const CoverImage: React.FC = ({ setParentFormData }) => {
+  const [imageUrl, setImageUrl] = useState("");
 
-  const url = getCldImageUrl({
-    width: 960,
-    height: 600,
-    src: "<Public ID>",
-  });
+  const updateForm = (url) => {
+    setParentFormData((prevData) => ({
+      ...prevData,
+      coverUrl: url,
+    }));
+  };
 
   return (
     <div>
-      <CldUploadWidget uploadPreset="bl8ltxxe">
+      <CldUploadWidget
+        uploadPreset="bl8ltxxe"
+        onUpload={(result: any) => {
+          updateForm(result?.info?.secure_url);
+          setImageUrl(result?.info?.secure_url);
+        }}
+      >
         {({ open }) => {
           function handleOnClick(e: React.MouseEvent) {
             e.preventDefault();
@@ -39,13 +46,13 @@ const CoverImage: React.FC = () => {
         }}
       </CldUploadWidget>
       <div className="w-full h-[8.25rem] lg:h-[10.4rem] flex justify-center items-center dark:bg-dark4 dark:border-dark4 bg-background2 border-background">
-        {showImage1 ? (
+        {!imageUrl ? (
           <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
         ) : (
           <div>
             <div>
               <Image
-                src={"/coverTemplate.png"}
+                src={imageUrl}
                 alt={"Cover"}
                 width={840}
                 height={167}

@@ -4,8 +4,6 @@ import React, { useState } from "react";
 
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
-import TagInput from "./TagInput";
-
 type Props = {};
 
 const AddGroup = (props: Props) => {
@@ -14,6 +12,7 @@ const AddGroup = (props: Props) => {
     description: "",
     admins: "",
     members: "",
+    coverUrl: "",
   });
 
   const handleChange = (
@@ -28,20 +27,21 @@ const AddGroup = (props: Props) => {
     }));
   };
 
-  // create formData object
-  const newFormData = new FormData();
-
-  // append each formData value
-  newFormData.append("groupName", formData.groupName);
-  newFormData.append("description", formData.description);
-  newFormData.append("admins", formData.admins);
-  newFormData.append("admins", formData.members);
+  const submitForm = () => {
+    // create form from state
+    //    const newFormData = new FormData();
+    // newFormData.append("groupName", formData.groupName);
+    // newFormData.append("description", formData.description);
+    // newFormData.append("admins", formData.admins);
+    // newFormData.append("admins", formData.members);
+    //submit formdata to our server
+  };
 
   return (
     <>
       <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
         <div>
-          <CoverImage />
+          <CoverImage setParentFormData={setFormData} />
         </div>
         <div>
           <GroupImage />
