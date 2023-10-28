@@ -105,9 +105,7 @@ const AddGroup = (props: Props) => {
             />
           </div>
         </div>
-        <div>
-          <TagInput />
-        </div>
+
         <div className="flex gap-[1.25rem]">
           <Link href={""}>
             <button className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]">

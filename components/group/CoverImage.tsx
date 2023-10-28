@@ -2,10 +2,16 @@
 import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
-import { CldUploadWidget } from "next-cloudinary";
+import { CldUploadWidget, getCldImageUrl } from "next-cloudinary";
 
 const CoverImage: React.FC = () => {
   const [showImage1, setShowImage1] = useState(true);
+
+  const url = getCldImageUrl({
+    width: 960,
+    height: 600,
+    src: "<Public ID>",
+  });
 
   return (
     <div>
