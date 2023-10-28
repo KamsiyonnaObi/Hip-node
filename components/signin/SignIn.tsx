@@ -62,9 +62,11 @@ const SignIn = () => {
             </Button>
           </div>
           <p className="body-regular text-secondary2 dark:text-background2">
-            Already have an account?{" "}
+            Don&apos;t have an account yet?{" "}
             <Link href={"/"}>
-              <span className="font-semibold text-red80">Sign in</span>
+              <span className="font-semibold text-red80">
+                Join the community!
+              </span>
             </Link>
           </p>
         </div>
