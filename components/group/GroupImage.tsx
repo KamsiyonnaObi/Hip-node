@@ -29,7 +29,7 @@ const GroupImage: React.FC = () => {
         </div>
       </div>
       <div className="ml-[.62rem]">
-        <CldUploadWidget uploadPreset="<Upload Preset>">
+        <CldUploadWidget uploadPreset="glxvvyd3">
           {({ open }) => {
             function handleOnClick(e: React.MouseEvent) {
               e.preventDefault();

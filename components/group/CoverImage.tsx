@@ -9,7 +9,7 @@ const CoverImage: React.FC = () => {
 
   return (
     <div>
-      <CldUploadWidget uploadPreset="<Upload Preset>">
+      <CldUploadWidget uploadPreset="bl8ltxxe">
         {({ open }) => {
           function handleOnClick(e: React.MouseEvent) {
             e.preventDefault();
