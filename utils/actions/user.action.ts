@@ -7,13 +7,12 @@ export async function newUser(user: FormData) {
     await dbConnect();
 
     // check if user already exists
-    const existingUser = await UserModel.findOne({ email: user.get("email") });
-    const existingUserByUsername = await UserModel.findOne({
-      username: user.get("username"),
+    const existingUser = await UserModel.findOne({
+      $or: [{ email: user.get("email") }, { username: user.get("username") }],
     });
 
     // create user if it doesn't exist
-    if (!existingUser || !existingUserByUsername) {
+    if (!existingUser) {
       await UserModel.create({
         email: user.get("email"),
         password: user.get("password"),
