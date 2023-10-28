@@ -1,40 +1,10 @@
-import React, { useCallback, useState } from "react";
+"use client";
+import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import { useDropzone, FileRejection } from "react-dropzone";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 
-interface FileWithPreview {
-  file: File;
-  previewUrl: string;
-}
-
 const GroupImage: React.FC = () => {
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      if (files.length === 0) {
-        // If there are no existing files, accept the new one
-        const newFiles = acceptedFiles.map((file) => {
-          const previewUrl = URL.createObjectURL(file);
-          return { file, previewUrl };
-        });
-
-        setFiles(newFiles);
-      } else {
-        const newFile = acceptedFiles[0];
-        const previewUrl = URL.createObjectURL(newFile);
-        setFiles([{ file: newFile, previewUrl }]);
-      }
-    },
-    [files]
-  );
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
-
   const [showImage1, setShowImage1] = useState(true);
 
   return (
@@ -45,17 +15,15 @@ const GroupImage: React.FC = () => {
             <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]" />
           ) : (
             <div>
-              {files.map((file, index) => (
-                <div key={file.previewUrl} className="m-auto">
-                  <Image
-                    src={file.previewUrl}
-                    alt={file.file.name}
-                    width={60}
-                    height={60}
-                    className="m-auto rounded-full"
-                  />
-                </div>
-              ))}
+              <div className="m-auto">
+                <Image
+                  src={"/Avatar.png"}
+                  alt={"Avatar"}
+                  width={60}
+                  height={60}
+                  className="m-auto rounded-full"
+                />
+              </div>
             </div>
           )}
         </div>
@@ -68,7 +36,7 @@ const GroupImage: React.FC = () => {
               open();
             }
             return (
-              <div className="flex" {...getRootProps()}>
+              <div className="flex">
                 <button
                   className="flex gap-[.62rem] items-center"
                   onClick={handleOnClick}
@@ -78,7 +46,6 @@ const GroupImage: React.FC = () => {
                     Set Profile Photo
                   </p>
                 </button>
-                <input {...getInputProps()} />
               </div>
             );
           }}

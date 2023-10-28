@@ -1,40 +1,11 @@
-import React, { useCallback, useState } from "react";
+"use client";
+import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import { useDropzone, FileRejection } from "react-dropzone";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 
-interface FileWithPreview {
-  file: File;
-  previewUrl: string;
-}
-
 const CoverImage: React.FC = () => {
-  const [files, setFiles] = useState<FileWithPreview[]>([]);
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      if (files.length === 0) {
-        const newFiles = acceptedFiles.map((file) => {
-          const previewUrl = URL.createObjectURL(file);
-          return { file, previewUrl };
-        });
-
-        setFiles(newFiles);
-      } else {
-        const newFile = acceptedFiles[0];
-        const previewUrl = URL.createObjectURL(newFile);
-        setFiles([{ file: newFile, previewUrl }]);
-      }
-    },
-    [files]
-  );
-
   const [showImage1, setShowImage1] = useState(true);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
 
   return (
     <div>
@@ -46,8 +17,7 @@ const CoverImage: React.FC = () => {
           }
           return (
             <div className="mb-[1.25rem]">
-              <div className="flex" {...getRootProps()}>
-                <input {...getInputProps()} />
+              <div className="flex">
                 <button
                   onClick={handleOnClick}
                   className="w-[6rem] flex px-[.625rem] py-[.25rem] gap-[.625rem] items-center rounded-[.25rem] bg-background2 dark:bg-dark4"
@@ -67,17 +37,15 @@ const CoverImage: React.FC = () => {
           <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
         ) : (
           <div>
-            {files.map((file, index) => (
-              <div key={index}>
-                <Image
-                  src={file.previewUrl}
-                  alt={file.file.name}
-                  width={840}
-                  height={167}
-                  className="w-[840px] h-[167px] lg:w-[1120px] lg:h-[223px]"
-                />
-              </div>
-            ))}
+            <div>
+              <Image
+                src={"/coverTemplate.png"}
+                alt={"Cover"}
+                width={840}
+                height={167}
+                className="w-[840px] h-[167px] lg:w-[1120px] lg:h-[223px]"
+              />
+            </div>
           </div>
         )}
       </div>
