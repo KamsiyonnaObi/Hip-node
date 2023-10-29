@@ -8,7 +8,7 @@ const CategoryLabel = ({ category }: { category: string }) => {
       <Checkbox id={category} />
       <label
         htmlFor={category.toLocaleLowerCase()}
-        className="text-xs font-semibold capitalize text-secondary3 peer-aria-checked:text-black peer-aria-checked:dark:text-white"
+        className="text-xs font-semibold capitalize text-secondary3 peer-aria-[checked=true]:text-black peer-aria-[checked=true]:dark:text-white"
       >
         {category}
       </label>
