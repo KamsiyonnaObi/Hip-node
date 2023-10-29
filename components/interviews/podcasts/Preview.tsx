@@ -13,7 +13,7 @@ const Preview = () => {
           <p className="text-xs font-semibold">
             Selling a Business and Scaling Another Amidst Tragedy.
           </p>
-          <address className="text-2xs not-italic text-secondary3">
+          <address className="text-xs not-italic text-secondary3">
             by Michele Hansen
           </address>
         </div>
