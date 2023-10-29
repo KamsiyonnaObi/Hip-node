@@ -49,6 +49,7 @@ import { Vector } from "./outlineIcons/Vector";
 import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
+import { Send } from "./fillIcons";
 import { ReactNode } from "react";
 
 interface Props {
@@ -69,6 +70,12 @@ const OutlineIcon = ({ children, className }: Props) => {
     </svg>
   );
 };
+
+OutlineIcon.Send = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Send />
+  </OutlineIcon>
+);
 
 OutlineIcon.ArrowLeft = ({ className }: Props) => (
   <OutlineIcon className={className}>
