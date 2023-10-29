@@ -33,6 +33,7 @@ import {
 } from "./fillIcons";
 
 import React from "react";
+import { Emoji } from "./fillIcons/Emoji";
 
 interface FillIconProps {
   children?: React.ReactNode;
@@ -208,6 +209,11 @@ FillIcon.Business = ({ className }: FillIconProps) => (
 FillIcon.Podcast = ({ className }: FillIconProps) => (
   <FillIcon className={className}>
     <Podcast />
+  </FillIcon>
+);
+FillIcon.Emoji = ({ className }: FillIconProps) => (
+  <FillIcon className={className}>
+    <Emoji />
   </FillIcon>
 );
 
