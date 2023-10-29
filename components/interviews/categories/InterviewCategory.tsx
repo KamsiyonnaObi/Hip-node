@@ -23,7 +23,7 @@ const InterviewCategory = ({ categories }: { categories: string[] }) => {
         className="flex flex-col gap-3"
       >
         <div className="flex justify-between">
-          <h3 className="h3-semibold flex">Categories</h3>
+          <p className="h3-semibold flex">Categories</p>
           <CollapsibleTrigger>
             <OutlineIcon.DownArrow
               className={cn(
