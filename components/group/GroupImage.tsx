@@ -4,20 +4,27 @@ import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 
-const GroupImage: React.FC = () => {
-  const [showImage1, setShowImage1] = useState(true);
+const GroupImage: React.FC = ({ setParentFormData }) => {
+  const [imageUrl, setImageUrl] = useState("");
+
+  const updateForm = (url: any) => {
+    setParentFormData((prevData: any) => ({
+      ...prevData,
+      groupUrl: url,
+    }));
+  };
 
   return (
     <div className="flex items-center">
       <div className="flex gap-[.62rem] my-[1.25rem]">
         <div className="rounded-full w-[3.75rem] h-[3.75rem] bg-background2 dark:bg-dark4">
-          {showImage1 ? (
+          {!imageUrl ? (
             <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]" />
           ) : (
             <div>
               <div className="m-auto">
                 <Image
-                  src={"/Avatar.png"}
+                  src={imageUrl}
                   alt={"Avatar"}
                   width={60}
                   height={60}
@@ -29,7 +36,13 @@ const GroupImage: React.FC = () => {
         </div>
       </div>
       <div className="ml-[.62rem]">
-        <CldUploadWidget uploadPreset="glxvvyd3">
+        <CldUploadWidget
+          uploadPreset="bl8ltxxe"
+          onUpload={(result: any) => {
+            updateForm(result?.info?.secure_url);
+            setImageUrl(result?.info?.secure_url);
+          }}
+        >
           {({ open }) => {
             function handleOnClick(e: React.MouseEvent) {
               e.preventDefault();

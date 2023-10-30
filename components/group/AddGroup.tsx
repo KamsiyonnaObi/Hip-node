@@ -13,6 +13,7 @@ const AddGroup = (props: Props) => {
     admins: "",
     members: "",
     coverUrl: "",
+    groupUrl: "",
   });
 
   const handleChange = (
@@ -27,15 +28,15 @@ const AddGroup = (props: Props) => {
     }));
   };
 
-  const submitForm = () => {
-    // create form from state
-    //    const newFormData = new FormData();
-    // newFormData.append("groupName", formData.groupName);
-    // newFormData.append("description", formData.description);
-    // newFormData.append("admins", formData.admins);
-    // newFormData.append("admins", formData.members);
-    //submit formdata to our server
-  };
+  // const submitForm = () => {
+  // create form from state
+  //    const newFormData = new FormData();
+  // newFormData.append("groupName", formData.groupName);
+  // newFormData.append("description", formData.description);
+  // newFormData.append("admins", formData.admins);
+  // newFormData.append("admins", formData.members);
+  // submit formdata to our server
+  // };
 
   return (
     <>
@@ -44,7 +45,7 @@ const AddGroup = (props: Props) => {
           <CoverImage setParentFormData={setFormData} />
         </div>
         <div>
-          <GroupImage />
+          <GroupImage setParentFormData={setFormData} />
         </div>
         <div className="flex flex-col gap-[.62rem]">
           <label className="text-secondary2 caption-semibold dark:text-background2">

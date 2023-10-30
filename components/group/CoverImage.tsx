@@ -7,8 +7,8 @@ import { CldUploadWidget } from "next-cloudinary";
 const CoverImage: React.FC = ({ setParentFormData }) => {
   const [imageUrl, setImageUrl] = useState("");
 
-  const updateForm = (url) => {
-    setParentFormData((prevData) => ({
+  const updateForm = (url: any) => {
+    setParentFormData((prevData: any) => ({
       ...prevData,
       coverUrl: url,
     }));
