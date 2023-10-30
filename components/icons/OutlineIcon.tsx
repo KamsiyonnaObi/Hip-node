@@ -49,8 +49,10 @@ import { Vector } from "./outlineIcons/Vector";
 import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
+import { RightArrow } from "./outlineIcons/RightArrow";
 import { Send } from "./fillIcons";
 import { ReactNode } from "react";
+import { cn } from "@/utils";
 
 interface Props {
   children?: ReactNode;
@@ -86,6 +88,14 @@ OutlineIcon.ArrowLeft = ({ className }: Props) => (
 OutlineIcon.Arrow = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Arrow />
+  </OutlineIcon>
+);
+
+OutlineIcon.RightArrow = ({ className }: Props) => (
+  <OutlineIcon
+    className={cn("w-10 stroke-black dark:stroke-secondary3", className)}
+  >
+    <RightArrow />
   </OutlineIcon>
 );
 
