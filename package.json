@@ -19,6 +19,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@tinymce/tinymce-react": "^4.3.0",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^1.41.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -29,8 +30,10 @@
     "mongoose": "^7.4.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
+    "next-cloudinary": "^4.28.0",
     "next-themes": "^0.2.1",
     "prettier": "^3.0.3",
+
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
