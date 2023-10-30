@@ -1,9 +1,11 @@
 import Image from "next/image";
 import ChatInput from "../home/ChatInput";
+import { commentData } from "@/constants/dummy";
+import { Thread } from "../home/Thread";
 
 const OpenedPost = () => {
   return (
-    <section className="flex flex-col gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">
+    <section className="flex flex-col gap-5 rounded-2xl bg-background p-5 dark:bg-dark3 md:px-[30px]">
       <div className="relative h-[103px] w-full md:h-[273px]">
         <Image
           src="/postCover.png"
@@ -12,7 +14,7 @@ const OpenedPost = () => {
           className="absolute h-auto w-full rounded-t-lg object-cover"
         />
       </div>
-      <article className="flex flex-col gap-5">
+      <article className="flex flex-col gap-5 md:mb-2.5">
         <div className="flex items-center gap-[26px]">
           <h3 className="h3-regular text-secondary5">H1</h3>
           <h1 className="display-semibold md:h1-semibold text-secondary2 dark:text-background2">
@@ -40,7 +42,6 @@ const OpenedPost = () => {
           <ChatInput />
         </div>
       </article>
-      {/* chat */}
     </section>
   );
 };

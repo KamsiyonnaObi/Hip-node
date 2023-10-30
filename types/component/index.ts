@@ -9,3 +9,18 @@ export interface ActionBarLink {
   value?: number;
   status: boolean;
 }
+
+export interface commentDataType {
+  name: string;
+  commentedDate: string;
+  lastEditDate: string;
+  imgUrl: string;
+  comment: string;
+  reply: {
+    name: string;
+    commentedDate: string;
+    lastEditDate: string;
+    imgUrl: string;
+    comment: string;
+  }[];
+}

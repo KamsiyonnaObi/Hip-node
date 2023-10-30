@@ -21,10 +21,10 @@ const ChatInput = () => {
         }
       >
         <input
-          className="w-full items-center justify-start rounded-lg bg-background text-secondary3 placeholder:text-secondary5 focus:outline-none dark:bg-dark3"
-          placeholder="Say something nice to Nishant..."
+          className="md:display-regular body-regular w-full items-center justify-start rounded-lg bg-background text-secondary3 placeholder:text-secondary5 focus:outline-none dark:bg-dark3"
+          placeholder="Say something..."
         />
-        <FillIcon.Emoji className="h-4 w-4 md:h-6 md:w-6" />
+        <FillIcon.Emoji className="h-6 w-6 shrink-0 md:h-8 md:w-8" />
       </div>
     </section>
   );
