@@ -1,9 +1,9 @@
 import MoreFrom from "@/components/home/MoreFrom";
 import PostDate from "@/components/home/PostDate";
-import Profile from "@/components/home/Profile";
 import ActionBar from "@/components/shared/ActionBar";
 import OpenedPost from "@/components/shared/OpenedPost";
 import React from "react";
+import MyProfile from "@/components/home/MyProfile";
 
 const page = () => {
   return (
@@ -13,10 +13,12 @@ const page = () => {
       </section>
       <div className="flex flex-col gap-5 md:order-1">
         <ActionBar />
+        {/* implement later- if group id existed, display GroupPostDate instead */}
         <PostDate />
       </div>
       <div className="flex flex-col gap-5 md:order-3">
-        <Profile />
+        {/* implement later- if user id is equal to someone you follow, display FollowedProfile and if the user id is equal to someone you are not following, display OtherProfile */}
+        <MyProfile />
         <MoreFrom />
       </div>
     </article>

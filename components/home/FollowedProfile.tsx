@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { profileData } from "@/constants/dummy";
+import FillIcon from "../icons/FillIcon";
 
 function monthsSinceJoined(joinedDate: Date): number {
   const today = new Date();
@@ -15,7 +16,7 @@ function monthsSinceJoined(joinedDate: Date): number {
   return Math.abs(months);
 }
 
-const Profile = () => {
+const FollowedProfile = () => {
   return (
     <section className="flex flex-col items-center justify-center gap-5 rounded-2xl bg-background px-5 py-[30px] dark:bg-dark3">
       <div className="relative h-24 w-24 rounded-full bg-yellow30">
@@ -34,10 +35,17 @@ const Profile = () => {
         <p className="text-secondary3">{profileData.job}</p>
       </div>
       <Link
-        className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+        className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md border border-blue20 bg-background text-secondary3  dark:bg-dark3"
         href={profileData.profileUrl}
       >
-        Visit Profile
+        Following
+      </Link>
+      <Link
+        className="h3-semibold flex h-11 w-72 items-center justify-center gap-5 rounded-md bg-blue text-background"
+        href={profileData.profileUrl}
+      >
+        <FillIcon.Message />
+        Message
       </Link>
       <p className="text-secondary3">
         Joined {monthsSinceJoined(new Date(profileData.joinedDate))} months ago
@@ -46,4 +54,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default FollowedProfile;

@@ -20,6 +20,7 @@ export const postData = [
     
     Each of the simple cute cat illustrations is perfect for any project (Website, Mobile App, Web app, presentations). Check it out!`,
     postedDate: "2-21-2022",
+    group: "Free Illustration Design",
   },
   {
     postId: "2",
@@ -30,6 +31,7 @@ export const postData = [
     coverImgUrl: "",
     contents: "",
     postedDate: "2-21-2022",
+    group: "",
   },
   {
     postId: "3",
@@ -39,6 +41,7 @@ export const postData = [
     coverImgUrl: "",
     contents: "",
     postedDate: "2-21-2022",
+    group: "",
   },
   {
     postId: "4",
@@ -48,5 +51,6 @@ export const postData = [
     coverImgUrl: "",
     contents: "",
     postedDate: "2-21-2022",
+    group: "",
   },
 ];

@@ -9,7 +9,7 @@ const ActionBar = () => {
     <section className="flex w-full flex-col items-start justify-start gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">
       {actionBarLinks.map((a: ActionBarLink) => {
         return (
-          <button key={a.label} className="flex gap-[14px] rounded-md ">
+          <button key={a.label} className="flex gap-[14px] rounded-md">
             <div
               className={clsx("h-7 w-7 rounded-md p-1", {
                 "bg-red10": a.status,
