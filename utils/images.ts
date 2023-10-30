@@ -1,0 +1,14 @@
+export { default as Avatar } from "@/public/Avatar.png";
+export { default as bird } from "@/public/bird.png";
+export { default as CompanyLogo } from "@/public/CompanyLogo.png";
+export { default as coverTemplate } from "@/public/coverTemplate.png";
+export { default as Ellipse } from "@/public/Ellipse.png";
+export { default as ExampleAvatar } from "@/public/ExampleAvatar.png";
+export { default as GroupCover } from "@/public/GroupCover.png";
+export { default as GroupImage } from "@/public/GroupImage.png";
+export { default as HostBG } from "@/public/host_bg.png";
+export { default as PodcastDefault } from "@/public/PodcastDefault.png";
+export { default as PostAvatar } from "@/public/PostAvatar.png";
+export { default as PostImage } from "@/public/PodcastDefault.png";
+export { default as InterviewImage } from "@/public/InterviewImage.png";
+export { default as InterviewIllustration } from "@/public/InterviewIllustration.png";
