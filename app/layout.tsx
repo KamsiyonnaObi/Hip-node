@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 // eslint-disable-next-line camelcase
 import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/providers/ThemeProvider";
+import { cn } from "@/utils";
 
 const SourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
@@ -22,9 +24,11 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession();
   return (
-    <html lang="en">
-      <body className={SourceSansPro.className}>
-        <NextAuthProvider session={session}>{children}</NextAuthProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(SourceSansPro.className, "bg-bkg")}>
+        <NextAuthProvider session={session}>
+          <Providers>{children}</Providers>
+        </NextAuthProvider>
       </body>
     </html>
   );

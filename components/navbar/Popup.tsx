@@ -1,9 +1,10 @@
 import React from "react";
 import FillIcon from "../icons/FillIcon";
-import useThemeState from "@/store/themeStore";
+import { useTheme } from "next-themes";
 
 const Popup = () => {
-  const { theme, toggleTheme } = useThemeState();
+  const { resolvedTheme, setTheme } = useTheme();
+
   return (
     <div className="fixed mr-[160px] mt-[230px] flex h-[182px] w-[182px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mr-0 md:mt-[260px]">
       {/* nub */}
@@ -26,13 +27,13 @@ const Popup = () => {
             <div className=" flex flex-row gap-[6px]">
               <div
                 className="w-6 gap-2.5 rounded-[15px] bg-background p-[4px] dark:bg-dark2"
-                onClick={() => theme === "dark" && toggleTheme()}
+                onClick={() => resolvedTheme === "dark" && setTheme("light")}
               >
                 <FillIcon.Sun className="h-4 w-4 fill-primary dark:fill-dark4" />
               </div>
               <div
                 className="gap-2.5 rounded-[15px] bg-background2 p-[4px] dark:bg-dark4"
-                onClick={() => theme === "light" && toggleTheme()}
+                onClick={() => resolvedTheme === "light" && setTheme("dark")}
               >
                 <FillIcon.Moon className="h-4 w-4 fill-secondary5 dark:fill-secondary5" />
               </div>
