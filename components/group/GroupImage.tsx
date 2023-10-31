@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
+interface GroupImageProps {
+  setParentFormData: (prevData: any) => void;
+}
 
-const GroupImage: React.FC = ({ setParentFormData }) => {
+const GroupImage: React.FC<GroupImageProps> = ({ setParentFormData }) => {
   const [imageUrl, setImageUrl] = useState("");
 
   const updateForm = (url: any) => {
