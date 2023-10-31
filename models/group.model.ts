@@ -2,25 +2,24 @@ import { Schema, models, model, Document } from "mongoose";
 
 export interface IGroup extends Document {
   title: string;
-  image: string;
+  coverUrl: string;
+  groupUrl: string;
   userId: string;
   createdAt: Date;
-  descTitle: string;
-  desc: string;
+  description: string;
   admins: String[];
   members: String[];
 }
 
 const GroupSchema = new Schema({
   title: { type: String, required: true },
-  image: { type: String },
-  tags: { type: [String] },
-  content: { type: String, required: true },
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  coverUrl: { type: String, required: true },
+  groupUrl: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  views: { type: Number, default: 0 },
-  likes: { type: Number, default: 0 },
-  comments: { type: Number, default: 0 },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  description: { type: String, required: true },
+  admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  members: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 

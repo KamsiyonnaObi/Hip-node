@@ -3,11 +3,15 @@ import React, { useState } from "react";
 
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
+import { GroupSchema } from "@/lib/validations";
+import { formDataToObject } from "@/utils";
+import { createGroup } from "@/utils/actions/group.action";
+
 type Props = {};
 
 const AddGroup = (props: Props) => {
   const [formData, setFormData] = useState({
-    groupName: "",
+    title: "",
     description: "",
     admins: "",
     members: "",
@@ -31,29 +35,20 @@ const AddGroup = (props: Props) => {
 
   const submitForm = async () => {
     const newFormData = new FormData();
-    newFormData.append("groupName", formData.groupName);
+    newFormData.append("title", formData.title);
+    newFormData.append("coverUrl", formData.coverUrl);
+    newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
     newFormData.append("admins", formData.admins);
     newFormData.append("members", formData.members);
+    const dataObject = formDataToObject(newFormData);
 
     try {
-      setSubmitStatus("Submitting...");
-
-      const response = await fetch("http://localhost:3000", {
-        method: "POST",
-        body: newFormData,
-      });
-
-      if (response.ok) {
-        setSubmitStatus("Post created successfully");
-        console.log("Post created successfully");
-      } else {
-        setSubmitStatus("Failed to create post");
-        console.error("Failed to create post");
-      }
-    } catch (error) {
-      setSubmitStatus("Error: Network error");
-      console.error("Error:", error);
+      const validatedData = GroupSchema.parse(dataObject);
+      const result = await createGroup(validatedData);
+      console.log(JSON.parse(result));
+    } catch (e) {
+      // form isn't valid
     }
   };
 
@@ -74,9 +69,9 @@ const AddGroup = (props: Props) => {
             <div>
               <input
                 type="text"
-                name="groupName"
+                name="title"
                 placeholder="Name..."
-                value={formData.groupName}
+                value={formData.title}
                 onChange={handleChange}
                 className="border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
               />
