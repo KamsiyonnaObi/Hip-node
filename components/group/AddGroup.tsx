@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 
 import CoverImage from "./CoverImage";
@@ -28,15 +27,35 @@ const AddGroup = (props: Props) => {
     }));
   };
 
-  // const submitForm = () => {
-  // create form from state
-  //    const newFormData = new FormData();
-  // newFormData.append("groupName", formData.groupName);
-  // newFormData.append("description", formData.description);
-  // newFormData.append("admins", formData.admins);
-  // newFormData.append("admins", formData.members);
-  // submit formdata to our server
-  // };
+  const [submitStatus, setSubmitStatus] = useState("");
+
+  const submitForm = async () => {
+    const newFormData = new FormData();
+    newFormData.append("groupName", formData.groupName);
+    newFormData.append("description", formData.description);
+    newFormData.append("admins", formData.admins);
+    newFormData.append("members", formData.members);
+
+    try {
+      setSubmitStatus("Submitting...");
+
+      const response = await fetch("http://localhost:3000", {
+        method: "POST",
+        body: newFormData,
+      });
+
+      if (response.ok) {
+        setSubmitStatus("Post created successfully");
+        console.log("Post created successfully");
+      } else {
+        setSubmitStatus("Failed to create post");
+        console.error("Failed to create post");
+      }
+    } catch (error) {
+      setSubmitStatus("Error: Network error");
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <>
@@ -47,76 +66,83 @@ const AddGroup = (props: Props) => {
         <div>
           <GroupImage setParentFormData={setFormData} />
         </div>
-        <div className="flex flex-col gap-[.62rem]">
-          <label className="text-secondary2 caption-semibold dark:text-background2">
-            Group Name
-          </label>
-          <div>
-            <input
-              type="text"
-              name="groupName"
-              placeholder="Name..."
-              value={formData.groupName}
-              onChange={handleChange}
-              className="border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
-            />
+        <form>
+          <div className="flex flex-col gap-[.62rem]">
+            <label className="text-secondary2 caption-semibold dark:text-background2">
+              Group Name
+            </label>
+            <div>
+              <input
+                type="text"
+                name="groupName"
+                placeholder="Name..."
+                value={formData.groupName}
+                onChange={handleChange}
+                className="border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+              />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-[.62rem]">
-          <label className="text-secondary2 caption-semibold dark:text-background2">
-            Description
-          </label>
-          <div>
-            <textarea
-              name="description"
-              placeholder="Provide a short description..."
-              value={formData.description}
-              onChange={handleChange}
-              className="border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 top-[0rem] flex h-[6.875rem] w-full min-w-[18.4375rem] max-w-[52.5rem] rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] lg:h-[9rem]"
-            />
+          <div className="flex flex-col gap-[.62rem]">
+            <label className="text-secondary2 caption-semibold dark:text-background2">
+              Description
+            </label>
+            <div>
+              <textarea
+                name="description"
+                placeholder="Provide a short description..."
+                value={formData.description}
+                onChange={handleChange}
+                className="border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 top-[0rem] flex h-[6.875rem] w-full min-w-[18.4375rem] max-w-[52.5rem] rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] lg:h-[9rem]"
+              />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-[.62rem]">
-          <label className="text-secondary2 caption-semibold dark:text-background2">
-            Add admins
-          </label>
-          <div>
-            <input
-              type="text"
-              name="admins"
-              placeholder="Add admins..."
-              value={formData.admins}
-              onChange={handleChange}
-              className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
-            />
+          <div className="flex flex-col gap-[.62rem]">
+            <label className="text-secondary2 caption-semibold dark:text-background2">
+              Add admins
+            </label>
+            <div>
+              <input
+                type="text"
+                name="admins"
+                placeholder="Add admins..."
+                value={formData.admins}
+                onChange={handleChange}
+                className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+              />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-[.62rem]">
-          <label className="text-secondary2 caption-semibold dark:text-background2">
-            Add members
-          </label>
-          <div>
-            <input
-              type="text"
-              name="members"
-              placeholder="Add members..."
-              value={formData.members}
-              onChange={handleChange}
-              className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
-            />
+          <div className="flex flex-col gap-[.62rem]">
+            <label className="text-secondary2 caption-semibold dark:text-background2">
+              Add members
+            </label>
+            <div>
+              <input
+                type="text"
+                name="members"
+                placeholder="Add members..."
+                value={formData.members}
+                onChange={handleChange}
+                className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="flex gap-[1.25rem]">
-          <Link href={""}>
-            <button className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]">
-              <p className="body-semibold  text-background">Create</p>
+          <div className="flex gap-[1.25rem]">
+            <button
+              type="button"
+              onClick={submitForm}
+              className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]"
+            >
+              <p className="body-semibold text-background">Create</p>
             </button>
-          </Link>
-          <button className="my-auto flex items-center">
-            <p className="body-semibold  text-secondary3">Cancel</p>
-          </button>
-        </div>
+            <button className="my-auto flex items-center">
+              <p className="body-semibold  text-secondary3">Cancel</p>
+            </button>
+          </div>
+          <p className="body-semibold text-secondary3 mt-[.1rem]">
+            {submitStatus}
+          </p>
+        </form>
       </div>
     </>
   );
