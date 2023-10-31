@@ -7,9 +7,7 @@ import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
 import { createGroup } from "@/utils/actions/group.action";
 
-type Props = {};
-
-const AddGroup = (props: Props) => {
+const AddGroup = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",

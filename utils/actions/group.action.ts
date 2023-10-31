@@ -10,19 +10,19 @@ export async function createGroup(params: Partial<IGroup>) {
   try {
     await dbConnect();
     // get the current user
-    let currentUser = await getServerSession();
-    let {email} = currentUser?.user;
+    const currentUser: any = await getServerSession();
+    const {email} = currentUser?.user;
     const User = await UserModel.findOne({email});
 
 
 
     
-    let validData = GroupSchema.parse(params);
+    const validData = GroupSchema.parse(params);
     console.log(User);
     // return an error if zod validation fails
 
 
-    const { title, createdAt, coverUrl, groupUrl, userId, description, admins, members } = params;
+    const { title, createdAt, coverUrl, groupUrl, description } = params;
 
 
     const group = await Group.create({
