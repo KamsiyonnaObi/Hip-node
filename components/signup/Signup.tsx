@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { newUser } from "@/utils/actions/user.action";
+import { emailSchema, passwordSchema } from "@/lib/validations";
 
 import {
   BusinessStage,
@@ -30,6 +31,9 @@ const SignUp = () => {
   // set initial stage to sign up
   const [flag, setFlag] = useState(true);
   const { currentStage, setCurrentStage } = useStageStore();
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
   const {
     username,
     email,
@@ -41,6 +45,7 @@ const SignUp = () => {
     updateEmail,
     updatePassword,
   } = useSignUpStore();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -52,13 +57,14 @@ const SignUp = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const validator = () => {
+  const disableButton = () => {
     if (flag) {
       return !formData.username;
     } else {
       return !formData.email || !formData.password;
     }
   };
+
   const handleSignUp = async () => {
     try {
       const newFormData = new FormData();
@@ -80,15 +86,26 @@ const SignUp = () => {
     }
   };
 
-  const userResponse = () => {
-    return {
-      username,
-      email,
-      password,
-      Stage,
-      CodingLevel,
-      BusinessInterest,
-    };
+  const signupstagetwo = () => {
+    try {
+      emailSchema.parse(formData.email);
+    } catch (error) {
+      setErrors((prevErrors) => ({ ...prevErrors, email: error.errors[0] }));
+      console.log("email: ", errors.email);
+      return;
+    }
+    try {
+      passwordSchema.parse(formData.password);
+    } catch (error) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: error.errors[0] }));
+      console.log("password: ", errors.password);
+      return;
+    }
+
+    updateEmail(formData.email);
+    updatePassword(formData.password);
+    setFlag(true);
+    setCurrentStage("businessStage");
   };
 
   const signUpStage = () => {
@@ -98,10 +115,7 @@ const SignUp = () => {
         setFlag(false);
         break;
       case false:
-        updateEmail(formData.email);
-        updatePassword(formData.password);
-        setFlag(true);
-        setCurrentStage("businessStage");
+        signupstagetwo();
         break;
     }
   };
@@ -118,7 +132,6 @@ const SignUp = () => {
       case STAGES.BUSINESS_TYPE:
         setCurrentStage("signUp"); // Loop back to the start for a continuous flow
         handleSignUp();
-        console.log(userResponse());
         break;
       default:
         setCurrentStage("signUp");
@@ -152,7 +165,7 @@ const SignUp = () => {
                   <Input
                     name="username"
                     divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
-                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    className=" w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.username}
                     placeholder="e.g Hipnode123"
@@ -163,11 +176,12 @@ const SignUp = () => {
                   <h1 className="h3-semibold text-secondary2 dark:text-background2">
                     Email
                   </h1>
+                  {/* {errors.email && <p className="text-red">{errors.email}</p>} */}
                   <Input
                     name="email"
                     type="email"
                     divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
-                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.email}
                     placeholder="hello@gmail.com"
@@ -175,11 +189,14 @@ const SignUp = () => {
                   <h1 className="h3-semibold text-secondary2 dark:text-background2">
                     Password
                   </h1>
+                  {/* {errors.password && (
+                    <p className="text-red">{errors.password}</p>
+                  )} */}
                   <Input
                     name="password"
                     type="password"
                     divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
-                    className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+                    className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.password}
                     placeholder="uikit.to074#"
@@ -190,7 +207,7 @@ const SignUp = () => {
             <div>
               <Button
                 onClick={signUpStage}
-                disabled={validator()}
+                disabled={disableButton()}
                 className="px-10 py-2.5"
               >
                 Next
