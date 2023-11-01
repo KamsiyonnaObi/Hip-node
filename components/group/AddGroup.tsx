@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
-
+import React, { useState, ChangeEvent } from "react";
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
 import { createGroup } from "@/utils/actions/group.action";
+import { z } from "zod";
 
 const AddGroup = () => {
   const [formData, setFormData] = useState({
@@ -17,21 +17,32 @@ const AddGroup = () => {
     groupUrl: "",
   });
 
+  // Initialize validationErrors as an empty object
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
+
   const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    // Clear the validation error for the changed input field
+    setValidationErrors((errors) => ({
+      ...errors,
+      [name]: "",
+    }));
   };
 
-  const [submitStatus, setSubmitStatus] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<string>("");
 
   const submitForm = async () => {
+    setSubmitStatus("Submitting"); // Set submit status to "Submitting"
+
     const newFormData = new FormData();
     newFormData.append("title", formData.title);
     newFormData.append("coverUrl", formData.coverUrl);
@@ -41,14 +52,33 @@ const AddGroup = () => {
     newFormData.append("members", formData.members);
     const dataObject = formDataToObject(newFormData);
 
-try {
+    try {
       const validatedData = GroupSchema.parse(dataObject);
       const result = await createGroup(validatedData);
-      
+
+      setSubmitStatus("Success");
+
+      // Clear any previous validation errors
+      setValidationErrors({});
     } catch (e) {
       if (e instanceof z.ZodError) {
         console.log(e.issues);
-        // use e.issues to show validation on the client side. 
+
+        // Create a new errors object to store validation issues
+        const errors: Record<string, string> = {};
+
+        e.issues.forEach((issue) => {
+          const fieldName = issue.path[0];
+
+          const errorMessage = issue.message;
+
+          errors[fieldName] = errorMessage;
+        });
+
+        // Set the validation errors to the new errors object
+        setValidationErrors(errors);
+
+        setSubmitStatus("Error");
       }
     }
   };
@@ -74,8 +104,15 @@ try {
                 placeholder="Name..."
                 value={formData.title}
                 onChange={handleChange}
-                className="border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.title ? "border-red" : ""
+                }`}
               />
+              {validationErrors.title && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.title}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -88,8 +125,15 @@ try {
                 placeholder="Provide a short description..."
                 value={formData.description}
                 onChange={handleChange}
-                className="border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 top-[0rem] flex h-[6.875rem] w-full min-w-[18.4375rem] max-w-[52.5rem] rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] lg:h-[9rem]"
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.description ? "border-red" : ""
+                }`}
               />
+              {validationErrors.description && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.description}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -103,8 +147,15 @@ try {
                 placeholder="Add admins..."
                 value={formData.admins}
                 onChange={handleChange}
-                className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.admins ? "border-red" : ""
+                }`}
               />
+              {validationErrors.admins && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.admins}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -118,11 +169,17 @@ try {
                 placeholder="Add members..."
                 value={formData.members}
                 onChange={handleChange}
-                className="border-background2 dark:border-dark4 flex min-w-[18.4375rem] w-full max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3"
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.members ? "border-red" : ""
+                }`}
               />
+              {validationErrors.members && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.members}
+                </p>
+              )}
             </div>
           </div>
-
           <div className="flex gap-[1.25rem]">
             <button
               type="button"
@@ -135,8 +192,16 @@ try {
               <p className="body-semibold  text-secondary3">Cancel</p>
             </button>
           </div>
-          <p className="body-semibold text-secondary3 mt-[.1rem]">
-            {submitStatus}
+          <p
+            className={`text-xs-regular mt-[.1rem] ${
+              submitStatus === "Success" ? "text-green" : "text-red"
+            }`}
+          >
+            {submitStatus === "Submitting"
+              ? "Submitting your request..."
+              : submitStatus === "Success"
+              ? "Form submitted successfully!"
+              : Object.values(validationErrors).join(" ")}
           </p>
         </form>
       </div>
