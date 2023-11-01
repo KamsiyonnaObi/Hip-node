@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 import Group, { IGroup } from "@/models/group.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
-import {GroupSchema} from "@/lib/validations"
 
 export async function createGroup(params: Partial<IGroup>) {
   try {
@@ -15,16 +14,7 @@ export async function createGroup(params: Partial<IGroup>) {
     const {email} = currentUser?.user;
     const User = await UserModel.findOne({email});
 
-
-
-    const validData = GroupSchema.parse(params);
-    if (!validData) {
-      throw new Error("Invalid data. Please check your input.");
-    }
-
-
     const { title, createdAt, coverUrl, groupUrl, description } = params;
-
 
     const group = await Group.create({
         title,

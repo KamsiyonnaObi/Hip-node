@@ -31,7 +31,6 @@ const AddGroup = () => {
       [name]: value,
     }));
 
-    // Clear the validation error for the changed input field
     setValidationErrors((errors) => ({
       ...errors,
       [name]: "",
@@ -41,7 +40,7 @@ const AddGroup = () => {
   const [submitStatus, setSubmitStatus] = useState<string>("");
 
   const submitForm = async () => {
-    setSubmitStatus("Submitting"); // Set submit status to "Submitting"
+    setSubmitStatus("Submitting");
 
     const newFormData = new FormData();
     newFormData.append("title", formData.title);
@@ -58,13 +57,11 @@ const AddGroup = () => {
 
       setSubmitStatus("Success");
 
-      // Clear any previous validation errors
       setValidationErrors({});
     } catch (e) {
       if (e instanceof z.ZodError) {
         console.log(e.issues);
 
-        // Create a new errors object to store validation issues
         const errors: Record<string, string> = {};
 
         e.issues.forEach((issue) => {
@@ -75,7 +72,6 @@ const AddGroup = () => {
           errors[fieldName] = errorMessage;
         });
 
-        // Set the validation errors to the new errors object
         setValidationErrors(errors);
 
         setSubmitStatus("Error");
