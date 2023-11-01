@@ -17,10 +17,10 @@ export async function createGroup(params: Partial<IGroup>) {
 
 
 
-    
     const validData = GroupSchema.parse(params);
-    console.log(User);
-    // return an error if zod validation fails
+    if (!validData) {
+      throw new Error("Invalid data. Please check your input.");
+    }
 
 
     const { title, createdAt, coverUrl, groupUrl, description } = params;
@@ -35,33 +35,49 @@ export async function createGroup(params: Partial<IGroup>) {
         description,
         
     });
-    return JSON.stringify(group);
-
+    if (group) {
+      return JSON.stringify({ success: true, message: "Group created successfully!" });
+    } else {
+      throw new Error("Failed to create a group.");
+    }
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to create a group.");
+    return { success: false, message: "An error occurred while creating the group." };
   }
+  
 }
 
 export async function getGroupById(groupId: number) {
   try {
     await dbConnect();
     const group = await Group.findById(groupId);
-    return group;
+
+    if (group) {
+      return { success: true, data: group };
+    } else {
+      throw new Error("Group not found.");
+    }
   } catch (error) {
     console.log(error);
-    throw error;
+    return { success: false, message: "An error occurred while retrieving the group." };
   }
 }
+
 
 
 export async function deleteGroup(groupId: number) {
   try {
     await dbConnect();
     const deletedGroup = await Group.findByIdAndDelete(groupId);
-    return deletedGroup;
+    
+    if (deletedGroup) {
+      return { success: true, message: "Group deleted successfully" };
+    } else {
+      throw new Error("Failed to delete the group.");
+    }
   } catch (error) {
     console.log(error);
-    throw error;
+    return { success: false, message: "An error occurred while deleting the group." };
   }
 }
+
