@@ -89,15 +89,21 @@ const SignUp = () => {
   const signupstagetwo = () => {
     try {
       emailSchema.parse(formData.email);
-    } catch (error) {
-      setErrors((prevErrors) => ({ ...prevErrors, email: error.errors[0] }));
+    } catch (error: any) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: error.issues[0].message,
+      }));
       console.log("email: ", errors.email);
       return;
     }
     try {
       passwordSchema.parse(formData.password);
-    } catch (error) {
-      setErrors((prevErrors) => ({ ...prevErrors, password: error.errors[0] }));
+    } catch (error: any) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: error.issues[0].message,
+      }));
       console.log("password: ", errors.password);
       return;
     }
@@ -164,7 +170,7 @@ const SignUp = () => {
                   </h1>
                   <Input
                     name="username"
-                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
                     className=" w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.username}
@@ -176,11 +182,11 @@ const SignUp = () => {
                   <h1 className="h3-semibold text-secondary2 dark:text-background2">
                     Email
                   </h1>
-                  {/* {errors.email && <p className="text-red">{errors.email}</p>} */}
+                  {errors.email && <p className="text-red">{errors.email}</p>}
                   <Input
                     name="email"
                     type="email"
-                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:dark:bg-dark2 md:bg-background2 dark:bg-dark3"
                     className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.email}
@@ -189,13 +195,13 @@ const SignUp = () => {
                   <h1 className="h3-semibold text-secondary2 dark:text-background2">
                     Password
                   </h1>
-                  {/* {errors.password && (
+                  {errors.password && (
                     <p className="text-red">{errors.password}</p>
-                  )} */}
+                  )}
                   <Input
                     name="password"
                     type="password"
-                    divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+                    divClassName="bg-background rounded-lg px-5 py-[13px] md:dark:bg-dark2 md:bg-background2 dark:bg-dark3"
                     className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                     onChange={handleChange}
                     value={formData.password}
