@@ -1,10 +1,11 @@
 "use server";
 
+import { getServerSession } from "next-auth";
+
 import Group, { IGroup } from "@/models/group.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 import {GroupSchema} from "@/lib/validations"
-import { getServerSession } from "next-auth";
 
 export async function createGroup(params: Partial<IGroup>) {
   try {
