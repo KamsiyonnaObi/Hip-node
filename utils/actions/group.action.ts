@@ -13,7 +13,6 @@ export async function createGroup(params: Partial<IGroup>) {
     const currentUser: any = await getServerSession();
     const {email} = currentUser?.user;
     const User = await UserModel.findOne({email});
-
     const { title, createdAt, coverUrl, groupUrl, description } = params;
 
     const group = await Group.create({
@@ -26,7 +25,7 @@ export async function createGroup(params: Partial<IGroup>) {
         
     });
     if (group) {
-      return JSON.stringify({ success: true, message: "Group created successfully!" });
+      return JSON.stringify({ success: true, message: "Group created successfully!",id:group._id});
     } else {
       throw new Error("Failed to create a group.");
     }

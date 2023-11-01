@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
@@ -8,6 +9,7 @@ import { createGroup } from "@/utils/actions/group.action";
 import { z } from "zod";
 
 const AddGroup = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -16,8 +18,7 @@ const AddGroup = () => {
     coverUrl: "",
     groupUrl: "",
   });
-
-  // Initialize validationErrors as an empty object
+  const [submitStatus, setSubmitStatus] = useState<string>("");
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
@@ -37,8 +38,6 @@ const AddGroup = () => {
     }));
   };
 
-  const [submitStatus, setSubmitStatus] = useState<string>("");
-
   const submitForm = async () => {
     setSubmitStatus("Submitting");
 
@@ -47,17 +46,23 @@ const AddGroup = () => {
     newFormData.append("coverUrl", formData.coverUrl);
     newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
-    newFormData.append("admins", formData.admins);
-    newFormData.append("members", formData.members);
+
+    const admins = formData.admins.split(",");
+    const members = formData.members.split(",");
+
+    newFormData.append("admins", JSON.stringify(admins));
+    newFormData.append("members", JSON.stringify(members));
+
     const dataObject = formDataToObject(newFormData);
 
     try {
       const validatedData = GroupSchema.parse(dataObject);
-      const result = await createGroup(validatedData);
-
-      setSubmitStatus("Success");
-
-      setValidationErrors({});
+      const response = JSON.parse(await createGroup(validatedData));
+      if (response.success) {
+        setSubmitStatus("Success");
+        setValidationErrors({});
+        setTimeout(() => router.push(`/groups/${response.id}`), 500);
+      }
     } catch (e) {
       if (e instanceof z.ZodError) {
         console.log(e.issues);
@@ -78,6 +83,18 @@ const AddGroup = () => {
       }
     }
   };
+  function formStatus() {
+    switch (submitStatus) {
+      case "":
+        return null;
+      case "Success":
+        return "Successfully submitted form";
+      case "Submitting":
+        return "Submitting form...";
+      default:
+        return "Errors in form";
+    }
+  }
 
   return (
     <>
@@ -193,11 +210,7 @@ const AddGroup = () => {
               submitStatus === "Success" ? "text-green" : "text-red"
             }`}
           >
-            {submitStatus === "Submitting"
-              ? "Submitting your request..."
-              : submitStatus === "Success"
-              ? "Form submitted successfully!"
-              : Object.values(validationErrors).join(" ")}
+            {formStatus()}
           </p>
         </form>
       </div>
