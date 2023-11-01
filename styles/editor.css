@@ -1,0 +1,12 @@
+@media (min-width: 1100px) {
+  .tox-toolbar__group > button:first-child {
+    margin-right: 115px !important;
+    display: inline !important;
+  }
+}
+
+@media (max-width: 1099px) {
+  .tox-toolbar__group > button:first-child {
+    display: none !important;
+  }
+}

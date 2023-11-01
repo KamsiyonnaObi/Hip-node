@@ -13,6 +13,7 @@ type Props = {
   disabled?: boolean;
   rounded?: boolean;
   full?: boolean;
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
 };
 
@@ -24,6 +25,7 @@ export const Button = ({
   full = false,
   rounded = false,
   color = "orange",
+  type,
 }: Props) => {
   const colorMap = {
     orange: "bg-red80",
@@ -54,6 +56,7 @@ export const Button = ({
       } h3-semibold rounded-lg ${colorMap[color]} ${
         textColorMap[color]
       } disabled:bg-red60`}
+      type={type}
     >
       {children}
     </button>
