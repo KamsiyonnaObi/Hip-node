@@ -50,6 +50,8 @@ import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
 import { ReactNode } from "react";
+import { VerticalLine } from "./outlineIcons/VerticalLine";
+import { Curve } from "./outlineIcons/Curve";
 
 interface Props {
   children?: ReactNode;
@@ -373,6 +375,18 @@ OutlineIcon.Voice = ({ className }: Props) => (
 OutlineIcon.Web = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Web />
+  </OutlineIcon>
+);
+
+OutlineIcon.VerticalLine = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <VerticalLine />
+  </OutlineIcon>
+);
+
+OutlineIcon.Curve = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Curve />
   </OutlineIcon>
 );
 

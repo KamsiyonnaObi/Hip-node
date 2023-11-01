@@ -27,16 +27,19 @@ export const Comment = ({
   }
   return (
     <section className="flex gap-5 bg-background dark:bg-dark3">
-      <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
-        <Image
-          className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 md:h-10 md:w-10"
-          src={imgUrl}
-          alt="profile"
-          width="80"
-          height="80"
-        />
+      <div className="flex w-11 flex-col">
+        <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
+          <Image
+            className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 md:h-10 md:w-10"
+            src={imgUrl}
+            alt="profile"
+            width="80"
+            height="80"
+          />
+        </div>
+        <OutlineIcon.VerticalLine className="w-11 grow basis-0 stroke-secondary5" />
       </div>
-      <section className="flex flex-col gap-[15px] bg-background dark:bg-dark3">
+      <section className="flex flex-col gap-[15px] bg-background pb-5 dark:bg-dark3 md:pb-[30px]">
         <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 bg-background p-[15px] dark:bg-dark3">
           <p className="md:body-regular caption-regular text-secondary2 dark:text-background2 ">
             <span className="body-semibold md:display-semibold ">{name} </span>•{" "}
