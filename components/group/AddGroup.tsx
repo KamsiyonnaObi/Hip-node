@@ -41,12 +41,15 @@ const AddGroup = () => {
     newFormData.append("members", formData.members);
     const dataObject = formDataToObject(newFormData);
 
-    try {
+try {
       const validatedData = GroupSchema.parse(dataObject);
       const result = await createGroup(validatedData);
-      console.log(JSON.parse(result));
+      
     } catch (e) {
-      // form isn't valid
+      if (e instanceof z.ZodError) {
+        console.log(e.issues);
+        // use e.issues to show validation on the client side. 
+      }
     }
   };
 
