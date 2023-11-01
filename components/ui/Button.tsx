@@ -2,7 +2,14 @@ import React from "react";
 type Props = {
   children?: React.ReactNode;
   className?: string;
-  color?: "orange" | "blue" | "blackWhite" | "white" | "gray" | "transparent";
+  color?:
+    | "orange"
+    | "blue"
+    | "blackWhite"
+    | "white"
+    | "gray"
+    | "transparent"
+    | "blackBlue";
   disabled?: boolean;
   rounded?: boolean;
   full?: boolean;
@@ -27,6 +34,7 @@ export const Button = ({
     gray: "bg-background dark:bg-dark4",
     blackWhite: "bg-background2 dark:bg-dark4",
     transparent: "bg-transparent",
+    blackBlue: "bg-blue10 dark:bg-dark3",
   };
   const textColorMap = {
     orange: "text-background2",
@@ -36,6 +44,7 @@ export const Button = ({
     white: "text-red80",
     blackWhite: "text-secondary3",
     transparent: "text-secondary3",
+    blackBlue: "text-blue dark:text-blue80",
   };
 
   return (
