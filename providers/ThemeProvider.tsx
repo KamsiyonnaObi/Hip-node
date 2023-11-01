@@ -1,11 +1,12 @@
 "use client";
-import useThemeState from "@/store/themeStore";
-import React, { ReactNode } from "react";
 
-const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const { theme } = useThemeState();
+import { ThemeProvider } from "next-themes";
+import { ReactNode } from "react";
 
-  return <div className={theme}>{children} </div>;
-};
-
-export default ThemeProvider;
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider enableSystem attribute="data-theme">
+      {children}
+    </ThemeProvider>
+  );
+}

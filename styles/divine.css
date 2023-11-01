@@ -26,6 +26,9 @@
     --mobileInput: 255 255 255;
     /* Secondary 2  */
     --default-text: 63 67 84;
+
+    /* Interview Post Text Color*/
+    --interview-text: #f7f7f7;
   }
 
   /* if system is dark mode */
@@ -54,6 +57,9 @@
       --mobileInput: 38 45 52;
       /* Background 2 */
       --default-text: 247 247 247;
+
+      /* Interview Post Text Color*/
+      --interview-text: #3f4354;
     }
   }
   /* If system is light mode */
@@ -82,6 +88,9 @@
       --mobileInput: 255 255 255;
       /* Secondary 2  */
       --default-text: 63 67 84;
+
+      /* Interview Post Text Color*/
+      --interview-text: #f7f7f7;
     }
   }
   /* If they pick dark mode */
@@ -109,6 +118,9 @@
     --mobileInput: 38 45 52;
     /* Background 2 */
     --default-text: 247 247 247;
+
+    /* Interview Post Text Color*/
+    --interview-text: #3f4354;
   }
 
   /* If they pick light mode */
@@ -136,5 +148,8 @@
     --mobileInput: 255 255 255;
     /* Secondary 2  */
     --default-text: 63 67 84;
+
+    /* Interview Post Text Color*/
+    --interview-text: #f7f7f7;
   }
 }
