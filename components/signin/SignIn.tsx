@@ -63,7 +63,7 @@ const SignIn = () => {
           </div>
           <p className="body-regular text-secondary2 dark:text-background2">
             Don&apos;t have an account yet?{" "}
-            <Link href={"/"}>
+            <Link href={"/sign-up"}>
               <span className="font-semibold text-red80">
                 Join the community!
               </span>
