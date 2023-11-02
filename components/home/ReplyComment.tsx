@@ -3,6 +3,7 @@ import { format } from "date-fns";
 
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
+import { Curve } from "../icons/outlineIcons/Curve";
 
 interface ReplyProps {
   name: string;
@@ -29,7 +30,7 @@ export const ReplyComment = ({
   return (
     <section className="flex gap-5 bg-background dark:bg-dark3">
       <div className="flex">
-        <OutlineIcon.Curve className="h-11 w-11 stroke-secondary5" />
+        <Curve className="h-11 w-11 stroke-secondary5" />
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
           <Image
             className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 md:h-10 md:w-10"

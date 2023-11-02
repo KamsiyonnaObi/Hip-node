@@ -378,16 +378,4 @@ OutlineIcon.Web = ({ className }: Props) => (
   </OutlineIcon>
 );
 
-OutlineIcon.VerticalLine = ({ className }: Props) => (
-  <OutlineIcon className={className}>
-    <VerticalLine />
-  </OutlineIcon>
-);
-
-OutlineIcon.Curve = ({ className }: Props) => (
-  <OutlineIcon className={className}>
-    <Curve />
-  </OutlineIcon>
-);
-
 export default OutlineIcon;

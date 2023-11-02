@@ -3,6 +3,7 @@ import Image from "next/image";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { format } from "date-fns";
+import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 
 interface CommentProps {
   name: string;
@@ -37,7 +38,7 @@ export const Comment = ({
             height="80"
           />
         </div>
-        <OutlineIcon.VerticalLine className="w-11 grow basis-0 stroke-secondary5" />
+        <VerticalLine className="w-11 grow basis-0 stroke-secondary5" />
       </div>
       <section className="flex flex-col gap-[15px] bg-background pb-5 dark:bg-dark3 md:pb-[30px]">
         <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 bg-background p-[15px] dark:bg-dark3">
