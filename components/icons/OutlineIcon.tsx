@@ -49,7 +49,11 @@ import { Vector } from "./outlineIcons/Vector";
 import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
+import { Like } from "./outlineIcons/Like";
+import { RightArrow } from "./outlineIcons/RightArrow";
+import { Send } from "./fillIcons";
 import { ReactNode } from "react";
+import { cn } from "@/utils";
 
 interface Props {
   children?: ReactNode;
@@ -70,6 +74,12 @@ const OutlineIcon = ({ children, className }: Props) => {
   );
 };
 
+OutlineIcon.Send = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Send />
+  </OutlineIcon>
+);
+
 OutlineIcon.ArrowLeft = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <ArrowLeft />
@@ -79,6 +89,14 @@ OutlineIcon.ArrowLeft = ({ className }: Props) => (
 OutlineIcon.Arrow = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Arrow />
+  </OutlineIcon>
+);
+
+OutlineIcon.RightArrow = ({ className }: Props) => (
+  <OutlineIcon
+    className={cn("w-10 stroke-black dark:stroke-secondary3", className)}
+  >
+    <RightArrow />
   </OutlineIcon>
 );
 
@@ -223,6 +241,12 @@ OutlineIcon.Italic = ({ className }: Props) => (
 OutlineIcon.Left = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Left />
+  </OutlineIcon>
+);
+
+OutlineIcon.Like = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Like />
   </OutlineIcon>
 );
 

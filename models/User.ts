@@ -6,7 +6,6 @@ const userSchema: Schema = new Schema<IUser>(
   {
     fullName: {
       type: String,
-      required: true,
       trim: true,
       minlength: 3,
     },
