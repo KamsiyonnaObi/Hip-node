@@ -50,8 +50,6 @@ import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
 import { ReactNode } from "react";
-import { VerticalLine } from "./outlineIcons/VerticalLine";
-import { Curve } from "./outlineIcons/Curve";
 
 interface Props {
   children?: ReactNode;
