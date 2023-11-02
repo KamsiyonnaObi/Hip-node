@@ -33,7 +33,7 @@ const SignIn = () => {
             <Input
               name="email"
               type="email"
-              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               onChange={handleChange}
               value={formData.email}
@@ -45,7 +45,7 @@ const SignIn = () => {
             <Input
               name="password"
               type="password"
-              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 dark:bg-dark2"
+              divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               onChange={handleChange}
               value={formData.password}
