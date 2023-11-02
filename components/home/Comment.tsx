@@ -27,7 +27,7 @@ export const Comment = ({
     editedText = ` • Edited on ${format(new Date(lastEditDate), "MMM dd")}`;
   }
   return (
-    <section className="flex gap-5 bg-background dark:bg-dark3">
+    <section className="flex gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3">
       <div className="flex w-11 flex-col">
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
           <Image
@@ -40,8 +40,8 @@ export const Comment = ({
         </div>
         <VerticalLine className="w-11 grow basis-0 stroke-secondary5" />
       </div>
-      <section className="flex flex-col gap-[15px] bg-background pb-5 dark:bg-dark3 md:pb-[30px]">
-        <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 bg-background p-[15px] dark:bg-dark3">
+      <section className="flex flex-col gap-[15px] md:pb-[30px] pb-5">
+        <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 p-[15px]">
           <p className="md:body-regular caption-regular text-secondary2 dark:text-background2 ">
             <span className="body-semibold md:display-semibold ">{name} </span>•{" "}
             {formattedDate}

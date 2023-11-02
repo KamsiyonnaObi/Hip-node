@@ -28,7 +28,7 @@ export const ReplyComment = ({
   }
 
   return (
-    <section className="flex gap-5 bg-background dark:bg-dark3">
+    <section className="flex gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3">
       <div className="flex">
         <Curve className="h-11 w-11 stroke-secondary5" />
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
@@ -41,8 +41,8 @@ export const ReplyComment = ({
           />
         </div>
       </div>
-      <section className="flex flex-col gap-[15px] bg-background dark:bg-dark3">
-        <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 bg-background p-[15px] dark:bg-dark3">
+      <section className="flex flex-col gap-[15px]">
+        <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 p-[15px]">
           <p className="md:body-regular caption-regular text-secondary2 dark:text-background2 ">
             <span className="body-semibold md:display-semibold ">{name} </span>•{" "}
             {formattedDate}
