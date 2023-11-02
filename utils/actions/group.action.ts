@@ -2,25 +2,34 @@
 
 import { getServerSession } from "next-auth";
 
-import Group, { IGroup } from "@/models/group.model";
+import Group from "@/models/group.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 
-export async function createGroup(params: Partial<IGroup>) {
+
+interface NewGroup {
+  title: string;
+  coverUrl: string;
+  groupUrl: string;
+  description: string;
+  admins: string;
+  members: string;
+}
+
+export async function createGroup(params: NewGroup) {
   try {
     await dbConnect();
     // get the current user
     const currentUser: any = await getServerSession();
     const {email} = currentUser?.user;
     const User = await UserModel.findOne({email});
-    const { title, createdAt, coverUrl, groupUrl, description } = params;
+    const { title, coverUrl, groupUrl, description } = params;
 
     const group = await Group.create({
         title,
         coverUrl,
         groupUrl,
         userId:User?._id,
-        createdAt,
         description,
         
     });
@@ -31,7 +40,8 @@ export async function createGroup(params: Partial<IGroup>) {
     }
   } catch (error) {
     console.log(error);
-    return { success: false, message: "An error occurred while creating the group." };
+    return JSON.stringify({ success: false, message: "An error occurred while creating the group." });
+    
   }
   
 }
@@ -67,6 +77,18 @@ export async function deleteGroup(groupId: number) {
   } catch (error) {
     console.log(error);
     return { success: false, message: "An error occurred while deleting the group." };
+  }
+}
+
+export async function getUsersBySimilarName(name: string) {
+  try {
+    await dbConnect();
+    const users = await UserModel.find({
+      username: { $regex: name, $options: "i" },
+    }).select("username");
+    return JSON.stringify(users);
+  } catch (error) {
+    return "[]";
   }
 }
 

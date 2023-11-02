@@ -1,12 +1,17 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
-import { createGroup } from "@/utils/actions/group.action";
-import { z } from "zod";
+import {
+  createGroup,
+  getUsersBySimilarName,
+} from "@/utils/actions/group.action";
+import useDebounce from "./GetUser";
 
 const AddGroup = () => {
   const router = useRouter();
@@ -95,6 +100,20 @@ const AddGroup = () => {
         return "Errors in form";
     }
   }
+
+  const [users, setUsers] = useState([]);
+  const [userSearch, setUserSearch] = useState("");
+  const debouncedUserSearch = useDebounce(userSearch, 300);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = JSON.parse(
+        await getUsersBySimilarName(debouncedUserSearch)
+      );
+      setUsers(response);
+    };
+    fetchUsers();
+  }, [debouncedUserSearch]);
 
   return (
     <>
