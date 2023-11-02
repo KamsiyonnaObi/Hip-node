@@ -1,26 +1,38 @@
 "use client";
+
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import { LogoIcon } from "../icons/LogoIcon";
 import Popup from "./Popup";
+import MessageList from "./MessageList";
+import Notification from "./Notification";
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(0);
 
   const toggleMenu = () => {
-    setExpanded(!expanded);
+    setExpanded(expanded !== 1 ? 1 : 0);
+  };
+
+  const toggleMessage = () => {
+    setExpanded(expanded !== 2 ? 2 : 0);
+  };
+
+  const toggleNotif = () => {
+    setExpanded(expanded !== 3 ? 3 : 0);
   };
 
   return (
-    <article className="flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
+    <article className="sticky top-0 flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
       <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-5 lg:gap-[84px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
@@ -34,12 +46,20 @@ const Navbar = () => {
         </section>
         {/* MOBILE */}
         <section className="flex flex-row gap-5 md:hidden">
-          <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+          <Button
+            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+            onClick={toggleMessage}
+          >
             <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
           </Button>
-          <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+          {expanded === 2 && <MessageList />}
+          <Button
+            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+            onClick={toggleNotif}
+          >
             <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
           </Button>
+          {expanded === 3 && <Notification />}
           <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
             <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
               <Image
@@ -50,7 +70,7 @@ const Navbar = () => {
                 height="32"
                 onClick={toggleMenu}
               />
-              {expanded && <Popup />}
+              {expanded === 1 && <Popup />}
             </div>
           </div>
         </section>
@@ -155,12 +175,27 @@ const Navbar = () => {
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>
             <div className="flex flex-row md:gap-[25px]">
-              <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-                <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
-              </Button>
-              <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-                <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
-              </Button>
+              <div className="relative">
+                {" "}
+                <Button
+                  className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+                  onClick={toggleMessage}
+                >
+                  <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
+                </Button>
+                {expanded === 2 && <MessageList />}
+              </div>
+
+              <div className="relative">
+                <Button
+                  className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
+                  onClick={toggleNotif}
+                >
+                  <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
+                </Button>
+                {expanded === 3 && <Notification />}
+              </div>
+
               <section className="flex flex-row items-center md:gap-2.5">
                 <div className="flex flex-row md:gap-4">
                   <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
@@ -173,7 +208,7 @@ const Navbar = () => {
                         height="32"
                         onClick={toggleMenu}
                       />
-                      {expanded && <Popup />}
+                      {expanded === 1 && <Popup />}
                     </div>
                   </div>
                   <p className="display-bold text-secondary1 dark:text-background2">

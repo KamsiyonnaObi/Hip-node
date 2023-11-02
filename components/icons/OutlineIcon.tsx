@@ -49,6 +49,7 @@ import { Vector } from "./outlineIcons/Vector";
 import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
+import { Like } from "./outlineIcons/Like";
 import { RightArrow } from "./outlineIcons/RightArrow";
 import { Send } from "./fillIcons";
 import { ReactNode } from "react";
@@ -240,6 +241,12 @@ OutlineIcon.Italic = ({ className }: Props) => (
 OutlineIcon.Left = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Left />
+  </OutlineIcon>
+);
+
+OutlineIcon.Like = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Like />
   </OutlineIcon>
 );
 
