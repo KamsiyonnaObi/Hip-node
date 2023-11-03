@@ -69,6 +69,9 @@ export const authOptions = {
 
   callbacks: {
     async signIn(profile: Profile) {
+      if (profile?.user.local) {
+        return true;
+      }
       const { name, email, image } = profile.user;
       const { given_name } = profile.profile;
 
