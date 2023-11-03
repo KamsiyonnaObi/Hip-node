@@ -4,7 +4,11 @@ import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 
-const CoverImage: React.FC = ({ setParentFormData }) => {
+interface CoverImageProps {
+  setParentFormData: (prevData: any) => void;
+}
+
+const CoverImage: React.FC<CoverImageProps> = ({ setParentFormData }) => {
   const [imageUrl, setImageUrl] = useState("");
 
   const updateForm = (url: any) => {
