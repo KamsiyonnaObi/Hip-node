@@ -24,10 +24,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <GroupError />
       </div>
     );
-  const { title } = group.data;
-  const { coverurl } = group.data;
-  const { groupurl } = group.data;
-  const { description } = group.data;
+  const { title,coverurl,groupurl,description } = group.data;
   const { username } = group.data.userId;
 
   return (
