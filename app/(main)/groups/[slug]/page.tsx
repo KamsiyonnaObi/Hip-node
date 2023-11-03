@@ -11,8 +11,19 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
+import { getGroupById } from "@/utils/actions/group.action";
+import GroupError from "@/components/group/GroupError";
 
-const page = () => {
+const page = async ({ params }: { params: { slug: string } }) => {
+  const group = await getGroupById(params.slug);
+  console.log(group);
+
+  if (!group.success)
+    return (
+      <div className="flex justify-center">
+        <GroupError />
+      </div>
+    );
   return (
     <main>
       {/* Desktop */}
