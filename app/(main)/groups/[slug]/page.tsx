@@ -24,13 +24,19 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <GroupError />
       </div>
     );
+  const { title } = group.data;
+  const { coverurl } = group.data;
+  const { groupurl } = group.data;
+  const { description } = group.data;
+  const { username } = group.data.userId;
+
   return (
     <main>
       {/* Desktop */}
       <div className="mx-auto hidden items-center justify-center gap-5 lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start xl:max-w-[1100px]">
         <section>
           <div className="flex flex-col gap-[1.25rem]">
-            <About />
+            <About description={description} />
             <Admin />
             <PopularTags />
           </div>
@@ -38,7 +44,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
           <section>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-              <Cover />
+              <Cover
+                title={title}
+                user={username}
+                coverurl={coverurl}
+                groupurl={groupurl}
+              />
               <div className="w-full">
                 <Frame />
               </div>
@@ -97,7 +108,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="flex flex-col md:flex-row md:gap-[1.25rem]">
           <section>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-              <Cover />
+              <Cover
+                title={title}
+                user={username}
+                coverurl={coverurl}
+                groupurl={groupurl}
+              />{" "}
               <div className="w-full">
                 <Frame />
               </div>
@@ -152,7 +168,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
             </section>
             <section>
               <div className="flex flex-col gap-[1.25rem]">
-                <About />
+                <About description={description} />
                 <Admin />
                 <PopularTags />
               </div>
@@ -163,7 +179,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
       {/* Mobile */}
       <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[600px] md:hidden">
         <div className="flex flex-col gap-5 sm:w-[99%]">
-          <Cover />
+          <Cover
+            title={title}
+            user={username}
+            coverurl={coverurl}
+            groupurl={groupurl}
+          />{" "}
           <CreateGroup
             title={"Create Group"}
             desc={
@@ -185,7 +206,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           />
           <ActiveMembers avatar={"/Avatar.png"} />
           <RecentMedia media={"/bird.png"} />
-          <About />
+          <About description={description} />
           <Admin />
         </div>
       </div>

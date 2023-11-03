@@ -52,7 +52,7 @@ export async function createGroup(params: NewGroup) {
 export async function getGroupById(groupId: string) {
   try {
     await dbConnect();
-    const group = await Group.findById(groupId);
+    const group = await Group.findById(groupId).populate("userId");
 
     if (group) {
       return { success: true, data: group };

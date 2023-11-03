@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { title } from "process";
 import { Button } from "../ui/Button";
 
 const GroupError = () => {
