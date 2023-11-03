@@ -11,7 +11,7 @@ const GroupMenu = () => {
         </p>
       </div>
       <div className="flex items-center gap-[0.625rem]">
-        <OutlineIcon.VerticalDots className="fill-transparent" />
+        <OutlineIcon.Trash className="fill-transparent" />
         <p className="text-secondary2 body-semibold dark:text-background2">
           Delete Group
         </p>
