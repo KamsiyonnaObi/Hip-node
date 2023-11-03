@@ -11,6 +11,7 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
+import GroupMenu from "@/components/group/GroupMenu";
 
 const page = () => {
   return (
@@ -77,6 +78,7 @@ const page = () => {
               />
               <ActiveMembers avatar={"/Avatar.png"} />
               <RecentMedia media={"/bird.png"} />
+              <GroupMenu />
             </div>
           </section>
         </div>

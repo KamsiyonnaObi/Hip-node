@@ -1,11 +1,33 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
+import OutlineIcon from "../icons/OutlineIcon";
+import GroupMenu from "./GroupMenu";
 
 const Cover = () => {
   const [show, setShow] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleButtonClick = () => {
+    setMenu((s) => !s);
+  };
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+      setMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
   return (
     <div className="bg-background dark:bg-dark3 flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] p-[.625rem] sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -45,17 +67,42 @@ const Cover = () => {
             </div>
           </div>
         </div>
-        <div onClick={() => console.log("Clicked")}>
-          <button
-            className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
-            onClick={() => setShow((s) => !s)}
-          >
-            <div>
-              <FillIcon.Leave className="fill-secondary3" />
-            </div>
-            <p className="caption-semibold text-secondary3">Leave</p>
-          </button>
-          <Modal show={show} closeModal={() => setShow(false)} />
+        <div className="flex items-center gap-[.62rem]">
+          <div onClick={() => console.log("Clicked")}>
+            <button
+              className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
+              onClick={() => setShow((s) => !s)}
+            >
+              <div>
+                <FillIcon.Leave className="fill-secondary3" />
+              </div>
+              <p className="caption-semibold text-secondary3">Leave</p>
+            </button>
+            <Modal show={show} closeModal={() => setShow(false)} />
+          </div>
+          <div onClick={() => console.log("Clicked")}>
+            <button ref={buttonRef} onClick={handleButtonClick}>
+              <OutlineIcon.VerticalDots className="fill-secondary5" />
+            </button>
+            {menu && (
+              <div
+                className="menu"
+                style={{
+                  position: "absolute",
+                  top: buttonRef.current
+                    ? buttonRef.current.getBoundingClientRect().bottom + "px"
+                    : "0",
+                  right: buttonRef.current
+                    ? window.innerWidth -
+                      buttonRef.current.getBoundingClientRect().right +
+                      "px"
+                    : "0",
+                }}
+              >
+                <GroupMenu />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
