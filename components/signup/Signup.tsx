@@ -221,7 +221,7 @@ const SignUp = () => {
             </div>
             <p className="body-regular text-secondary2 dark:text-background2">
               Already have an account?{" "}
-              <Link href={"/"}>
+              <Link href={"/sign-in"}>
                 <span className="font-semibold text-red80">Sign in</span>
               </Link>
             </p>
