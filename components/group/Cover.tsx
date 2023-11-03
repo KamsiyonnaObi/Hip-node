@@ -7,27 +7,45 @@ import FillIcon from "../icons/FillIcon";
 const Cover = ({
   user,
   title,
-  coverurl,
-  groupurl,
+  coverUrl,
+  groupUrl,
 }: {
   user: string;
   title: string;
-  coverurl: string;
-  groupurl: string;
+  coverUrl: string;
+  groupUrl: string;
 }) => {
   const [show, setShow] = useState(false);
   return (
     <div className="bg-background dark:bg-dark3 flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] p-[.625rem] sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
-        <Image src="/GroupCover.png" alt="GroupCover" width={315} height={75} />
+        <Image
+          src={coverUrl}
+          alt="GroupCover"
+          width={315}
+          height={75}
+          className="rounded-[1rem] w-[315px] h-[72px]"
+        />
       </div>
       <div className="hidden sm:flex">
-        <Image src={coverurl} alt="GroupCover" width={780} height={174} />
+        <Image
+          src={coverUrl}
+          alt="GroupCover"
+          width={780}
+          height={174}
+          className="w-[780px] h-[174px] rounded-[1rem]"
+        />
       </div>
       <div className="mt-[.88rem] flex justify-between sm:mt-[1.25rem]">
         <div className="flex items-center gap-[.86rem]">
           <div>
-            <Image src={groupurl} alt="GroupCover" width={40} height={40} />
+            <Image
+              src={groupUrl}
+              alt="GroupCover"
+              width={40}
+              height={40}
+              className="rounded-full w-[40px] h-[40px]"
+            />
           </div>
           <div className="flex flex-col">
             <div>

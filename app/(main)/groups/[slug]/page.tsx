@@ -16,7 +16,6 @@ import GroupError from "@/components/group/GroupError";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
-  console.log(group);
 
   if (!group.success)
     return (
@@ -24,10 +23,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <GroupError />
       </div>
     );
-  const { title } = group.data;
-  const { coverurl } = group.data;
-  const { groupurl } = group.data;
-  const { description } = group.data;
+  const { title, coverUrl, groupUrl, description } = group.data;
   const { username } = group.data.userId;
 
   return (
@@ -47,8 +43,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
               <Cover
                 title={title}
                 user={username}
-                coverurl={coverurl}
-                groupurl={groupurl}
+                coverUrl={coverUrl}
+                groupUrl={groupUrl}
               />
               <div className="w-full">
                 <Frame />
@@ -111,9 +107,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
               <Cover
                 title={title}
                 user={username}
-                coverurl={coverurl}
-                groupurl={groupurl}
-              />{" "}
+                coverUrl={coverUrl}
+                groupUrl={groupUrl}
+              />
               <div className="w-full">
                 <Frame />
               </div>
@@ -182,9 +178,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <Cover
             title={title}
             user={username}
-            coverurl={coverurl}
-            groupurl={groupurl}
-          />{" "}
+            coverUrl={coverUrl}
+            groupUrl={groupUrl}
+          />
           <CreateGroup
             title={"Create Group"}
             desc={
