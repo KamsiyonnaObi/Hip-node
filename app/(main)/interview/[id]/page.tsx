@@ -10,7 +10,7 @@ const InterviewArticle = ({ params }: { params: { id: string } }) => {
         <Image
           src={InterviewPostImage}
           alt="Group Meeting"
-          className="rounded-t-2xl"
+          className="rounded-t-lg"
           priority
         />
         <div className="px-5 sm:px-10 pb-10 pt-5 flex flex-col gap-5">
