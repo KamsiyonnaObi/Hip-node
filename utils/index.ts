@@ -23,3 +23,7 @@ export function formDataToObject(formData) {
   return object;
 }
 export * from "./utils";
+
+export function uniques(array: string[]) {
+  return Array.from(new Set(array));
+}
