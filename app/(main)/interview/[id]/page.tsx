@@ -1,7 +1,8 @@
-import { Tags } from "@/components";
+import Image from "next/image";
+
 import PageWrapper from "@/components/PageWrapper";
 import { InterviewPostImage } from "@/utils/images";
-import Image from "next/image";
+import { Tags } from "@/components";
 
 const InterviewArticle = ({ params }: { params: { id: string } }) => {
   return (
