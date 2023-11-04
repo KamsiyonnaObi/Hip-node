@@ -8,7 +8,7 @@ const InterviewArticle = ({ params }: { params: { id: string } }) => {
     <PageWrapper>
       <article className="w-full bg-bkg-2 max-w-[785px] mx-auto rounded-2xl">
         <Image src={InterviewPostImage} alt="Group Meeting" priority />
-        <div className="px-10 pb-10 pt-5 flex flex-col gap-5">
+        <div className="px-5 sm:px-10 pb-10 pt-5 flex flex-col gap-5">
           <h1 className="font-semibold sm:h1-semibold">
             Leading with Empathy: An Interview with HR and People Management
             Experts
