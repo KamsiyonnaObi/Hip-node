@@ -8,14 +8,17 @@ import MyProfile from "@/components/home/MyProfile";
 import { Thread } from "@/components/home/Thread";
 import { commentData } from "@/constants/dummy";
 import { getPostById, getPostsByUserId } from "@/utils/actions/post.action";
+import mongoose from "mongoose";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const session = await getSession();
-  console.log(session?.user);
-  const loggedinUserId = session?.user?.id;
+  // const session = await getSession();
+  // const loggedinUserId = session?.user?.id;
+
+  // TODO: Replace them once the session is working properly.
+  const { ObjectId } = mongoose.Types;
+  const loggedinUserId = new ObjectId("6546f04496a572e837bd18e3");
 
   const postopen = await getPostById(params.slug);
-  console.log(postopen.data);
 
   if (!postopen.success) return <div>Post Not Found</div>;
   const {
@@ -41,12 +44,15 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <OpenedPost image={image} title={title} tags={tags} content={content} />
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
-            postId={_id}
-            userId={loggedinUserId}
+            postId={JSON.stringify(_id)}
+            userId={JSON.stringify(loggedinUserId)}
             hasLiked={likes.includes(loggedinUserId)}
             hasCommented={comments.includes(loggedinUserId)}
             hasShared={shares.includes(loggedinUserId)}
-            hasreported={reports.includes(loggedinUserId)}
+            hasReported={reports.includes(loggedinUserId)}
+            likes={likes.length}
+            comments={comments.length}
+            shares={shares.length}
           />
           {/* implement later- show PostDate only if it is your own post */}
           {/* implement later- if group id existed, display GroupPostDate instead */}
@@ -55,7 +61,17 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <Thread commentData={commentData} />
       </section>
       <div className="hidden flex-col gap-5 md:order-1 md:flex">
-        <ActionBar />
+        <ActionBar
+          postId={JSON.stringify(_id)}
+          userId={JSON.stringify(loggedinUserId)}
+          hasLiked={likes.includes(loggedinUserId)}
+          hasCommented={comments.includes(loggedinUserId)}
+          hasShared={shares.includes(loggedinUserId)}
+          hasReported={reports.includes(loggedinUserId)}
+          likes={likes.length}
+          comments={comments.length}
+          shares={shares.length}
+        />
         {/* implement later- show PostDate only if it is your own post */}
         {/* implement later- if group id existed, display GroupPostDate instead */}
         <PostDate username={userId.username} createdAt={createdAt} />

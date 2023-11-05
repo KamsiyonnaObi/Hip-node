@@ -2,18 +2,25 @@
 
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import { ObjectId } from "mongoose";
 
 import FillIcon from "../icons/FillIcon";
-import { likePost } from "@/utils/actions/post.action";
+import {
+  commentPost,
+  likePost,
+  reportPost,
+  sharePost,
+} from "@/utils/actions/post.action";
 
 interface Props {
-  postId: ObjectId;
-  userId?: ObjectId;
+  postId: string;
+  userId?: string;
   hasLiked?: boolean;
   hasCommented?: boolean;
   hasShared?: boolean;
-  hasreported?: boolean;
+  hasReported?: boolean;
+  likes: number;
+  shares: number;
+  comments: number;
 }
 
 const ActionBar = ({
@@ -22,16 +29,57 @@ const ActionBar = ({
   hasLiked,
   hasCommented,
   hasShared,
-  hasreported,
+  hasReported,
+  likes,
+  shares,
+  comments,
 }: Props) => {
   const pathname = usePathname;
-  const rounter = useRouter();
+  const path = pathname();
 
   const handleLike = async () => {
     if (userId) {
-      await likePost({ postId, userId, hasLiked, path: pathname });
+      await likePost({
+        postId: JSON.parse(postId),
+        userId: JSON.parse(userId),
+        hasLiked,
+        path,
+      });
     }
   };
+  const handleComment = async () => {
+    if (userId) {
+      await commentPost({
+        postId: JSON.parse(postId),
+        userId: JSON.parse(userId),
+        hasCommented,
+        path,
+      });
+    }
+  };
+
+  const handleShare = async () => {
+    if (userId) {
+      await sharePost({
+        postId: JSON.parse(postId),
+        userId: JSON.parse(userId),
+        hasShared,
+        path,
+      });
+    }
+  };
+
+  const handleReport = async () => {
+    if (userId) {
+      await reportPost({
+        postId: JSON.parse(postId),
+        userId: JSON.parse(userId),
+        hasReported,
+        path,
+      });
+    }
+  };
+
   return (
     <section className="flex w-full flex-col items-start justify-start gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">
       <div className="flex gap-[14px] rounded-md">
@@ -55,17 +103,17 @@ const ActionBar = ({
             "text-secondary3": !hasLiked,
           })}
         >
-          {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
-          <p>Likes</p>
+          <p>{new Intl.NumberFormat().format(likes)} Likes</p>
         </div>
       </div>
 
-      <button className="flex gap-[14px] rounded-md">
-        <div
+      <div className="flex gap-[14px] rounded-md">
+        <button
           className={clsx("h-7 w-7 rounded-md p-1", {
             "bg-red10": hasCommented,
             "bg-background2 dark:bg-dark4": !hasCommented,
           })}
+          onClick={handleComment}
         >
           <FillIcon.Comment
             className={clsx({
@@ -73,7 +121,7 @@ const ActionBar = ({
               "fill-secondary3": !hasCommented,
             })}
           />
-        </div>
+        </button>
         <div
           className={clsx("flex gap-1", {
             "text-secondary2 dark:text-background": hasCommented,
@@ -81,16 +129,17 @@ const ActionBar = ({
           })}
         >
           {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
-          <p>Comments</p>
+          <p>{new Intl.NumberFormat().format(comments)} Comments</p>
         </div>
-      </button>
+      </div>
 
-      <button className="flex gap-[14px] rounded-md">
-        <div
+      <div className="flex gap-[14px] rounded-md">
+        <button
           className={clsx("h-7 w-7 rounded-md p-1", {
             "bg-red10": hasShared,
             "bg-background2 dark:bg-dark4": !hasShared,
           })}
+          onClick={handleShare}
         >
           <FillIcon.Share
             className={clsx({
@@ -98,7 +147,7 @@ const ActionBar = ({
               "fill-secondary3": !hasShared,
             })}
           />
-        </div>
+        </button>
         <div
           className={clsx("flex gap-1", {
             "text-secondary2 dark:text-background": hasShared,
@@ -106,34 +155,35 @@ const ActionBar = ({
           })}
         >
           {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
-          <p>Shares</p>
+          <p>{new Intl.NumberFormat().format(shares)} Shares</p>
         </div>
-      </button>
+      </div>
 
-      <button className="flex gap-[14px] rounded-md">
-        <div
+      <div className="flex gap-[14px] rounded-md">
+        <button
           className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": hasreported,
-            "bg-background2 dark:bg-dark4": !hasreported,
+            "bg-red10": hasReported,
+            "bg-background2 dark:bg-dark4": !hasReported,
           })}
+          onClick={handleReport}
         >
           <FillIcon.Report
             className={clsx({
-              "fill-red80": hasreported,
-              "fill-secondary3": !hasreported,
+              "fill-red80": hasReported,
+              "fill-secondary3": !hasReported,
             })}
           />
-        </div>
+        </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": hasreported,
-            "text-secondary3": !hasreported,
+            "text-secondary2 dark:text-background": hasReported,
+            "text-secondary3": !hasReported,
           })}
         >
           {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
           <p>Report</p>
         </div>
-      </button>
+      </div>
     </section>
   );
 };
