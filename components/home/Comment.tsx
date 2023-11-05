@@ -13,7 +13,7 @@ interface CommentProps {
   comment: string;
 }
 
-export const Comment = ({
+const Comment = ({
   name,
   commentedDate,
   lastEditDate,
@@ -58,3 +58,5 @@ export const Comment = ({
     </section>
   );
 };
+
+export default Comment;

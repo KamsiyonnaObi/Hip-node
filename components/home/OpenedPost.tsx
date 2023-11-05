@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ChatInput from "../home/ChatInput";
+import ChatInput from "./ChatInput";
 
 interface Props {
   title: string;

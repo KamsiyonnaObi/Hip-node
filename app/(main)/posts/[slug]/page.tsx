@@ -1,17 +1,17 @@
 import { getSession } from "next-auth/react";
 
-import MoreFrom from "@/components/home/MoreFrom";
-import PostDate from "@/components/home/PostDate";
-import ActionBar from "@/components/shared/ActionBar";
-import OpenedPost from "@/components/shared/OpenedPost";
-import MyProfile from "@/components/home/MyProfile";
-import { Thread } from "@/components/home/Thread";
 import { commentData } from "@/constants/dummy";
 import { getPostById, getPostsByUserId } from "@/utils/actions/post.action";
 import mongoose from "mongoose";
-import GroupPostDate from "@/components/home/GroupPostDate";
-import OtherProfile from "@/components/home/OtherProfile";
-import FollowedProfile from "@/components/home/FollowedProfile";
+import {
+  ActionBar,
+  GroupPostDate,
+  MyProfile,
+  MoreFrom,
+  OpenedPost,
+  PostDate,
+  Thread,
+} from "@/components";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   // const session = await getSession();
