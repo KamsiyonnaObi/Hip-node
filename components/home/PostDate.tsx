@@ -1,4 +1,3 @@
-import { postData } from "@/constants/dummy";
 import { FormatDate } from "@/lib/formatDate";
 
 const PostDate = ({

@@ -29,6 +29,8 @@ export async function getPostById(postId: string) {
   try {
     await dbConnect();
     const post = await Post.findById(postId).populate("userId");
+    // MissingSchemaError: Schema hasn't been registered for model "Group".
+    // .populate("groupId");
     if (post) {
       return { success: true, data: post };
     } else {

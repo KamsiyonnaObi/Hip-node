@@ -65,30 +65,6 @@ const userSchema: Schema = new Schema<IUser>(
         ref: "User",
       },
     ],
-    // likedPosts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Post",
-    //   },
-    // ],
-    // commentedPosts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Post",
-    //   },
-    // ],
-    // sharedPosts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Post",
-    //   },
-    // ],
-    // reportedPosts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Post",
-    //   },
-    // ],
     points: {
       type: Number,
     },

@@ -9,6 +9,9 @@ import { Thread } from "@/components/home/Thread";
 import { commentData } from "@/constants/dummy";
 import { getPostById, getPostsByUserId } from "@/utils/actions/post.action";
 import mongoose from "mongoose";
+import GroupPostDate from "@/components/home/GroupPostDate";
+import OtherProfile from "@/components/home/OtherProfile";
+import FollowedProfile from "@/components/home/FollowedProfile";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   // const session = await getSession();
@@ -27,6 +30,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     tags,
     content,
     userId,
+    groupId,
     createdAt,
     image,
     likes,
@@ -34,6 +38,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     shares,
     reports,
   } = postopen.data;
+  console.log(postopen.data);
 
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
@@ -57,6 +62,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           {/* implement later- show PostDate only if it is your own post */}
           {/* implement later- if group id existed, display GroupPostDate instead */}
           <PostDate username={userId.username} createdAt={createdAt} />
+          <GroupPostDate
+            username={userId.username}
+            createdAt={createdAt}
+            groupTitle={groupId.title}
+          />
         </div>
         <Thread commentData={commentData} />
       </section>
@@ -75,11 +85,18 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         {/* implement later- show PostDate only if it is your own post */}
         {/* implement later- if group id existed, display GroupPostDate instead */}
         <PostDate username={userId.username} createdAt={createdAt} />
+        <GroupPostDate
+          username={userId.username}
+          createdAt={createdAt}
+          groupTitle={groupId.title}
+        />
       </div>
       <div className="flex flex-col gap-5 md:order-3">
         {/* implement later- if user id is equal to someone you follow, display FollowedProfile and if the user id is equal to someone you are not following, display OtherProfile */}
         <MyProfile user={userId} joinedDate={userId.createdAt} />
-        <MoreFrom posts={posts} />
+        {/* <FollowedProfile user={userId} joinedDate={userId.createdAt} />
+        <OtherProfile user={userId} joinedDate={userId.createdAt} /> */}
+        <MoreFrom posts={posts} author={userId.username} />
       </div>
     </article>
   );
