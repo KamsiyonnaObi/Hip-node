@@ -15,6 +15,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  const [failedLogin, setFailedLogin] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,10 +30,11 @@ const SignIn = () => {
         redirect: false,
       });
       if (response?.error) {
-        console.log(formData);
+        setFailedLogin(true);
+        return false;
       } else {
-        console.log("success login");
         router.push("/");
+        setFailedLogin(false);
         return true;
       }
     } catch (error) {
@@ -47,6 +49,9 @@ const SignIn = () => {
             <h1 className="h3-semibold text-secondary2 dark:text-background2">
               Email
             </h1>
+            {failedLogin && (
+              <p className="text-red">Email or Password is invalid</p>
+            )}
             <Input
               name="email"
               type="email"
