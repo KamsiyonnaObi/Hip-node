@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
@@ -9,6 +10,7 @@ import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
 
 const SignIn = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,8 +21,23 @@ const SignIn = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleLogIn = () => {
-    console.log(formData);
+  const handleLogIn = async () => {
+    try {
+      const response = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      if (response?.error) {
+        console.log(formData);
+      } else {
+        console.log("success login");
+        router.push("/");
+        return true;
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <>
