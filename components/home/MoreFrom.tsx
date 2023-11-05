@@ -1,12 +1,10 @@
-import { postData } from "@/constants/dummy";
-
-const MoreFrom = () => {
+const MoreFrom = ({ posts }) => {
   return (
     <article className="flex flex-col gap-[15px] rounded-2xl bg-background p-5 dark:bg-dark3">
       <h3 className="h3-regular text-secondary2 dark:text-background2">
         More from AR. Jakir
       </h3>
-      {postData.slice(1).map((i) => (
+      {posts.slice(0, 3).map((i) => (
         <div
           key={i.title}
           className="border-t border-secondary6 pt-[15px] dark:border-secondary2"

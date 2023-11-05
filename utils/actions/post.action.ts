@@ -1,5 +1,8 @@
 "use server";
 
+import { ObjectId } from "mongoose";
+import { revalidatePath } from "next/cache";
+
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 
@@ -22,14 +25,46 @@ export async function createPost(params: Partial<IPost>) {
   }
 }
 
-export async function getPostById(postId: number) {
+export async function getPostById(postId: string) {
   try {
     await dbConnect();
-    const post = await Post.findById(postId);
-    return post;
+    const post = await Post.findById(postId).populate("userId");
+    if (post) {
+      return { success: true, data: post };
+    } else {
+      throw new Error("post not found.");
+    }
   } catch (error) {
     console.log(error);
-    throw error;
+    return {
+      success: false,
+      message: "An error occurred while retrieving the post.",
+    };
+  }
+}
+
+export async function getPostsByUserId(
+  userId: ObjectId,
+  excludedPostId: ObjectId
+) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({
+      userId,
+      _id: { $ne: excludedPostId },
+    }).populate("tags");
+
+    if (posts.length > 0) {
+      return { success: true, data: posts };
+    } else {
+      throw new Error("post not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the posts.",
+    };
   }
 }
 
@@ -48,6 +83,37 @@ export async function deletePost(postId: number) {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
     return deletedPost;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function likePost(params: Partial<IPost>) {
+  try {
+    dbConnect();
+
+    const { postId, userId, hasLiked, path } = params;
+
+    let updateQuery = {};
+    // Remove like if it is already liked
+    if (hasLiked) {
+      updateQuery = { $pull: { likes: userId } };
+    } else {
+      updateQuery = { $addToSet: { likes: userId } };
+    }
+
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    if (!path) {
+      throw new Error("Path is required");
+    }
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
