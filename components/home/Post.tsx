@@ -13,6 +13,7 @@ interface Props {
   views: number;
   likes: number;
   comments: number;
+  _id: string;
 }
 
 const Post = ({
@@ -25,6 +26,7 @@ const Post = ({
   views,
   likes,
   comments,
+  _id,
 }: Props) => {
   return (
     <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:rounded-[16px] md:p-[20px]">

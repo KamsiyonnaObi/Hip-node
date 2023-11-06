@@ -5,9 +5,11 @@ import PopularTags from "@/components/home/PopularTags";
 import Post from "@/components/home/Post";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
+import { getAllPosts } from "@/utils/actions/post.action";
 import React from "react";
 
-const Page = () => {
+export default async function Home() {
+  const result = await getAllPosts({});
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -26,61 +28,27 @@ const Page = () => {
           <Sidebar small />
         </div>
         <CreatePost />
-        <Post
-          postImage="/PostImage.png"
-          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-          tags={["remote", "part time", "test"]}
-          avatar="/Avatar.png"
-          username={"John Smith"}
-          createdAt={"2 month ago"}
-          views={420}
-          likes={69}
-          comments={75}
-        />
-        <Post
-          postImage="/PostImage.png"
-          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-          tags={["remote", "part time", "test"]}
-          avatar="/Avatar.png"
-          username={"Louis Liu"}
-          createdAt={"2 month ago"}
-          views={420}
-          likes={69}
-          comments={75}
-        />
-        <Post
-          postImage="/PostImage.png"
-          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-          tags={["remote", "part time", "test"]}
-          avatar="/Avatar.png"
-          username={"Louis Liu"}
-          createdAt={"2 month ago"}
-          views={420}
-          likes={69}
-          comments={75}
-        />
-        <Post
-          postImage="/PostImage.png"
-          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-          tags={["remote", "part time", "test"]}
-          avatar="/Avatar.png"
-          username={"Louis Liu"}
-          createdAt={"2 month ago"}
-          views={420}
-          likes={69}
-          comments={75}
-        />
-        <Post
-          postImage="/PostImage.png"
-          title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-          tags={["remote", "part time", "test"]}
-          avatar="/Avatar.png"
-          username={"Louis Liu"}
-          createdAt={"2 month ago"}
-          views={420}
-          likes={69}
-          comments={75}
-        />
+        {result.posts.length > 0
+          ? result.posts.map((post) => (
+              <Post
+                key={post._id}
+                _id={post._id}
+                postImage={post.postImage}
+                title={post.title}
+                tags={post.tags}
+                avatar={post.avatar}
+                username={post.userId}
+                createdAt="2 month ago"
+                views={420}
+                likes={69}
+                comments={75}
+                // createdAt={post.createdAt}
+                // views={post.views}
+                // likes={post.likes}
+                // comments={post.comments}
+              />
+            ))
+          : "No Posts to Show!"}
       </section>
       <section className="flex flex-col gap-5">
         <Meetups />
@@ -88,6 +56,4 @@ const Page = () => {
       </section>
     </main>
   );
-};
-
-export default Page;
+}
