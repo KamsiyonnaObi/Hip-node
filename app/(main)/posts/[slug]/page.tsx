@@ -62,11 +62,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           {/* implement later- show PostDate only if it is your own post */}
           {/* implement later- if group id existed, display GroupPostDate instead */}
           <PostDate username={userId.username} createdAt={createdAt} />
-          <GroupPostDate
+          {/* <GroupPostDate
             username={userId.username}
             createdAt={createdAt}
             groupTitle={groupId.title}
-          />
+          /> */}
         </div>
         <Thread commentData={commentData} />
       </section>
@@ -85,11 +85,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         {/* implement later- show PostDate only if it is your own post */}
         {/* implement later- if group id existed, display GroupPostDate instead */}
         <PostDate username={userId.username} createdAt={createdAt} />
-        <GroupPostDate
+        {/* <GroupPostDate
           username={userId.username}
           createdAt={createdAt}
           groupTitle={groupId.title}
-        />
+        /> */}
       </div>
       <div className="flex flex-col gap-5 md:order-3">
         {/* implement later- if user id is equal to someone you follow, display FollowedProfile and if the user id is equal to someone you are not following, display OtherProfile */}

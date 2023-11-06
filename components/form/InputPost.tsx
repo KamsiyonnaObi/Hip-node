@@ -21,10 +21,8 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
-import useThemeState from "@/store/themeStore";
 
-export function InputPost() {
-  const { theme } = useThemeState();
+export function InputPost({ darkMode }: { darkMode: boolean }) {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();

@@ -1,6 +1,5 @@
 import { commentDataType } from "@/types/component";
-import { Comment } from "./Comment";
-import { ReplyComment } from "./ReplyComment";
+import { Comment, ReplyComment } from "@/components";
 
 interface ThreadProps {
   commentData: commentDataType[];
