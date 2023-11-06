@@ -9,13 +9,13 @@ type ModalProps = {
   params: string;
 };
 
-export default function DeleteGroupModel({
+export default function DeleteGroupModal({
   show,
   closeModal,
   params,
 }: ModalProps) {
-  const [menu, setMenu] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [, setMenu] = useState(false);
+  const [, setError] = useState<string | null>(null);
 
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 

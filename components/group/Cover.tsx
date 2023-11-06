@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
-import DeleteGroupModel from "./DeleteGroupModel";
+import GroupMenu from "./GroupMenu";
 
 const Cover = ({
   user,
@@ -20,8 +20,26 @@ const Cover = ({
   groupId: string;
 }) => {
   const [show, setShow] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
+  const handleButtonClick = () => {
+    setMenu((s) => !s);
+  };
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+      setMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
   return (
     <div className="bg-background dark:bg-dark3 flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] p-[.625rem] sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -90,14 +108,14 @@ const Cover = ({
             />
           </div>
           <div className="relative">
-            <button onClick={() => setShowDelete((s) => !s)}>
+            <button ref={buttonRef} onClick={handleButtonClick}>
               <OutlineIcon.VerticalDots className="fill-secondary5" />
             </button>
-            <DeleteGroupModel
-              show={showDelete}
-              closeModal={() => setShowDelete(false)}
-              params={groupId}
-            />
+            {menu && (
+              <div className="absolute top-[50%] translate-x-[-100%]">
+                <GroupMenu id={groupId} />
+              </div>
+            )}
           </div>
         </div>
       </div>

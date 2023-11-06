@@ -1,43 +1,16 @@
-import React, { useState, useEffect } from "react";
-import OutlineIcon from "../icons/OutlineIcon";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
-import { deleteGroup, getGroupById } from "@/utils/actions/group.action";
-import router from "next/router";
 
-interface GroupMenuProps {
-  params: { slug: string };
-}
+import OutlineIcon from "../icons/OutlineIcon";
+import DeleteGroupModal from "./DeleteGroupModal";
 
-const GroupMenu: React.FC<GroupMenuProps> = ({ params }) => {
-  const [group, setGroup] = useState<GroupData | null>(null);
-  const [deleteStatus, setDeleteStatus] = useState<DeleteGroupResult | null>(
-    null
-  );
+const GroupMenu = ({ id }: { id: string }) => {
+  const [showDelete, setShowDelete] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const groupData = await getGroupById(params.slug);
-        setGroup(groupData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchData();
-  }, [params.slug]);
-
-  const handleDeleteClick = async (groupId: number) => {
-    try {
-      const result = await deleteGroup(groupId);
-      setDeleteStatus(result);
-
-      if (result && result.success) {
-        router.push("/groups");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const handleDeleteClick = () => {
+    setShowDelete(true);
   };
 
   return (
@@ -51,27 +24,23 @@ const GroupMenu: React.FC<GroupMenuProps> = ({ params }) => {
         </div>
       </Link>
       <div>
-        <button onClick={() => handleDeleteClick(group.id)}>
-          <div className="flex items-center gap-[0.625rem]">
-            <OutlineIcon.Trash className="fill-transparent" />
-            <p className="text-secondary2 body-semibold dark:text-background2">
-              Delete Group
-            </p>
-          </div>
-        </button>
-
-        {deleteStatus && (
-          <div>
-            {deleteStatus.success ? (
-              <p>Group deleted successfully: {deleteStatus.message}</p>
-            ) : (
-              <p>Error: {deleteStatus.message}</p>
-            )}
-          </div>
-        )}
+        <div className="relative">
+          <button onClick={handleDeleteClick}>
+            <div className="flex items-center gap-[0.625rem]">
+              <OutlineIcon.Trash className="fill-transparent" />
+              <p className="text-secondary2 body-semibold dark:text-background2">
+                Delete Group
+              </p>
+            </div>
+          </button>
+          <DeleteGroupModal
+            show={showDelete}
+            closeModal={() => setShowDelete(false)}
+            params={id}
+          />
+        </div>
       </div>
     </div>
   );
 };
-
 export default GroupMenu;
