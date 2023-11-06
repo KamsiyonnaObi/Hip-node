@@ -11,6 +11,7 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
+import GroupMenu from "@/components/group/GroupMenu";
 import { getGroupById } from "@/utils/actions/group.action";
 import GroupError from "@/components/group/GroupError";
 
@@ -95,6 +96,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
               />
               <ActiveMembers avatar={"/Avatar.png"} />
               <RecentMedia media={"/bird.png"} />
+              <GroupMenu />
             </div>
           </section>
         </div>

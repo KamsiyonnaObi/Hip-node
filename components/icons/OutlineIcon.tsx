@@ -46,6 +46,7 @@ import { Uncheck } from "./outlineIcons/Uncheck";
 import { Underline } from "./outlineIcons/Underline";
 import { Upload } from "./outlineIcons/Upload";
 import { Vector } from "./outlineIcons/Vector";
+import { VerticalDots } from "./outlineIcons/VerticalDots";
 import { View } from "./outlineIcons/View";
 import { Voice } from "./outlineIcons/Voice";
 import { Web } from "./outlineIcons/Web";
@@ -54,6 +55,7 @@ import { RightArrow } from "./outlineIcons/RightArrow";
 import { Send } from "./fillIcons";
 import { ReactNode } from "react";
 import { cn } from "@/utils";
+import { Trash } from "./outlineIcons/Trash";
 
 interface Props {
   children?: ReactNode;
@@ -346,6 +348,12 @@ OutlineIcon.Strikethrough = ({ className }: Props) => (
   </OutlineIcon>
 );
 
+OutlineIcon.Trash = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Trash />
+  </OutlineIcon>
+);
+
 OutlineIcon.Tutorial = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Tutorial />
@@ -379,6 +387,12 @@ OutlineIcon.Upload = ({ className }: Props) => (
 OutlineIcon.Vector = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Vector />
+  </OutlineIcon>
+);
+
+OutlineIcon.VerticalDots = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <VerticalDots />
   </OutlineIcon>
 );
 
