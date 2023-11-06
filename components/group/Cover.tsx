@@ -1,43 +1,27 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
-import GroupMenu from "./GroupMenu";
+import DeleteGroupModel from "./DeleteGroupModel";
 
 const Cover = ({
   user,
   title,
   coverUrl,
   groupUrl,
+  groupId,
 }: {
   user: string;
   title: string;
   coverUrl: string;
   groupUrl: string;
+  groupId: string;
 }) => {
   const [show, setShow] = useState(false);
-  const [menu, setMenu] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [showDelete, setShowDelete] = useState(false);
 
-  const handleButtonClick = () => {
-    setMenu((s) => !s);
-  };
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
-      setMenu(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
   return (
     <div className="bg-background dark:bg-dark3 flex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] p-[.625rem] sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -96,17 +80,24 @@ const Cover = ({
               </div>
               <p className="caption-semibold text-secondary3">Leave</p>
             </button>
-            <Modal show={show} closeModal={() => setShow(false)} />
+            <Modal
+              show={show}
+              closeModal={() => setShow(false)}
+              params={{
+                slug: "",
+                id: "",
+              }}
+            />
           </div>
           <div className="relative">
-            <button ref={buttonRef} onClick={handleButtonClick}>
+            <button onClick={() => setShowDelete((s) => !s)}>
               <OutlineIcon.VerticalDots className="fill-secondary5" />
             </button>
-            {menu && (
-              <div className="absolute top-[50%] translate-x-[-100%]">
-                <GroupMenu />
-              </div>
-            )}
+            <DeleteGroupModel
+              show={showDelete}
+              closeModal={() => setShowDelete(false)}
+              params={groupId}
+            />
           </div>
         </div>
       </div>

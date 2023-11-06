@@ -11,12 +11,12 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
-import GroupMenu from "@/components/group/GroupMenu";
 import { getGroupById } from "@/utils/actions/group.action";
 import GroupError from "@/components/group/GroupError";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
+  console.log(params.slug);
 
   if (!group.success)
     return (
@@ -46,6 +46,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 user={username}
                 coverUrl={coverUrl}
                 groupUrl={groupUrl}
+                groupId={params.slug}
               />
               <div className="w-full">
                 <Frame />
@@ -96,7 +97,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
               />
               <ActiveMembers avatar={"/Avatar.png"} />
               <RecentMedia media={"/bird.png"} />
-              <GroupMenu />
             </div>
           </section>
         </div>
@@ -111,6 +111,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 user={username}
                 coverUrl={coverUrl}
                 groupUrl={groupUrl}
+                groupId={params.slug}
               />
               <div className="w-full">
                 <Frame />
@@ -182,6 +183,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
             user={username}
             coverUrl={coverUrl}
             groupUrl={groupUrl}
+            groupId={params.slug}
           />
           <CreateGroup
             title={"Create Group"}
