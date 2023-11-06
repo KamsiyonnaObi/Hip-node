@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
@@ -9,18 +10,36 @@ import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/Button";
 
 const SignIn = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [failedLogin, setFailedLogin] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleLogIn = () => {
-    console.log(formData);
+  const handleLogIn = async () => {
+    try {
+      const response = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      if (response?.error) {
+        setFailedLogin(true);
+        return false;
+      } else {
+        router.push("/");
+        setFailedLogin(false);
+        return true;
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <>
@@ -30,6 +49,9 @@ const SignIn = () => {
             <h1 className="h3-semibold text-secondary2 dark:text-background2">
               Email
             </h1>
+            {failedLogin && (
+              <p className="text-red">Email or Password is invalid</p>
+            )}
             <Input
               name="email"
               type="email"
