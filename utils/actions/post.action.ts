@@ -2,11 +2,12 @@
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
+import User from "@/models/User";
 
-export async function createPost(params: Partial<IPost>) {
+export async function createPost(params: any) {
   try {
     await dbConnect();
-    const { title, content, image, tags, userId } = params;
+    const { title, content, image, tags, userId, avatar } = params;
 
     const post = await Post.create({
       title,
@@ -14,6 +15,7 @@ export async function createPost(params: Partial<IPost>) {
       image,
       tags,
       userId,
+      avatar,
     });
     return post;
   } catch (error) {
@@ -48,6 +50,19 @@ export async function deletePost(postId: number) {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
     return deletedPost;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllPosts(params: any) {
+  try {
+    await dbConnect();
+
+    const posts = await Post.find({})
+    .sort({ createdAt: -1 });
+    return { posts };
   } catch (error) {
     console.log(error);
     throw error;

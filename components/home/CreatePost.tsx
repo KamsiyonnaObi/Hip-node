@@ -1,9 +1,31 @@
+"use client";
 import Image from "next/image";
 import { Input } from "../form/Input";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/Button";
+import { createPost } from "@/utils/actions/post.action";
 
 const CreatePost = () => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
+  async function handleSubmit() {
+    try {
+      await createPost({
+        title: inputValue,
+        content: inputValue,
+        tags: ["java", "css"],
+        userId: "John Smith",
+        image: "/PostImage.png",
+        avatar: "/Avatar.png",
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   return (
     <article className="flex flex-row gap-[10px] rounded-[16px] bg-background p-[14px] dark:bg-dark3 md:p-[20px]">
       <div className="flex flex-row gap-[10px] md:gap-[20px]">
@@ -19,10 +41,13 @@ const CreatePost = () => {
         <Input
           className="caption-regular md:body-regular w-[174px] gap-[10px] rounded-[6px] bg-secondary6 py-2 pl-2.5 md:w-[553px] md:p-3"
           placeholder="Let's share what is going on..."
+          value={inputValue}
+          onChange={handleInputChange}
         />
         <Button
           color="orange"
           className="caption-semibold md:body-semibold gap-2.5 rounded-[6px] px-3 py-2 text-center md:px-4 md:py-3"
+          onClick={handleSubmit}
         >
           Create Post
         </Button>
