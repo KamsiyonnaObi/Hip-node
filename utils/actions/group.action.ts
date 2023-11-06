@@ -6,7 +6,6 @@ import Group from "@/models/group.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 
-
 interface NewGroup {
   title: string;
   coverUrl: string;
@@ -21,35 +20,39 @@ export async function createGroup(params: NewGroup) {
     await dbConnect();
     // get the current user
     const currentUser: any = await getServerSession();
-    const {email} = currentUser?.user;
-    const User = await UserModel.findOne({email});
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
     const { title, coverUrl, groupUrl, description } = params;
 
     const group = await Group.create({
-        title,
-        coverUrl,
-        groupUrl,
-        userId:User?._id,
-        description,
-        
+      title,
+      coverUrl,
+      groupUrl,
+      userId: User?._id,
+      description,
     });
     if (group) {
-      return JSON.stringify({ success: true, message: "Group created successfully!",id:group._id});
+      return JSON.stringify({
+        success: true,
+        message: "Group created successfully!",
+        id: group._id,
+      });
     } else {
       throw new Error("Failed to create a group.");
     }
   } catch (error) {
     console.log(error);
-    return JSON.stringify({ success: false, message: "An error occurred while creating the group." });
-    
+    return JSON.stringify({
+      success: false,
+      message: "An error occurred while creating the group.",
+    });
   }
-  
 }
 
-export async function getGroupById(groupId: number) {
+export async function getGroupById(groupId: string) {
   try {
     await dbConnect();
-    const group = await Group.findById(groupId);
+    const group = await Group.findById(groupId).populate("userId");
 
     if (group) {
       return { success: true, data: group };
@@ -58,17 +61,18 @@ export async function getGroupById(groupId: number) {
     }
   } catch (error) {
     console.log(error);
-    return { success: false, message: "An error occurred while retrieving the group." };
+    return {
+      success: false,
+      message: "An error occurred while retrieving the group.",
+    };
   }
 }
-
-
 
 export async function deleteGroup(groupId: number) {
   try {
     await dbConnect();
     const deletedGroup = await Group.findByIdAndDelete(groupId);
-    
+
     if (deletedGroup) {
       return { success: true, message: "Group deleted successfully" };
     } else {
@@ -76,7 +80,10 @@ export async function deleteGroup(groupId: number) {
     }
   } catch (error) {
     console.log(error);
-    return { success: false, message: "An error occurred while deleting the group." };
+    return {
+      success: false,
+      message: "An error occurred while deleting the group.",
+    };
   }
 }
 
@@ -91,4 +98,3 @@ export async function getUsersBySimilarName(name: string) {
     return "[]";
   }
 }
-

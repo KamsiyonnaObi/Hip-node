@@ -12,15 +12,28 @@ import {
   CreateGroup,
 } from "@/components/group";
 import GroupMenu from "@/components/group/GroupMenu";
+import { getGroupById } from "@/utils/actions/group.action";
+import GroupError from "@/components/group/GroupError";
 
-const page = () => {
+const page = async ({ params }: { params: { slug: string } }) => {
+  const group = await getGroupById(params.slug);
+
+  if (!group.success)
+    return (
+      <div className="flex justify-center">
+        <GroupError />
+      </div>
+    );
+  const { title, coverUrl, groupUrl, description } = group.data;
+  const { username } = group.data.userId;
+
   return (
     <main>
       {/* Desktop */}
       <div className="mx-auto hidden items-center justify-center gap-5 lg:mt-5 lg:flex lg:max-w-[950px] lg:flex-row lg:items-start xl:max-w-[1100px]">
         <section>
           <div className="flex flex-col gap-[1.25rem]">
-            <About />
+            <About description={description} />
             <Admin />
             <PopularTags />
           </div>
@@ -28,7 +41,12 @@ const page = () => {
         <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
           <section>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-              <Cover />
+              <Cover
+                title={title}
+                user={username}
+                coverUrl={coverUrl}
+                groupUrl={groupUrl}
+              />
               <div className="w-full">
                 <Frame />
               </div>
@@ -88,7 +106,12 @@ const page = () => {
         <div className="flex flex-col md:flex-row md:gap-[1.25rem]">
           <section>
             <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-              <Cover />
+              <Cover
+                title={title}
+                user={username}
+                coverUrl={coverUrl}
+                groupUrl={groupUrl}
+              />
               <div className="w-full">
                 <Frame />
               </div>
@@ -143,7 +166,7 @@ const page = () => {
             </section>
             <section>
               <div className="flex flex-col gap-[1.25rem]">
-                <About />
+                <About description={description} />
                 <Admin />
                 <PopularTags />
               </div>
@@ -154,7 +177,12 @@ const page = () => {
       {/* Mobile */}
       <div className="xs:max-w-[320px] mx-auto mt-2.5 flex flex-col items-center justify-center gap-5 sm:max-w-[600px] md:hidden">
         <div className="flex flex-col gap-5 sm:w-[99%]">
-          <Cover />
+          <Cover
+            title={title}
+            user={username}
+            coverUrl={coverUrl}
+            groupUrl={groupUrl}
+          />
           <CreateGroup
             title={"Create Group"}
             desc={
@@ -176,7 +204,7 @@ const page = () => {
           />
           <ActiveMembers avatar={"/Avatar.png"} />
           <RecentMedia media={"/bird.png"} />
-          <About />
+          <About description={description} />
           <Admin />
         </div>
       </div>
