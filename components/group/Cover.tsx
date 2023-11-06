@@ -80,25 +80,13 @@ const Cover = () => {
             </button>
             <Modal show={show} closeModal={() => setShow(false)} />
           </div>
-          <div onClick={() => console.log("Clicked")}>
+          <div className="relative" onClick={() => console.log("Clicked")}>
             <button ref={buttonRef} onClick={handleButtonClick}>
               <OutlineIcon.VerticalDots className="fill-secondary5" />
             </button>
             {menu && (
               <div
-                className="menu"
-                style={{
-                  position: "absolute",
-                  top: buttonRef.current
-                    ? buttonRef.current.getBoundingClientRect().bottom + "px"
-                    : "0",
-                  right: buttonRef.current
-                    ? window.innerWidth -
-                      buttonRef.current.getBoundingClientRect().right +
-                      "px"
-                    : "0",
-                }}
-              >
+                className="absolute top-[50%] translate-x-[-100%]">
                 <GroupMenu />
               </div>
             )}
