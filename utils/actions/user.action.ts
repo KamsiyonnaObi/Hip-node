@@ -1,8 +1,4 @@
 "use server";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-
-import { IUser } from "@/types/mongoose";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 
@@ -35,43 +31,4 @@ export async function newUser(user: FormData) {
   }
 }
 
-export async function getUser(user: FormData) {
-  const email = user.get("email");
-  const password = user.get("password");
-  try {
-    // connect to db
-    await dbConnect();
 
-    // check if user exists
-    const existingUser = (await UserModel.findOne({
-      email,
-    })) as IUser;
-
-    // check if password is correct
-    const isPasswordCorrect = await existingUser?.checkPassword(
-      password as string
-    );
-
-    // return error if user doesn't exist or password is incorrect
-    if (!existingUser || !isPasswordCorrect) {
-      return { status: "Email or Password is incorrect" };
-    }
-
-    // create a JWT token
-    const token = jwt.sign(
-      { id: existingUser._id },
-      (process.env.JWT_SECRET as string) || "",
-      {
-        expiresIn: "1d",
-      }
-    );
-
-    // set cookie
-    cookies().set("token", token);
-
-    // return success
-    return { status: "success" };
-  } catch (error) {
-    return { status: "Something went wrong" };
-  }
-}
