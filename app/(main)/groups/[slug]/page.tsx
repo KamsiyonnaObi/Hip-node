@@ -16,7 +16,6 @@ import GroupError from "@/components/group/GroupError";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
-  console.log(params.slug);
 
   if (!group.success)
     return (
