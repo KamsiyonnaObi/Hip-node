@@ -22,13 +22,18 @@ const Cover = ({
   const [show, setShow] = useState(false);
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
   };
 
   const handleOutsideClick = (e: MouseEvent) => {
-    if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+    if (!menuRef.current || !buttonRef.current) return;
+    if (
+      !menuRef.current.contains(e.target as Node) &&
+      !buttonRef.current.contains(e.target as Node)
+    ) {
       setMenu(false);
     }
   };
@@ -105,7 +110,10 @@ const Cover = ({
               <OutlineIcon.VerticalDots className="fill-secondary5" />
             </button>
             {menu && (
-              <div className="absolute top-[50%] translate-x-[-100%]">
+              <div
+                className="absolute top-[50%] translate-x-[-100%]"
+                ref={menuRef}
+              >
                 <GroupMenu id={groupId} />
               </div>
             )}
