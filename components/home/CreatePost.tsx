@@ -4,6 +4,7 @@ import { Input } from "../form/Input";
 import React, { useState } from "react";
 import { Button } from "../ui/Button";
 import { createPost } from "@/utils/actions/post.action";
+import Link from "next/link";
 
 const CreatePost = () => {
   const [inputValue, setInputValue] = useState("");
@@ -44,13 +45,14 @@ const CreatePost = () => {
           value={inputValue}
           onChange={handleInputChange}
         />
-        <Button
-          color="orange"
-          className="caption-semibold md:body-semibold gap-2.5 rounded-[6px] px-3 py-2 text-center md:px-4 md:py-3"
-          onClick={handleSubmit}
-        >
-          Create Post
-        </Button>
+        <Link href="/posts/new">
+          <Button
+            color="orange"
+            className="caption-semibold md:body-semibold gap-2.5 rounded-[6px] px-3 py-2 text-center md:px-4 md:py-3"
+          >
+            Create Post
+          </Button>
+        </Link>
       </div>
     </article>
   );

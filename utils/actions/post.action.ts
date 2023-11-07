@@ -61,7 +61,8 @@ export async function getAllPosts(params: any) {
     await dbConnect();
 
     const posts = await Post.find({})
-    .sort({ createdAt: -1 });
+      .populate("userId")
+      .sort({ createdAt: -1 });
     return { posts };
   } catch (error) {
     console.log(error);

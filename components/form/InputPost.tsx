@@ -21,10 +21,10 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
-import useThemeState from "@/store/themeStore";
+import { useTheme } from "next-themes";
 
 export function InputPost() {
-  const { theme } = useThemeState();
+  const { theme } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
