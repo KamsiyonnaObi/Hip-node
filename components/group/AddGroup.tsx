@@ -136,7 +136,6 @@ const AddGroup: React.FC = () => {
   };
 
   const handleUserSelection = (user: User) => {
-    // Add the user to formData.admins
     setFormData((prevData) => ({
       ...prevData,
       admins: prevData.admins
@@ -144,13 +143,11 @@ const AddGroup: React.FC = () => {
         : user.username,
     }));
 
-    // Add the user to the selectedAdmins state
     setSelectedAdmins((prevSelectedAdmins) => [
       ...prevSelectedAdmins,
       user.username,
     ]);
 
-    // Clear the user suggestions
     setSuggestedUsers([]);
 
     clearAdminInput();
@@ -337,7 +334,7 @@ const AddGroup: React.FC = () => {
                 {suggestedUsers.map((user: User) => (
                   <div
                     key={user._id}
-                    onClick={() => handleUserSelectionForMember(user)} // Change to handleUserSelectionForMember
+                    onClick={() => handleUserSelectionForMember(user)}
                     className="border w-fit"
                   >
                     {user.username}
