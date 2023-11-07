@@ -35,6 +35,7 @@ export default function DeleteGroupModal({
 
   return (
     <>
+<<<<<<< HEAD
       {show &&
         createPortal(
           <div
@@ -60,6 +61,21 @@ export default function DeleteGroupModal({
                       </p>
                     </button>
                   </Link>
+=======
+      {show && createPortal(
+        <div 
+        onClick={closeModal}
+        className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+          <div className="absolute flex items-center justify-center">
+            <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
+              <div className="mb-[1.875rem]">
+                <h2 className="h3-semibold text-center text-secondary2 dark:text-background2">
+                  Confirm you would like to delete this group?
+                </h2>
+              </div>
+              <div className="flex gap-[1.25rem]">
+                <Link href="/groups">
+>>>>>>> 3a0f4d78859a276874f9865bcc2f25ea7467c98e
                   <button
                     className="my-auto flex items-center"
                     onClick={closeModal}
