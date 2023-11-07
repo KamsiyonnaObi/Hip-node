@@ -75,3 +75,25 @@ export async function getUser(user: FormData) {
     return { status: "Something went wrong" };
   }
 }
+
+export async function getUserProfile(email: string | null | undefined) {
+  try {
+    await dbConnect();
+
+    const loggedInUser = await UserModel.findOne({ email });
+
+    if (loggedInUser) {
+      const userObj = {
+        id: loggedInUser._id.toString(),
+        name: loggedInUser.username,
+        email: loggedInUser.email,
+        profileImage: loggedInUser.profileImage,
+      };
+      return userObj;
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+}
