@@ -40,6 +40,7 @@ export default function DeleteGroupModal({
         createPortal(
           <div
             onClick={closeModal}
+            // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
             className="z-[15] fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm"
           >
             <div className="absolute flex items-center justify-center">

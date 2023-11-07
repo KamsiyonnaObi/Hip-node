@@ -15,6 +15,7 @@ export default function Modal({ show, closeModal }: Props) {
   return (
     <>
       {createPortal(
+        // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
         <div className="z-[15] fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
           <div className="absolute flex items-center justify-center">
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
