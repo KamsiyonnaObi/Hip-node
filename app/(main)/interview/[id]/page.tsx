@@ -1,7 +1,9 @@
-import { Tags } from "@/components";
+import Image from "next/image";
+
 import PageWrapper from "@/components/PageWrapper";
 import { InterviewPostImage } from "@/utils/images";
-import Image from "next/image";
+import { Tags } from "@/components";
+import { dummyTags } from "@/constants/dummy";
 
 const InterviewArticle = ({ params }: { params: { id: string } }) => {
   return (
@@ -18,7 +20,7 @@ const InterviewArticle = ({ params }: { params: { id: string } }) => {
             Leading with Empathy: An Interview with HR and People Management
             Experts
           </h1>
-          <Tags tags={["technology", "diversity", "hr"]} />
+          <Tags tags={dummyTags} />
           <p className="text-secondary3">
             In a recent interview with HR and people management experts, we
             explored the significance of leading with empathy in today&apos;s
