@@ -13,7 +13,12 @@ import {
 } from "@/utils/actions/group.action";
 import useDebounce from "./GetUser";
 
-const AddGroup = () => {
+interface User {
+  _id: string;
+  username: string;
+}
+
+const AddGroup: React.FC = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
@@ -23,7 +28,9 @@ const AddGroup = () => {
     coverUrl: "",
     groupUrl: "",
   });
+
   const [submitStatus, setSubmitStatus] = useState<string>("");
+
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
@@ -88,6 +95,7 @@ const AddGroup = () => {
       }
     }
   };
+
   function formStatus() {
     switch (submitStatus) {
       case "":
@@ -101,19 +109,31 @@ const AddGroup = () => {
     }
   }
 
-  const [users, setUsers] = useState([]);
-  const [userSearch, setUserSearch] = useState("");
+  const [userSearch, setUserSearch] = useState<string>("");
   const debouncedUserSearch = useDebounce(userSearch, 300);
+
+  const [suggestedUsers, setSuggestedUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const response = JSON.parse(
         await getUsersBySimilarName(debouncedUserSearch)
       );
-      setUsers(response);
+      setSuggestedUsers(response);
     };
     fetchUsers();
   }, [debouncedUserSearch]);
+
+  const handleUserSelection = (user: User) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      admins: prevData.admins
+        ? prevData.admins + `,${user.username}`
+        : user.username,
+    }));
+    // Clear the user suggestions
+    setSuggestedUsers([]);
+  };
 
   return (
     <>
@@ -179,10 +199,25 @@ const AddGroup = () => {
                 placeholder="Add admins..."
                 value={formData.admins}
                 onChange={handleChange}
+                onInput={(e) => {
+                  setUserSearch(e.target.value);
+                }}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
                   validationErrors.admins ? "border-red" : ""
                 }`}
               />
+              <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+                {suggestedUsers.map((user) => (
+                  <div
+                    key={user._id}
+                    onClick={() => handleUserSelection(user)}
+                    className="border w-fit"
+                  >
+                    {user.username}
+                  </div>
+                ))}
+              </div>
+
               {validationErrors.admins && (
                 <p className="text-red text-xs-regular mb-[.62rem]">
                   {validationErrors.admins}
