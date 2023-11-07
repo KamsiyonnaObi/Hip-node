@@ -1,10 +1,13 @@
 "use server";
 
-import mongoose, { ObjectId } from "mongoose";
+import mongoose, { ObjectId, ConnectOptions } from "mongoose";
 import { revalidatePath } from "next/cache";
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
+
+const { UserModel } = require("@/models/User");
+const { GroupModel } = require("@/models/group.model");
 
 export async function createPost(params: Partial<IPost>) {
   try {
@@ -28,9 +31,10 @@ export async function createPost(params: Partial<IPost>) {
 export async function getPostById(postId: string) {
   try {
     await dbConnect();
-    const post = await Post.findById(postId).populate("userId");
-    // MissingSchemaError: Schema hasn't been registered for model "Group".
-    // .populate("groupId");
+    const post = await Post.findById(postId)
+      .populate("userId")
+      // MissingSchemaError: Schema hasn't been registered for model "Group".
+      .populate("groupId");
     if (post) {
       return { success: true, data: post };
     } else {
