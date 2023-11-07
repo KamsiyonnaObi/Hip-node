@@ -124,15 +124,86 @@ const AddGroup: React.FC = () => {
     fetchUsers();
   }, [debouncedUserSearch]);
 
+  const [selectedAdmins, setSelectedAdmins] = useState<string[]>([]);
+
+  const clearAdminInput = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      admins: "",
+    }));
+
+    setUserSearch("");
+  };
+
   const handleUserSelection = (user: User) => {
+    // Add the user to formData.admins
     setFormData((prevData) => ({
       ...prevData,
       admins: prevData.admins
         ? prevData.admins + `,${user.username}`
         : user.username,
     }));
+
+    // Add the user to the selectedAdmins state
+    setSelectedAdmins((prevSelectedAdmins) => [
+      ...prevSelectedAdmins,
+      user.username,
+    ]);
+
     // Clear the user suggestions
     setSuggestedUsers([]);
+
+    clearAdminInput();
+  };
+
+  const handleRemoveAdmin = (adminName: string) => {
+    const updatedAdmins = selectedAdmins.filter((admin) => admin !== adminName);
+    setSelectedAdmins(updatedAdmins);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      admins: updatedAdmins.join(","),
+    }));
+  };
+
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
+  const clearMemberInput = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      members: "",
+    }));
+
+    setUserSearch("");
+  };
+
+  const handleUserSelectionForMember = (user: User) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      members: prevData.members
+        ? prevData.members + `,${user.username}`
+        : user.username,
+    }));
+
+    setSelectedMembers((prevSelectedMembers) => [
+      ...prevSelectedMembers,
+      user.username,
+    ]);
+
+    setSuggestedUsers([]);
+    clearMemberInput();
+  };
+
+  const handleRemoveMember = (memberName: string) => {
+    const updatedMembers = selectedMembers.filter(
+      (member) => member !== memberName
+    );
+    setSelectedMembers(updatedMembers);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      members: updatedMembers.join(","),
+    }));
   };
 
   return (
@@ -199,7 +270,7 @@ const AddGroup: React.FC = () => {
                 placeholder="Add admins..."
                 value={formData.admins}
                 onChange={handleChange}
-                onInput={(e) => {
+                onInput={(e: ChangeEvent<HTMLInputElement>) => {
                   setUserSearch(e.target.value);
                 }}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
@@ -207,7 +278,7 @@ const AddGroup: React.FC = () => {
                 }`}
               />
               <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
-                {suggestedUsers.map((user) => (
+                {suggestedUsers.map((user: User) => (
                   <div
                     key={user._id}
                     onClick={() => handleUserSelection(user)}
@@ -223,6 +294,20 @@ const AddGroup: React.FC = () => {
                   {validationErrors.admins}
                 </p>
               )}
+              <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+                {selectedAdmins.map((admin) => (
+                  <div key={admin} className="border w-fit">
+                    {admin}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveAdmin(admin)}
+                      className="ml-[.25rem] text-red cursor-pointer"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -236,6 +321,9 @@ const AddGroup: React.FC = () => {
                 placeholder="Add members..."
                 value={formData.members}
                 onChange={handleChange}
+                onInput={(e: ChangeEvent<HTMLInputElement>) => {
+                  setUserSearch(e.target.value);
+                }}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
                   validationErrors.members ? "border-red" : ""
                 }`}
@@ -245,8 +333,39 @@ const AddGroup: React.FC = () => {
                   {validationErrors.members}
                 </p>
               )}
+              <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+                {suggestedUsers.map((user: User) => (
+                  <div
+                    key={user._id}
+                    onClick={() => handleUserSelectionForMember(user)} // Change to handleUserSelectionForMember
+                    className="border w-fit"
+                  >
+                    {user.username}
+                  </div>
+                ))}
+              </div>
+              {validationErrors.members && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.members}
+                </p>
+              )}
+              <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+                {selectedMembers.map((member) => (
+                  <div key={member} className="border w-fit">
+                    {member}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveMember(member)}
+                      className="ml-[.25rem] text-red cursor-pointer"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+
           <div className="flex gap-[1.25rem]">
             <button
               type="button"
