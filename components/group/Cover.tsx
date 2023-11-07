@@ -98,14 +98,7 @@ const Cover = ({
               </div>
               <p className="caption-semibold text-secondary3">Leave</p>
             </button>
-            <Modal
-              show={show}
-              closeModal={() => setShow(false)}
-              params={{
-                slug: "",
-                id: "",
-              }}
-            />
+            <Modal show={show} closeModal={() => setShow(false)} />
           </div>
           <div className="relative">
             <button ref={buttonRef} onClick={handleButtonClick}>

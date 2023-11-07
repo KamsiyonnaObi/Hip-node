@@ -4,12 +4,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 import OutlineIcon from "../icons/OutlineIcon";
-import DeleteGroupModal from "./DeleteGroupModal";
+import DeleteGroupModal from "@/components/group/DeleteGroupModal";
 
 const GroupMenu = ({ id }: { id: string }) => {
   const [showDelete, setShowDelete] = useState(false);
-
-  const handleDeleteClick = () => {
+  const handleDeleteClick = async () => {
     setShowDelete(true);
   };
 
@@ -24,23 +23,22 @@ const GroupMenu = ({ id }: { id: string }) => {
         </div>
       </Link>
       <div>
-        <div className="relative">
-          <button onClick={handleDeleteClick}>
-            <div className="flex items-center gap-[0.625rem]">
-              <OutlineIcon.Trash className="fill-transparent" />
-              <p className="text-secondary2 body-semibold dark:text-background2">
-                Delete Group
-              </p>
-            </div>
-          </button>
-          <DeleteGroupModal
-            show={showDelete}
-            closeModal={() => setShowDelete(false)}
-            params={id}
-          />
-        </div>
+        <button onClick={handleDeleteClick}>
+          <div className="flex items-center gap-[0.625rem]">
+            <OutlineIcon.Trash className="fill-transparent" />
+            <p className="text-secondary2 body-semibold dark:text-background2">
+              Delete Group
+            </p>
+          </div>
+        </button>
       </div>
+      <DeleteGroupModal
+        show={showDelete}
+        closeModal={() => setShowDelete(false)}
+        params={id}
+      />
     </div>
   );
 };
+
 export default GroupMenu;
