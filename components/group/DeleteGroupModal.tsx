@@ -53,8 +53,10 @@ export default function DeleteGroupModal({
 
   return (
     <>
-      {createPortal(
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+      {show && createPortal(
+        <div 
+        onClick={closeModal}
+        className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
           <div className="absolute flex items-center justify-center">
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
               <div className="mb-[1.875rem]">
