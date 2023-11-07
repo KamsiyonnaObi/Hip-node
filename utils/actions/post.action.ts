@@ -135,46 +135,6 @@ export async function likePost({
   }
 }
 
-export async function commentPost({
-  postId,
-  userId,
-  hasCommented,
-  path,
-}: {
-  postId: string;
-  userId: string;
-  hasCommented: boolean;
-  path: string;
-}) {
-  try {
-    dbConnect();
-    const { ObjectId } = mongoose.Types;
-    const id = new ObjectId(postId);
-    let updateQuery = {};
-    // Remove like if it is already liked
-    if (hasCommented) {
-      updateQuery = { $pull: { comments: userId } };
-    } else {
-      updateQuery = { $addToSet: { comments: userId } };
-    }
-
-    const post = await Post.findByIdAndUpdate(id, updateQuery, {
-      new: true,
-    });
-
-    if (!post) {
-      throw new Error("Post not found");
-    }
-    if (!path) {
-      throw new Error("Path is required");
-    }
-    revalidatePath(path);
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
 export async function sharePost({
   postId,
   userId,

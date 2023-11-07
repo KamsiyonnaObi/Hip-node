@@ -12,14 +12,15 @@ import {
   PostDate,
   Thread,
 } from "@/components";
+import { getLoggedInUserId } from "@/utils/actions/user.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   // const session = await getSession();
   // const loggedinUserId = session?.user?.id;
 
   // TODO: Replace them once the session is working properly.
-  const { ObjectId } = mongoose.Types;
-  const loggedinUserId = new ObjectId("6546f04496a572e837bd18e3");
+
+  const loggedInUserId = await getLoggedInUserId();
 
   const postopen = await getPostById(params.slug);
 
@@ -38,7 +39,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     shares,
     reports,
   } = postopen.data;
-  console.log(postopen.data);
 
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
@@ -50,11 +50,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
             postId={JSON.stringify(_id)}
-            userId={JSON.stringify(loggedinUserId)}
-            hasLiked={likes.includes(loggedinUserId)}
-            hasCommented={comments.includes(loggedinUserId)}
-            hasShared={shares.includes(loggedinUserId)}
-            hasReported={reports.includes(loggedinUserId)}
+            userId={JSON.stringify(loggedInUserId)}
+            hasLiked={likes.includes(loggedInUserId)}
+            hasCommented={comments.includes(loggedInUserId)}
+            hasShared={shares.includes(loggedInUserId)}
+            hasReported={reports.includes(loggedInUserId)}
             likes={likes.length}
             comments={comments.length}
             shares={shares.length}
@@ -73,11 +73,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="hidden flex-col gap-5 md:order-1 md:flex">
         <ActionBar
           postId={JSON.stringify(_id)}
-          userId={JSON.stringify(loggedinUserId)}
-          hasLiked={likes.includes(loggedinUserId)}
-          hasCommented={comments.includes(loggedinUserId)}
-          hasShared={shares.includes(loggedinUserId)}
-          hasReported={reports.includes(loggedinUserId)}
+          userId={JSON.stringify(loggedInUserId)}
+          hasLiked={likes.includes(loggedInUserId)}
+          hasCommented={comments.includes(loggedInUserId)}
+          hasShared={shares.includes(loggedInUserId)}
+          hasReported={reports.includes(loggedInUserId)}
           likes={likes.length}
           comments={comments.length}
           shares={shares.length}

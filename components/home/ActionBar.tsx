@@ -1,15 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import FillIcon from "../icons/FillIcon";
-import {
-  commentPost,
-  likePost,
-  reportPost,
-  sharePost,
-} from "@/utils/actions/post.action";
+import { likePost, reportPost, sharePost } from "@/utils/actions/post.action";
 
 interface Props {
   postId: string;
@@ -47,17 +42,8 @@ const ActionBar = ({
       });
     }
   };
-  const handleComment = async () => {
-    if (userId) {
-      await commentPost({
-        postId: JSON.parse(postId),
-        userId: JSON.parse(userId),
-        hasCommented,
-        path,
-      });
-    }
-  };
 
+  // TODO: implement sharing function later
   const handleShare = async () => {
     if (userId) {
       await sharePost({
@@ -69,6 +55,7 @@ const ActionBar = ({
     }
   };
 
+  // TODO: implement report function later
   const handleReport = async () => {
     if (userId) {
       await reportPost({
@@ -108,12 +95,11 @@ const ActionBar = ({
       </div>
 
       <div className="flex gap-[14px] rounded-md">
-        <button
+        <div
           className={clsx("h-7 w-7 rounded-md p-1", {
             "bg-red10": hasCommented,
             "bg-background2 dark:bg-dark4": !hasCommented,
           })}
-          onClick={handleComment}
         >
           <FillIcon.Comment
             className={clsx({
@@ -121,14 +107,13 @@ const ActionBar = ({
               "fill-secondary3": !hasCommented,
             })}
           />
-        </button>
+        </div>
         <div
           className={clsx("flex gap-1", {
             "text-secondary2 dark:text-background": hasCommented,
             "text-secondary3": !hasCommented,
           })}
         >
-          {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
           <p>{new Intl.NumberFormat().format(comments)} Comments</p>
         </div>
       </div>
@@ -154,7 +139,6 @@ const ActionBar = ({
             "text-secondary3": !hasShared,
           })}
         >
-          {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
           <p>{new Intl.NumberFormat().format(shares)} Shares</p>
         </div>
       </div>
@@ -180,7 +164,6 @@ const ActionBar = ({
             "text-secondary3": !hasReported,
           })}
         >
-          {/* {a.value && <p>{new Intl.NumberFormat().format(a.value)} </p>} */}
           <p>Report</p>
         </div>
       </div>
