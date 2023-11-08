@@ -93,7 +93,6 @@ export async function getUsersBySimilarName(name: string) {
     const users = await UserModel.find({
       username: { $regex: name, $options: "i" },
     }).select("username");
-    console.log(users)
     return JSON.stringify(users);
   } catch (error) {
     return "[]";

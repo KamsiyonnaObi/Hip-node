@@ -115,6 +115,10 @@ const AddGroup: React.FC = () => {
   const [suggestedUsers, setSuggestedUsers] = useState<User[]>([]);
 
   useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  useEffect(() => {
     const fetchUsers = async () => {
       const response = JSON.parse(
         await getUsersBySimilarName(debouncedUserSearch)
@@ -125,15 +129,6 @@ const AddGroup: React.FC = () => {
   }, [debouncedUserSearch]);
 
   const [selectedAdmins, setSelectedAdmins] = useState<string[]>([]);
-
-  const clearAdminInput = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      admins: "",
-    }));
-
-    setUserSearch("");
-  };
 
   const handleUserSelection = (user: User) => {
     setFormData((prevData) => ({
@@ -150,7 +145,7 @@ const AddGroup: React.FC = () => {
 
     setSuggestedUsers([]);
 
-    clearAdminInput();
+    setUserSearch("");
   };
 
   const handleRemoveAdmin = (adminName: string) => {
@@ -164,15 +159,6 @@ const AddGroup: React.FC = () => {
   };
 
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
-
-  const clearMemberInput = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      members: "",
-    }));
-
-    setUserSearch("");
-  };
 
   const handleUserSelectionForMember = (user: User) => {
     setFormData((prevData) => ({
@@ -188,7 +174,7 @@ const AddGroup: React.FC = () => {
     ]);
 
     setSuggestedUsers([]);
-    clearMemberInput();
+    setUserSearch("");
   };
 
   const handleRemoveMember = (memberName: string) => {
@@ -265,8 +251,6 @@ const AddGroup: React.FC = () => {
                 type="text"
                 name="admins"
                 placeholder="Add admins..."
-                value={formData.admins}
-                onChange={handleChange}
                 onInput={(e: ChangeEvent<HTMLInputElement>) => {
                   setUserSearch(e.target.value);
                 }}
@@ -316,8 +300,6 @@ const AddGroup: React.FC = () => {
                 type="text"
                 name="members"
                 placeholder="Add members..."
-                value={formData.members}
-                onChange={handleChange}
                 onInput={(e: ChangeEvent<HTMLInputElement>) => {
                   setUserSearch(e.target.value);
                 }}
