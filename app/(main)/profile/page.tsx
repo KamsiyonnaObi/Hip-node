@@ -11,11 +11,13 @@ export default async function Profile() {
 
   return (
     <section className="flex h-screen justify-center">
-      <div>
-        <p>Hello Hello!</p>
-        <p> This is {data?.name}&apos;s Profile</p>
-      </div>
-      <LeftSideBar />
+      <article className="flex flex-col">
+        <div>
+          <p>Hello Hello!</p>
+          <p> This is {data?.name}&apos;s Profile</p>
+        </div>
+        <LeftSideBar />
+      </article>
     </section>
   );
 }
