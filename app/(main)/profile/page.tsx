@@ -2,6 +2,7 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 
 import { getUserProfile } from "@/utils/actions/user.action";
+import LeftSideBar from "@/components/profile/LeftSideBar";
 
 export default async function Profile() {
   const session = await getServerSession();
@@ -12,8 +13,9 @@ export default async function Profile() {
     <section className="flex h-screen justify-center">
       <div>
         <p>Hello Hello!</p>
-        <p> This is {data?.name}'s Profile</p>
+        <p> This is {data?.name}&apos;s Profile</p>
       </div>
+      <LeftSideBar />
     </section>
   );
 }
