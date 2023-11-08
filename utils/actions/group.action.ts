@@ -68,7 +68,26 @@ export async function getGroupById(groupId: string) {
   }
 }
 
-export async function deleteGroup(groupId: number) {
+export async function updateGroup(groupId: any) {
+  try {
+    await dbConnect();
+    const updatedGroup = await Group.findById(groupId);
+
+    if (updatedGroup) {
+      return { success: true, message: "Group updated successfully" };
+    } else {
+      throw new Error("Failed to update the group.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while updating the group.",
+    };
+  }
+}
+
+export async function deleteGroup(groupId: string) {
   try {
     await dbConnect();
     const deletedGroup = await Group.findByIdAndDelete(groupId);

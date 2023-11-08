@@ -12,3 +12,4 @@ export { default as PostAvatar } from "@/public/PostAvatar.png";
 export { default as PostImage } from "@/public/PodcastDefault.png";
 export { default as InterviewImage } from "@/public/InterviewImage.png";
 export { default as InterviewIllustration } from "@/public/InterviewIllustration.png";
+export { default as InterviewPostImage } from "@/public/InterviewPost.png";
