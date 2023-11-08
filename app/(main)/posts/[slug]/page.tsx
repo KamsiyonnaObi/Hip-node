@@ -1,8 +1,5 @@
-import { getSession } from "next-auth/react";
-
 import { commentData } from "@/constants/dummy";
 import { getPostById, getPostsByUserId } from "@/utils/actions/post.action";
-import mongoose from "mongoose";
 import {
   ActionBar,
   GroupPostDate,
@@ -11,15 +8,12 @@ import {
   OpenedPost,
   PostDate,
   Thread,
+  FollowedProfile,
+  OtherProfile,
 } from "@/components";
 import { getLoggedInUserId } from "@/utils/actions/user.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  // const session = await getSession();
-  // const loggedinUserId = session?.user?.id;
-
-  // TODO: Replace them once the session is working properly.
-
   const loggedInUserId = await getLoggedInUserId();
 
   const postopen = await getPostById(params.slug);
@@ -43,6 +37,20 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
 
+  let profileContent;
+
+  if (userId === loggedInUserId) {
+    profileContent = <MyProfile user={userId} joinedDate={userId.createdAt} />;
+  } else if (userId.followers.includes(loggedInUserId)) {
+    profileContent = (
+      <FollowedProfile user={userId} joinedDate={userId.createdAt} />
+    );
+  } else {
+    profileContent = (
+      <OtherProfile user={userId} joinedDate={userId.createdAt} />
+    );
+  }
+
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
       <section className="w-full md:order-2">
@@ -59,14 +67,16 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             comments={comments.length}
             shares={shares.length}
           />
-          {/* implement later- show PostDate only if it is your own post */}
-          {/* implement later- if group id existed, display GroupPostDate instead */}
-          <PostDate username={userId.username} createdAt={createdAt} />
-          <GroupPostDate
-            username={userId.username}
-            createdAt={createdAt}
-            groupTitle={groupId.title}
-          />
+          {groupId && (
+            <GroupPostDate
+              username={userId.username}
+              createdAt={createdAt}
+              groupTitle={groupId.title}
+            />
+          )}
+          {!groupId && userId === loggedInUserId && (
+            <PostDate username={userId.username} createdAt={createdAt} />
+          )}
         </div>
         <Thread commentData={commentData} />
       </section>
@@ -82,21 +92,19 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           comments={comments.length}
           shares={shares.length}
         />
-        {/* implement later- show PostDate only if it is your own post */}
-        {/* implement later- if group id existed, display GroupPostDate instead */}
-        <PostDate username={userId.username} createdAt={createdAt} />
-        <GroupPostDate
-          username={userId.username}
-          createdAt={createdAt}
-          groupTitle={groupId.title}
-        />
+        {groupId && (
+          <GroupPostDate
+            username={userId.username}
+            createdAt={createdAt}
+            groupTitle={groupId.title}
+          />
+        )}
+        {!groupId && userId === loggedInUserId && (
+          <PostDate username={userId.username} createdAt={createdAt} />
+        )}
       </div>
       <div className="flex flex-col gap-5 md:order-3">
-        {/* implement later- if user id is equal to someone you follow, display FollowedProfile and if the user id is equal to someone you are not following, display OtherProfile */}
-        <MyProfile user={userId} joinedDate={userId.createdAt} />
-        {/* <FollowedProfile user={userId} joinedDate={userId.createdAt} />
-        <OtherProfile user={userId} joinedDate={userId.createdAt} /> */}
-        <MoreFrom posts={posts} author={userId.username} />
+        {profileContent} <MoreFrom posts={posts} author={userId.username} />
       </div>
     </article>
   );
