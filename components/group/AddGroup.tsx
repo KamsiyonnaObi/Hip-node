@@ -115,9 +115,9 @@ const AddGroup: React.FC = () => {
 
   const [, setSuggestedUsers] = useState<User[]>([]);
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const divRef = useRef<HTMLDivElement>(null);
 

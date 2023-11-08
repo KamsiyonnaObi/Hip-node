@@ -4,16 +4,18 @@ import { ChangeEvent, useEffect, useState, useRef } from "react";
 
 import useDebounce from "./GetUser";
 import { getUsersBySimilarName } from "@/utils/actions/group.action";
+import OutlineIcon from "../icons/OutlineIcon";
 interface User {
   _id: string;
   username: string;
 }
+
 export default function UserSelect({
   setter,
   formKey,
 }: {
   setter: any;
-  formKey: any;
+  formKey: string;
 }) {
   const [userSearch, setUserSearch] = useState<string>("");
   const [showList, setShowList] = useState(false);
@@ -52,16 +54,23 @@ export default function UserSelect({
       const response = JSON.parse(
         await getUsersBySimilarName(debouncedUserSearch)
       );
-      setSuggestedUsers(response);
+      const selectedUserIds = selectedUsers.map((user) => user._id);
+
+      const filteredArray = response.filter((user: User) => {
+        return !selectedUserIds.includes(user._id);
+      });
+      setSuggestedUsers(filteredArray);
     };
     fetchUsers();
-  }, [debouncedUserSearch]);
+  }, [debouncedUserSearch, selectedUsers]);
 
   const addUser = (e: any) => {
     const { username, key } = e.target.dataset;
     const user = { username, _id: key };
     const newUsers = selectedUsers.filter((user) => user._id !== key);
     newUsers.push(user);
+    setUserSearch("");
+    setSuggestedUsers([]);
     setSelectedUsers(newUsers);
   };
 
@@ -70,12 +79,14 @@ export default function UserSelect({
     const newUsers = selectedUsers.filter((user) => user._id !== key);
     setSelectedUsers(newUsers);
   };
+
   return (
     <div onFocus={() => setShowList(true)} ref={divRef}>
       <input
         type="text"
         name="admins"
         placeholder="Add admins..."
+        value={userSearch}
         onInput={(e: ChangeEvent<HTMLInputElement>) => {
           setUserSearch(e.target.value);
         }}
@@ -83,13 +94,13 @@ export default function UserSelect({
       />
       {showList && (
         <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
-          {suggestedUsers.map((user: User) => (
+          {suggestedUsers.slice(0, 5).map((user: User) => (
             <div
               key={user._id}
               data-key={user._id}
               data-username={user.username}
               onClick={addUser}
-              className="border w-fit"
+              className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
             >
               {user.username}
             </div>
@@ -98,9 +109,14 @@ export default function UserSelect({
       )}
       <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
         {selectedUsers.map((user: User) => (
-          <div key={user._id} className="border w-fit flex gap-2">
+          <div
+            key={user._id}
+            className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+          >
             {user.username}
-            <div data-key={user._id} onClick={removeUser}></div>
+            <div data-key={user._id} onClick={removeUser}>
+              <OutlineIcon.Close />
+            </div>
           </div>
         ))}
       </div>
