@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import FillIcon from "../icons/FillIcon";
 import { useTheme } from "next-themes";
 
@@ -12,10 +13,12 @@ const Popup = () => {
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
       <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
-        <li className="flex flex-row gap-[14px]">
-          <FillIcon.Profile className="fill-secondary2 dark:fill-secondary6" />
-          <p>Profile</p>
-        </li>
+        <Link href={"/profile"}>
+          <li className="flex flex-row gap-[14px]">
+            <FillIcon.Profile className="fill-secondary2 dark:fill-secondary6" />
+            <p>Profile</p>
+          </li>
+        </Link>
         <li className="flex flex-row gap-[14px]">
           <FillIcon.Settings className="fill-secondary2 dark:fill-secondary6" />
           <p>Settings</p>
