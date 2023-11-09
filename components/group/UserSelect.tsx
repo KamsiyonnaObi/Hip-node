@@ -85,7 +85,7 @@ export default function UserSelect({
       <input
         type="text"
         name="admins"
-        placeholder="Add admins..."
+        placeholder={`Add ${formKey}...`}
         value={userSearch}
         onInput={(e: ChangeEvent<HTMLInputElement>) => {
           setUserSearch(e.target.value);
@@ -93,25 +93,25 @@ export default function UserSelect({
         className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3`}
       />
       {showList && (
-        <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+        <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
           {suggestedUsers.slice(0, 5).map((user: User) => (
             <div
               key={user._id}
               data-key={user._id}
               data-username={user.username}
               onClick={addUser}
-              className="cursor-pointer flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+              className="cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
             >
               {user.username}
             </div>
           ))}
         </div>
       )}
-      <div className="caption-regular mb-[.62rem] flex gap-[.62rem]">
+      <div className="caption-regular mb-[.62rem] flex gap-[.62rem] flex-wrap">
         {selectedUsers.map((user: User) => (
           <div
             key={user._id}
-            className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+            className="flex items-center justify-center gap-2 whitespace-nowrap rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
           >
             {user.username}
             <div
