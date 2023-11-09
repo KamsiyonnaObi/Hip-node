@@ -1,7 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const LeftSideBar = () => {
+type Props =
+  | {
+      id: string;
+      name: string;
+      email: string;
+      profileImage: string;
+      job: string;
+      followers: [];
+      following: [];
+      points: number;
+      bio: string;
+    }
+  | null
+  | undefined;
+const LeftSideBar = (props: Props) => {
   function monthsSinceJoined(joinedDate: Date): number {
     const today = new Date();
     const joined = new Date(joinedDate);
@@ -39,10 +52,8 @@ const LeftSideBar = () => {
         />
       </div>
       <div className="flex flex-col items-center justify-center">
-        <p className="text-secondary2 dark:text-background2">
-          {profileData.name}
-        </p>
-        <p className="text-secondary3">{profileData.job}</p>
+        <p className="text-secondary2 dark:text-background2">{props?.name}</p>
+        <p className="text-secondary3">{props?.job}</p>
       </div>
       <Link
         className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
@@ -52,11 +63,11 @@ const LeftSideBar = () => {
       </Link>
       <div className="flex items-center justify-center gap-3">
         <p className="text-secondary2 dark:text-background2">
-          {`${profileData.followers} Followers`}
+          {`${props?.followers.length} Followers`}
         </p>
         <p className="text-secondary2 dark:text-background2">{`${profileData.points} Points`}</p>
       </div>
-      <p className="text-secondary3">{profileData.bio}</p>
+      <p className="text-secondary3">{props?.bio}</p>
       <p className="text-secondary2 dark:text-background2">
         {profileData.website}
       </p>
