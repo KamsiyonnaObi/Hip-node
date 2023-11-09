@@ -39,11 +39,7 @@ export default async function Home() {
                 tags={post.tags}
                 avatar={post.avatar}
                 username={post.userId?.username || "unknown"}
-                createdAt="2 month ago"
-                // views={420}
-                // likes={69}
-                // comments={75}
-                // createdAt={post.createdAt}
+                createdAt={post.createdAt}
                 views={post.views}
                 likes={post.likes}
                 comments={post.comments}

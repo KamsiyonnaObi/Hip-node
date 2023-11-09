@@ -22,12 +22,37 @@ import {
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
+import PostCategory from "../home/PostCategory";
+import { CldUploadWidget } from "next-cloudinary";
+import { createPost } from "@/utils/actions/post.action";
+import { useSession } from "next-auth/react";
 
 export function InputPost() {
+  const { data: session } = useSession();
+  const userId = session?.user.id;
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [coverUrl, setCoverUrl] = useState("");
+
   const router = useRouter();
+
+  const [expanded, setExpanded] = useState(0);
+  const [create, setCreate] = useState("Post");
+
+  const toggleCategory = () => {
+    setExpanded(expanded !== 2 ? 2 : 0);
+  };
+
+  const closeCategory = (val: any) => {
+    setExpanded(0);
+    setCreate(val);
+  };
+
+  const updateForm = (url: string) => {
+    setCoverUrl(url);
+  };
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostSchema>>({
@@ -40,15 +65,26 @@ export function InputPost() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof PostSchema>) {
+  const onSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // async call to API
+      const values = form.getValues();
+
+      const postData = {
+        title: values.title,
+        content: values.contents,
+        tags: values.tags,
+        userId,
+        image: coverUrl,
+        avatar: "/Avatar.png",
+      };
+      console.log(postData);
+      await createPost(postData);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   const handleInputKeydown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -100,15 +136,36 @@ export function InputPost() {
                     {...field}
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                    <CldUploadWidget
+                      uploadPreset="bl8ltxxe"
+                      onUpload={(result: any) => {
+                        updateForm(result?.info?.secure_url);
+                      }}
                     >
-                      <OutlineIcon.Image1 />
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Set Cover
-                      </p>
-                    </Button>
+                      {({ open }) => {
+                        function handleOnClick(e: React.MouseEvent) {
+                          e.preventDefault();
+                          open();
+                        }
+                        return (
+                          <div className="mb-[1.25rem]">
+                            <div className="flex">
+                              <Button
+                                color="blackWhite"
+                                onClick={handleOnClick}
+                                className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                              >
+                                <OutlineIcon.Image1 />
+                                <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                                  Set Cover
+                                </p>
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      }}
+                    </CldUploadWidget>
+
                     <Button
                       color="blackWhite"
                       className="items-center justify-between px-2.5 py-2"
@@ -118,15 +175,24 @@ export function InputPost() {
                       </p>
                       <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                     </Button>
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2  "
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        <span className="text-secondary3">Create</span> - Post
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
+                    <div className="relative">
+                      <Button
+                        color="blackWhite"
+                        className="items-center justify-between px-2.5 py-2"
+                        onClick={toggleCategory}
+                      >
+                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                          <span className="text-secondary3">Create</span> -{" "}
+                          {create}
+                        </p>
+                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
+                      </Button>
+                      {expanded === 2 && (
+                        <div className="absolute left-0 mt-2 z-50">
+                          <PostCategory closeCategory={closeCategory} />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </FormControl>
@@ -254,6 +320,9 @@ export function InputPost() {
             color="blue"
             className="md:display-semibold body-semibold px-10 py-2.5"
             disabled={isSubmitting}
+            onClick={() => {
+              onSubmit();
+            }}
           >
             {isSubmitting ? <>Posting...</> : <>Publish</>}
           </Button>

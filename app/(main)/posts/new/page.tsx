@@ -1,4 +1,5 @@
 import { InputPost } from "@/components/form";
+import PostCategory from "@/components/home/PostCategory";
 import React from "react";
 
 const page = () => {

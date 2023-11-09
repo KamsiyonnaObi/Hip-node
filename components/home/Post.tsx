@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
+import { getTimestamp } from "@/utils";
 
 interface Props {
   postImage: string;
@@ -9,7 +10,7 @@ interface Props {
   tags: string[];
   avatar: string;
   username: string;
-  createdAt: string;
+  createdAt: Date;
   views: number;
   likes: number;
   comments: number;
@@ -79,13 +80,13 @@ const Post = ({
                   <OutlineIcon.Ellipse />
                 </div>
                 <p className="md:text-sm-regular text-secondary3 dark:text-secondary5">
-                  {createdAt}
+                  {getTimestamp(createdAt)}
                 </p>
               </div>
               <div className="md:body-regular text-xs-regular flex flex-row items-center justify-center gap-[40px] text-secondary3 dark:text-secondary5">
-                <p>{views} Views</p>
-                <p>{likes} Likes</p>
-                <p>{comments} Comments</p>
+                <p>{views !== undefined ? views : 0} Views</p>
+                <p>{likes !== undefined ? likes : 0} Likes</p>
+                <p>{comments !== undefined ? comments : 0} Comments</p>
               </div>
             </section>
           </div>
