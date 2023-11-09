@@ -19,19 +19,29 @@ export const PostSchema = z.object({
 
 export const GroupSchema = z.object({
   title: z
-  .string()
-  .min(3, { message: "Must be 3 or more characters long" })
-  .max(20, { message: "Must be 20 or less characters long" }),
-  coverUrl: z
-    .string(),
-  groupUrl: z
-    .string(),
+    .string()
+    .min(3, { message: "Must be 3 or more characters long" })
+    .max(20, { message: "Must be 20 or less characters long" }),
+  coverUrl: z.string(),
+  groupUrl: z.string(),
   description: z
-  .string()
-  .min(3, { message: "Must be 3 or more characters long" })
-  .max(100, { message: "Must be 100 or less characters long" }),
-  admins: z.string(),
-  members: z.string(),
+    .string()
+    .min(3, { message: "Must be 3 or more characters long" })
+    .max(100, { message: "Must be 100 or less characters long" }),
+  admins: z.string().refine(
+    (val) => {
+      const toArr = JSON.parse(val);
+      return toArr.length > 0;
+    },
+    { message: "Must choose at least one admin" }
+  ),
+  members: z.string().refine(
+    (val) => {
+      const toArr = JSON.parse(val);
+      return toArr.length > 0;
+    },
+    { message: "Must choose at least one member" }
+  ),
 });
 
 export const emailSchema = z.string().email("Invalid email address.");
