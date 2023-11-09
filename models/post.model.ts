@@ -6,10 +6,19 @@ export interface IPost extends Document {
   tags: string[];
   content: string;
   userId: Schema.Types.ObjectId;
+  groupId: Schema.Types.ObjectId;
   createdAt: Date;
-  views: number;
-  likes: number;
-  comments: number;
+  views?: Schema.Types.ObjectId[];
+  likes?: Schema.Types.ObjectId[];
+  comments?: Schema.Types.ObjectId[];
+  shares?: Schema.Types.ObjectId[];
+  reports?: Schema.Types.ObjectId[];
+  hasLiked?: boolean;
+  hasCommented?: boolean;
+  hasShared?: boolean;
+  hasReported?: boolean;
+  postId: Schema.Types.ObjectId;
+  path: () => string;
 }
 
 const PostSchema = new Schema({
@@ -18,10 +27,38 @@ const PostSchema = new Schema({
   tags: { type: [String] },
   content: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  groupId: { type: Schema.Types.ObjectId, ref: "Group" },
   createdAt: { type: Date, default: Date.now },
-  views: { type: Number, default: 0 },
-  likes: { type: Number, default: 0 },
-  comments: { type: Number, default: 0 },
+  views: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  shares: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  reports: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const Post = models.Post || model("Post", PostSchema);

@@ -17,6 +17,11 @@ export interface IUser {
   points: number;
   following: Schema.Types.ObjectId[];
   followers: Schema.Types.ObjectId[];
+  likedPosts: Schema.Types.ObjectId[];
+  commentedPosts: Schema.Types.ObjectId[];
+  sharedPosts: Schema.Types.ObjectId[];
+  reportedPosts: Schema.Types.ObjectId[];
+  myPosts: Schema.Types.ObjectId[];
 
   checkPassword: (password: string | Buffer) => Promise<boolean>;
 }
