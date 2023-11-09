@@ -43,6 +43,11 @@ export async function getUserProfile(email: string | null | undefined) {
         name: loggedInUser.username,
         email: loggedInUser.email,
         profileImage: loggedInUser.profileImage,
+        job: loggedInUser.occupation,
+        followers: loggedInUser.followers,
+        following: loggedInUser.following,
+        points: loggedInUser.points,
+        bio: loggedInUser.bio,
       };
       return userObj;
     }
