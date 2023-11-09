@@ -75,7 +75,7 @@ export default function UserSelect({
   };
 
   const removeUser = (e: any) => {
-    const { key } = e.target.dataset;
+    const { key } = e.currentTarget.dataset;
     const newUsers = selectedUsers.filter((user) => user._id !== key);
     setSelectedUsers(newUsers);
   };
@@ -100,7 +100,7 @@ export default function UserSelect({
               data-key={user._id}
               data-username={user.username}
               onClick={addUser}
-              className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+              className="cursor-pointer flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
             >
               {user.username}
             </div>
@@ -114,7 +114,11 @@ export default function UserSelect({
             className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
           >
             {user.username}
-            <div data-key={user._id} onClick={removeUser}>
+            <div
+              data-key={user._id}
+              onClick={removeUser}
+              className="cursor-pointer"
+            >
               <OutlineIcon.Close />
             </div>
           </div>

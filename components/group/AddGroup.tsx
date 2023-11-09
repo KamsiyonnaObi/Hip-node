@@ -24,8 +24,8 @@ const AddGroup: React.FC = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    admins: "",
-    members: "",
+    admins: [],
+    members: [],
     coverUrl: "",
     groupUrl: "",
   });
@@ -60,8 +60,8 @@ const AddGroup: React.FC = () => {
     newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
 
-    const admins = formData.admins.split(",");
-    const members = formData.members.split(",");
+    const admins = formData?.admins;
+    const members = formData?.members;
 
     newFormData.append("admins", JSON.stringify(admins));
     newFormData.append("members", JSON.stringify(members));
