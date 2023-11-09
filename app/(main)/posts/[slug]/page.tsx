@@ -104,7 +104,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         )}
       </div>
       <div className="flex flex-col gap-5 md:order-3">
-        {profileContent} <MoreFrom posts={posts} author={userId.username} />
+        {profileContent}{" "}
+        {posts && <MoreFrom posts={posts} author={userId.username} />}
       </div>
     </article>
   );
