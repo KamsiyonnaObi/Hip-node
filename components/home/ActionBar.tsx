@@ -1,7 +1,7 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 
 import FillIcon from "../icons/FillIcon";
 import { likePost, reportPost, sharePost } from "@/utils/actions/post.action";
@@ -29,16 +29,25 @@ const ActionBar = ({
   shares,
   comments,
 }: Props) => {
-  const pathname = usePathname;
-  const path = pathname();
+  const [isLiked, setIsLiked] = useState(hasLiked || null);
+  const [numberLiked, setNumberLiked] = useState(likes || 0);
+  const [isShared, setIsShared] = useState(hasShared || null);
+  const [numberShared, setNumberShared] = useState(shares || 0);
+  const [isReported, setIsReported] = useState(hasReported || null);
+  const [isPending, startTransition] = useTransition();
 
   const handleLike = async () => {
     if (userId) {
-      await likePost({
-        postId: JSON.parse(postId),
-        userId: JSON.parse(userId),
-        hasLiked,
-        path,
+      startTransition(async () => {
+        const liked = await likePost({
+          postId: JSON.parse(postId),
+          userId: JSON.parse(userId),
+          hasLiked: isLiked,
+        });
+        if (!liked) return;
+
+        setIsLiked(liked.status);
+        setNumberLiked(liked.number);
       });
     }
   };
@@ -46,11 +55,15 @@ const ActionBar = ({
   // TODO: implement sharing function later
   const handleShare = async () => {
     if (userId) {
-      await sharePost({
-        postId: JSON.parse(postId),
-        userId: JSON.parse(userId),
-        hasShared,
-        path,
+      startTransition(async () => {
+        const shared = await sharePost({
+          postId: JSON.parse(postId),
+          userId: JSON.parse(userId),
+          hasShared: isShared,
+        });
+        if (!shared) return;
+        setIsShared(shared.status);
+        setNumberShared(shared.number);
       });
     }
   };
@@ -58,11 +71,14 @@ const ActionBar = ({
   // TODO: implement report function later
   const handleReport = async () => {
     if (userId) {
-      await reportPost({
-        postId: JSON.parse(postId),
-        userId: JSON.parse(userId),
-        hasReported,
-        path,
+      startTransition(async () => {
+        const reported = await reportPost({
+          postId: JSON.parse(postId),
+          userId: JSON.parse(userId),
+          hasReported: isReported,
+        });
+        if (!reported) return;
+        setIsReported(reported.status);
       });
     }
   };
@@ -71,26 +87,27 @@ const ActionBar = ({
     <section className="flex w-full flex-col items-start justify-start gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">
       <div className="flex gap-[14px] rounded-md">
         <button
+          disabled={isPending}
           className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": hasLiked,
-            "bg-background2 dark:bg-dark4": !hasLiked,
+            "bg-red10": isLiked,
+            "bg-background2 dark:bg-dark4": !isLiked,
           })}
           onClick={handleLike}
         >
           <FillIcon.Heart
             className={clsx({
-              "fill-red80": hasLiked,
-              "fill-secondary3": !hasLiked,
+              "fill-red80": isLiked,
+              "fill-secondary3": !isLiked,
             })}
           />
         </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": hasLiked,
-            "text-secondary3": !hasLiked,
+            "text-secondary2 dark:text-background": isLiked,
+            "text-secondary3": !isLiked,
           })}
         >
-          <p>{new Intl.NumberFormat().format(likes)} Likes</p>
+          <p>{new Intl.NumberFormat().format(numberLiked)} Likes</p>
         </div>
       </div>
 
@@ -120,48 +137,50 @@ const ActionBar = ({
 
       <div className="flex gap-[14px] rounded-md">
         <button
+          disabled={isPending}
           className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": hasShared,
-            "bg-background2 dark:bg-dark4": !hasShared,
+            "bg-red10": isShared,
+            "bg-background2 dark:bg-dark4": !isShared,
           })}
           onClick={handleShare}
         >
           <FillIcon.Share
             className={clsx({
-              "fill-red80": hasShared,
-              "fill-secondary3": !hasShared,
+              "fill-red80": isShared,
+              "fill-secondary3": !isShared,
             })}
           />
         </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": hasShared,
-            "text-secondary3": !hasShared,
+            "text-secondary2 dark:text-background": isShared,
+            "text-secondary3": !isShared,
           })}
         >
-          <p>{new Intl.NumberFormat().format(shares)} Shares</p>
+          <p>{new Intl.NumberFormat().format(numberShared)} Shares</p>
         </div>
       </div>
 
       <div className="flex gap-[14px] rounded-md">
         <button
+          disabled={isPending}
           className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": hasReported,
-            "bg-background2 dark:bg-dark4": !hasReported,
+            "bg-red10": isReported,
+            "bg-background2 dark:bg-dark4": !isReported,
           })}
           onClick={handleReport}
         >
           <FillIcon.Report
             className={clsx({
-              "fill-red80": hasReported,
-              "fill-secondary3": !hasReported,
+              "fill-red80": isReported,
+              "fill-secondary3": !isReported,
             })}
           />
         </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": hasReported,
-            "text-secondary3": !hasReported,
+            "text-secondary2 dark:text-background": isReported,
+            "text-secondary3": !isReported,
           })}
         >
           <p>Report</p>

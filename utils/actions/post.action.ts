@@ -1,10 +1,10 @@
 "use server";
 
 import mongoose, { ObjectId, ConnectOptions } from "mongoose";
-import { revalidatePath } from "next/cache";
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
+import { revalidatePath } from "next/cache";
 
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
@@ -99,12 +99,10 @@ export async function likePost({
   postId,
   userId,
   hasLiked,
-  path,
 }: {
   postId: string;
   userId: string;
   hasLiked: boolean;
-  path: string;
 }) {
   try {
     dbConnect();
@@ -121,14 +119,45 @@ export async function likePost({
     const post = await Post.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
+    const likedStatus = post.likes.includes(userId);
 
     if (!post) {
       throw new Error("Post not found");
     }
-    if (!path) {
-      throw new Error("Path is required");
+    return { status: likedStatus, number: post.likes.length };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function commentPost({
+  postId,
+  userId,
+  hasCommented,
+}: {
+  postId: string;
+  userId: string;
+  hasCommented: boolean;
+}) {
+  try {
+    dbConnect();
+    const { ObjectId } = mongoose.Types;
+    const id = new ObjectId(postId);
+    let updateQuery = {};
+    // Remove like if it is already liked
+    if (hasCommented) {
+      updateQuery = { $pull: { comments: userId } };
+    } else {
+      updateQuery = { $addToSet: { comments: userId } };
     }
-    revalidatePath(path);
+
+    const post = await Post.findByIdAndUpdate(id, updateQuery, {
+      new: true,
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -139,19 +168,17 @@ export async function sharePost({
   postId,
   userId,
   hasShared,
-  path,
 }: {
   postId: string;
   userId: string;
   hasShared: boolean;
-  path: string;
 }) {
   try {
     dbConnect();
     const { ObjectId } = mongoose.Types;
     const id = new ObjectId(postId);
     let updateQuery = {};
-    // Remove like if it is already liked
+    // Remove like if it is already Shared
     if (hasShared) {
       updateQuery = { $pull: { shares: userId } };
     } else {
@@ -161,14 +188,12 @@ export async function sharePost({
     const post = await Post.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
+    const sharedStatus = post.shares.includes(userId);
 
     if (!post) {
       throw new Error("Post not found");
     }
-    if (!path) {
-      throw new Error("Path is required");
-    }
-    revalidatePath(path);
+    return { status: sharedStatus, number: post.shares.length };
   } catch (error) {
     console.log(error);
     throw error;
@@ -179,19 +204,17 @@ export async function reportPost({
   postId,
   userId,
   hasReported,
-  path,
 }: {
   postId: string;
   userId: string;
   hasReported: boolean;
-  path: string;
 }) {
   try {
     dbConnect();
     const { ObjectId } = mongoose.Types;
     const id = new ObjectId(postId);
     let updateQuery = {};
-    // Remove like if it is already liked
+    // Remove like if it is already reported
     if (hasReported) {
       updateQuery = { $pull: { reports: userId } };
     } else {
@@ -201,14 +224,12 @@ export async function reportPost({
     const post = await Post.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
+    const reportedStatus = post.reports.includes(userId);
 
     if (!post) {
       throw new Error("Post not found");
     }
-    if (!path) {
-      throw new Error("Path is required");
-    }
-    revalidatePath(path);
+    return { status: reportedStatus };
   } catch (error) {
     console.log(error);
     throw error;
