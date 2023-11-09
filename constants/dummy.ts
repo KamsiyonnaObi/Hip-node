@@ -92,3 +92,5 @@ export const commentData = [
     ],
   },
 ];
+
+export const dummyTags = ["technology", "diversity", "hr"];

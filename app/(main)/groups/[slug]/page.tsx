@@ -45,6 +45,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 user={username}
                 coverUrl={coverUrl}
                 groupUrl={groupUrl}
+                groupId={params.slug}
               />
               <div className="w-full">
                 <Frame />
@@ -109,6 +110,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 user={username}
                 coverUrl={coverUrl}
                 groupUrl={groupUrl}
+                groupId={params.slug}
               />
               <div className="w-full">
                 <Frame />
@@ -180,6 +182,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
             user={username}
             coverUrl={coverUrl}
             groupUrl={groupUrl}
+            groupId={params.slug}
           />
           <CreateGroup
             title={"Create Group"}

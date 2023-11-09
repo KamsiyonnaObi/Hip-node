@@ -36,11 +36,8 @@ export async function newUser(user: FormData) {
   }
 }
 
-export async function getUser(user: FormData) {
-  const email = user.get("email");
-  const password = user.get("password");
+export async function getUserProfile(email: string | null | undefined) {
   try {
-    // connect to db
     await dbConnect();
 
     // check if user exists
