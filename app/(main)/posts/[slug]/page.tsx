@@ -11,10 +11,10 @@ import {
   FollowedProfile,
   OtherProfile,
 } from "@/components";
-import { getLoggedInUserId } from "@/utils/actions/user.action";
+import { getCurrentUserId } from "@/utils/actions/user.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const loggedInUserId = await getLoggedInUserId();
+  const currentUserId = await getCurrentUserId();
 
   const postopen = await getPostById(params.slug);
 
@@ -39,9 +39,9 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   let profileContent;
 
-  if (userId === loggedInUserId) {
+  if (userId === currentUserId) {
     profileContent = <MyProfile user={userId} joinedDate={userId.createdAt} />;
-  } else if (userId.followers.includes(loggedInUserId)) {
+  } else if (userId.followers.includes(currentUserId)) {
     profileContent = (
       <FollowedProfile user={userId} joinedDate={userId.createdAt} />
     );
@@ -58,11 +58,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
             postId={JSON.stringify(_id)}
-            userId={JSON.stringify(loggedInUserId)}
-            hasLiked={likes.includes(loggedInUserId)}
-            hasCommented={comments.includes(loggedInUserId)}
-            hasShared={shares.includes(loggedInUserId)}
-            hasReported={reports.includes(loggedInUserId)}
+            userId={JSON.stringify(currentUserId)}
+            hasLiked={likes.includes(currentUserId)}
+            hasCommented={comments.includes(currentUserId)}
+            hasShared={shares.includes(currentUserId)}
+            hasReported={reports.includes(currentUserId)}
             likes={likes.length}
             comments={comments.length}
             shares={shares.length}
@@ -74,7 +74,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
               groupTitle={groupId.title}
             />
           )}
-          {!groupId && userId === loggedInUserId && (
+          {!groupId && userId === currentUserId && (
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
@@ -83,11 +83,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="hidden flex-col gap-5 md:order-1 md:flex">
         <ActionBar
           postId={JSON.stringify(_id)}
-          userId={JSON.stringify(loggedInUserId)}
-          hasLiked={likes.includes(loggedInUserId)}
-          hasCommented={comments.includes(loggedInUserId)}
-          hasShared={shares.includes(loggedInUserId)}
-          hasReported={reports.includes(loggedInUserId)}
+          userId={JSON.stringify(currentUserId)}
+          hasLiked={likes.includes(currentUserId)}
+          hasCommented={comments.includes(currentUserId)}
+          hasShared={shares.includes(currentUserId)}
+          hasReported={reports.includes(currentUserId)}
           likes={likes.length}
           comments={comments.length}
           shares={shares.length}
@@ -99,7 +99,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             groupTitle={groupId.title}
           />
         )}
-        {!groupId && userId === loggedInUserId && (
+        {!groupId && userId === currentUserId && (
           <PostDate username={userId.username} createdAt={createdAt} />
         )}
       </div>

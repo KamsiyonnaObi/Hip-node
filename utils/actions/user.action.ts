@@ -77,7 +77,7 @@ export async function getUser(user: FormData) {
   }
 }
 
-export async function getLoggedInUserId() {
+export async function getCurrentUserId() {
   try {
     await dbConnect();
 
