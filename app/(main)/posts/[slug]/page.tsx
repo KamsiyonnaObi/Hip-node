@@ -80,7 +80,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </div>
         <Thread commentData={commentData} />
       </section>
-      <div className="hidden flex-col gap-5 md:order-1 md:flex">
+      <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar
           postId={JSON.stringify(_id)}
           userId={JSON.stringify(currentUserId)}
