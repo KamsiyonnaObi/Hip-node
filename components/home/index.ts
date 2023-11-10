@@ -2,7 +2,6 @@ export { default as ActionBar } from "./ActionBar";
 export { default as ChatInput } from "./ChatInput";
 export { default as Comment } from "./Comment";
 export { default as CreatePost } from "./CreatePost";
-export { default as FollowedProfile } from "./FollowedProfile";
 export { default as GroupPostDate } from "./GroupPostDate";
 // export { default as MeetupCard } from "./MeetupCard";
 // export { default as Meetups } from "./Meetups";

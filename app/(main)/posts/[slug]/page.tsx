@@ -8,7 +8,7 @@ import {
   OpenedPost,
   PostDate,
   Thread,
-  FollowedProfile,
+  OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
 
@@ -94,7 +94,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           (userId === currentUserId ? (
             <MyProfile user={userId} joinedDate={userId.createdAt} />
           ) : (
-            <FollowedProfile
+            <OtherProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
               currentUserId={JSON.stringify(currentUserId)}
