@@ -14,6 +14,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     );
   const { title, coverUrl, groupUrl, description, admins, members, groupId } =
     group.data;
+  console.log(group.data);
 
   return (
     <div className="flex justify-center">

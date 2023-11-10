@@ -11,8 +11,8 @@ interface NewGroup {
   coverUrl: string;
   groupUrl: string;
   description: string;
-  admins: string;
-  members: string;
+  admins: string[];
+  members: string[];
 }
 
 export async function createGroup(params: NewGroup) {
@@ -69,12 +69,12 @@ export async function getGroupById(groupId: string) {
 }
 
 export async function updateGroup(groupId: any, params: NewGroup) {
-  const { title, coverUrl, groupUrl, description } = params;
+  const { title, coverUrl, groupUrl, description, admins, members } = params;
   try {
     await dbConnect();
     const updatedGroup = await Group.findOneAndUpdate(
       { _id: groupId },
-      { $set: { title, coverUrl, groupUrl, description } }
+      { $set: { title, coverUrl, groupUrl, description, admins, members } }
     );
 
     if (updatedGroup) {
