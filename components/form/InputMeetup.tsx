@@ -4,12 +4,14 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Badge } from "../ui/badge";
-import { PostSchema } from "@/lib/validations";
+import { MeetupSchema } from "@/lib/validations";
 import { Input } from "../ui/input";
 import {
   FormControl,
@@ -22,16 +24,11 @@ import {
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
-import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
-import { useSession } from "next-auth/react";
+import { createMeetup } from "@/utils/actions/meetup.action";
 
-export function InputPost() {
-  const { data: session } = useSession();
-  const userId = session?.user.id;
+export function InputMeetup() {
   const { theme } = useTheme();
-
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,29 +36,34 @@ export function InputPost() {
 
   const router = useRouter();
 
-  const [expanded, setExpanded] = useState(0);
-  const [create, setCreate] = useState("Post");
-
-  const toggleCategory = () => {
-    setExpanded(expanded !== 2 ? 2 : 0);
-  };
-
-  const closeCategory = (val: any) => {
-    setExpanded(0);
-    setCreate(val);
-  };
+  const [month, setMonth] = useState("JAN");
+  const [day, setDay] = useState(1);
 
   const updateForm = (url: string) => {
     setCoverUrl(url);
   };
 
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date: any) => {
+    setSelectedDate(date);
+    // Extract month and day from the selected date and save it to your variable
+    const monthAbbreviation = new Intl.DateTimeFormat("en", {
+      month: "short",
+    }).format(date);
+    setMonth(monthAbbreviation.toUpperCase());
+    setDay(date.getDate());
+  };
+
   // 1. Define your form.
-  const form = useForm<z.infer<typeof PostSchema>>({
-    resolver: zodResolver(PostSchema),
+  const form = useForm<z.infer<typeof MeetupSchema>>({
+    resolver: zodResolver(MeetupSchema),
     defaultValues: {
       title: "",
-      contents: "",
-      tags: [],
+      subtitle: "",
+      jobType: [],
+      location: "",
+      desc: "",
     },
   });
 
@@ -70,14 +72,22 @@ export function InputPost() {
     setIsSubmitting(true);
     try {
       const values = form.getValues();
-      const postData = {
+
+      const meetupData = {
         title: values.title,
-        content: values.contents,
-        tags: values.tags,
+        subtitle: values.subtitle,
+        jobType: values.jobType,
+        location: values.location,
+        desc: values.desc,
         image: coverUrl,
-        avatar: "/Avatar.png",
+        month,
+        day: day.toString(),
       };
-      const id = await createPost(postData);
+
+      console.log(meetupData);
+      console.log("HERE");
+
+      const id = await createMeetup(meetupData);
       console.log(id);
     } catch (error) {
     } finally {
@@ -89,21 +99,21 @@ export function InputPost() {
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
   ) => {
-    if (e.key === "Enter" && field.name === "tags") {
+    if (e.key === "Enter" && field.name === "jobType") {
       e.preventDefault();
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
       if (tagValue !== "") {
         if (tagValue.length > 15) {
-          return form.setError("tags", {
+          return form.setError("jobType", {
             type: "required",
             message: "Tag must be less than 15 characters.",
           });
         }
         if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
+          form.setValue("jobType", [...field.value, tagValue]);
           tagInput.value = "";
-          form.clearErrors("tags");
+          form.clearErrors("jobType");
         }
       } else {
         form.trigger();
@@ -113,7 +123,7 @@ export function InputPost() {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("tags", newTags);
+    form.setValue("jobType", newTags);
   };
 
   return (
@@ -157,7 +167,7 @@ export function InputPost() {
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                                  Set Cover
+                                  Set Image
                                 </p>
                               </Button>
                             </div>
@@ -165,35 +175,6 @@ export function InputPost() {
                         );
                       }}
                     </CldUploadWidget>
-
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2"
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Select Group
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
-                    <div className="relative">
-                      <Button
-                        color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
-                        type="button"
-                        onClick={toggleCategory}
-                      >
-                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                          <span className="text-secondary3">Create</span> -{" "}
-                          {create}
-                        </p>
-                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                      </Button>
-                      {expanded === 2 && (
-                        <div className="absolute left-0 mt-2 z-50">
-                          <PostCategory closeCategory={closeCategory} />
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
               </FormControl>
@@ -204,7 +185,53 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="contents"
+          name="subtitle"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    placeholder="Subtitle..."
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    placeholder="Location..."
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="MM/dd"
+          placeholderText="Select a date"
+          className="rounded-[8px] mb-5 p-1 pl-3 h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+        />
+
+        <FormField
+          control={form.control}
+          name="desc"
           render={({ field }) => (
             <FormItem>
               <div className="flex">
@@ -224,7 +251,7 @@ export function InputPost() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue="Meetup Details..."
                   init={{
                     height: 376,
                     menubar: false,
@@ -280,7 +307,7 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="tags"
+          name="jobType"
           render={({ field }) => (
             <FormItem className="my-5">
               <FormLabel className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
@@ -316,7 +343,7 @@ export function InputPost() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/home">
+          <Link href="/meetups">
             <Button
               type="submit"
               color="blue"
@@ -329,6 +356,7 @@ export function InputPost() {
               {isSubmitting ? <>Posting...</> : <>Publish</>}
             </Button>
           </Link>
+
           <Button
             type="button"
             color="gray"

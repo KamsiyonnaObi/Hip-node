@@ -4,15 +4,24 @@ import mongoose, { ObjectId, ConnectOptions } from "mongoose";
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
+import { getServerSession } from "next-auth";
+
 import { revalidatePath } from "next/cache";
 
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
 
-export async function createPost(params: Partial<IPost>) {
+
+export async function createPost(params: any) {
   try {
     await dbConnect();
-    const { title, content, image, tags, userId } = params;
+    // get the userID from the session
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const userId = User?._id;
+
+    const { title, content, image, tags, avatar } = params;
 
     const post = await Post.create({
       title,
@@ -20,8 +29,11 @@ export async function createPost(params: Partial<IPost>) {
       image,
       tags,
       userId,
+      avatar,
     });
-    return post;
+
+    // return the postID, not the entire Post
+    return post._id.toString();
   } catch (error) {
     console.log(error);
     throw new Error("Failed to create a post.");
@@ -89,6 +101,20 @@ export async function deletePost(postId: number) {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
     return deletedPost;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllPosts(params: any) {
+  try {
+    await dbConnect();
+
+    const posts = await Post.find({})
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return { posts };
   } catch (error) {
     console.log(error);
     throw error;

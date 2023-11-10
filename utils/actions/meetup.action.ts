@@ -2,24 +2,46 @@
 
 import Meetup, { IMeetup } from "@/models/meetup.model";
 import dbConnect from "@/utils/mongooseConnect";
+import { getServerSession } from "next-auth";
+import UserModel from "@/models/User";
 
-export async function createMeetup(params: Partial<IMeetup>) {
+export async function createMeetup(params: any) {
   try {
     await dbConnect();
-    const { title, image, subtitle, desc, jobType } = params;
+    // get the userID from the session
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+
+    if (!User) {
+      throw new Error("User not found");
+    }
+
+    const userId = User?._id;
+
+    const { title, image, subtitle, location, desc, jobType, month, day } =
+      params;
 
     const meetup = await Meetup.create({
       title,
       image,
       subtitle,
+      location,
       desc,
       jobType,
+      userId,
+      month,
+      day,
     });
 
-    return meetup;
+    console.log(meetup);
+
+    // return the postID, not the entire Post
+    return meetup._id.toString();
   } catch (error) {
     console.log(error);
-    throw error;
+    console.log(params);
+    throw new Error("Failed to create a post.");
   }
 }
 
@@ -49,6 +71,20 @@ export async function deleteMeetup(meetupId: number) {
     await dbConnect();
     const deletedMeetup = await Meetup.findByIdAndDelete(meetupId);
     return deletedMeetup;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllMeetups(params: any) {
+  try {
+    await dbConnect();
+
+    const meetups = await Meetup.find({})
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return { meetups };
   } catch (error) {
     console.log(error);
     throw error;

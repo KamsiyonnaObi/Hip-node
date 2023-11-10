@@ -4,9 +4,13 @@ export interface IMeetup extends Document {
   title: string;
   image: string;
   subtitle: string;
+  location: string;
   desc: string;
-  createdAt: Date;
+  month: string;
+  day: string;
   jobType: string[];
+  userId: Schema.Types.ObjectId;
+  createdAt: Date;
 }
 
 const MeetupSchema = new Schema({
@@ -21,17 +25,27 @@ const MeetupSchema = new Schema({
     type: String,
     required: true,
   },
+  location: {
+    type: String,
+    required: true,
+  },
   desc: {
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  month: {
+    type: String,
+    required: true,
+  },
+  day: {
+    type: String,
+    required: true,
   },
   jobType: {
     type: [String],
   },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Meetup = models.Meetup || model("Meetup", MeetupSchema);
