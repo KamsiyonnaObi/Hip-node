@@ -99,12 +99,11 @@ export async function followAuthor({
   hasFollowed,
 }: {
   userId: ObjectId;
-  currentUserId: string;
+  currentUserId: ObjectId;
   hasFollowed: boolean;
 }) {
   try {
     dbConnect();
-    // const { ObjectId } = mongoose.Types;
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };
@@ -115,12 +114,11 @@ export async function followAuthor({
     const user = await User.findByIdAndUpdate(userId, updateQuery, {
       new: true,
     });
-    // const followedStatus = user?.followers.includes(currentUserIdObj);
-
+    const followedStatus = user?.followers.includes(currentUserId);
     if (!user) {
       throw new Error("User not found");
     }
-    return { status: true };
+    return { status: followedStatus };
   } catch (error) {
     console.log(error);
     throw error;

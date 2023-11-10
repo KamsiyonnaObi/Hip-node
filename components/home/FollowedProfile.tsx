@@ -26,20 +26,21 @@ const FollowedProfile = ({
   currentUserId,
   hasFollowed,
 }: {
-  user: IUser;
+  user: string;
   joinedDate: Date;
   currentUserId: string;
   hasFollowed: boolean;
 }) => {
   const [isFollowing, setIsFollowing] = useState(hasFollowed || false);
   const [isPending, startTransition] = useTransition();
+  const userObj = JSON.parse(user);
 
   const handleFollow = async () => {
-    if (user._id) {
+    if (userObj._id) {
       startTransition(async () => {
         const followed = await followAuthor({
-          userId: user._id,
-          currentUserId,
+          userId: userObj._id,
+          currentUserId: JSON.parse(currentUserId),
           hasFollowed: isFollowing,
         });
         if (!followed) return;
@@ -55,15 +56,17 @@ const FollowedProfile = ({
       <div className="relative h-24 w-24 rounded-full bg-yellow30">
         <Image
           className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
-          src={user.profileImage}
+          src={userObj.profileImage}
           alt="profile"
           width="80"
           height="80"
         />
       </div>
       <div className="flex flex-col items-center justify-center">
-        <p className="text-secondary2 dark:text-background2">{user.username}</p>
-        <p className="text-secondary3">{user.occupation}</p>
+        <p className="text-secondary2 dark:text-background2">
+          {userObj.username}
+        </p>
+        <p className="text-secondary3">{userObj.occupation}</p>
       </div>
       {isFollowing ? (
         <>
@@ -76,7 +79,7 @@ const FollowedProfile = ({
           </button>
           <Link
             className="h3-semibold flex h-11 w-72 items-center justify-center gap-5 rounded-md bg-blue text-background"
-            href={profileData.profileUrl}
+            href="/"
           >
             <FillIcon.Message />
             Message
