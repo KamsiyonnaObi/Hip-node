@@ -7,6 +7,9 @@
 @import url("../styles/theme.css");
 @import url("../styles/editor.css");
 
+/* Add styles for react-datepicker */
+@import "react-datepicker/dist/react-datepicker.css";
+
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
