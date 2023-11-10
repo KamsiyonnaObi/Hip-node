@@ -1,47 +1,50 @@
 "use client";
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-
 import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
 import {
   getUsersBySimilarName,
-  updateGroup,
+  createGroup,
 } from "@/utils/actions/group.action";
 import useDebounce from "./GetUser";
+import UserSelect from "./UserSelect";
 
-const ChangeGroup = () => {
+type Props = {
+  title: string;
+  description: string;
+  admins: string[];
+  members: string[];
+  coverUrl: string;
+  groupUrl: string;
+};
+
+const ChangeGroup: React.FC<Props> = ({
+  title,
+  description,
+  admins,
+  members,
+  coverUrl,
+  groupUrl,
+}) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    admins: "",
-    members: "",
-    coverUrl: "",
-    groupUrl: "",
+    title,
+    description,
+    admins,
+    members,
+    coverUrl,
+    groupUrl,
   });
+
   const [submitStatus, setSubmitStatus] = useState<string>("");
+
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    setValidationErrors((errors) => ({
-      ...errors,
-      [name]: "",
-    }));
-  };
 
   const submitForm = async () => {
     setSubmitStatus("Submitting");
@@ -52,8 +55,8 @@ const ChangeGroup = () => {
     newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
 
-    const admins = formData.admins.split(",");
-    const members = formData.members.split(",");
+    const admins = formData?.admins;
+    const members = formData?.members;
 
     newFormData.append("admins", JSON.stringify(admins));
     newFormData.append("members", JSON.stringify(members));
@@ -62,7 +65,7 @@ const ChangeGroup = () => {
 
     try {
       const validatedData = GroupSchema.parse(dataObject);
-      const response = JSON.parse(await updateGroup(validatedData));
+      const response = JSON.parse(await createGroup(validatedData));
       if (response.success) {
         setSubmitStatus("Success");
         setValidationErrors({});
@@ -88,6 +91,7 @@ const ChangeGroup = () => {
       }
     }
   };
+
   function formStatus() {
     switch (submitStatus) {
       case "":
@@ -101,17 +105,63 @@ const ChangeGroup = () => {
     }
   }
 
-  const [users, setUsers] = useState([]);
-  const [userSearch, setUserSearch] = useState("");
+  const [userSearch] = useState<string>("");
   const debouncedUserSearch = useDebounce(userSearch, 300);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const response = JSON.parse(
-        await getUsersBySimilarName(debouncedUserSearch)
-      );
-      setUsers(response);
+    console.log(formData);
+  }, [formData]);
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (divRef.current && !divRef.current.contains(event.target)) {
+        setShowList(false);
+      }
     };
+    document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  function setShowList(arg0: boolean) {
+    throw new Error("Function not implemented.");
+  }
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setValidationErrors((errors) => ({
+      ...errors,
+      [name]: "",
+    }));
+  };
+  function setSuggestedUsers(response: any) {
+    throw new Error("Function not implemented.");
+  }
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = JSON.parse(
+          await getUsersBySimilarName(debouncedUserSearch)
+        );
+
+        // Assuming the response is an array of users
+        setSuggestedUsers(response);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
     fetchUsers();
   }, [debouncedUserSearch]);
 
@@ -133,7 +183,7 @@ const ChangeGroup = () => {
               <input
                 type="text"
                 name="title"
-                placeholder={formData.title}
+                placeholder="Name..."
                 value={formData.title}
                 onChange={handleChange}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
@@ -154,7 +204,7 @@ const ChangeGroup = () => {
             <div>
               <textarea
                 name="description"
-                placeholder={formData.description}
+                placeholder="Provide a short description..."
                 value={formData.description}
                 onChange={handleChange}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
@@ -173,21 +223,7 @@ const ChangeGroup = () => {
               Add admins
             </label>
             <div>
-              <input
-                type="text"
-                name="admins"
-                placeholder={formData.admins}
-                value={formData.admins}
-                onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
-                  validationErrors.admins ? "border-red" : ""
-                }`}
-              />
-              {validationErrors.admins && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
-                  {validationErrors.admins}
-                </p>
-              )}
+              <UserSelect setter={setFormData} formKey="admins" />
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -195,23 +231,10 @@ const ChangeGroup = () => {
               Add members
             </label>
             <div>
-              <input
-                type="text"
-                name="members"
-                placeholder={formData.members}
-                value={formData.members}
-                onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
-                  validationErrors.members ? "border-red" : ""
-                }`}
-              />
-              {validationErrors.members && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
-                  {validationErrors.members}
-                </p>
-              )}
+              <UserSelect setter={setFormData} formKey="members" />
             </div>
           </div>
+
           <div className="flex gap-[1.25rem]">
             <button
               type="button"

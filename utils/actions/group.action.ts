@@ -68,10 +68,14 @@ export async function getGroupById(groupId: string) {
   }
 }
 
-export async function updateGroup(groupId: any) {
+export async function updateGroup(groupId: any, params: NewGroup) {
+  const { title, coverUrl, groupUrl, description } = params;
   try {
     await dbConnect();
-    const updatedGroup = await Group.findById(groupId);
+    const updatedGroup = await Group.findOneAndUpdate(
+      { _id: groupId },
+      { $set: { title, coverUrl, groupUrl, description } }
+    );
 
     if (updatedGroup) {
       return { success: true, message: "Group updated successfully" };

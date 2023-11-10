@@ -14,7 +14,7 @@ const GroupMenu = ({ id }: { id: string }) => {
 
   return (
     <div className="flex flex-col w-[10.625rem] p-[1.25rem] h-[5.675rem] rounded-[0.625rem] border border-secondary5 bg-background2 dark:bg-dark4 dark:border-secondary2 gap-[.62rem]">
-      <Link href="/groups/update">
+      <Link href={`/groups/update/${id}`}>
         <div className="flex items-center gap-[0.625rem]">
           <OutlineIcon.Edit className="dark:fill-white" />
           <p className="text-secondary2 body-semibold dark:text-background2">
