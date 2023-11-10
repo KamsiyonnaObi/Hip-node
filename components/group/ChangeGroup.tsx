@@ -36,8 +36,8 @@ const ChangeGroup: React.FC<Props> = ({
   const [formData, setFormData] = useState({
     title,
     description,
-    admins,
-    members,
+    admins: admins || [],
+    members: members || [],
     coverUrl,
     groupUrl,
   });
@@ -49,6 +49,8 @@ const ChangeGroup: React.FC<Props> = ({
   >({});
 
   const submitForm = async () => {
+    console.log("Submitting form");
+
     setSubmitStatus("Submitting");
 
     const newFormData = new FormData();
@@ -57,15 +59,14 @@ const ChangeGroup: React.FC<Props> = ({
     newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
 
-    const admins = formData?.admins;
-    const members = formData?.members;
-
-    newFormData.append("admins", JSON.stringify(admins));
-    newFormData.append("members", JSON.stringify(members));
+    newFormData.append("admins", JSON.stringify(formData.admins));
+    newFormData.append("members", JSON.stringify(formData.members));
 
     const dataObject = formDataToObject(newFormData);
 
     try {
+      console.log("Sending data to updateGroup:", dataObject);
+
       const validatedData = GroupSchema.parse(dataObject);
       const response = await updateGroup(groupId, validatedData);
 
@@ -75,6 +76,8 @@ const ChangeGroup: React.FC<Props> = ({
         setTimeout(() => router.push(`/groups/${groupId}`), 500);
       }
     } catch (e) {
+      console.error("Error in form submission:", e);
+
       if (e instanceof z.ZodError) {
         console.log(e.issues);
 
@@ -82,14 +85,12 @@ const ChangeGroup: React.FC<Props> = ({
 
         e.issues.forEach((issue) => {
           const fieldName = issue.path[0];
-
           const errorMessage = issue.message;
 
           errors[fieldName] = errorMessage;
         });
 
         setValidationErrors(errors);
-
         setSubmitStatus("Error");
       }
     }
