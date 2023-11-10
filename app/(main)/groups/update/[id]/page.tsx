@@ -12,17 +12,19 @@ const page = async ({ params }: { params: { id: string } }) => {
         <GroupError />
       </div>
     );
-  const { title, coverUrl, groupUrl, description } = group.data;
+  const { title, coverUrl, groupUrl, description, admins, members, groupId } =
+    group.data;
 
   return (
     <div className="flex justify-center">
       <ChangeGroup
         title={title}
         description={description}
-        admins={[]}
-        members={[]}
+        admins={admins}
+        members={members}
         coverUrl={coverUrl}
         groupUrl={groupUrl}
+        groupId={groupId}
       />
     </div>
   );

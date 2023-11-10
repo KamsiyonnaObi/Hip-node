@@ -8,7 +8,7 @@ import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
 import {
   getUsersBySimilarName,
-  createGroup,
+  updateGroup,
 } from "@/utils/actions/group.action";
 import useDebounce from "./GetUser";
 import UserSelect from "./UserSelect";
@@ -20,6 +20,7 @@ type Props = {
   members: string[];
   coverUrl: string;
   groupUrl: string;
+  groupId: string;
 };
 
 const ChangeGroup: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const ChangeGroup: React.FC<Props> = ({
   members,
   coverUrl,
   groupUrl,
+  groupId,
 }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -65,11 +67,12 @@ const ChangeGroup: React.FC<Props> = ({
 
     try {
       const validatedData = GroupSchema.parse(dataObject);
-      const response = JSON.parse(await createGroup(validatedData));
+      const response = await updateGroup(groupId, validatedData);
+
       if (response.success) {
         setSubmitStatus("Success");
         setValidationErrors({});
-        setTimeout(() => router.push(`/groups/${response.id}`), 500);
+        setTimeout(() => router.push(`/groups/${groupId}`), 500);
       }
     } catch (e) {
       if (e instanceof z.ZodError) {
@@ -241,7 +244,7 @@ const ChangeGroup: React.FC<Props> = ({
               onClick={submitForm}
               className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]"
             >
-              <p className="body-semibold text-background">Create</p>
+              <p className="body-semibold text-background">Update</p>
             </button>
             <button className="my-auto flex items-center">
               <p className="body-semibold  text-secondary3">Cancel</p>
