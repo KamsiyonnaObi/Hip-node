@@ -1,6 +1,7 @@
 "use server";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
 
 import { IUser } from "@/types/mongoose";
 import dbConnect from "../mongooseConnect";
@@ -35,11 +36,8 @@ export async function newUser(user: FormData) {
   }
 }
 
-export async function getUser(user: FormData) {
-  const email = user.get("email");
-  const password = user.get("password");
+export async function getUserProfile(email: string | null | undefined) {
   try {
-    // connect to db
     await dbConnect();
 
     // check if user exists
@@ -73,5 +71,22 @@ export async function getUser(user: FormData) {
     return { status: "success" };
   } catch (error) {
     return { status: "Something went wrong" };
+  }
+}
+
+export async function getCurrentUserId() {
+  try {
+    await dbConnect();
+
+    // get the current user
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+
+    // Return the user's id
+    return User?._id ?? null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }

@@ -1,12 +1,11 @@
 import { commentDataType } from "@/types/component";
-import { Comment } from "./Comment";
-import { ReplyComment } from "./ReplyComment";
+import { Comment, ReplyComment } from "@/components";
 
 interface ThreadProps {
   commentData: commentDataType[];
 }
 
-export const Thread = ({ commentData }: ThreadProps) => {
+const Thread = ({ commentData }: ThreadProps) => {
   return (
     <section className="md:rounded-b-lg flex flex-col gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3 px-5 md:pb-[30px] md:gap-[30px] md:px-[30px]">
       {commentData.map((comment) => (
@@ -20,3 +19,5 @@ export const Thread = ({ commentData }: ThreadProps) => {
     </section>
   );
 };
+
+export default Thread;

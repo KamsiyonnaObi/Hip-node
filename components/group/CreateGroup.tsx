@@ -16,7 +16,7 @@ const CreateGroup = ({ title, desc, buttonText }: Props) => {
           <p className="caption-regular line-clamp-2">{desc}</p>
         </section>
         <section className="flex flex-row gap-[21px] sm:justify-center">
-          <Button className="body-semibold rounded-[6px] bg-red60 px-4 py-[9px]">
+          <Button className="body-semibold rounded-[6px] bg-red60 px-4 py-[9px] lg:px-[15px]">
             Code of Conduct
           </Button>
           <Button

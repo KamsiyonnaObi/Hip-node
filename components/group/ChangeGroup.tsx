@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent, useEffect, useRef } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
@@ -8,30 +8,22 @@ import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
 import {
-  createGroup,
   getUsersBySimilarName,
+  updateGroup,
 } from "@/utils/actions/group.action";
 import useDebounce from "./GetUser";
-import UserSelect from "./UserSelect";
 
-interface User {
-  _id: string;
-  username: string;
-}
-
-const AddGroup: React.FC = () => {
+const ChangeGroup = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    admins: [],
-    members: [],
+    admins: "",
+    members: "",
     coverUrl: "",
     groupUrl: "",
   });
-
   const [submitStatus, setSubmitStatus] = useState<string>("");
-
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
@@ -60,8 +52,8 @@ const AddGroup: React.FC = () => {
     newFormData.append("groupUrl", formData.groupUrl);
     newFormData.append("description", formData.description);
 
-    const admins = formData?.admins;
-    const members = formData?.members;
+    const admins = formData.admins.split(",");
+    const members = formData.members.split(",");
 
     newFormData.append("admins", JSON.stringify(admins));
     newFormData.append("members", JSON.stringify(members));
@@ -70,7 +62,7 @@ const AddGroup: React.FC = () => {
 
     try {
       const validatedData = GroupSchema.parse(dataObject);
-      const response = JSON.parse(await createGroup(validatedData));
+      const response = JSON.parse(await updateGroup(validatedData));
       if (response.success) {
         setSubmitStatus("Success");
         setValidationErrors({});
@@ -96,7 +88,6 @@ const AddGroup: React.FC = () => {
       }
     }
   };
-
   function formStatus() {
     switch (submitStatus) {
       case "":
@@ -110,39 +101,16 @@ const AddGroup: React.FC = () => {
     }
   }
 
-  const [userSearch] = useState<string>("");
+  const [users, setUsers] = useState([]);
+  const [userSearch, setUserSearch] = useState("");
   const debouncedUserSearch = useDebounce(userSearch, 300);
-
-  const [, setSuggestedUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (divRef.current && !divRef.current.contains(event.target)) {
-        setShowList(false);
-      }
-    };
-    document.removeEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  function setShowList(arg0: boolean) {
-    throw new Error("Function not implemented.");
-  }
 
   useEffect(() => {
     const fetchUsers = async () => {
       const response = JSON.parse(
         await getUsersBySimilarName(debouncedUserSearch)
       );
-      setSuggestedUsers(response);
+      setUsers(response);
     };
     fetchUsers();
   }, [debouncedUserSearch]);
@@ -165,7 +133,7 @@ const AddGroup: React.FC = () => {
               <input
                 type="text"
                 name="title"
-                placeholder="Name..."
+                placeholder={formData.title}
                 value={formData.title}
                 onChange={handleChange}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
@@ -186,7 +154,7 @@ const AddGroup: React.FC = () => {
             <div>
               <textarea
                 name="description"
-                placeholder="Provide a short description..."
+                placeholder={formData.description}
                 value={formData.description}
                 onChange={handleChange}
                 className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
@@ -205,7 +173,21 @@ const AddGroup: React.FC = () => {
               Add admins
             </label>
             <div>
-              <UserSelect setter={setFormData} formKey="admins" />
+              <input
+                type="text"
+                name="admins"
+                placeholder={formData.admins}
+                value={formData.admins}
+                onChange={handleChange}
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.admins ? "border-red" : ""
+                }`}
+              />
+              {validationErrors.admins && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.admins}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
@@ -213,10 +195,23 @@ const AddGroup: React.FC = () => {
               Add members
             </label>
             <div>
-              <UserSelect setter={setFormData} formKey="members" />
+              <input
+                type="text"
+                name="members"
+                placeholder={formData.members}
+                value={formData.members}
+                onChange={handleChange}
+                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                  validationErrors.members ? "border-red" : ""
+                }`}
+              />
+              {validationErrors.members && (
+                <p className="text-red text-xs-regular mb-[.62rem]">
+                  {validationErrors.members}
+                </p>
+              )}
             </div>
           </div>
-
           <div className="flex gap-[1.25rem]">
             <button
               type="button"
@@ -242,4 +237,4 @@ const AddGroup: React.FC = () => {
   );
 };
 
-export default AddGroup;
+export default ChangeGroup;

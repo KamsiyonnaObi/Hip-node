@@ -31,6 +31,7 @@ export function InputPost() {
   const { data: session } = useSession();
   const userId = session?.user.id;
   const { theme } = useTheme();
+
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
