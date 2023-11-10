@@ -2,12 +2,19 @@
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
-import User from "@/models/User";
+import { getServerSession } from "next-auth";
+import UserModel from "@/models/User";
 
 export async function createPost(params: any) {
   try {
     await dbConnect();
-    const { title, content, image, tags, userId, avatar } = params;
+    // get the userID from the session
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const userId = User?._id;
+
+    const { title, content, image, tags, avatar } = params;
 
     const post = await Post.create({
       title,
@@ -17,7 +24,9 @@ export async function createPost(params: any) {
       userId,
       avatar,
     });
-    return post;
+
+    // return the postID, not the entire Post
+    return post._id.toString();
   } catch (error) {
     console.log(error);
     throw new Error("Failed to create a post.");

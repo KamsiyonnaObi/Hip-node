@@ -9,6 +9,7 @@ interface Props {
   month: string;
   day: number;
   jobType: string[];
+  _id: string;
 }
 
 const MeetupCardBig = ({
@@ -19,6 +20,7 @@ const MeetupCardBig = ({
   month,
   day,
   jobType,
+  _id,
 }: Props) => {
   return (
     <article className="w-[335px] rounded-[16px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:gap-[10px] md:p-5">
@@ -41,15 +43,13 @@ const MeetupCardBig = ({
               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-center rounded-[6px] border-[1px] border-secondary5 bg-background px-4 py-[5px] text-center shadow-md md:h-[72px] md:w-[59px]">
+          <div className="flex flex-col justify-center rounded-[6px] border-[1px] border-secondary5 dark:border-dark3 bg-background dark:bg-dark4 px-4 py-[5px] text-center shadow-md md:h-[72px] md:w-[59px]">
             <p className="md:body-semibold caption-semibold">{month}</p>
             <h1 className="display-semibold md:h1-bold text-blue80">{day}</h1>
           </div>
         </section>
         <section className="caption-regular md:body-regular text-secondary2 dark:text-background2">
-          Contact Email mansurul@uihut.com; Phone Number +8801777138513. UI HUT
-          is a design resources platform for UX/UI designers, developers, and
-          founders.
+          {desc}
         </section>
         <section className="flex flex-row gap-[10px]">
           {jobType.map((type, index) => (
