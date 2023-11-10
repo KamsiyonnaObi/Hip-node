@@ -9,7 +9,6 @@ import {
   PostDate,
   Thread,
   FollowedProfile,
-  OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
 
@@ -33,21 +32,25 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     shares,
     reports,
   } = postopen.data;
+  console.log(postopen.data);
+  console.log(userId._id);
+  console.log(currentUserId);
 
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
 
   let profileContent;
 
-  if (userId === currentUserId) {
+  if (userId._id === currentUserId) {
     profileContent = <MyProfile user={userId} joinedDate={userId.createdAt} />;
-  } else if (userId.followers.includes(currentUserId)) {
-    profileContent = (
-      <FollowedProfile user={userId} joinedDate={userId.createdAt} />
-    );
   } else {
     profileContent = (
-      <OtherProfile user={userId} joinedDate={userId.createdAt} />
+      <FollowedProfile
+        user={userId}
+        joinedDate={userId.createdAt}
+        currentUserId={JSON.stringify(currentUserId)}
+        hasFollowed={userId.followers.includes(currentUserId)}
+      />
     );
   }
 
