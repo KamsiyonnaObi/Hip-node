@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { InterviewIllustration } from "@/utils/images";
 import { ShadButton } from "../ui/ShadButton";
+import Link from "next/link";
 
 const StartInterview = () => {
   return (
@@ -18,9 +19,11 @@ const StartInterview = () => {
           <ShadButton className="bg-red60 text-red10">
             Code of Conduct
           </ShadButton>
-          <ShadButton className="bg-white text-red80 hover:text-white">
-            Submit a Story
-          </ShadButton>
+          <Link href="/interview/new">
+            <ShadButton className="bg-white text-red80 hover:text-white">
+              Submit a Story
+            </ShadButton>
+          </Link>
         </div>
       </div>
       <Image
