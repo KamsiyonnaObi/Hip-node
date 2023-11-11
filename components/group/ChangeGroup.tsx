@@ -179,7 +179,10 @@ const ChangeGroup: React.FC<Props> = ({
           />
         </div>
         <div>
-          <GroupImage setParentFormData={setFormData} />
+          <GroupImage
+            setParentFormData={setFormData}
+            defaultImage={formData.groupUrl}
+          />
         </div>
         <form>
           <div className="flex flex-col gap-[.62rem]">
