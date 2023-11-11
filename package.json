@@ -17,6 +17,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@tinymce/tinymce-react": "^4.3.0",
     "bcrypt": "^5.1.1",
+    "bufferutil": "^4.0.8",
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^1.41.0",
     "clsx": "^2.0.0",
@@ -42,6 +43,7 @@
     "react-router-dom": "^6.17.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "utf-8-validate": "^6.0.3",
     "zod": "^3.22.4",
     "zustand": "^4.4.4"
   },

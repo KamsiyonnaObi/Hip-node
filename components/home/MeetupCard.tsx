@@ -21,7 +21,9 @@ const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
         <p className="body-semibold">{title}</p>
         <div className="flex flex-row gap-[6px]">
           <Image src="/MeetupIcon.svg" alt="meetup" width={16} height={16} />
-          <p className="text-sm-semibold text-secondary3">{desc}</p>
+          <p className="text-sm-semibold text-secondary3 line-clamp-1">
+            {desc}
+          </p>
         </div>
         <div className="mt-2 flex flex-row gap-[10px]">
           {jobType.map((type, index) => (

@@ -9,7 +9,6 @@ import {
   PostDate,
   Thread,
   FollowedProfile,
-  OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
 
@@ -36,20 +35,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
-
-  let profileContent;
-
-  if (userId === currentUserId) {
-    profileContent = <MyProfile user={userId} joinedDate={userId.createdAt} />;
-  } else if (userId.followers.includes(currentUserId)) {
-    profileContent = (
-      <FollowedProfile user={userId} joinedDate={userId.createdAt} />
-    );
-  } else {
-    profileContent = (
-      <OtherProfile user={userId} joinedDate={userId.createdAt} />
-    );
-  }
 
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
@@ -104,7 +89,18 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         )}
       </div>
       <div className="flex flex-col gap-5 md:order-3">
-        {profileContent}{" "}
+        {userId &&
+          currentUserId &&
+          (userId === currentUserId ? (
+            <MyProfile user={userId} joinedDate={userId.createdAt} />
+          ) : (
+            <FollowedProfile
+              user={JSON.stringify(userId)}
+              joinedDate={userId.createdAt}
+              currentUserId={JSON.stringify(currentUserId)}
+              hasFollowed={userId.followers.includes(currentUserId)}
+            />
+          ))}{" "}
         {posts && <MoreFrom posts={posts} author={userId.username} />}
       </div>
     </article>

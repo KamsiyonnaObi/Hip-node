@@ -1,6 +1,8 @@
 "use server";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
+import User from "@/models/User";
+import mongoose, { ObjectId } from "mongoose";
 
 export async function newUser(user: FormData) {
   try {
@@ -56,5 +58,37 @@ export async function getUserProfile(email: string | null | undefined) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function followAuthor({
+  userId,
+  currentUserId,
+  hasFollowed,
+}: {
+  userId: ObjectId;
+  currentUserId: ObjectId;
+  hasFollowed: boolean;
+}) {
+  try {
+    dbConnect();
+    let updateQuery = {};
+    if (hasFollowed) {
+      updateQuery = { $pull: { followers: currentUserId } };
+    } else {
+      updateQuery = { $addToSet: { followers: currentUserId } };
+    }
+
+    const user = await User.findByIdAndUpdate(userId, updateQuery, {
+      new: true,
+    });
+    const followedStatus = user?.followers.includes(currentUserId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return { status: followedStatus };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }
