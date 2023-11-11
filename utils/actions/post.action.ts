@@ -124,7 +124,7 @@ export async function likePost({
 }: {
   postId: string;
   userId: string;
-  hasLiked: boolean;
+  hasLiked: boolean | null;
 }) {
   try {
     dbConnect();
@@ -160,7 +160,7 @@ export async function commentPost({
 }: {
   postId: string;
   userId: string;
-  hasCommented: boolean;
+  hasCommented: boolean | null;
 }) {
   try {
     dbConnect();
@@ -193,7 +193,7 @@ export async function sharePost({
 }: {
   postId: string;
   userId: string;
-  hasShared: boolean;
+  hasShared: boolean | null;
 }) {
   try {
     dbConnect();
@@ -229,7 +229,7 @@ export async function reportPost({
 }: {
   postId: string;
   userId: string;
-  hasReported: boolean;
+  hasReported: boolean | null;
 }) {
   try {
     dbConnect();
