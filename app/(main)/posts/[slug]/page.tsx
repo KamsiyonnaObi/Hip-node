@@ -59,7 +59,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
               groupTitle={groupId.title}
             />
           )}
-          {!groupId && userId === currentUserId && (
+          {!groupId && userId._id.equals(currentUserId) && (
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
@@ -84,15 +84,18 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             groupTitle={groupId.title}
           />
         )}
-        {!groupId && userId === currentUserId && (
+        {!groupId && userId._id === currentUserId && (
           <PostDate username={userId.username} createdAt={createdAt} />
         )}
       </div>
       <div className="flex flex-col gap-5 md:order-3">
-        {userId &&
+        {userId._id &&
           currentUserId &&
-          (userId === currentUserId ? (
-            <MyProfile user={userId} joinedDate={userId.createdAt} />
+          (userId._id.equals(currentUserId) ? (
+            <MyProfile
+              user={JSON.stringify(userId)}
+              joinedDate={userId.createdAt}
+            />
           ) : (
             <OtherProfile
               user={JSON.stringify(userId)}
