@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { ShadButton } from "@/components/ui/ShadButton";
 import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
+import OutlineIcon from "@/components/icons/OutlineIcon";
 
 interface Props {
   username: string;
@@ -72,8 +73,13 @@ const InterviewPost = ({
                   <p className="text-sm font-bold">{updates}</p>
                   <small className="text-xs text-secondary3">Updates</small>
                 </div>
-                <div className="flex flex-col items-center pl-6">
-                  <p className="text-sm font-bold">Image</p>
+                <div
+                  className="flex flex-col items-center pl-6"
+                  onClick={() => window.open(`https://${website}`, "_blank")}
+                >
+                  <p className="text-sm font-bold">
+                    <OutlineIcon.Web className="dark:fill-background2 fill-secondary2" />
+                  </p>
                   <small className="text-xs text-secondary3">Website</small>
                 </div>
               </div>

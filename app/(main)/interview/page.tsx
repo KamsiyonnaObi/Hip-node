@@ -31,7 +31,7 @@ const InterviewHomePage = async () => {
                 content={interview.desc}
                 revenue={interview.revenue}
                 updates={interview.updates}
-                website={interview.Website}
+                website={interview.website}
               />
             ))
           : "No Posts to Show!"}
