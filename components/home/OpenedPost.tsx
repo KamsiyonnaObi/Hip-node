@@ -35,7 +35,7 @@ const OpenedPost = ({ title, tags, content, image }: Props) => {
         <h3 className="body-regular whitespace-pre-wrap md:h3-semibold pl-[47px] text-secondary3 md:mb-5 mb-2.5">
           {content}
         </h3>
-        <div className="pl-[47px] md:pl-0">
+        <div className="">
           <ChatInput />
         </div>
       </article>
