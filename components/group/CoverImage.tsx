@@ -6,10 +6,14 @@ import { CldUploadWidget } from "next-cloudinary";
 
 interface CoverImageProps {
   setParentFormData: (prevData: any) => void;
+  defaultImage?: string;
 }
 
-const CoverImage: React.FC<CoverImageProps> = ({ setParentFormData }) => {
-  const [imageUrl, setImageUrl] = useState("");
+const CoverImage: React.FC<CoverImageProps> = ({
+  setParentFormData,
+  defaultImage,
+}) => {
+  const [imageUrl, setImageUrl] = useState(defaultImage || "");
 
   const updateForm = (url: any) => {
     setParentFormData((prevData: any) => ({

@@ -173,7 +173,10 @@ const ChangeGroup: React.FC<Props> = ({
     <>
       <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
         <div>
-          <CoverImage setParentFormData={setFormData} />
+          <CoverImage
+            setParentFormData={setFormData}
+            defaultImage={formData.coverUrl}
+          />
         </div>
         <div>
           <GroupImage setParentFormData={setFormData} />
