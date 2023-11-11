@@ -1,22 +1,23 @@
+import { Schema } from "mongoose";
 import Image from "next/image";
 import Link from "next/link";
-type Props =
-  | {
-      profileData: {
-        id: string;
-        name: string;
-        email: string;
-        profileImage: string;
-        job: string;
-        followers: [];
-        following: [];
-        points: number;
-        bio: string;
-      };
-    }
-  | null
-  | undefined;
+
+interface userProfileData {
+  id: string;
+  name: string;
+  email: string;
+  profileImage: string;
+  job: string;
+  followers: Schema.Types.ObjectId[];
+  following: Schema.Types.ObjectId[];
+  points: number;
+  bio: string;
+}
+
+type Props = { profileData: userProfileData | null };
+
 const LeftSideBar = ({ profileData }: Props) => {
+  // format timestamp to months
   function monthsSinceJoined(joinedDate: Date): number {
     const today = new Date();
     const joined = new Date(joinedDate);
@@ -29,6 +30,7 @@ const LeftSideBar = ({ profileData }: Props) => {
     return Math.abs(months);
   }
 
+  // Use dummy data for remaining user data
   const dummyProfileData = {
     imgUrl: "/ExampleAvatar.png",
     profileUrl: "/",
@@ -38,7 +40,6 @@ const LeftSideBar = ({ profileData }: Props) => {
     website: "www.uikit.to",
   };
 
-  console.log("here", profileData.followers.length);
   return (
     <section className="flex flex-col items-center justify-center gap-5 rounded-2xl bg-background px-5 py-[30px] dark:bg-dark3">
       <div className="relative h-24 w-24 rounded-full bg-yellow30">
@@ -52,9 +53,9 @@ const LeftSideBar = ({ profileData }: Props) => {
       </div>
       <div className="flex flex-col items-center justify-center">
         <p className="text-secondary2 dark:text-background2">
-          {profileData.name}
+          {profileData?.name}
         </p>
-        <p className="text-secondary3">{profileData.job}</p>
+        <p className="text-secondary3">{profileData?.job}</p>
       </div>
       <Link
         className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
@@ -64,7 +65,7 @@ const LeftSideBar = ({ profileData }: Props) => {
       </Link>
       <div className="flex items-center justify-center gap-3">
         <p className="text-secondary2 dark:text-background2">
-          {`${profileData.followers.length} Followers`}
+          {`${profileData?.followers.length} Followers`}
         </p>
         <p className="text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
       </div>
