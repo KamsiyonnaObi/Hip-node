@@ -1,9 +1,11 @@
-"use client";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import MeetupCard from "./MeetupCard";
+import { getAllMeetups } from "@/utils/actions/meetup.action";
 
-const Meetups = () => {
+const Meetups = async () => {
+  const result = await getAllMeetups({});
+
   return (
     <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2">
       <section className="display-semibold mb-5 flex flex-row items-center gap-[3px]">
@@ -11,20 +13,21 @@ const Meetups = () => {
         <OutlineIcon.ArrowLeft />
       </section>
       <div className="flex flex-col gap-[20px] rounded-[16px] dark:bg-dark3">
-        <MeetupCard
-          month="FEB"
-          day={7}
-          title="UIHUT - Crunchbase Company Profile"
-          desc="UIHUT  •  Sylhet, Bangladesh"
-          jobType={["remote", "Part-time", "Worldwide"]}
-        />
-        <MeetupCard
-          month="MAR"
-          day={17}
-          title="UIHUT - Crunchbase Company Profile"
-          desc="UIHUT  •  Sylhet, Bangladesh"
-          jobType={["remote", "Part-time"]}
-        />
+        {result.meetups.length > 0
+          ? result.meetups
+              .slice(0, 3)
+              .map((meetup: any) => (
+                <MeetupCard
+                  key={meetup._id}
+                  _id={meetup._id}
+                  title={meetup.title}
+                  jobType={meetup.jobType}
+                  desc={meetup.desc}
+                  month={meetup.month}
+                  day={meetup.day}
+                />
+              ))
+          : "No Posts to Show!"}
       </div>
     </div>
   );

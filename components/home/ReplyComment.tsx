@@ -13,7 +13,7 @@ interface ReplyProps {
   comment: string;
 }
 
-export const ReplyComment = ({
+const ReplyComment = ({
   name,
   commentedDate,
   lastEditDate,
@@ -59,3 +59,5 @@ export const ReplyComment = ({
     </section>
   );
 };
+
+export default ReplyComment;

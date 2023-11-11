@@ -1,4 +1,9 @@
 "use server";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+
+import { IUser } from "@/types/mongoose";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 
@@ -55,5 +60,6 @@ export async function getUserProfile(email: string | null | undefined) {
     return null;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
