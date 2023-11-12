@@ -7,7 +7,6 @@
   ],
   "rules": {
     "react/display-name": "off",
-    "tailwindcss/classnames-order": "off",
     "tailwindcss/no-custom-classname": "off"
   }
 }

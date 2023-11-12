@@ -1,4 +1,3 @@
-import { commentData } from "@/constants/dummy";
 import { getPostById, getPostsByUserId } from "@/utils/actions/post.action";
 import {
   ActionBar,
@@ -11,6 +10,7 @@ import {
   OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
+import { getCommentById } from "@/utils/actions/comment.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUserId = await getCurrentUserId();
@@ -33,13 +33,21 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     reports,
   } = postopen.data;
 
+  const getComments = await getCommentById(params.slug);
+
   const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
   const posts = morePosts.data;
 
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
       <section className="w-full md:order-2">
-        <OpenedPost image={image} title={title} tags={tags} content={content} />
+        <OpenedPost
+          image={image}
+          title={title}
+          tags={tags}
+          content={content}
+          postId={params.slug}
+        />
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
             postId={JSON.stringify(_id)}
@@ -63,7 +71,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
-        <Thread commentData={commentData} />
+        {getComments.data && <Thread comments={getComments.data} />}
       </section>
       <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar

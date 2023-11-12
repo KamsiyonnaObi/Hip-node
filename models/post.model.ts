@@ -18,7 +18,7 @@ export interface IPost extends Document {
   hasShared?: boolean;
   hasReported?: boolean;
   postId: Schema.Types.ObjectId;
-  path: () => string;
+  commentIds: Schema.Types.ObjectId[];
 }
 
 const PostSchema = new Schema({
@@ -57,6 +57,12 @@ const PostSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+  ],
+  commentIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
     },
   ],
 });

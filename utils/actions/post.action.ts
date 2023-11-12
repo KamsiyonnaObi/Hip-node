@@ -6,11 +6,9 @@ import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 
-import { revalidatePath } from "next/cache";
-
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
-
+const { CommentModel } = require("@/models/comment.model");
 
 export async function createPost(params: any) {
   try {
@@ -45,7 +43,6 @@ export async function getPostById(postId: string) {
     await dbConnect();
     const post = await Post.findById(postId)
       .populate("userId")
-      // MissingSchemaError: Schema hasn't been registered for model "Group".
       .populate("groupId");
     if (post) {
       return { success: true, data: post };

@@ -1,18 +1,32 @@
-import { commentDataType } from "@/types/component";
 import { Comment, ReplyComment } from "@/components";
+import { IComment } from "@/models/comment.model";
 
 interface ThreadProps {
-  commentData: commentDataType[];
+  comments: IComment[];
 }
 
-const Thread = ({ commentData }: ThreadProps) => {
+const Thread = ({ comments }: ThreadProps) => {
   return (
-    <section className="md:rounded-b-lg flex flex-col gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3 px-5 md:pb-[30px] md:gap-[30px] md:px-[30px]">
-      {commentData.map((comment) => (
-        <div key={comment.name}>
-          <Comment {...comment} />
-          {comment.reply.map((reply) => (
-            <ReplyComment key={reply.name} {...reply} />
+    <section className="flex flex-col gap-5 bg-background2 px-5 dark:bg-dark2 md:gap-[30px] md:rounded-b-lg md:bg-background md:px-[30px] md:pb-[30px] md:dark:bg-dark3">
+      {comments.map((comment) => (
+        <div key={JSON.stringify(comment._id)}>
+          <Comment
+            name={comment.userId.username}
+            createdAt={comment.createdAt}
+            updatedAt={comment.updatedAt}
+            imgUrl={comment.userId.profileImage}
+            text={comment.text}
+          />
+          {comment.replies?.map((reply) => (
+            <div key={JSON.stringify(reply._id)}>
+              <ReplyComment
+                name={reply.userId.username}
+                createdAt={reply.createdAt}
+                updatedAt={reply.updatedAt}
+                imgUrl={reply.userId.profileImage}
+                text={reply.text}
+              />
+            </div>
           ))}
         </div>
       ))}
