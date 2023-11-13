@@ -157,6 +157,10 @@ const config: Config = {
       gridTemplateColumns: {
         'groupLG': '13.125rem, 49.625rem,  20.3125rem',
       },
+      gridTemplateRows: {
+        'groupLGRow': 'auto, auto, auto',
+
+      }
     },
   },
   plugins: [],

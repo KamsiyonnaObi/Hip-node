@@ -25,8 +25,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const { username } = group.data.userId;
   return (
     <>
-      <div className="grid md:grid-cols-2 md:grid-rows-5 lg:grid-cols-groupLG lg:auto-rows-auto gap-[1.25rem] justify-center sm:px-[5rem]">
-        <div className="  lg:row-start-1 lg:col-start-2 md:row-start-1 md:col-start-1">
+      <div className="lg:grid-cols-groupLG lg:grid-rows-groupLGRow grid justify-center gap-[1.25rem] sm:px-[5rem] md:grid-cols-2 md:grid-rows-5">
+        <div className="  md:col-start-1 md:row-start-1 lg:col-start-2 lg:row-start-1">
           <div className="lg:w-[800px] ">
             <Cover
               title={title}
