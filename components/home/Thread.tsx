@@ -11,6 +11,7 @@ const Thread = ({ comments }: ThreadProps) => {
       {comments.map((comment) => (
         <div key={JSON.stringify(comment._id)}>
           <Comment
+            userId={JSON.stringify(comment.userId._id)}
             name={comment.userId.username}
             createdAt={comment.createdAt}
             updatedAt={comment.updatedAt}

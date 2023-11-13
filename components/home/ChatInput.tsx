@@ -8,7 +8,9 @@ import Picker from "@emoji-mart/react";
 
 import { profileData } from "@/constants/dummy";
 import FillIcon from "../icons/FillIcon";
-import { createComment } from "@/utils/actions/comment.action";
+import { createComment } from "@/utils/actions/clientComment.action";
+
+// import { createComment } from "@/utils/actions/comment.action";
 
 const ChatInput = ({ postId }: { postId: string }) => {
   const [inputValue, setInputValue] = useState("");
@@ -29,6 +31,20 @@ const ChatInput = ({ postId }: { postId: string }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [showPicker]);
+
+  const handleSubmit = async (e) => {
+    console.log(inputValue);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      await createComment({
+        text: inputValue,
+        postId,
+      });
+      setInputValue("");
+
+      console.log("Comment created");
+    }
+  };
 
   return (
     <section className="flex items-center gap-5">
@@ -53,16 +69,7 @@ const ChatInput = ({ postId }: { postId: string }) => {
               placeholder="Say something..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={async (e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  await createComment({
-                    text: inputValue,
-                    postId,
-                  });
-                  setInputValue("");
-                }
-              }}
+              onKeyDown={handleSubmit}
             />
             <button onClick={() => setShowPicker((prev) => !prev)}>
               <FillIcon.Emoji className="h-6 w-6 shrink-0 md:h-8 md:w-8" />
