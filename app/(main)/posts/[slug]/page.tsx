@@ -71,7 +71,12 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
-        {/* {getComments.data && <Thread comments={getComments.data} />} */}
+        {getComments.data && (
+          <Thread
+            currentUserId={JSON.stringify(currentUserId)}
+            comments={getComments.data}
+          />
+        )}
       </section>
       <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar

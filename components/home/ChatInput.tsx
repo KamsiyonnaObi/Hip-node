@@ -8,9 +8,9 @@ import Picker from "@emoji-mart/react";
 
 import { profileData } from "@/constants/dummy";
 import FillIcon from "../icons/FillIcon";
-import { createComment } from "@/utils/actions/clientComment.action";
+// import { createComment } from "@/utils/actions/clientComment.action";
 
-// import { createComment } from "@/utils/actions/comment.action";
+import { createComment } from "@/utils/actions/comment.action";
 
 const ChatInput = ({ postId }: { postId: string }) => {
   const [inputValue, setInputValue] = useState("");
