@@ -1,6 +1,12 @@
 import React from "react";
 
-import { Podcasts, PostGroup, GroupName, Meetups } from "@/components/group";
+import {
+  Podcasts,
+  PostGroup,
+  GroupName,
+  Meetups,
+  CreateGroup,
+} from "@/components/group";
 
 const page = () => {
   return (
@@ -61,6 +67,15 @@ const page = () => {
         </section>
         <section>
           <div className="flex flex-col gap-5">
+            <div className="sm:w-[325px]">
+              <CreateGroup
+                title={"Create Group"}
+                desc={
+                  "Create a community and unite with like-minded individuals. Embark on exciting journeys together."
+                }
+                buttonText={"Create Group"}
+              />
+            </div>
             <Meetups />
             <Podcasts />
           </div>

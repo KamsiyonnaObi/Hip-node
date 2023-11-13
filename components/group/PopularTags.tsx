@@ -2,7 +2,7 @@
 import React from "react";
 
 import OutlineIcon from "../icons/OutlineIcon";
-import Tag from "./Tag";
+import GroupTag from "./GroupTag";
 
 const PopularTags = () => {
   return (
@@ -11,35 +11,35 @@ const PopularTags = () => {
         Popular Tags
       </p>
       <div className="flex flex-col rounded-[16px] dark:bg-dark3">
-        <Tag
+        <GroupTag
           title="java"
           icon={<OutlineIcon.Dev className="fill-green" />}
           desc="placeholder"
           className="bg-green10"
           postNum="82,430"
         />
-        <Tag
+        <GroupTag
           title="bitcoin"
           icon={<OutlineIcon.Bitcoin className="fill-blue" />}
           desc="placeholder"
           className="bg-blue10"
           postNum="5,354"
         />
-        <Tag
+        <GroupTag
           title="design"
           icon={<OutlineIcon.Design className="fill-purple" />}
           desc="placeholder"
           className="bg-purple10"
           postNum="5,354"
         />
-        <Tag
+        <GroupTag
           title="blogging"
           icon={<OutlineIcon.Blogging className="fill-primary" />}
           desc="placeholder"
           className="bg-red10"
           postNum="5,354"
         />
-        <Tag
+        <GroupTag
           title="tutorial"
           icon={<OutlineIcon.Tutorial className="fill-yellow" />}
           desc="placeholder"
