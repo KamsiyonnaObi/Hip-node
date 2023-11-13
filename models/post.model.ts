@@ -18,7 +18,6 @@ export interface IPost extends Document {
   hasShared?: boolean;
   hasReported?: boolean;
   postId: Schema.Types.ObjectId;
-  path: () => string;
 }
 
 const PostSchema = new Schema({

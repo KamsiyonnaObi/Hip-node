@@ -8,7 +8,6 @@ import {
   OpenedPost,
   PostDate,
   Thread,
-  FollowedProfile,
   OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
@@ -34,22 +33,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     reports,
   } = postopen.data;
 
-  const morePosts = await getPostsByUserId(userId._id, postopen.data._id);
+  const morePosts = await getPostsByUserId(userId?._id, postopen.data._id);
   const posts = morePosts.data;
-
-  let profileContent;
-
-  if (userId === currentUserId) {
-    profileContent = <MyProfile user={userId} joinedDate={userId.createdAt} />;
-  } else if (userId.followers.includes(currentUserId)) {
-    profileContent = (
-      <FollowedProfile user={userId} joinedDate={userId.createdAt} />
-    );
-  } else {
-    profileContent = (
-      <OtherProfile user={userId} joinedDate={userId.createdAt} />
-    );
-  }
 
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
@@ -59,22 +44,22 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           <ActionBar
             postId={JSON.stringify(_id)}
             userId={JSON.stringify(currentUserId)}
-            hasLiked={likes.includes(currentUserId)}
-            hasCommented={comments.includes(currentUserId)}
-            hasShared={shares.includes(currentUserId)}
-            hasReported={reports.includes(currentUserId)}
-            likes={likes.length}
-            comments={comments.length}
-            shares={shares.length}
+            hasLiked={likes?.includes(currentUserId)}
+            hasCommented={comments?.includes(currentUserId)}
+            hasShared={shares?.includes(currentUserId)}
+            hasReported={reports?.includes(currentUserId)}
+            likes={likes?.length}
+            comments={comments?.length}
+            shares={shares?.length}
           />
           {groupId && (
             <GroupPostDate
               username={userId.username}
               createdAt={createdAt}
-              groupTitle={groupId.title}
+              groupTitle={groupId?.title}
             />
           )}
-          {!groupId && userId === currentUserId && (
+          {!groupId && userId?._id.equals(currentUserId) && (
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
@@ -84,13 +69,13 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <ActionBar
           postId={JSON.stringify(_id)}
           userId={JSON.stringify(currentUserId)}
-          hasLiked={likes.includes(currentUserId)}
-          hasCommented={comments.includes(currentUserId)}
-          hasShared={shares.includes(currentUserId)}
-          hasReported={reports.includes(currentUserId)}
-          likes={likes.length}
-          comments={comments.length}
-          shares={shares.length}
+          hasLiked={likes?.includes(currentUserId)}
+          hasCommented={comments?.includes(currentUserId)}
+          hasShared={shares?.includes(currentUserId)}
+          hasReported={reports?.includes(currentUserId)}
+          likes={likes?.length}
+          comments={comments?.length}
+          shares={shares?.length}
         />
         {groupId && (
           <GroupPostDate
@@ -99,13 +84,29 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             groupTitle={groupId.title}
           />
         )}
-        {!groupId && userId === currentUserId && (
+        {!groupId && userId?._id.equals(currentUserId) && (
           <PostDate username={userId.username} createdAt={createdAt} />
         )}
       </div>
-      <div className="flex flex-col gap-5 md:order-3">
-        {profileContent}{" "}
-        {posts && <MoreFrom posts={posts} author={userId.username} />}
+      <div className="flex flex-col gap-5 md:order-3 md:min-w-[325px]">
+        {userId?._id &&
+          currentUserId &&
+          (userId?._id.equals(currentUserId) ? (
+            <MyProfile
+              user={JSON.stringify(userId)}
+              joinedDate={userId.createdAt}
+            />
+          ) : (
+            <OtherProfile
+              user={JSON.stringify(userId)}
+              joinedDate={userId.createdAt}
+              currentUserId={JSON.stringify(currentUserId)}
+              hasFollowed={userId.followers?.includes(currentUserId)}
+            />
+          ))}{" "}
+        {userId?._id && posts && (
+          <MoreFrom posts={JSON.stringify(posts)} author={userId?.username} />
+        )}
       </div>
     </article>
   );
