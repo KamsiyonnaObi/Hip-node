@@ -29,11 +29,13 @@ const ActionBar = ({
   shares,
   comments,
 }: Props) => {
-  const [isLiked, setIsLiked] = useState(hasLiked || null);
-  const [numberLiked, setNumberLiked] = useState(likes || 0);
-  const [isShared, setIsShared] = useState(hasShared || null);
-  const [numberShared, setNumberShared] = useState(shares || 0);
-  const [isReported, setIsReported] = useState(hasReported || null);
+  const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
+  const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
+  const [isShared, setIsShared] = useState<boolean | null>(hasShared || null);
+  const [numberShared, setNumberShared] = useState<number>(shares || 0);
+  const [isReported, setIsReported] = useState<boolean | null>(
+    hasReported || null
+  );
   const [isPending, startTransition] = useTransition();
 
   const handleLike = async () => {
@@ -107,7 +109,7 @@ const ActionBar = ({
             "text-secondary3": !isLiked,
           })}
         >
-          <p>{new Intl.NumberFormat().format(numberLiked)} Likes</p>
+          <p>{new Intl.NumberFormat().format(numberLiked ?? 0)} Likes</p>
         </div>
       </div>
 
@@ -131,7 +133,7 @@ const ActionBar = ({
             "text-secondary3": !hasCommented,
           })}
         >
-          <p>{new Intl.NumberFormat().format(comments)} Comments</p>
+          <p>{new Intl.NumberFormat().format(comments ?? 0)} Comments</p>
         </div>
       </div>
 
@@ -157,7 +159,7 @@ const ActionBar = ({
             "text-secondary3": !isShared,
           })}
         >
-          <p>{new Intl.NumberFormat().format(numberShared)} Shares</p>
+          <p>{new Intl.NumberFormat().format(numberShared ?? 0)} Shares</p>
         </div>
       </div>
 

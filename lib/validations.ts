@@ -77,6 +77,25 @@ export const GroupSchema = z.object({
   ),
 });
 
+export const InterviewSchema = z.object({
+  title: z
+    .string()
+    .min(5, {
+      message: "Title must be at least 5 characters.",
+    })
+    .max(60, { message: "Title must be less than 60 characters." }),
+  desc: z
+    .string()
+    .min(12, {
+      message: "Description must be at least 12 characters.",
+    })
+    .max(200, { message: "Description must be less than 200 characters." }),
+  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  revenue: z.number(),
+  updates: z.number(),
+  website: z.string(),
+});
+
 export const emailSchema = z.string().email("Invalid email address.");
 export const passwordSchema = z
   .string()

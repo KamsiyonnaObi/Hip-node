@@ -1,16 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { profileData } from "@/constants/dummy";
-
-interface User {
-  fullName: string;
-  username: string;
-  email: string;
-  occupation: string;
-  profileImage: string;
-}
-
 function monthsSinceJoined(joinedDate: Date): number {
   const today = new Date();
   const joined = new Date(joinedDate);
@@ -23,25 +13,35 @@ function monthsSinceJoined(joinedDate: Date): number {
   return Math.abs(months);
 }
 
-const MyProfile = ({ user, joinedDate }: { user: User; joinedDate: Date }) => {
+const MyProfile = ({
+  user,
+  joinedDate,
+}: {
+  user: string;
+  joinedDate: Date;
+}) => {
+  const userObj = JSON.parse(user);
   return (
     <section className="flex flex-col items-center justify-center gap-5 rounded-2xl bg-background px-5 py-[30px] dark:bg-dark3">
       <div className="relative h-24 w-24 rounded-full bg-yellow30">
         <Image
-          className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
-          src={user.profileImage}
+          className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full"
+          src={userObj.profileImage}
           alt="profile"
           width="80"
           height="80"
         />
       </div>
       <div className="flex flex-col items-center justify-center">
-        <p className="text-secondary2 dark:text-background2">{user.username}</p>
-        <p className="text-secondary3">{user.occupation}</p>
+        <p className="text-secondary2 dark:text-background2">
+          {userObj.username}
+        </p>
+        <p className="text-secondary3">{userObj.occupation}</p>
       </div>
+
       <Link
         className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
-        href={profileData.profileUrl}
+        href={userObj._id ? `/profile/${userObj._id}` : "/"}
       >
         Visit Profile
       </Link>
