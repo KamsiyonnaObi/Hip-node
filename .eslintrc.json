@@ -5,5 +5,9 @@
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
-  "rules": { "react/display-name": "off", "tailwindcss/classnames-order": "off", "tailwindcss/no-custom-classname": "off" }
+  "rules": {
+    "react/display-name": "off",
+    "tailwindcss/classnames-order": "warn",
+    "tailwindcss/no-custom-classname": "off"
+  }
 }
