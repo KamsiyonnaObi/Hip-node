@@ -55,7 +55,7 @@ const CoverImage: React.FC<CoverImageProps> = ({
       </CldUploadWidget>
       <div className="w-full h-[8.25rem] lg:h-[10.4rem] flex justify-center items-center dark:bg-dark4 dark:border-dark4 bg-background2 border-background">
         {!imageUrl ? (
-          <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 w-[1.875rem] h-[1.875rem] lg:w-[2.5rem] lg:h-[2.5rem]" />
+          <OutlineIcon.Image2 className="dark:stroke-secondary4 dark:fill-dark4 h-[1.875rem] w-[1.875rem] fill-white lg:h-[2.5rem] lg:w-[2.5rem]" />
         ) : (
           <div>
             <div>
@@ -64,7 +64,7 @@ const CoverImage: React.FC<CoverImageProps> = ({
                 alt={"Cover"}
                 width={840}
                 height={167}
-                className="w-[840px] h-[167px] lg:w-[1120px] lg:h-[223px]"
+                className="h-[167px] w-[840px] lg:h-[223px] lg:w-[1120px]"
               />
             </div>
           </div>

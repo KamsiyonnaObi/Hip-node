@@ -16,8 +16,8 @@ import UserSelect from "./UserSelect";
 type Props = {
   title: string;
   description: string;
-  admins: string[];
-  members: string[];
+  admins: string;
+  members: string;
   coverUrl: string;
   groupUrl: string;
   groupId: string;
@@ -48,7 +48,8 @@ const ChangeGroup: React.FC<Props> = ({
     Record<string, string>
   >({});
 
-  const submitForm = async () => {
+  const submitForm = async (e: any) => {
+    e.preventDefault();
     console.log("Submitting form");
 
     setSubmitStatus("Submitting");
@@ -171,7 +172,7 @@ const ChangeGroup: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
+      <div className="xs:max-w-[30rem] bg-background dark:bg-dark3 sm mb-[13.44rem]  mt-[1.25rem] flex w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] p-[1.25rem] sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
         <div>
           <CoverImage
             setParentFormData={setFormData}
@@ -196,7 +197,7 @@ const ChangeGroup: React.FC<Props> = ({
                 placeholder="Name..."
                 value={formData.title}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                className={`border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] ${
                   validationErrors.title ? "border-red" : ""
                 }`}
               />
@@ -217,7 +218,7 @@ const ChangeGroup: React.FC<Props> = ({
                 placeholder="Provide a short description..."
                 value={formData.description}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                className={`border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] ${
                   validationErrors.description ? "border-red" : ""
                 }`}
               />
@@ -249,7 +250,7 @@ const ChangeGroup: React.FC<Props> = ({
             <button
               type="button"
               onClick={submitForm}
-              className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]"
+              className="bg-blue flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] px-[2.5rem] py-[0.625rem]"
             >
               <p className="body-semibold text-background">Update</p>
             </button>
