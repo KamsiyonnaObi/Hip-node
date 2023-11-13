@@ -11,7 +11,6 @@ import { revalidatePath } from "next/cache";
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
 
-
 export async function createPost(params: any) {
   try {
     await dbConnect();

@@ -14,7 +14,8 @@ export async function createInterview(params: Partial<IInterview>) {
     const { email } = currentUser?.user;
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
-    const { title, desc, image, revenue, updates, website, tags } = params;
+    const { title, desc, image, revenue, updates, website, interviewTags } =
+      params;
 
     const interview = await Interview.create({
       title,
@@ -24,7 +25,7 @@ export async function createInterview(params: Partial<IInterview>) {
       revenue,
       updates,
       website,
-      tags,
+      interviewTags,
     });
 
     return interview._id.toString();

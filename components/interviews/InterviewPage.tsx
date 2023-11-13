@@ -1,11 +1,11 @@
 "use client";
-import { dummyTags } from "@/constants/dummy";
+
 import { formatNumber } from "@/utils";
 import React from "react";
-import { Tags } from ".";
 import PageWrapper from "../PageWrapper";
 import OutlineIcon from "../icons/OutlineIcon";
 import Image from "next/image";
+import { html } from "@/lib/utils";
 
 const InterviewPage = ({ result }: any) => {
   return (
@@ -21,7 +21,7 @@ const InterviewPage = ({ result }: any) => {
         />
         <div className="flex flex-col gap-5 px-5 pb-10 pt-5 sm:px-10">
           <h1 className="sm:h1-semibold font-semibold">{result.title}</h1>
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col md:flex-row md:justify-between">
             <div className="flex gap-6">
               <div className="flex flex-col items-center">
                 <p className="text-sm font-bold">
@@ -45,9 +45,15 @@ const InterviewPage = ({ result }: any) => {
                 <small className="text-xs text-secondary3">Website</small>
               </div>
             </div>
-            <Tags tags={dummyTags} />
+            <div className="caption-regular md:display-regular  text-yellow90">
+              {result.interviewTags.map((tag: any) => (
+                <span className="p-3" key={tag}>
+                  #{tag}
+                </span>
+              ))}
+            </div>
           </div>
-          <p className="text-secondary3">{result.desc}</p>
+          <p className="text-secondary3">{html(result.desc)}</p>
         </div>
       </article>
     </PageWrapper>
