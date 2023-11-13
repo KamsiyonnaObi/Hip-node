@@ -14,7 +14,10 @@ const OpenedPost = ({ title, tags, content, image, postId }: Props) => {
     <section className="flex flex-col gap-5 rounded-lg bg-background dark:bg-dark3 md:rounded-b-none">
       <div className="relative h-[103px] w-full md:h-[273px]">
         <Image
-          src={image}
+          src={
+            image ||
+            "https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/v1699045854/CldUploadWidget-unsigned/bqwwegsp23vk00e5ifck.png"
+          }
           alt="cover"
           fill={true}
           className="absolute h-auto w-full rounded-t-lg object-cover"

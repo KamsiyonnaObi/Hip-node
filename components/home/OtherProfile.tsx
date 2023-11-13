@@ -1,9 +1,9 @@
 "use client";
+import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import FillIcon from "../icons/FillIcon";
-import { useState, useTransition } from "react";
 import { followAuthor } from "@/utils/actions/user.action";
 
 function monthsSinceJoined(joinedDate: Date): number {
