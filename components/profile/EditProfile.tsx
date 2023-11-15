@@ -97,13 +97,13 @@ const EditProfile = () => {
             className="flex rounded-md bg-blue px-2 py-1 text-background"
             type="submit"
           >
-            save
+            Save
           </button>
           <button
             className="flex rounded-md bg-blue10 px-2 py-1 text-red"
             type="submit"
           >
-            cancel
+            Cancel
           </button>
         </div>
       </form>
