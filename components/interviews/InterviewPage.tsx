@@ -1,10 +1,11 @@
 "use client";
 
-import { formatNumber } from "@/utils";
+import Image from "next/image";
 import React from "react";
+
+import { formatNumber } from "@/utils";
 import PageWrapper from "../PageWrapper";
 import OutlineIcon from "../icons/OutlineIcon";
-import Image from "next/image";
 import { html } from "@/lib/utils";
 
 const InterviewPage = ({ result }: any) => {

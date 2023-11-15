@@ -35,7 +35,7 @@ export async function createInterview(params: Partial<IInterview>) {
   }
 }
 
-export async function getInterview(InterviewId: number) {
+export async function getInterview(InterviewId: string) {
   try {
     await dbConnect();
     const interview = await Interview.findById(InterviewId);
