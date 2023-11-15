@@ -24,10 +24,10 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const { title, coverUrl, groupUrl, description } = group.data;
   const { username } = group.data.userId;
   return (
-    <>
-      <div className="lg:grid-cols-groupLG lg:grid-rows-groupLGRow grid justify-center gap-[1.25rem] sm:px-[5rem] md:grid-cols-2 md:grid-rows-5">
-        <div className="  md:col-start-1 md:row-start-1 lg:col-start-2 lg:row-start-1">
-          <div className="lg:w-[800px] ">
+    <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1150px]  md:max-w-[1250px] lg:max-w-[1400px]">
+      <div className="grid grid-cols-1 gap-[1.25rem] sm:px-[5rem] md:grid-cols-[65%_auto] lg:grid-cols-[auto_58%_auto] ">
+        <div className="md:h-0 lg:col-start-2 lg:row-start-1">
+          <div className="lg:w-[800px]">
             <Cover
               title={title}
               user={username}
@@ -37,64 +37,81 @@ const page = async ({ params }: { params: { slug: string } }) => {
             />
           </div>
         </div>
-        <div className="lg:row-start-1 lg:col-start-3 md:row-start-1 md:col-start-2">
-          <div className="">
-            <CreateGroup
-              title={"Create Group"}
-              desc={
-                "Create a community and unite with like-minded individuals. Embark on exciting journeys together."
-              }
-              buttonText={"Create Group"}
-            />
-          </div>
+        <div className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:h-0">
+          <CreateGroup
+            title={"Create Group"}
+            desc={
+              "Create a community and unite with like-minded individuals. Embark on exciting journeys together."
+            }
+            buttonText={"Create Group"}
+          />
         </div>
-        <div className="  lg:row-start-2 lg:col-start-2 md:row-start-4 md:col-start-1 md:col-span-2	">
-          <div className="lg:w-full">
-            <Frame />
-          </div>
-        </div>
-        <div className="md:col-span-2 md:col-start-1 md:row-start-5 lg:col-start-2 lg:row-start-3">
-          <div className="gap-5">
+        <div className="flex w-fit flex-col gap-5 sm:w-full md:row-start-2 md:mt-32 lg:col-start-2 lg:mt-28">
+          <Frame />
+          <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden lg:h-0">
             <Post
               postImage="/PostImage.png"
               title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
               tags={["remote", "part time", "test"]}
               avatar="/Avatar.png"
               username={"John Smith"}
-              createdAt={"2 month ago"}
+              createdAt={"2 months ago"}
+              views={420}
+              likes={69}
+              comments={75}
+            />
+            <Post
+              postImage="/PostImage.png"
+              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+              tags={["remote", "part time", "test"]}
+              avatar="/Avatar.png"
+              username={"John Smith"}
+              createdAt={"2 months ago"}
+              views={420}
+              likes={69}
+              comments={75}
+            />
+            <Post
+              postImage="/PostImage.png"
+              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+              tags={["remote", "part time", "test"]}
+              avatar="/Avatar.png"
+              username={"John Smith"}
+              createdAt={"2 months ago"}
+              views={420}
+              likes={69}
+              comments={75}
+            />
+            <Post
+              postImage="/PostImage.png"
+              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
+              tags={["remote", "part time", "test"]}
+              avatar="/Avatar.png"
+              username={"John Smith"}
+              createdAt={"2 months ago"}
               views={420}
               likes={69}
               comments={75}
             />
           </div>
         </div>
-        <div className="  lg:row-start-2 lg:col-start-3 md:row-start-3 md:col-start-1">
-          <div className="">
-            <ActiveMembers avatar={"/Avatar.png"} />
-          </div>
+        <div className="md:col-start-2 md:row-start-2 lg:col-start-3 lg:mt-[-1rem]">
+          <ActiveMembers avatar={"/Avatar.png"} />
         </div>
-        <div className="  lg:row-start-3 lg:col-start-3 md:row-start-2 md:col-start-2">
-          <div className="">
-            <RecentMedia media={"/bird.png"} />
-          </div>
+        <div className="md:col-start-2 lg:col-start-3 lg:row-start-3">
+          <RecentMedia media={"/bird.png"} />
         </div>
-        <div className="lg:row-start-1 lg:col-start-1 md:row-start-2 md:col-start-">
-          <div className="">
-            <About description={description} />
-          </div>
+        <div className="md:col-start-2 md:row-start-2 md:mt-[14.5rem] lg:col-start-1 lg:row-start-1 lg:mt-0">
+          <About description={description} />
         </div>
-        <div className="  lg:row-start-2 lg:col-start-1 md:row-start-3 md:col-start-2">
-          <div className="w-full">
-            <Admin />
-          </div>
+        <div className="mb-[1.25rem] w-full md:col-start-2 lg:col-start-1 lg:row-start-2 lg:mb-0 lg:h-0">
+          <Admin />
         </div>
-        <div className="  hidden lg:block lg:row-start-3 lg:col-start-1">
-          <div className="">
-            <PopularTags />
-          </div>
+        <div className="hidden  lg:col-start-1 lg:mt-[5rem] lg:block">
+          <PopularTags />
         </div>
       </div>
-    </>
+    </main>
   );
 };
 
