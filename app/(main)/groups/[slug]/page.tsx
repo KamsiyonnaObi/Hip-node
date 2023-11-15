@@ -104,10 +104,10 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="md:col-start-2 md:row-start-2 md:mt-[14.5rem] lg:col-start-1 lg:row-start-1 lg:mt-0">
           <About description={description} />
         </div>
-        <div className="mb-[1.25rem] w-full md:col-start-2 lg:col-start-1 lg:row-start-2 lg:mb-0 lg:h-0">
+        <div className="w-full md:col-start-2 lg:col-start-1 lg:row-start-2 lg:mb-0 lg:h-0">
           <Admin />
         </div>
-        <div className="hidden  lg:col-start-1 lg:mt-[5rem] lg:block">
+        <div className="mb-[1.25rem] md:col-start-2 lg:col-start-3 lg:row-start-4">
           <PopularTags />
         </div>
       </div>
