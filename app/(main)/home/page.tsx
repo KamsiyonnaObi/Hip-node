@@ -5,7 +5,6 @@ import PopularTags from "@/components/home/PopularTags";
 import Post from "@/components/home/Post";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
-import { getAllMeetups } from "@/utils/actions/meetup.action";
 import { getAllPosts } from "@/utils/actions/post.action";
 import React from "react";
 

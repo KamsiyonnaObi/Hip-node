@@ -1,6 +1,6 @@
 import { InterviewCategory, InterviewPost, StartInterview } from "@/components";
 import PageWrapper from "@/components/PageWrapper";
-import PodcastsPreview from "@/components/interviews/podcasts/PodcastsPreview";
+import Podcasts from "@/components/Podcasts";
 import { getAllInterviews } from "@/utils/actions/interview.action";
 
 const InterviewHomePage = async () => {
@@ -18,7 +18,7 @@ const InterviewHomePage = async () => {
           ]}
         />
       </aside>
-      <section className="order-3 flex w-full flex-col md:order-2 gap-5">
+      <section className="order-3 flex w-full flex-col gap-5 md:order-2">
         {result.interviews.length > 0
           ? result.interviews.map((interview) => (
               <InterviewPost
@@ -41,7 +41,7 @@ const InterviewHomePage = async () => {
         {/* Start your interview */}
         <StartInterview />
         {/* Podcasts */}
-        <PodcastsPreview />
+        <Podcasts />
       </aside>
     </PageWrapper>
   );

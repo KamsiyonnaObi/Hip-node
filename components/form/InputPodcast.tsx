@@ -4,19 +4,16 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import "react-datepicker/dist/react-datepicker.css";
 import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Badge } from "../ui/badge";
-import { InterviewSchema } from "@/lib/validations";
+import { PodcastSchema } from "@/lib/validations";
 import { Input } from "../ui/input";
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   Form,
 } from "../ui/form";
@@ -24,10 +21,11 @@ import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
-import { createInterview } from "@/utils/actions/interview.action";
+import { createPodcast } from "@/utils/actions/podcast.action";
 
-export function InputInterview() {
+export function InputPodcast() {
   const { theme } = useTheme();
+
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,15 +38,13 @@ export function InputInterview() {
   };
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof InterviewSchema>>({
-    resolver: zodResolver(InterviewSchema),
+  const form = useForm<z.infer<typeof PodcastSchema>>({
+    resolver: zodResolver(PodcastSchema),
     defaultValues: {
       title: "",
       desc: "",
-      tags: [],
-      revenue: 0,
-      updates: 0,
-      website: "",
+      type: "",
+      episode: 0,
     },
   });
 
@@ -57,54 +53,20 @@ export function InputInterview() {
     setIsSubmitting(true);
     try {
       const values = form.getValues();
-
-      const interviewData = {
+      const podcastData = {
         title: values.title,
-        revenue: values.revenue,
-        updates: values.updates,
-        tags: values.tags,
         desc: values.desc,
-        website: values.website,
         image: coverUrl,
+        audioPath: "this is an audio path",
+        type: values.type,
+        episode: values.episode,
       };
-
-      const id = await createInterview(interviewData);
+      const id = await createPodcast(podcastData);
       console.log(id);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleInputKeydown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
-  ) => {
-    if (e.key === "Enter" && field.name === "jobType") {
-      e.preventDefault();
-      const tagInput = e.target as HTMLInputElement;
-      const tagValue = tagInput.value.trim();
-      if (tagValue !== "") {
-        if (tagValue.length > 15) {
-          return form.setError("tags", {
-            type: "required",
-            message: "Tag must be less than 15 characters.",
-          });
-        }
-        if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
-          tagInput.value = "";
-          form.clearErrors("tags");
-        }
-      } else {
-        form.trigger();
-      }
-    }
-  };
-
-  const handleTagRemove = (tag: string, field: any) => {
-    const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("tags", newTags);
   };
 
   return (
@@ -148,7 +110,7 @@ export function InputInterview() {
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                                  Set Image
+                                  Set Cover
                                 </p>
                               </Button>
                             </div>
@@ -186,7 +148,7 @@ export function InputInterview() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Meetup Details..."
+                  initialValue="Tell your story..."
                   init={{
                     height: 376,
                     menubar: false,
@@ -242,16 +204,16 @@ export function InputInterview() {
 
         <FormField
           control={form.control}
-          name="revenue"
+          name="episode"
           render={({ field }) => (
-            <FormItem className="my-10">
+            <FormItem className="mb-10">
               <FormControl className="flex flex-col">
-                <div className="flex flex-row gap-5">
+                <div className="gap-5">
                   <h3 className="h3-semibold text-secondary2 dark:text-background2">
-                    Revenue per Hour:
+                    Episode #:
                   </h3>
                   <Input
-                    placeholder="Subtitle..."
+                    defaultValue={1}
                     type="number"
                     className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
@@ -265,77 +227,17 @@ export function InputInterview() {
 
         <FormField
           control={form.control}
-          name="updates"
-          render={({ field }) => (
-            <FormItem className="mb-10">
-              <FormControl className="flex flex-col">
-                <div className="gap-5">
-                  <h3 className="h3-semibold text-secondary2 dark:text-background2">
-                    Updates:
-                  </h3>
-                  <Input
-                    placeholder="Subtitle..."
-                    type="number"
-                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
-                    {...field}
-                  />
-                </div>
-              </FormControl>
-              <FormMessage className="text-red90" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="website"
+          name="type"
           render={({ field }) => (
             <FormItem className="mb-10">
               <FormControl className="flex flex-col">
                 <div className="gap-5">
                   <Input
-                    placeholder="Website..."
                     className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Type..."
                     {...field}
                   />
                 </div>
-              </FormControl>
-              <FormMessage className="text-red90" />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem className="my-5">
-              <FormLabel className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
-                Add or change tags (up to 5) so readers know what your story is
-                about
-              </FormLabel>
-              <FormControl>
-                <>
-                  <Input
-                    placeholder="Add a tag..."
-                    className="caption-regular md:body-regular border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
-                    onKeyDown={(e) => handleInputKeydown(e, field)}
-                  />
-                  {Array.isArray(field.value) && field.value.length > 0 && (
-                    <div className="mt-2.5 flex items-start gap-2.5">
-                      {field.value.map((tag: any) => (
-                        <Badge
-                          key={tag}
-                          className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
-                          onClick={() => handleTagRemove(tag, field)}
-                        >
-                          {tag}
-                          <OutlineIcon.Close className="cursor-pointer object-contain invert-0 dark:invert" />
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </>
               </FormControl>
               <FormMessage className="text-red90" />
             </FormItem>
@@ -343,7 +245,7 @@ export function InputInterview() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/interview">
+          <Link href="/podcast">
             <Button
               type="submit"
               color="blue"
@@ -356,7 +258,6 @@ export function InputInterview() {
               {isSubmitting ? <>Posting...</> : <>Publish</>}
             </Button>
           </Link>
-
           <Button
             type="button"
             color="gray"
