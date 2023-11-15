@@ -33,11 +33,15 @@ const ChangeGroup: React.FC<Props> = ({
   groupId,
 }) => {
   const router = useRouter();
+
+  const parsedAdmins = JSON.parse(admins);
+  const parsedUsers = JSON.parse(members);
+
   const [formData, setFormData] = useState({
     title,
     description,
-    admins: admins || [],
-    members: members || [],
+    admins: parsedAdmins || [],
+    members: parsedUsers || [],
     coverUrl,
     groupUrl,
   });
@@ -110,13 +114,6 @@ const ChangeGroup: React.FC<Props> = ({
     }
   }
 
-  const [userSearch] = useState<string>("");
-  const debouncedUserSearch = useDebounce(userSearch, 300);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -149,30 +146,10 @@ const ChangeGroup: React.FC<Props> = ({
       [name]: "",
     }));
   };
-  function setSuggestedUsers(response: any) {
-    throw new Error("Function not implemented.");
-  }
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = JSON.parse(
-          await getUsersBySimilarName(debouncedUserSearch)
-        );
-
-        // Assuming the response is an array of users
-        setSuggestedUsers(response);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, [debouncedUserSearch]);
 
   return (
     <>
-      <div className="xs:max-w-[30rem] bg-background dark:bg-dark3 sm mb-[13.44rem]  mt-[1.25rem] flex w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] p-[1.25rem] sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
+      <div className="xs:max-w-[30rem] sm mb-[13.44rem] mt-[1.25rem] flex  w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
         <div>
           <CoverImage
             setParentFormData={setFormData}
@@ -187,7 +164,7 @@ const ChangeGroup: React.FC<Props> = ({
         </div>
         <form>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Group Name
             </label>
             <div>
@@ -197,19 +174,19 @@ const ChangeGroup: React.FC<Props> = ({
                 placeholder="Name..."
                 value={formData.title}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] ${
+                className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
                   validationErrors.title ? "border-red" : ""
                 }`}
               />
               {validationErrors.title && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
+                <p className="text-xs-regular mb-[.62rem] text-red">
                   {validationErrors.title}
                 </p>
               )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Description
             </label>
             <div>
@@ -218,31 +195,39 @@ const ChangeGroup: React.FC<Props> = ({
                 placeholder="Provide a short description..."
                 value={formData.description}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 caption-regular text-secondary3 dark:bg-dark3 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] ${
+                className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
                   validationErrors.description ? "border-red" : ""
                 }`}
               />
               {validationErrors.description && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
+                <p className="text-xs-regular mb-[.62rem] text-red">
                   {validationErrors.description}
                 </p>
               )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Add admins
             </label>
             <div>
-              <UserSelect setter={setFormData} formKey="admins" />
+              <UserSelect
+                setter={setFormData}
+                initialUserArray={parsedAdmins}
+                formKey="admins"
+              />
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Add members
             </label>
             <div>
-              <UserSelect setter={setFormData} formKey="members" />
+              <UserSelect
+                setter={setFormData}
+                initialUserArray={parsedUsers}
+                formKey="members"
+              />
             </div>
           </div>
 
@@ -250,7 +235,7 @@ const ChangeGroup: React.FC<Props> = ({
             <button
               type="button"
               onClick={submitForm}
-              className="bg-blue flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] px-[2.5rem] py-[0.625rem]"
+              className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]"
             >
               <p className="body-semibold text-background">Update</p>
             </button>

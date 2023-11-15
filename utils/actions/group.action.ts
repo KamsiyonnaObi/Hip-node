@@ -32,8 +32,8 @@ export async function createGroup(params: NewGroup) {
     const { email } = currentUser?.user;
     const User = await UserModel.findOne({ email });
     const { title, coverUrl, groupUrl, description, admins, members } = params;
-    const parsedAdmins = JSON.parse(admins)
-    const parseMembers = JSON.parse(members)
+    const parsedAdmins = JSON.parse(admins);
+    const parseMembers = JSON.parse(members);
 
     const group = await Group.create({
       title,
@@ -43,7 +43,6 @@ export async function createGroup(params: NewGroup) {
       description,
       admins: parsedAdmins,
       members: parseMembers,
-
     });
     if (group) {
       return JSON.stringify({
@@ -66,8 +65,10 @@ export async function createGroup(params: NewGroup) {
 export async function getGroupById(groupId: string) {
   try {
     await dbConnect();
-    const group = await Group.findById(groupId).populate("userId");
-
+    const group = await Group.findById(groupId)
+      .populate("userId")
+      .populate({ path: "admins", select: "username _id" })
+      .populate({ path: "members", select: "username _id" });
     if (group) {
       return { success: true, data: group };
     } else {
@@ -87,16 +88,24 @@ export async function updateGroup(groupId: any, params: UpdateGroup) {
   const currentUser: any = await getServerSession();
   const { email } = currentUser?.user;
   const User = await UserModel.findOne({ email });
-  const parsedAdmins = JSON.parse(admins)
-  const parseMembers = JSON.parse(members)
-
+  const parsedAdmins = JSON.parse(admins);
+  const parseMembers = JSON.parse(members);
 
   try {
     await dbConnect();
     const updatedGroup = await Group.findOneAndUpdate(
       { _id: groupId },
-      { $set: { title, coverUrl, groupUrl, description, userId: User?._id,  admins: parsedAdmins,
-        members: parseMembers, } }
+      {
+        $set: {
+          title,
+          coverUrl,
+          groupUrl,
+          description,
+          userId: User?._id,
+          admins: parsedAdmins,
+          members: parseMembers,
+        },
+      }
     );
 
     if (updatedGroup) {
