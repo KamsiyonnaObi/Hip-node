@@ -6,8 +6,6 @@ import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 
-import { revalidatePath } from "next/cache";
-
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
 
@@ -44,7 +42,6 @@ export async function getPostById(postId: string) {
     await dbConnect();
     const post = await Post.findById(postId)
       .populate("userId")
-      // MissingSchemaError: Schema hasn't been registered for model "Group".
       .populate("groupId");
     if (post) {
       return { success: true, data: post };
@@ -127,7 +124,7 @@ export async function likePost({
 }: {
   postId: string;
   userId: string;
-  hasLiked: boolean;
+  hasLiked: boolean | null;
 }) {
   try {
     dbConnect();
@@ -163,7 +160,7 @@ export async function commentPost({
 }: {
   postId: string;
   userId: string;
-  hasCommented: boolean;
+  hasCommented: boolean | null;
 }) {
   try {
     dbConnect();
@@ -196,7 +193,7 @@ export async function sharePost({
 }: {
   postId: string;
   userId: string;
-  hasShared: boolean;
+  hasShared: boolean | null;
 }) {
   try {
     dbConnect();
@@ -232,7 +229,7 @@ export async function reportPost({
 }: {
   postId: string;
   userId: string;
-  hasReported: boolean;
+  hasReported: boolean | null;
 }) {
   try {
     dbConnect();
