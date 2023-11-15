@@ -48,7 +48,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         </div>
         <div className="flex w-fit flex-col gap-5 sm:w-full md:row-start-2 md:mt-32 lg:col-start-2 lg:mt-28">
           <Frame />
-          <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden lg:h-0">
+          <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden md:h-0">
             <Post
               postImage="/PostImage.png"
               title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
