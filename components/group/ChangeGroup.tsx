@@ -6,11 +6,7 @@ import CoverImage from "./CoverImage";
 import GroupImage from "./GroupImage";
 import { GroupSchema } from "@/lib/validations";
 import { formDataToObject } from "@/utils";
-import {
-  getUsersBySimilarName,
-  updateGroup,
-} from "@/utils/actions/group.action";
-import useDebounce from "./GetUser";
+import { updateGroup } from "@/utils/actions/group.action";
 import UserSelect from "./UserSelect";
 
 type Props = {
