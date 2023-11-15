@@ -18,5 +18,5 @@ export { default as PopularTags } from "./PopularTags";
 export { default as Post } from "./Post";
 export { default as PostGroup } from "./PostGroup";
 export { default as RecentMedia } from "./RecentMedia";
-export { default as Tag } from "./Tag";
+export { default as GroupTag } from "./GroupTag";
 export { default as Frame } from "./Frame";
