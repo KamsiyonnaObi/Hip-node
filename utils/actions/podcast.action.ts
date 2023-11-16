@@ -46,7 +46,6 @@ export async function getPodcast(podcastId: string) {
 export async function getAllPodcasts(params: any) {
   try {
     await dbConnect();
-
     const podcast = await Podcast.find({})
       .populate("userId")
       .sort({ createdAt: -1 });

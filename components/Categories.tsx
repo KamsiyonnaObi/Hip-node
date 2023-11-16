@@ -1,21 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 
 interface Props {
   title: string;
   categoryList: { name: string; checked: boolean }[];
+  onCategoryChange: (categoryName: string, checked: boolean) => void;
 }
 
-const Categories = ({ title, categoryList }: Props) => {
-  const [categories, setCategories] = useState(categoryList);
-
+const Categories = ({ title, categoryList, onCategoryChange }: Props) => {
   const toggleCategory = (index: number) => {
-    setCategories((prevCategories) =>
-      prevCategories.map((category, i) =>
-        i === index ? { ...category, checked: !category.checked } : category
-      )
-    );
+    const categoryName = categoryList[index].name;
+    const checked = !categoryList[index].checked;
+    onCategoryChange(categoryName, checked);
   };
 
   return (
@@ -25,7 +22,7 @@ const Categories = ({ title, categoryList }: Props) => {
           <h3 className="h3-semibold ">{title}</h3>
           <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
         </div>
-        {categories.map((category, index) => (
+        {categoryList.map((category, index) => (
           <div
             key={index}
             className="mt-[10px] flex select-none flex-row justify-between md:w-[170px]"

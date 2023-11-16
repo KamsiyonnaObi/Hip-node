@@ -8,111 +8,124 @@ import PodcastCardBig from "./PodcastCardBig";
 import { getAllPodcasts } from "@/utils/actions/podcast.action";
 
 const PodcastShowPage = () => {
-  const [result, setResult] = useState<any>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const [podcasts, setPodcasts] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const podcasts = await getAllPodcasts({});
-        setResult(podcasts);
+        const result = await getAllPodcasts({});
+        setPodcasts(result.podcast);
+        setLoading(false);
+        console.log(result.podcast);
       } catch (error) {
         console.error("Error fetching podcasts:", error);
       }
     };
 
     fetchData();
-  }, []); // Run once on component mount
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  }, []);
 
-  const handleCategoryChange = (categoryName: string) => {
-    setSelectedCategories((prevCategories) => {
-      if (prevCategories.includes(categoryName)) {
-        return prevCategories.filter((category) => category !== categoryName);
-      } else {
-        // Add the category if it's not present
-        return [...prevCategories, categoryName];
-      }
-    });
+  const handleCategoryChange = ({ categoryName, checked }: any) => {
+    // Update the selectedCategories array based on user selection
+    if (checked) {
+      setSelectedCategories([...selectedCategories, categoryName]);
+    } else {
+      setSelectedCategories(
+        selectedCategories.filter((cat: any) => cat !== categoryName)
+      );
+    }
   };
 
-  const filteredPodcasts =
-    selectedCategories.length > 0
-      ? result?.podcast?.filter(
-          (podcast: any) =>
-            podcast?.categoryList?.some(
-              (podcastCategory: any) =>
-                selectedCategories.includes(podcastCategory?.type) &&
-                podcastCategory?.checked
-            )
-        )
-      : result?.podcast;
+  const filteredPodcasts = podcasts.filter((podcast: { type: any }) => {
+    // If no categories are selected, show all podcasts
+    if (selectedCategories.length === 0) {
+      return true;
+    }
+    // Otherwise, filter by selected categories
+    return selectedCategories.includes(podcast.type);
+  });
 
   return (
-    <>
-      {result ? (
-        <>
-          <section className="hidden flex-col md:flex md:gap-5">
-            <Categories
-              title="Filter By Show"
-              categoryList={[
-                {
-                  name: "Indie Bites",
-                  checked: selectedCategories.includes("Indie Bites"),
-                },
-                {
-                  name: "Software Social",
-                  checked: selectedCategories.includes("Software Social"),
-                },
-                {
-                  name: "Hipnode",
-                  checked: selectedCategories.includes("Hipnode"),
-                },
-                { name: "Free", checked: selectedCategories.includes("Free") },
-              ]}
-              onCategoryChange={handleCategoryChange}
-            />
-          </section>
-          <section className="flex flex-col md:hidden">
-            <HostCard
-              title="Start Your Podcasts"
-              desc="Working on your own internet business? We'd love to interview you!"
-              buttonText="Submit a Podcast"
-              buttonLink="/podcast/new"
-            />
-          </section>
-          <section className="flex flex-col gap-5">
-            {filteredPodcasts.length > 0
-              ? filteredPodcasts.map((podcast: any) => (
-                  <Link key={podcast._id} href={`/podcast/${podcast.id}`}>
-                    <PodcastCardBig
-                      key={podcast._id}
-                      title={podcast.title}
-                      desc={podcast.desc}
-                      name={podcast.userId?.username || "unknown"}
-                      location={podcast.location}
-                      avatar="/Avatar.Png"
-                    />
-                  </Link>
-                ))
-              : "No Posts to Show!"}
-          </section>
-          <section className="flex flex-col gap-5">
-            <div className="hidden md:flex">
-              <HostCard
-                title="Start Your Podcasts"
-                desc="Working on your own internet business? We'd love to interview you!"
-                buttonText="Submit a Podcast"
-                buttonLink="/podcast/new"
-              />
-            </div>
-
-            <Meetups />
-          </section>
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </>
+    <main className="page-formatting">
+      <section className="hidden flex-col md:flex md:gap-5">
+        <Categories
+          title="Filter By Show"
+          categoryList={[
+            { name: "Indie Bites", checked: false },
+            { name: "Software Social", checked: false },
+            { name: "Hipnode", checked: false },
+            { name: "Free", checked: false },
+          ]}
+          onCategoryChange={handleCategoryChange}
+        />
+      </section>
+      <section className="flex flex-col md:hidden">
+        <HostCard
+          title="Start Your Podcasts"
+          desc="Working on your own internet business? We'd love to interview you!"
+          buttonText="Submit a Podcast"
+          buttonLink="/podcast/new"
+        />
+      </section>
+      <section className="flex flex-col gap-5">
+        {loading
+          ? "Loading..."
+          : filteredPodcasts.length > 0
+          ? filteredPodcasts.map(({ podcast, index }: any) => (
+              <Link
+                key={podcast._id}
+                className={index % 2 === 0 ? "" : "hidden"}
+                href={`/podcast/${podcast._id}`}
+              >
+                <PodcastCardBig
+                  key={podcast._id}
+                  title={podcast.title}
+                  desc={podcast.desc}
+                  name={podcast.userId?.username || "unknown"}
+                  location={podcast.location}
+                  avatar="/Avatar.Png"
+                />
+              </Link>
+            ))
+          : "No Posts to Show!"}
+      </section>
+      <section className="flex flex-col gap-5">
+        {loading
+          ? ""
+          : filteredPodcasts.length > 0
+          ? filteredPodcasts.map(({ podcast, index }: any) => (
+              <Link
+                key={podcast._id}
+                className={index % 2 === 0 ? "hidden" : ""}
+                href={`/podcast/${podcast._id}`}
+              >
+                <PodcastCardBig
+                  key={podcast._id}
+                  title={podcast.title}
+                  desc={podcast.desc}
+                  name={podcast.userId?.username || "unknown"}
+                  location={podcast.location}
+                  avatar="/Avatar.Png"
+                />
+              </Link>
+            ))
+          : ""}
+      </section>
+      <section className="flex flex-col gap-5">
+        <div className="hidden md:flex">
+          <HostCard
+            title="Start Your Podcasts"
+            desc="Working on your own internet business? We'd love to interview you!"
+            buttonText="Submit a Podcast"
+            buttonLink="/podcast/new"
+          />
+        </div>
+        <Meetups />
+      </section>
+    </main>
   );
 };
 
