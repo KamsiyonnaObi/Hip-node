@@ -12,7 +12,7 @@ export async function createPodcast(params: Partial<IPodcast>) {
     const { email } = currentUser?.user;
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
-    const { title, desc, image, audioPath, type, episode } = params;
+    const { title, desc, image, audioPath, type, episode, location } = params;
 
     const podcast = await Podcast.create({
       title,
@@ -22,6 +22,7 @@ export async function createPodcast(params: Partial<IPodcast>) {
       audioPath,
       type,
       episode,
+      location,
     });
 
     return podcast;
@@ -31,7 +32,7 @@ export async function createPodcast(params: Partial<IPodcast>) {
   }
 }
 
-export async function getPodcast(podcastId: number) {
+export async function getPodcast(podcastId: string) {
   try {
     await dbConnect();
     const podcast = await Podcast.findById(podcastId).populate("userId");

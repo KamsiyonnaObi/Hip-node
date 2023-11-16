@@ -97,6 +97,7 @@ export const PodcastSchema = z.object({
     })
     .max(60, { message: "Type must be less than 60 characters." }),
   episode: z.number(),
+  location: z.string(),
 });
 
 export const InterviewSchema = z.object({

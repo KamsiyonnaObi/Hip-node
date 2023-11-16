@@ -4,11 +4,11 @@ import PodcastCardBig from "@/components/podcasts/PodcastCardBig";
 import HostCard from "@/components/Meetups/HostCard";
 import React from "react";
 import { getAllPodcasts } from "@/utils/actions/podcast.action";
+import Link from "next/link";
 
 export default async function Home() {
   const result = await getAllPodcasts({});
 
-  console.log(result);
   return (
     <main className="page-formatting">
       <section className="hidden flex-col md:flex md:gap-5">
@@ -33,14 +33,16 @@ export default async function Home() {
       <section className="flex flex-col gap-5">
         {result.podcast.length > 0
           ? result.podcast.map((podcast) => (
-              <PodcastCardBig
-                key={podcast._id}
-                title={podcast.title}
-                desc={podcast.desc}
-                name={podcast.userId?.username || "unknown"}
-                location="Sylhet, Bangladesh"
-                avatar="/Avatar.Png"
-              />
+              <Link key={podcast._id} href={`/podcast/${podcast.id}`}>
+                <PodcastCardBig
+                  key={podcast._id}
+                  title={podcast.title}
+                  desc={podcast.desc}
+                  name={podcast.userId?.username || "unknown"}
+                  location={podcast.location}
+                  avatar="/Avatar.Png"
+                />
+              </Link>
             ))
           : "No Posts to Show!"}
       </section>

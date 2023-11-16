@@ -45,6 +45,7 @@ export function InputPodcast() {
       desc: "",
       type: "",
       episode: 0,
+      location: "",
     },
   });
 
@@ -60,6 +61,7 @@ export function InputPodcast() {
         audioPath: "this is an audio path",
         type: values.type,
         episode: values.episode,
+        location: values.location,
       };
       const id = await createPodcast(podcastData);
       console.log(id);
@@ -235,6 +237,25 @@ export function InputPodcast() {
                   <Input
                     className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     placeholder="Type..."
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Location..."
                     {...field}
                   />
                 </div>
