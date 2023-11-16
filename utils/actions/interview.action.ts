@@ -4,6 +4,7 @@ import UserModel from "@/models/User";
 import Interview, { IInterview } from "@/models/interview.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 
 export async function createInterview(params: Partial<IInterview>) {
   try {
@@ -41,8 +42,7 @@ export async function getInterview(InterviewId: string) {
     const interview = await Interview.findById(InterviewId);
     return interview;
   } catch (error) {
-    console.log(error);
-    throw error;
+    notFound();
   }
 }
 

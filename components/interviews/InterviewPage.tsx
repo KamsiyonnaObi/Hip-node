@@ -54,7 +54,7 @@ const InterviewPage = ({ result }: any) => {
               ))}
             </div>
           </div>
-          <p className="text-secondary3">{html(result.desc)}</p>
+          <section className="text-secondary3">{html(result.desc)}</section>
         </div>
       </article>
     </PageWrapper>
