@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { Schema } from "mongoose";
 
 import { Input } from "../form/Input";
@@ -168,29 +167,63 @@ const ProfileDetails = ({ profileData }: Props) => {
             </p>
             <p className="text-secondary3">{profileData?.job}</p>
           </div>
-          <Link
-            className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
-            href={dummyProfileData.profileUrl}
-          >
-            Follow
-          </Link>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex gap-2.5">
+            <Button
+              className="h3-semibold flex h-11 w-fit items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+              color="blue"
+            >
+              Follow
+            </Button>
+            <Button color="blackBlue">
+              <FillIcon.Message className="fill-blue" />
+            </Button>
+          </div>
+          <div className="flex-center gap-3">
             <p className="text-secondary2 dark:text-background2">
               {`${profileData?.followers.length} Followers`}
             </p>
             <p className="text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
           </div>
-          <p className="text-secondary3">{dummyProfileData?.bio}</p>
-          <p className="text-secondary2 dark:text-background2">
-            {dummyProfileData.website}
-          </p>
+          <div className="flex flex-col gap-[15px]">
+            <p className="text-center text-secondary2 dark:text-background2">
+              Following 47
+            </p>
+            <div className="flex flex-wrap gap-2.5">
+              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
+              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
+              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
+              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
+              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
+            </div>
+          </div>
+          <div>
+            <p className="text-center text-secondary3">
+              {dummyProfileData?.bio}
+            </p>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex gap-2.5">
+              <OutlineIcon.Web />
+              <p className="text-secondary2 dark:text-background2">
+                {dummyProfileData.website}
+              </p>
+            </div>
+
+            {/* display socials based on user's profile */}
+            <div className="flex gap-5">
+              <OutlineIcon.Twitter className="fill-secondary4" />
+              <OutlineIcon.Facebook className="fill-secondary4" />
+              <OutlineIcon.Instagram className="fill-secondary4" />
+            </div>
+          </div>
+          <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>
           <p className="text-secondary3">
             Joined {monthsSinceJoined(new Date(dummyProfileData.joinedDate))}{" "}
             months ago
           </p>
           <Button
             onClick={onEdit}
-            className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+            className="h3-semibold flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-blue text-background"
           >
             Edit Profile
           </Button>
