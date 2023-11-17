@@ -23,7 +23,7 @@ const InterviewHomePage = async () => {
           ? result.interviews.map((interview) => (
               <InterviewPost
                 key={interview._id}
-                _id={interview._id}
+                _id={interview._id.tostring()}
                 image={interview.image}
                 title={interview.title}
                 username={interview.userId?.username || "unknown"}
