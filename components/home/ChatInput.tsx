@@ -11,8 +11,15 @@ import FillIcon from "../icons/FillIcon";
 // import { createComment } from "@/utils/actions/clientComment.action";
 
 import { createComment } from "@/utils/actions/comment.action";
+import { addComments } from "@/utils/actions/post.action";
 
-const ChatInput = ({ postId }: { postId: string }) => {
+const ChatInput = ({
+  postId,
+  commentId,
+}: {
+  postId: string;
+  commentId: string | null;
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const { theme } = useTheme();
@@ -36,9 +43,10 @@ const ChatInput = ({ postId }: { postId: string }) => {
     console.log(inputValue);
     if (e.key === "Enter") {
       e.preventDefault();
-      await createComment({
+      await addComments({
         text: inputValue,
         postId,
+        commentId,
       });
       setInputValue("");
 

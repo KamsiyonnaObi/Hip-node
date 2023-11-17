@@ -2,11 +2,14 @@
 
 import mongoose, { ObjectId, ConnectOptions } from "mongoose";
 
-import Post, { IPost } from "@/models/post.model";
+import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
+import { IComment } from "@/models/comment.model";
 
-const { UserModel } = require("@/models/User");
+import UserModel from "@/models/User";
+import { comment } from "postcss";
 const { GroupModel } = require("@/models/group.model");
 const { CommentModel } = require("@/models/comment.model");
 
@@ -257,4 +260,70 @@ export async function reportPost({
     console.log(error);
     throw error;
   }
+}
+
+function findCommentOrReply({
+  comments,
+  commentId,
+}: {
+  comments: IComments[];
+  commentId: string;
+}): IComments | null {
+  for (const comment of comments) {
+    if (comment?._id?.toString() === commentId) {
+      return comment;
+    }
+    const found = findCommentOrReply({
+      comments: comment.replies ?? [],
+      commentId,
+    });
+    if (found) {
+      return found;
+    }
+  }
+  return null;
+}
+
+export async function addComments({
+  postId,
+  text,
+  commentId,
+}: {
+  postId: string;
+  text: string;
+  commentId: string | null;
+}) {
+  await dbConnect();
+  // get the userID from the session
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const userId = User?._id;
+  const name = User?.username;
+  const imgUrl = User?.profileImage;
+  const post = await Post.findById(postId);
+  if (!commentId) {
+    post.comments.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+      likes: [],
+    });
+  } else {
+    // Adding a reply to a comment or a nested reply
+    const target = findCommentOrReply({ comments: post.comments, commentId });
+
+    target?.replies?.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+    });
+  }
+
+  await post.save();
+  revalidatePath("/?postId=" + postId);
 }

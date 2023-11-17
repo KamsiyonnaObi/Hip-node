@@ -40,7 +40,7 @@ const OpenedPost = ({ title, tags, content, image, postId }: Props) => {
           {content}
         </h3>
         <div className="">
-          <ChatInput postId={postId} />
+          <ChatInput postId={postId} commentId={null} />
         </div>
       </article>
     </section>

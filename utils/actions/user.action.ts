@@ -3,6 +3,7 @@ import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 import User from "@/models/User";
 import mongoose, { ObjectId } from "mongoose";
+import { getServerSession } from "next-auth";
 
 export async function newUser(user: FormData) {
   try {
@@ -90,5 +91,22 @@ export async function followAuthor({
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getCurrentUserId() {
+  try {
+    await dbConnect();
+
+    // get the current user
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+
+    // Return the user's id
+    return User?._id ?? null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }

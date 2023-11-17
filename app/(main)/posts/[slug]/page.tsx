@@ -10,7 +10,6 @@ import {
   OtherProfile,
 } from "@/components";
 import { getCurrentUserId } from "@/utils/actions/user.action";
-import { getCommentById } from "@/utils/actions/comment.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUserId = await getCurrentUserId();
@@ -33,10 +32,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     reports,
   } = postopen.data;
 
-  const getComments = await getCommentById(params.slug);
-
-  const morePosts = await getPostsByUserId(userId?._id, postopen.data._id);
-  const posts = morePosts.data;
+  const getMorePosts = await getPostsByUserId(userId?._id, postopen.data._id);
+  const morePosts = getMorePosts.data;
 
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
@@ -53,7 +50,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             postId={JSON.stringify(_id)}
             userId={JSON.stringify(currentUserId)}
             hasLiked={likes?.includes(currentUserId)}
-            hasCommented={comments?.includes(currentUserId)}
+            // hasCommented={comments?.includes(currentUserId)}
             hasShared={shares?.includes(currentUserId)}
             hasReported={reports?.includes(currentUserId)}
             likes={likes?.length}
@@ -71,10 +68,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
-        {getComments.data && (
+        {comments && (
           <Thread
             currentUserId={JSON.stringify(currentUserId)}
-            comments={getComments.data}
+            postId={params.slug}
+            comments={comments}
           />
         )}
       </section>
@@ -83,7 +81,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           postId={JSON.stringify(_id)}
           userId={JSON.stringify(currentUserId)}
           hasLiked={likes?.includes(currentUserId)}
-          hasCommented={comments?.includes(currentUserId)}
+          // hasCommented={comments?.includes(currentUserId)}
           hasShared={shares?.includes(currentUserId)}
           hasReported={reports?.includes(currentUserId)}
           likes={likes?.length}
@@ -117,8 +115,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
               hasFollowed={userId.followers?.includes(currentUserId)}
             />
           ))}{" "}
-        {userId?._id && posts && (
-          <MoreFrom posts={JSON.stringify(posts)} author={userId?.username} />
+        {userId?._id && morePosts && (
+          <MoreFrom
+            posts={JSON.stringify(morePosts)}
+            author={userId?.username}
+          />
         )}
       </div>
     </article>

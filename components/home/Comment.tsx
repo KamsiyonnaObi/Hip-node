@@ -8,10 +8,12 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
-import { likeComment, replyToComment } from "@/utils/actions/comment.action";
+import { likeComment } from "@/utils/actions/comment.action";
+import { ChatInput } from ".";
 
 interface CommentProps {
   commentId: string;
+  postId: string;
   userId: string;
   name: string;
   createdAt: Date;
@@ -24,6 +26,7 @@ interface CommentProps {
 
 const Comment = ({
   commentId,
+  postId,
   userId,
   name,
   createdAt,
@@ -35,6 +38,7 @@ const Comment = ({
 }: CommentProps) => {
   const formattedDate = format(new Date(createdAt), "MMM dd");
   const [isLiked, setIsLiked] = useState(hasLiked || false);
+  const [showComment, setShowComment] = useState(false);
   // const [isReplied, setIsReplied] = useState(hasReplied || false);
   const [isPending, startTransition] = useTransition();
 
@@ -50,20 +54,6 @@ const Comment = ({
       });
     }
   };
-
-  // TODO implement reply function later
-  // const handleReply = async () => {
-  //   if (userId) {
-  //     startTransition(async () => {
-  //       const replied = await replyToComment({
-  //         commentId: JSON.parse(commentId),
-  //         hasReplied: isReplied,
-  //       });
-  //       if (!replied) return;
-  //       setIsReplied(replied.status);
-  //     });
-  //   }
-  // };
 
   let editedText;
   if (updatedAt) {
@@ -105,9 +95,10 @@ const Comment = ({
             />
           </button>
           {/* Add later disabled={isPending} onClick={handleReply} */}
-          <button>
+          <button onClick={() => setShowComment(!showComment)}>
             <FillIcon.Reply className="h-5 w-5 fill-secondary3" />
           </button>
+          {showComment && <ChatInput postId={postId} commentId={commentId} />}
           <button>
             <OutlineIcon.More className="h-5 w-5 fill-secondary3" />
           </button>
