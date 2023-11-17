@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   } = group.data;
 
   return (
-    <div className="flex justify-center">
+    <main className="flex justify-center">
       <ChangeGroup
         title={title}
         description={description}
@@ -33,7 +33,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         groupUrl={groupUrl}
         groupId={groupId}
       />
-    </div>
+    </main>
   );
 };
 
