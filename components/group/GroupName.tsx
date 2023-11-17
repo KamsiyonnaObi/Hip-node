@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -7,8 +6,6 @@ import FillIcon from "../icons/FillIcon";
 import { MostPopularButton, FastestGrowing } from "@/components/group";
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunchedButton from "./NewlyLaunchedButton";
-
-// interface Props {}
 
 const GroupName = () => {
   const [isDropDown, setDropDown] = useState(false);
