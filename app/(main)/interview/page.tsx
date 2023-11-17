@@ -18,12 +18,12 @@ const InterviewHomePage = async () => {
           ]}
         />
       </aside>
-      <section className="order-3 flex w-full flex-col md:order-2 gap-5">
+      <section className="order-3 flex w-full flex-col gap-5 md:order-2">
         {result.interviews.length > 0
           ? result.interviews.map((interview) => (
               <InterviewPost
                 key={interview._id}
-                _id={interview._id}
+                _id={interview._id.tostring()}
                 image={interview.image}
                 title={interview.title}
                 username={interview.userId?.username || "unknown"}

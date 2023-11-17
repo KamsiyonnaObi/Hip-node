@@ -1,5 +1,4 @@
 "use client";
-
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 
 import useDebounce from "./GetUser";
@@ -90,7 +89,7 @@ export default function UserSelect({
         onInput={(e: ChangeEvent<HTMLInputElement>) => {
           setUserSearch(e.target.value);
         }}
-        className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3`}
+        className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3`}
       />
       {showList && (
         <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
@@ -100,14 +99,14 @@ export default function UserSelect({
               data-key={user._id}
               data-username={user.username}
               onClick={addUser}
-              className="cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+              className="flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
             >
               {user.username}
             </div>
           ))}
         </div>
       )}
-      <div className="caption-regular mb-[.62rem] flex gap-[.62rem] flex-wrap">
+      <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
         {selectedUsers.map((user: User) => (
           <div
             key={user._id}
