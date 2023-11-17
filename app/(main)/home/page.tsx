@@ -40,9 +40,9 @@ export default async function Home() {
                 avatar={post.avatar}
                 username={post.userId?.username || "unknown"}
                 createdAt={post.createdAt}
-                views={post.views}
-                likes={post.likes}
-                comments={post.comments}
+                views={post?.views?.length}
+                likes={post?.likes?.length}
+                comments={post?.comments?.length}
               />
             ))
           : "No Posts to Show!"}
