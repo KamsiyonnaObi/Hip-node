@@ -146,18 +146,14 @@ const ChangeGroup: React.FC<Props> = ({
   return (
     <>
       <div className="xs:max-w-[30rem] sm mb-[13.44rem] mt-[1.25rem] flex  w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
-        <div>
-          <CoverImage
-            setParentFormData={setFormData}
-            defaultImage={formData.coverUrl}
-          />
-        </div>
-        <div>
-          <GroupImage
-            setParentFormData={setFormData}
-            defaultImage={formData.groupUrl}
-          />
-        </div>
+        <CoverImage
+          setParentFormData={setFormData}
+          defaultImage={formData.coverUrl}
+        />
+        <GroupImage
+          setParentFormData={setFormData}
+          defaultImage={formData.groupUrl}
+        />
         <form>
           <div className="flex flex-col gap-[.62rem]">
             <label className="caption-semibold text-secondary2 dark:text-background2">
@@ -206,25 +202,21 @@ const ChangeGroup: React.FC<Props> = ({
             <label className="caption-semibold text-secondary2 dark:text-background2">
               Add admins
             </label>
-            <div>
-              <UserSelect
-                setter={setFormData}
-                initialUserArray={parsedAdmins}
-                formKey="admins"
-              />
-            </div>
+            <UserSelect
+              setter={setFormData}
+              initialUserArray={parsedAdmins}
+              formKey="admins"
+            />
           </div>
           <div className="flex flex-col gap-[.62rem]">
             <label className="caption-semibold text-secondary2 dark:text-background2">
               Add members
             </label>
-            <div>
-              <UserSelect
-                setter={setFormData}
-                initialUserArray={parsedUsers}
-                formKey="members"
-              />
-            </div>
+            <UserSelect
+              setter={setFormData}
+              initialUserArray={parsedUsers}
+              formKey="members"
+            />
           </div>
 
           <div className="flex gap-[1.25rem]">

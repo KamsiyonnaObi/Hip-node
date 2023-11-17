@@ -149,16 +149,12 @@ const AddGroup: React.FC = () => {
 
   return (
     <>
-      <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
-        <div>
-          <CoverImage setParentFormData={setFormData} />
-        </div>
-        <div>
-          <GroupImage setParentFormData={setFormData} />
-        </div>
+      <div className="xs:max-w-[30rem] sm mb-[13.44rem] mt-[1.25rem] flex  w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
+        <CoverImage setParentFormData={setFormData} />
+        <GroupImage setParentFormData={setFormData} />
         <form>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Group Name
             </label>
             <div>
@@ -168,19 +164,19 @@ const AddGroup: React.FC = () => {
                 placeholder="Name..."
                 value={formData.title}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
                   validationErrors.title ? "border-red" : ""
                 }`}
               />
               {validationErrors.title && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
+                <p className="text-xs-regular mb-[.62rem] text-red">
                   {validationErrors.title}
                 </p>
               )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Description
             </label>
             <div>
@@ -189,32 +185,28 @@ const AddGroup: React.FC = () => {
                 placeholder="Provide a short description..."
                 value={formData.description}
                 onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
+                className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
                   validationErrors.description ? "border-red" : ""
                 }`}
               />
               {validationErrors.description && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
+                <p className="text-xs-regular mb-[.62rem] text-red">
                   {validationErrors.description}
                 </p>
               )}
             </div>
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Add admins
             </label>
-            <div>
-              <UserSelect setter={setFormData} formKey="admins" />
-            </div>
+            <UserSelect setter={setFormData} formKey="admins" />
           </div>
           <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
+            <label className="caption-semibold text-secondary2 dark:text-background2">
               Add members
             </label>
-            <div>
-              <UserSelect setter={setFormData} formKey="members" />
-            </div>
+            <UserSelect setter={setFormData} formKey="members" />
           </div>
 
           <div className="flex gap-[1.25rem]">
