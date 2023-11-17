@@ -51,7 +51,6 @@ const ChangeGroup: React.FC<Props> = ({
 
   const submitForm = async (e: any) => {
     e.preventDefault();
-    console.log("Submitting form");
 
     setSubmitStatus("Submitting");
 
@@ -203,6 +202,11 @@ const ChangeGroup: React.FC<Props> = ({
             initialUserArray={parsedAdmins}
             formKey="admins"
           />
+          {validationErrors.admins && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.admins}
+            </p>
+          )}
         </section>
         <section className="flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
@@ -213,6 +217,11 @@ const ChangeGroup: React.FC<Props> = ({
             initialUserArray={parsedUsers}
             formKey="members"
           />
+          {validationErrors.members && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.members}
+            </p>
+          )}
         </section>
         <section className="flex gap-[1.25rem]">
           <button
