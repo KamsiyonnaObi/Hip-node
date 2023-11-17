@@ -5,14 +5,12 @@ import PopularTags from "@/components/home/PopularTags";
 import Post from "@/components/home/Post";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
-import { getAllMeetups } from "@/utils/actions/meetup.action";
 import { getAllPosts } from "@/utils/actions/post.action";
 import React from "react";
 
 export default async function Home() {
   const result = await getAllPosts({});
 
-  console.log(result);
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">

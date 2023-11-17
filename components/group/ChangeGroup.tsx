@@ -70,8 +70,6 @@ const ChangeGroup = () => {
       }
     } catch (e) {
       if (e instanceof z.ZodError) {
-        console.log(e.issues);
-
         const errors: Record<string, string> = {};
 
         e.issues.forEach((issue) => {
