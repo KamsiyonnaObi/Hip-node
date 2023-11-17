@@ -10,7 +10,7 @@ export default async function LeftSideBar() {
   const profileData = await getUserProfile(session?.user?.email);
   return (
     <section className="flex-center rounded-2xl bg-background p-5 dark:bg-dark3">
-      <article className="flex-center max-w-[295px] flex-col gap-5 bg-background px-5 py-10 dark:bg-dark3">
+      <article className="flex-center w-[295px] flex-col gap-5 bg-background px-5 py-10 dark:bg-dark3">
         <div className="relative h-24 w-24 rounded-full border-4 border-dark3 bg-yellow30">
           <Image
             className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
