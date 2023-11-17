@@ -42,7 +42,7 @@ const ProfileDetails = ({ profileData }: Props) => {
     profileUrl: "/",
     joinedDate: "2-28-2023",
     points: 501,
-    bio: "Hey there.. I am AR Jakir! I am here to learn from and support the other members of this community!",
+    bio: "Hey there... I'm AR Jakir! I'm here to learn from and support the other members of this community!",
     website: "www.uikit.to",
   };
 
@@ -162,30 +162,32 @@ const ProfileDetails = ({ profileData }: Props) => {
       ) : (
         <>
           <div className="flex flex-col items-center justify-center">
-            <p className="text-secondary2 dark:text-background2">
+            <p className="h1-semibold text-secondary2 dark:text-background2">
               {profileData?.name}
             </p>
-            <p className="text-secondary3">{profileData?.job}</p>
+            <p className="display-regular text-secondary3">
+              {profileData?.job}
+            </p>
           </div>
           <div className="flex gap-2.5">
             <Button
-              className="h3-semibold flex h-11 w-fit items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+              className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
               color="blue"
             >
               Follow
             </Button>
-            <Button color="blackBlue">
+            <Button className="flex items-center p-2" color="blackBlue">
               <FillIcon.Message className="fill-blue" />
             </Button>
           </div>
           <div className="flex-center gap-3">
-            <p className="text-secondary2 dark:text-background2">
+            <p className="body-semibold text-secondary2 dark:text-background2">
               {`${profileData?.followers.length} Followers`}
             </p>
-            <p className="text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
+            <p className="body-semibold text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
           </div>
           <div className="flex flex-col gap-[15px]">
-            <p className="text-center text-secondary2 dark:text-background2">
+            <p className="body-semibold text-center text-secondary2 dark:text-background2">
               Following 47
             </p>
             <div className="flex flex-wrap gap-2.5">
@@ -197,23 +199,23 @@ const ProfileDetails = ({ profileData }: Props) => {
             </div>
           </div>
           <div>
-            <p className="text-center text-secondary3">
+            <p className="body-semibold text-center text-secondary3">
               {dummyProfileData?.bio}
             </p>
           </div>
           <div className="flex gap-5">
             <div className="flex gap-2.5">
               <OutlineIcon.Web />
-              <p className="text-secondary2 dark:text-background2">
+              <p className="body-semibold text-secondary2 dark:text-background2">
                 {dummyProfileData.website}
               </p>
             </div>
 
             {/* display socials based on user's profile */}
             <div className="flex gap-5">
-              <OutlineIcon.Twitter className="fill-secondary4" />
-              <OutlineIcon.Facebook className="fill-secondary4" />
-              <OutlineIcon.Instagram className="fill-secondary4" />
+              <OutlineIcon.Twitter className="fill-secondary4 dark:fill-secondary6" />
+              <OutlineIcon.Facebook className="fill-secondary4 dark:fill-secondary6" />
+              <OutlineIcon.Instagram className="fill-secondary4 dark:fill-secondary6" />
             </div>
           </div>
           <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>
