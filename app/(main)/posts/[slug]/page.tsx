@@ -9,10 +9,10 @@ import {
   Thread,
   OtherProfile,
 } from "@/components";
-import { getCurrentUserId } from "@/utils/actions/user.action";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const currentUserId = await getCurrentUserId();
+  const currentUser = await getCurrentUser();
 
   const postopen = await getPostById(params.slug);
 
@@ -44,15 +44,16 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           tags={tags}
           content={content}
           postId={params.slug}
+          currentUserImage={currentUser?.profileImage || ""}
         />
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
             postId={JSON.stringify(_id)}
-            userId={JSON.stringify(currentUserId)}
-            hasLiked={likes?.includes(currentUserId)}
+            userId={JSON.stringify(currentUser?._id)}
+            hasLiked={likes?.includes(currentUser?._id)}
             // hasCommented={comments?.includes(currentUserId)}
-            hasShared={shares?.includes(currentUserId)}
-            hasReported={reports?.includes(currentUserId)}
+            hasShared={shares?.includes(currentUser?._id)}
+            hasReported={reports?.includes(currentUser?._id)}
             likes={likes?.length}
             comments={comments?.length}
             shares={shares?.length}
@@ -64,13 +65,14 @@ const Page = async ({ params }: { params: { slug: string } }) => {
               groupTitle={groupId?.title}
             />
           )}
-          {!groupId && userId?._id.equals(currentUserId) && (
+          {!groupId && userId?._id.equals(currentUser?._id) && (
             <PostDate username={userId.username} createdAt={createdAt} />
           )}
         </div>
         {comments && (
           <Thread
-            currentUserId={JSON.stringify(currentUserId)}
+            currentUserId={JSON.stringify(currentUser?._id)}
+            currentUserImage={currentUser?.profileImage || ""}
             postId={params.slug}
             comments={comments}
           />
@@ -79,11 +81,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar
           postId={JSON.stringify(_id)}
-          userId={JSON.stringify(currentUserId)}
-          hasLiked={likes?.includes(currentUserId)}
-          // hasCommented={comments?.includes(currentUserId)}
-          hasShared={shares?.includes(currentUserId)}
-          hasReported={reports?.includes(currentUserId)}
+          userId={JSON.stringify(currentUser?._id)}
+          hasLiked={likes?.includes(currentUser?._id)}
+          // hasCommented={comments?.includes(currentUser?._id)}
+          hasShared={shares?.includes(currentUser?._id)}
+          hasReported={reports?.includes(currentUser?._id)}
           likes={likes?.length}
           comments={comments?.length}
           shares={shares?.length}
@@ -95,14 +97,14 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             groupTitle={groupId.title}
           />
         )}
-        {!groupId && userId?._id.equals(currentUserId) && (
+        {!groupId && userId?._id.equals(currentUser?._id) && (
           <PostDate username={userId.username} createdAt={createdAt} />
         )}
       </div>
       <div className="flex flex-col gap-5 md:order-3 md:min-w-[325px]">
         {userId?._id &&
-          currentUserId &&
-          (userId?._id.equals(currentUserId) ? (
+          currentUser?._id &&
+          (userId?._id.equals(currentUser?._id) ? (
             <MyProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
@@ -111,8 +113,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <OtherProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
-              currentUserId={JSON.stringify(currentUserId)}
-              hasFollowed={userId.followers?.includes(currentUserId)}
+              currentUserId={JSON.stringify(currentUser?._id)}
+              hasFollowed={userId.followers?.includes(currentUser?._id)}
             />
           ))}{" "}
         {userId?._id && morePosts && (

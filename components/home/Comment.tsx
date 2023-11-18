@@ -8,46 +8,55 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
-import { likeComment } from "@/utils/actions/comment.action";
-import { ChatInput } from ".";
+import { ChatInput } from "@/components";
+import { IComments } from "@/models/post.model";
+import { likeComment } from "@/utils/actions/post.action";
 
 interface CommentProps {
-  commentId: string;
+  commentId: any;
   postId: string;
   userId: string;
-  name: string;
-  createdAt: Date;
+  currentUserId: string;
+  currentUserImage: string;
+  name?: string;
+  createdAt?: Date;
   updatedAt?: Date;
   imgUrl?: string;
-  text: string;
-  hasLiked: boolean | null;
-  hasReplied: boolean | null;
+  text?: string;
+  replies?: string;
+  hasLiked?: boolean | false;
+  hasReplied?: boolean | false;
 }
 
 const Comment = ({
   commentId,
   postId,
   userId,
+  currentUserId,
+  currentUserImage,
   name,
   createdAt,
   updatedAt,
   imgUrl,
   text,
+  replies,
   hasLiked,
   hasReplied,
 }: CommentProps) => {
-  const formattedDate = format(new Date(createdAt), "MMM dd");
+  const formattedDate = format(new Date(createdAt ?? new Date()), "MMM dd");
   const [isLiked, setIsLiked] = useState(hasLiked || false);
   const [showComment, setShowComment] = useState(false);
-  // const [isReplied, setIsReplied] = useState(hasReplied || false);
   const [isPending, startTransition] = useTransition();
+  const replyList = JSON.parse(replies || "");
 
   const handleLike = async () => {
-    if (userId) {
+    if (currentUserId) {
       startTransition(async () => {
         const liked = await likeComment({
-          commentId: JSON.parse(commentId),
-          hasLiked: isLiked,
+          postId,
+          commentId,
+          currentUserId,
+          hasLiked,
         });
         if (!liked) return;
         setIsLiked(liked.status);
@@ -94,15 +103,39 @@ const Comment = ({
               })}
             />
           </button>
-          {/* Add later disabled={isPending} onClick={handleReply} */}
           <button onClick={() => setShowComment(!showComment)}>
             <FillIcon.Reply className="h-5 w-5 fill-secondary3" />
           </button>
-          {showComment && <ChatInput postId={postId} commentId={commentId} />}
           <button>
             <OutlineIcon.More className="h-5 w-5 fill-secondary3" />
           </button>
         </div>
+        {showComment && (
+          <ChatInput
+            postId={postId}
+            commentId={commentId}
+            currentUserImage={currentUserImage}
+          />
+        )}
+        {replyList.map((reply: IComments) => (
+          <div key={JSON.stringify(reply._id)} className="text-lg text-white">
+            <Comment
+              commentId={reply._id}
+              postId={postId}
+              userId={JSON.stringify(reply.userId)}
+              currentUserId={currentUserId}
+              currentUserImage={currentUserImage}
+              name={reply?.name}
+              createdAt={reply.createdAt}
+              updatedAt={reply.updatedAt}
+              imgUrl={reply?.imgUrl}
+              text={reply.text}
+              replies={JSON.stringify(reply.replies)}
+              hasLiked={reply.likes?.includes(JSON.parse(userId)) || false}
+              hasReplied={reply.replies?.includes(JSON.parse(userId)) || false}
+            />
+          </div>
+        ))}
       </section>
     </section>
   );

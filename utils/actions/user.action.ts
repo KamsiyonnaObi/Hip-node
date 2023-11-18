@@ -94,7 +94,7 @@ export async function followAuthor({
   }
 }
 
-export async function getCurrentUserId() {
+export async function getCurrentUser() {
   try {
     await dbConnect();
 
@@ -104,7 +104,7 @@ export async function getCurrentUserId() {
     const User = await UserModel.findOne({ email });
 
     // Return the user's id
-    return User?._id ?? null;
+    return User ?? null;
   } catch (error) {
     console.log(error);
     return null;

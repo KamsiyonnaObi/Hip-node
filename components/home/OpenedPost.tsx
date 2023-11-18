@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ChatInput from "./ChatInput";
+import { ChatInput } from "@/components";
 
 interface Props {
   title: string;
@@ -7,9 +7,17 @@ interface Props {
   content: string;
   image: string;
   postId: string;
+  currentUserImage: string;
 }
 
-const OpenedPost = ({ title, tags, content, image, postId }: Props) => {
+const OpenedPost = ({
+  title,
+  tags,
+  content,
+  image,
+  postId,
+  currentUserImage,
+}: Props) => {
   return (
     <section className="flex flex-col gap-5 rounded-lg bg-background dark:bg-dark3 md:rounded-b-none">
       <div className="relative h-[103px] w-full md:h-[273px]">
@@ -40,7 +48,11 @@ const OpenedPost = ({ title, tags, content, image, postId }: Props) => {
           {content}
         </h3>
         <div className="">
-          <ChatInput postId={postId} commentId={null} />
+          <ChatInput
+            postId={postId}
+            commentId={null}
+            currentUserImage={currentUserImage}
+          />
         </div>
       </article>
     </section>

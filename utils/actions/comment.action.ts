@@ -68,41 +68,41 @@ export async function createComment({
   }
 }
 
-export async function likeComment({
-  commentId,
-  hasLiked,
-}: {
-  commentId: string;
-  hasLiked: boolean;
-}) {
-  try {
-    dbConnect();
-    const currentUser: any = await getServerSession();
-    const { email } = currentUser?.user;
-    const User = await UserModel.findOne({ email });
-    const { ObjectId } = mongoose.Types;
-    const id = new ObjectId(commentId);
-    let updateQuery = {};
-    // Remove like if it is already liked
-    if (hasLiked) {
-      updateQuery = { $pull: { likes: User?._id } };
-    } else {
-      updateQuery = { $addToSet: { likes: User?._id } };
-    }
+// export async function likeComment({
+//   commentId,
+//   hasLiked,
+// }: {
+//   commentId: string;
+//   hasLiked: boolean;
+// }) {
+//   try {
+//     dbConnect();
+//     const currentUser: any = await getServerSession();
+//     const { email } = currentUser?.user;
+//     const User = await UserModel.findOne({ email });
+//     const { ObjectId } = mongoose.Types;
+//     const id = new ObjectId(commentId);
+//     let updateQuery = {};
+//     // Remove like if it is already liked
+//     if (hasLiked) {
+//       updateQuery = { $pull: { likes: User?._id } };
+//     } else {
+//       updateQuery = { $addToSet: { likes: User?._id } };
+//     }
 
-    const comment = await Comment.findByIdAndUpdate(id, updateQuery, {
-      new: true,
-    });
-    const likedStatus = comment.likes.includes(User?._id);
-    if (!comment) {
-      throw new Error("Comment not found");
-    }
-    return { status: likedStatus };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
+//     const comment = await Comment.findByIdAndUpdate(id, updateQuery, {
+//       new: true,
+//     });
+//     const likedStatus = comment.likes.includes(User?._id);
+//     if (!comment) {
+//       throw new Error("Comment not found");
+//     }
+//     return { status: likedStatus };
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
 
 // TODO Implement reply function later
 // export async function replyToComment({

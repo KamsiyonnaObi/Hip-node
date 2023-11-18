@@ -2,11 +2,11 @@ import { Schema, models, model, Document } from "mongoose";
 
 export interface IComments {
   _id?: Schema.Types.ObjectId;
-  userId: Schema.Types.ObjectId;
-  name: string;
-  imgUrl: string;
-  text: string;
-  createdAt: Date;
+  userId?: Schema.Types.ObjectId;
+  name?: string | "";
+  imgUrl?: string | "";
+  text?: string | "";
+  createdAt?: Date;
   updatedAt?: Date;
   replies?: IComments[];
   likes?: Schema.Types.ObjectId[];
@@ -33,8 +33,9 @@ export interface IPost extends Document {
 }
 
 const commentSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  name: { type: String },
+  imgUrl: { type: String },
   text: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

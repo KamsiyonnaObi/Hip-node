@@ -6,12 +6,9 @@ import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { IComment } from "@/models/comment.model";
 
 import UserModel from "@/models/User";
-import { comment } from "postcss";
 const { GroupModel } = require("@/models/group.model");
-const { CommentModel } = require("@/models/comment.model");
 
 export async function createPost(params: any) {
   try {
@@ -75,7 +72,7 @@ export async function getPostsByUserId(
     if (posts.length > 0) {
       return { success: true, data: posts };
     } else {
-      throw new Error("post not found.");
+      return { success: false, data: [] };
     }
   } catch (error) {
     console.log(error);
@@ -314,7 +311,13 @@ export async function addComments({
   } else {
     // Adding a reply to a comment or a nested reply
     const target = findCommentOrReply({ comments: post.comments, commentId });
+    if (!target) {
+      return;
+    }
 
+    if (!target.replies) {
+      target.replies = [];
+    }
     target?.replies?.push({
       userId,
       name,
@@ -326,4 +329,52 @@ export async function addComments({
 
   await post.save();
   revalidatePath("/?postId=" + postId);
+}
+
+export async function likeComment({
+  postId,
+  commentId,
+  currentUserId,
+  hasLiked,
+}: {
+  postId: string;
+  commentId: string;
+  currentUserId: string;
+  hasLiked?: boolean;
+}) {
+  await dbConnect();
+  console.log(hasLiked);
+
+  const post = await Post.findById(postId);
+  if (!post) {
+    throw new Error("Post not found");
+  }
+
+  if (commentId) {
+    const target = findCommentOrReply({ comments: post.comments, commentId });
+    if (!target) {
+      return;
+    }
+
+    if (!target.likes) {
+      target.likes = [];
+    }
+    const objCurrentUserId = JSON.parse(currentUserId);
+
+    if (hasLiked) {
+      // User already liked, remove their ID
+      target.likes = target.likes.filter((id) => id !== objCurrentUserId);
+    } else {
+      // User has not liked yet, add their ID
+      target.likes.push(objCurrentUserId);
+    }
+
+    const likedStatus = target.likes.includes(objCurrentUserId);
+    console.log(target);
+    console.log(target.likes);
+
+    return {
+      status: likedStatus,
+    };
+  }
 }

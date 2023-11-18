@@ -6,19 +6,17 @@ import Image from "next/image";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
-import { profileData } from "@/constants/dummy";
 import FillIcon from "../icons/FillIcon";
-// import { createComment } from "@/utils/actions/clientComment.action";
-
-import { createComment } from "@/utils/actions/comment.action";
 import { addComments } from "@/utils/actions/post.action";
 
 const ChatInput = ({
   postId,
   commentId,
+  currentUserImage,
 }: {
   postId: string;
   commentId: string | null;
+  currentUserImage: string;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -40,7 +38,6 @@ const ChatInput = ({
   }, [showPicker]);
 
   const handleSubmit = async (e) => {
-    console.log(inputValue);
     if (e.key === "Enter") {
       e.preventDefault();
       await addComments({
@@ -49,8 +46,6 @@ const ChatInput = ({
         commentId,
       });
       setInputValue("");
-
-      console.log("Comment created");
     }
   };
 
@@ -58,8 +53,8 @@ const ChatInput = ({
     <section className="flex items-center gap-5">
       <div className="relative h-9 w-9 shrink-0 rounded-full bg-yellow30 md:h-11 md:w-11">
         <Image
-          className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 md:h-10 md:w-10"
-          src={profileData.imgUrl}
+          className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full md:h-11 md:w-11"
+          src={currentUserImage}
           alt="profile"
           width="80"
           height="80"
