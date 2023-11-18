@@ -90,7 +90,7 @@ export const InterviewSchema = z.object({
       message: "Description must be at least 12 characters.",
     })
     .max(200, { message: "Description must be less than 200 characters." }),
-  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  interviewTags: z.array(z.string().min(1).max(15)).min(1).max(3),
   revenue: z.number(),
   updates: z.number(),
   website: z.string(),

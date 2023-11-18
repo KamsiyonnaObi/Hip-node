@@ -1,4 +1,4 @@
-import { html } from "@/lib/utils";
+import Html from "../shared/html";
 import Image from "next/image";
 import React from "react";
 
@@ -44,13 +44,13 @@ const MeetupCardBig = ({
               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-center rounded-[6px] border-[1px] border-secondary5 dark:border-dark3 bg-background dark:bg-dark4 px-4 py-[5px] text-center shadow-md md:h-[72px] md:w-[59px]">
+          <div className="flex flex-col justify-center rounded-[6px] border-[1px] border-secondary5 bg-background px-4 py-[5px] text-center shadow-md dark:border-dark3 dark:bg-dark4 md:h-[72px] md:w-[59px]">
             <p className="md:body-semibold caption-semibold">{month}</p>
             <h1 className="display-semibold md:h1-bold text-blue80">{day}</h1>
           </div>
         </section>
         <section className="caption-regular md:body-regular text-secondary2 dark:text-background2">
-          {html(desc)}
+          <Html htmltext={desc} />
         </section>
         <section className="flex flex-row gap-[10px]">
           {jobType.map((type, index) => (

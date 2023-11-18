@@ -79,8 +79,6 @@ const AddGroup: React.FC = () => {
       }
     } catch (e) {
       if (e instanceof z.ZodError) {
-        console.log(e.issues);
-
         const errors: Record<string, string> = {};
 
         e.issues.forEach((issue) => {
@@ -115,10 +113,6 @@ const AddGroup: React.FC = () => {
   const debouncedUserSearch = useDebounce(userSearch, 300);
 
   const [, setSuggestedUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const divRef = useRef<HTMLDivElement>(null);
 

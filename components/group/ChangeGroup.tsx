@@ -80,8 +80,6 @@ const ChangeGroup: React.FC<Props> = ({
       console.error("Error in form submission:", e);
 
       if (e instanceof z.ZodError) {
-        console.log(e.issues);
-
         const errors: Record<string, string> = {};
 
         e.issues.forEach((issue) => {

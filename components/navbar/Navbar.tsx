@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
@@ -13,6 +12,7 @@ import { LogoIcon } from "../icons/LogoIcon";
 import Popup from "./Popup";
 import MessageList from "./MessageList";
 import Notification from "./Notification";
+import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <article className="z-10 sticky top-0 flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
+    <article className="sticky top-0 z-10 flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
       <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-5 lg:gap-[84px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
@@ -77,94 +77,23 @@ const Navbar = () => {
         {/* DESKTOP */}
         <div className="hidden flex-row md:flex md:gap-5 md2:gap-[65px]">
           <section className="hidden flex-row items-center gap-[20px] bg-background  dark:bg-dark3 md:flex">
-            <Link href="/home">
-              <Button
-                className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/home"
-                    ? "bg-primary"
-                    : "bg-secondary6  dark:bg-dark4"
-                }`}
-              >
-                <FillIcon.Home
-                  className={`${
-                    pathname === "/home"
-                      ? "fill-background"
-                      : "fill-secondary4 dark:fill-secondary6"
-                  }`}
-                />
-              </Button>
-            </Link>
-            <Link href="/meetups">
-              <Button
-                className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/calendar"
-                    ? "bg-primary"
-                    : "bg-secondary6  dark:bg-dark4"
-                }`}
-              >
-                <FillIcon.Calendar
-                  className={`${
-                    pathname === "/meetups"
-                      ? "fill-background"
-                      : "fill-secondary4 dark:fill-secondary6"
-                  }`}
-                />
-              </Button>
-            </Link>
-
-            <Link href="/groups">
-              <Button
-                className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/groups"
-                    ? "bg-primary"
-                    : "bg-secondary6  dark:bg-dark4"
-                }`}
-              >
-                <FillIcon.Group
-                  className={`${
-                    pathname === "/groups"
-                      ? "fill-background"
-                      : "fill-secondary4 dark:fill-secondary6"
-                  }`}
-                />
-              </Button>
-            </Link>
-
-            <Link href="/podcast">
-              <Button
-                className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/podcast"
-                    ? "bg-primary"
-                    : "bg-secondary6  dark:bg-dark4"
-                }`}
-              >
-                <FillIcon.Podcast
-                  className={`${
-                    pathname === "/podcast"
-                      ? "fill-background"
-                      : "fill-secondary4 dark:fill-secondary6"
-                  }`}
-                />
-              </Button>
-            </Link>
-
-            <Link href="/interview">
-              <Button
-                className={`items-center  md:gap-2.5 md:p-2.5 ${
-                  pathname === "/interview"
-                    ? "bg-primary"
-                    : "bg-secondary6  dark:bg-dark4"
-                }`}
-              >
-                <FillIcon.Interviews
-                  className={`${
-                    pathname === "/interview"
-                      ? "fill-background"
-                      : "fill-secondary4 dark:fill-secondary6"
-                  }`}
-                />
-              </Button>
-            </Link>
+            <NavbarLink path="/home" pathname={pathname} iconName="Home" />
+            <NavbarLink
+              path="/meetups"
+              pathname={pathname}
+              iconName="Calendar"
+            />
+            <NavbarLink path="/groups" pathname={pathname} iconName="Group" />
+            <NavbarLink
+              path="/podcast"
+              pathname={pathname}
+              iconName="Podcast"
+            />
+            <NavbarLink
+              path="/interview"
+              pathname={pathname}
+              iconName="Interviews"
+            />
           </section>
           <div className="flex flex-row md:gap-5 md2:gap-[58px]">
             <Input

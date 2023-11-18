@@ -7,6 +7,7 @@ import { ShadButton } from "@/components/ui/ShadButton";
 import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
 import OutlineIcon from "@/components/icons/OutlineIcon";
+import Link from "next/link";
 
 interface Props {
   username: string;
@@ -58,7 +59,7 @@ const InterviewPost = ({
             className="w-full object-cover"
           />
         </div>
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>
         <div className="flex">
           <div className="flex w-full flex-col justify-between gap-5 sm:flex-row">
             <div>
@@ -69,24 +70,29 @@ const InterviewPost = ({
                   </p>
                   <small className="text-xs text-secondary3">Revenue</small>
                 </div>
-                <div className="flex flex-col items-center pl-6">
+                <div className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6">
                   <p className="text-sm font-bold">{updates}</p>
                   <small className="text-xs text-secondary3">Updates</small>
                 </div>
-                <div
-                  className="flex flex-col items-center pl-6"
-                  onClick={() => window.open(`https://${website}`, "_blank")}
+                <a
+                  href={`https://${website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6"
                 >
                   <p className="text-sm font-bold">
-                    <OutlineIcon.Web className="dark:fill-background2 fill-secondary2" />
+                    <OutlineIcon.Web className="fill-secondary2 dark:fill-background2" />
                   </p>
                   <small className="text-xs text-secondary3">Website</small>
-                </div>
+                </a>
               </div>
             </div>
-            <ShadButton className="bg-blue text-white hover:bg-blue/70 hover:text-white">
-              Full Details
-            </ShadButton>
+            <Link href={`/interview/${_id}`}>
+              {" "}
+              <ShadButton className="bg-blue text-white hover:bg-blue/70 hover:text-white">
+                Full Details
+              </ShadButton>
+            </Link>
           </div>
         </div>
       </div>
@@ -96,7 +102,7 @@ const InterviewPost = ({
           alt="Interview Image"
           width={280}
           height={180}
-          className="md:w-[280px] md:h-[180px] w-[307px] h-[200px]"
+          className="h-[200px] w-[307px] md:h-[180px] md:w-[280px]"
         />
       </div>
     </article>
