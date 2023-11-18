@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
@@ -13,37 +12,7 @@ import { LogoIcon } from "../icons/LogoIcon";
 import Popup from "./Popup";
 import MessageList from "./MessageList";
 import Notification from "./Notification";
-
-const NavbarLink = ({
-  path,
-  pathname,
-  iconName,
-}: {
-  path: string;
-  pathname: string;
-  iconName: string;
-}) => {
-  const DynamicIcon = FillIcon[iconName];
-  return (
-    <Link href={path}>
-      <Button
-        className={`items-center  md:gap-2.5 md:p-2.5 ${
-          pathname.startsWith(path)
-            ? "bg-primary"
-            : "bg-secondary6  dark:bg-dark4"
-        }`}
-      >
-        <DynamicIcon
-          className={`${
-            pathname.startsWith(path)
-              ? "fill-background"
-              : "fill-secondary4 dark:fill-secondary6"
-          }`}
-        />
-      </Button>
-    </Link>
-  );
-};
+import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -115,7 +84,6 @@ const Navbar = () => {
               iconName="Calendar"
             />
             <NavbarLink path="/groups" pathname={pathname} iconName="Group" />
-
             <NavbarLink
               path="/podcast"
               pathname={pathname}
