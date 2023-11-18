@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { html } from "@/lib/utils";
+import Html from "../shared/html";
 
 interface Props {
   title: string;
@@ -17,7 +17,7 @@ const PodcastCardBig = ({ title, desc, name, location, avatar }: Props) => {
         <div className="gap-2.5">
           <h3 className="md:h3-semibold display-semibold">{title}</h3>
           <p className="md:body-regular caption-regular line-clamp-6">
-            {html(desc)}
+            <Html htmltext={desc} />
           </p>
         </div>
         <div className="flex flex-row gap-5">
