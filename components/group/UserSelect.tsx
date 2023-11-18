@@ -12,14 +12,18 @@ interface User {
 export default function UserSelect({
   setter,
   formKey,
+  initialUserArray,
 }: {
   setter: any;
+  initialUserArray?: User[];
   formKey: string;
 }) {
   const [userSearch, setUserSearch] = useState<string>("");
   const [showList, setShowList] = useState(false);
   const [suggestedUsers, setSuggestedUsers] = useState<User[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>(
+    initialUserArray || []
+  );
 
   const debouncedUserSearch = useDebounce(userSearch, 300);
   const divRef = useRef<HTMLDivElement>(null);
@@ -66,7 +70,9 @@ export default function UserSelect({
   const addUser = (e: any) => {
     const { username, key } = e.target.dataset;
     const user = { username, _id: key };
+    console.log(user);
     const newUsers = selectedUsers.filter((user) => user._id !== key);
+    console.log(newUsers);
     newUsers.push(user);
     setUserSearch("");
     setSuggestedUsers([]);
@@ -93,17 +99,20 @@ export default function UserSelect({
       />
       {showList && (
         <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
-          {suggestedUsers.slice(0, 5).map((user: User) => (
-            <div
-              key={user._id}
-              data-key={user._id}
-              data-username={user.username}
-              onClick={addUser}
-              className="flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
-            >
-              {user.username}
-            </div>
-          ))}
+          {suggestedUsers.slice(0, 5).map((user: User) => {
+            console.log("suggestedUsers", suggestedUsers);
+            return (
+              <div
+                key={user._id}
+                data-key={user._id}
+                data-username={user.username}
+                onClick={addUser}
+                className="flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
+              >
+                {user.username}
+              </div>
+            );
+          })}
         </div>
       )}
       <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
