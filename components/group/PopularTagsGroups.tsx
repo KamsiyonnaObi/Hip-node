@@ -4,7 +4,7 @@ import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupTag from "./GroupTag";
 
-const PopularTags = () => {
+const PopularTagsGroups = () => {
   return (
     <div className="flex w-full flex-col gap-[10px] rounded-[16px] bg-background p-[20px] dark:bg-dark3">
       <p className="display-semibold mb-5 text-secondary2 dark:text-background2">
@@ -51,4 +51,4 @@ const PopularTags = () => {
   );
 };
 
-export default PopularTags;
+export default PopularTagsGroups;
