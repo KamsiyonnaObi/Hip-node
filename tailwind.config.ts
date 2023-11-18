@@ -154,12 +154,6 @@ const config: Config = {
         md: "1100px",
         sm: "768px",
       },
-      gridTemplateRows: {
-        "12": "repeat(8, minmax(0, 1fr))",
-      },
-      gridTemplateColumns: {
-        "12": "repeat(8, minmax(0, 1fr))",
-      },
     },
   },
   plugins: [],

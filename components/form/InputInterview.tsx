@@ -4,12 +4,13 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import "react-datepicker/dist/react-datepicker.css";
 import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Badge } from "../ui/badge";
-import { PostSchema } from "@/lib/validations";
+import { InterviewSchema } from "@/lib/validations";
 import { Input } from "../ui/input";
 import {
   FormControl,
@@ -22,16 +23,11 @@ import {
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
-import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
-import { useSession } from "next-auth/react";
+import { createInterview } from "@/utils/actions/interview.action";
 
-export function InputPost() {
-  const { data: session } = useSession();
-  const userId = session?.user.id;
+export function InputInterview() {
   const { theme } = useTheme();
-
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,29 +35,20 @@ export function InputPost() {
 
   const router = useRouter();
 
-  const [expanded, setExpanded] = useState(0);
-  const [create, setCreate] = useState("Post");
-
-  const toggleCategory = () => {
-    setExpanded(expanded !== 2 ? 2 : 0);
-  };
-
-  const closeCategory = (val: any) => {
-    setExpanded(0);
-    setCreate(val);
-  };
-
   const updateForm = (url: string) => {
     setCoverUrl(url);
   };
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof PostSchema>>({
-    resolver: zodResolver(PostSchema),
+  const form = useForm<z.infer<typeof InterviewSchema>>({
+    resolver: zodResolver(InterviewSchema),
     defaultValues: {
       title: "",
-      contents: "",
-      tags: [],
+      desc: "",
+      interviewTags: [],
+      revenue: 0,
+      updates: 0,
+      website: "",
     },
   });
 
@@ -70,14 +57,18 @@ export function InputPost() {
     setIsSubmitting(true);
     try {
       const values = form.getValues();
-      const postData = {
+
+      const interviewData = {
         title: values.title,
-        content: values.contents,
-        tags: values.tags,
+        revenue: values.revenue,
+        updates: values.updates,
+        interviewTags: values.interviewTags,
+        desc: values.desc,
+        website: values.website,
         image: coverUrl,
-        avatar: "/Avatar.png",
       };
-      const id = await createPost(postData);
+
+      const id = await createInterview(interviewData);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -88,21 +79,21 @@ export function InputPost() {
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
   ) => {
-    if (e.key === "Enter" && field.name === "tags") {
+    if (e.key === "Enter" && field.name === "interviewTags") {
       e.preventDefault();
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
       if (tagValue !== "") {
         if (tagValue.length > 15) {
-          return form.setError("tags", {
-            type: "required",
+          return form.setError("interviewTags", {
+            type: "maxLength",
             message: "Tag must be less than 15 characters.",
           });
         }
         if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
+          form.setValue("interviewTags", [...field.value, tagValue]);
           tagInput.value = "";
-          form.clearErrors("tags");
+          form.clearErrors("interviewTags");
         }
       } else {
         form.trigger();
@@ -112,7 +103,7 @@ export function InputPost() {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("tags", newTags);
+    form.setValue("interviewTags", newTags);
   };
 
   return (
@@ -156,7 +147,7 @@ export function InputPost() {
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                                  Set Cover
+                                  Set Image
                                 </p>
                               </Button>
                             </div>
@@ -164,35 +155,6 @@ export function InputPost() {
                         );
                       }}
                     </CldUploadWidget>
-
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2"
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Select Group
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
-                    <div className="relative">
-                      <Button
-                        color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
-                        type="button"
-                        onClick={toggleCategory}
-                      >
-                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                          <span className="text-secondary3">Create</span> -{" "}
-                          {create}
-                        </p>
-                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                      </Button>
-                      {expanded === 2 && (
-                        <div className="absolute left-0 mt-2 z-50">
-                          <PostCategory closeCategory={closeCategory} />
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
               </FormControl>
@@ -203,7 +165,7 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="contents"
+          name="desc"
           render={({ field }) => (
             <FormItem>
               <div className="flex">
@@ -223,7 +185,7 @@ export function InputPost() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue="Meetup Details..."
                   init={{
                     height: 376,
                     menubar: false,
@@ -279,7 +241,72 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="tags"
+          name="revenue"
+          render={({ field }) => (
+            <FormItem className="my-10">
+              <FormControl className="flex flex-col">
+                <div className="flex flex-row gap-5">
+                  <h3 className="h3-semibold text-secondary2 dark:text-background2">
+                    Revenue per Hour:
+                  </h3>
+                  <Input
+                    placeholder="Revenue..."
+                    type="number"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="updates"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <h3 className="h3-semibold text-secondary2 dark:text-background2">
+                    Updates:
+                  </h3>
+                  <Input
+                    placeholder="Updates..."
+                    type="number"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    placeholder="Website..."
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="interviewTags"
           render={({ field }) => (
             <FormItem className="my-5">
               <FormLabel className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
@@ -315,7 +342,7 @@ export function InputPost() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/home">
+          <Link href="/interview">
             <Button
               type="submit"
               color="blue"
@@ -328,6 +355,7 @@ export function InputPost() {
               {isSubmitting ? <>Posting...</> : <>Publish</>}
             </Button>
           </Link>
+
           <Button
             type="button"
             color="gray"

@@ -16,6 +16,38 @@ export const PostSchema = z.object({
   tags: z.array(z.string().min(1).max(15)).min(1).max(3),
 });
 
+export const MeetupSchema = z.object({
+  title: z
+    .string()
+    .min(5, {
+      message: "Title must be at least 5 characters.",
+    })
+    .max(60, {
+      message: "Title must be less than 60 characters.",
+    }),
+  subtitle: z.string().max(100, {
+    message: "Subtitle must be less than 100 characters.",
+  }),
+  jobType: z.array(z.string()).min(1, {
+    message: "Select at least one job type.",
+  }),
+  location: z
+    .string()
+    .min(5, {
+      message: "Location must be at least 5 characters.",
+    })
+    .max(100, {
+      message: "Location must be less than 100 characters.",
+    }),
+  desc: z
+    .string()
+    .min(12, {
+      message: "Description must be at least 12 characters.",
+    })
+    .max(200, {
+      message: "Description must be less than 200 characters.",
+    }),
+});
 
 export const GroupSchema = z.object({
   title: z
@@ -28,6 +60,7 @@ export const GroupSchema = z.object({
     .string()
     .min(3, { message: "Must be 3 or more characters long" })
     .max(100, { message: "Must be 100 or less characters long" }),
+
   admins: z.string().refine(
     (val) => {
       const toArr = JSON.parse(val);
@@ -42,6 +75,25 @@ export const GroupSchema = z.object({
     },
     { message: "Must choose at least one member" }
   ),
+});
+
+export const InterviewSchema = z.object({
+  title: z
+    .string()
+    .min(5, {
+      message: "Title must be at least 5 characters.",
+    })
+    .max(60, { message: "Title must be less than 60 characters." }),
+  desc: z
+    .string()
+    .min(12, {
+      message: "Description must be at least 12 characters.",
+    })
+    .max(200, { message: "Description must be less than 200 characters." }),
+  interviewTags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  revenue: z.number(),
+  updates: z.number(),
+  website: z.string(),
 });
 
 export const emailSchema = z.string().email("Invalid email address.");

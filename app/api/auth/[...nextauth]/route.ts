@@ -90,7 +90,6 @@ export const authOptions = {
       } catch (e) {
         console.error("Sign-in error:", e);
       }
-      console.log(profile);
 
       return true;
     },

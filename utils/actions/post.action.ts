@@ -4,15 +4,21 @@ import mongoose, { ObjectId, ConnectOptions } from "mongoose";
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
-import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth";
 
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
 
-export async function createPost(params: Partial<IPost>) {
+export async function createPost(params: any) {
   try {
     await dbConnect();
-    const { title, content, image, tags, userId } = params;
+    // get the userID from the session
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const userId = User?._id;
+
+    const { title, content, image, tags, avatar } = params;
 
     const post = await Post.create({
       title,
@@ -20,8 +26,11 @@ export async function createPost(params: Partial<IPost>) {
       image,
       tags,
       userId,
+      avatar,
     });
-    return post;
+
+    // return the postID, not the entire Post
+    return post._id.toString();
   } catch (error) {
     console.log(error);
     throw new Error("Failed to create a post.");
@@ -33,7 +42,6 @@ export async function getPostById(postId: string) {
     await dbConnect();
     const post = await Post.findById(postId)
       .populate("userId")
-      // MissingSchemaError: Schema hasn't been registered for model "Group".
       .populate("groupId");
     if (post) {
       return { success: true, data: post };
@@ -95,6 +103,20 @@ export async function deletePost(postId: number) {
   }
 }
 
+export async function getAllPosts(params: any) {
+  try {
+    await dbConnect();
+
+    const posts = await Post.find({})
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return { posts };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function likePost({
   postId,
   userId,
@@ -102,7 +124,7 @@ export async function likePost({
 }: {
   postId: string;
   userId: string;
-  hasLiked: boolean;
+  hasLiked: boolean | null;
 }) {
   try {
     dbConnect();
@@ -138,7 +160,7 @@ export async function commentPost({
 }: {
   postId: string;
   userId: string;
-  hasCommented: boolean;
+  hasCommented: boolean | null;
 }) {
   try {
     dbConnect();
@@ -171,7 +193,7 @@ export async function sharePost({
 }: {
   postId: string;
   userId: string;
-  hasShared: boolean;
+  hasShared: boolean | null;
 }) {
   try {
     dbConnect();
@@ -207,7 +229,7 @@ export async function reportPost({
 }: {
   postId: string;
   userId: string;
-  hasReported: boolean;
+  hasReported: boolean | null;
 }) {
   try {
     dbConnect();

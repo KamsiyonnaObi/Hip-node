@@ -3,13 +3,14 @@ import Image from "next/image";
 
 interface Props {
   month: string;
-  day: number;
+  day: string;
   title: string;
   desc: string;
   jobType: string[];
+  _id: string;
 }
 
-const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
+const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
   return (
     <article className="flex flex-row gap-4 ">
       <section className="flex flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center dark:border-dark3 dark:bg-dark4">
@@ -20,7 +21,9 @@ const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
         <p className="body-semibold">{title}</p>
         <div className="flex flex-row gap-[6px]">
           <Image src="/MeetupIcon.svg" alt="meetup" width={16} height={16} />
-          <p className="text-sm-semibold text-secondary3">{desc}</p>
+          <p className="text-sm-semibold text-secondary3 line-clamp-1">
+            {desc}
+          </p>
         </div>
         <div className="mt-2 flex flex-row gap-[10px]">
           {jobType.map((type, index) => (
