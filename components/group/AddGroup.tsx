@@ -197,12 +197,22 @@ const AddGroup: React.FC = () => {
             Add admins
           </label>
           <UserSelect setter={setFormData} formKey="admins" />
+          {validationErrors.admins && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.admins}
+            </p>
+          )}
         </section>
         <section className="flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
             Add members
           </label>
           <UserSelect setter={setFormData} formKey="members" />
+          {validationErrors.members && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.members}
+            </p>
+          )}
         </section>
 
         <section className="flex gap-[1.25rem]">
