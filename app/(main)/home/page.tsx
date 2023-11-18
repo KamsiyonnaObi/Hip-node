@@ -11,7 +11,6 @@ import React from "react";
 export default async function Home() {
   const result = await getAllPosts({});
 
-  console.log(result);
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -41,9 +40,9 @@ export default async function Home() {
                 avatar={post.avatar}
                 username={post.userId?.username || "unknown"}
                 createdAt={post.createdAt}
-                views={post.views}
-                likes={post.likes}
-                comments={post.comments}
+                views={post?.views?.length}
+                likes={post?.likes?.length}
+                comments={post?.comments?.length}
               />
             ))
           : "No Posts to Show!"}

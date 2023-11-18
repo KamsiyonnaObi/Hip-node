@@ -34,13 +34,10 @@ export async function createMeetup(params: any) {
       day,
     });
 
-    console.log(meetup);
-
     // return the postID, not the entire Post
     return meetup._id.toString();
   } catch (error) {
     console.log(error);
-    console.log(params);
     throw new Error("Failed to create a post.");
   }
 }

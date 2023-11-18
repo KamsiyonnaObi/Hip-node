@@ -1,4 +1,4 @@
-import { html } from "@/lib/utils";
+import Html from "../shared/html";
 import Image from "next/image";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -51,7 +51,7 @@ const MeetupCardBig = ({
           </div>
         </section>
         <section className="caption-regular md:body-regular text-secondary2 dark:text-background2">
-          {html(desc)}
+          <Html htmltext={desc} />
         </section>
         <section className="flex flex-row justify-between">
           <section className="flex flex-row gap-[10px]">

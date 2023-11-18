@@ -94,7 +94,6 @@ const SignUp = () => {
         ...prevErrors,
         email: error.issues[0].message,
       }));
-      console.log("email: ", errors.email);
       return;
     }
     try {
@@ -104,7 +103,6 @@ const SignUp = () => {
         ...prevErrors,
         password: error.issues[0].message,
       }));
-      console.log("password: ", errors.password);
       return;
     }
 

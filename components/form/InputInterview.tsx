@@ -69,7 +69,6 @@ export function InputInterview() {
       };
 
       const id = await createInterview(interviewData);
-      console.log(id);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
