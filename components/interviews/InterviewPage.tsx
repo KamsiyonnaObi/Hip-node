@@ -8,7 +8,17 @@ import PageWrapper from "../PageWrapper";
 import OutlineIcon from "../icons/OutlineIcon";
 import { html } from "@/lib/utils";
 
-const InterviewPage = ({ result }: any) => {
+interface ResultType {
+  image: string;
+  title: string;
+  revenue: number;
+  updates: number;
+  website: string;
+  interviewTags: string[];
+  desc: string;
+}
+
+const InterviewPage = ({ result }: { result: ResultType }) => {
   return (
     <PageWrapper>
       <article className="mx-auto w-full max-w-[785px] rounded-2xl bg-bkg-2">

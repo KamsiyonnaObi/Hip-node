@@ -74,15 +74,17 @@ const InterviewPost = ({
                   <p className="text-sm font-bold">{updates}</p>
                   <small className="text-xs text-secondary3">Updates</small>
                 </div>
-                <div
+                <a
+                  href={`https://${website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6"
-                  onClick={() => window.open(`https://${website}`, "_blank")}
                 >
                   <p className="text-sm font-bold">
                     <OutlineIcon.Web className="fill-secondary2 dark:fill-background2" />
                   </p>
                   <small className="text-xs text-secondary3">Website</small>
-                </div>
+                </a>
               </div>
             </div>
             <Link href={`/interview/${_id}`}>

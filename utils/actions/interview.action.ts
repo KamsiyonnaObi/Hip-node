@@ -40,9 +40,13 @@ export async function getInterview(InterviewId: string) {
   try {
     await dbConnect();
     const interview = await Interview.findById(InterviewId);
+    if (!interview) {
+      notFound();
+    }
     return interview;
   } catch (error) {
-    notFound();
+    console.log(error);
+    throw error;
   }
 }
 

@@ -87,7 +87,7 @@ export function InputInterview() {
       if (tagValue !== "") {
         if (tagValue.length > 15) {
           return form.setError("interviewTags", {
-            type: "required",
+            type: "maxLength",
             message: "Tag must be less than 15 characters.",
           });
         }
@@ -251,7 +251,7 @@ export function InputInterview() {
                     Revenue per Hour:
                   </h3>
                   <Input
-                    placeholder="Subtitle..."
+                    placeholder="Revenue..."
                     type="number"
                     className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
@@ -274,7 +274,7 @@ export function InputInterview() {
                     Updates:
                   </h3>
                   <Input
-                    placeholder="Subtitle..."
+                    placeholder="Updates..."
                     type="number"
                     className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
