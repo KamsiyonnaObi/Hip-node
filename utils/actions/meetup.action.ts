@@ -75,10 +75,16 @@ export async function deleteMeetup(meetupId: number) {
 }
 
 export async function getAllMeetups(params: any) {
+  const { jobType } = params;
+  const jobArray = jobType ? jobType.split(",") : [];
+
   try {
     await dbConnect();
-
-    const meetups = await Meetup.find({})
+    let query = {};
+    if (jobArray.length > 0) {
+      query = { type: { $in: jobArray } };
+    }
+    const meetups = await Meetup.find({ query })
       .populate("userId")
       .sort({ createdAt: -1 });
     return { meetups };

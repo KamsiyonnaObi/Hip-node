@@ -44,9 +44,17 @@ export async function getPodcast(podcastId: string) {
 }
 
 export async function getAllPodcasts(params: any) {
+  const { type } = params;
+  const typeArray = type ? type.split(",") : [];
   try {
     await dbConnect();
-    const podcast = await Podcast.find({})
+
+    let query = {};
+    if (typeArray.length > 0) {
+      query = { type: { $in: typeArray } };
+    }
+
+    const podcast = await Podcast.find(query)
       .populate("userId")
       .sort({ createdAt: -1 });
     return { podcast };

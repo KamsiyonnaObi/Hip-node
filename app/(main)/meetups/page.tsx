@@ -20,6 +20,8 @@ export default async function Meetup() {
             { name: "Contract", checked: false },
             { name: "Free", checked: false },
           ]}
+          web="meetups"
+          filter="jobType"
         />
       </section>
       <section className="flex flex-col gap-5">

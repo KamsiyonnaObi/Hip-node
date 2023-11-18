@@ -1,18 +1,41 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import OutlineIcon from "@/components/icons/OutlineIcon";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/Button";
 
 interface Props {
   title: string;
   categoryList: { name: string; checked: boolean }[];
-  onCategoryChange: (categoryName: string, checked: boolean) => void;
+  web: string;
+  filter: string;
 }
 
-const Categories = ({ title, categoryList, onCategoryChange }: Props) => {
+const Categories = ({ title, categoryList, web, filter }: Props) => {
+  const [categories, setCategories] = useState(categoryList);
+  const router = useRouter();
+
   const toggleCategory = (index: number) => {
-    const categoryName = categoryList[index].name;
-    const checked = !categoryList[index].checked;
-    onCategoryChange(categoryName, checked);
+    setCategories((prevCategories) =>
+      prevCategories.map((category, i) =>
+        i === index ? { ...category, checked: !category.checked } : category
+      )
+    );
+  };
+
+  const handleSubmit = () => {
+    // Get the selected categories
+    const selectedCategories = categories
+      .filter((category) => category.checked)
+      .map((category) => category.name);
+
+    // Build the route based on selected categories
+    const route =
+      selectedCategories.length > 0
+        ? `/${web}?${filter}=${selectedCategories.join(",")}`
+        : `/${web}`;
+
+    router.push(route);
   };
 
   return (
@@ -22,7 +45,7 @@ const Categories = ({ title, categoryList, onCategoryChange }: Props) => {
           <h3 className="h3-semibold ">{title}</h3>
           <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
         </div>
-        {categoryList.map((category, index) => (
+        {categories.map((category, index) => (
           <div
             key={index}
             className="mt-[10px] flex select-none flex-row justify-between md:w-[170px]"
@@ -49,6 +72,13 @@ const Categories = ({ title, categoryList, onCategoryChange }: Props) => {
             </div>
           </div>
         ))}
+        <Button
+          color="orange"
+          className="caption-semibold md:body-semibold mt-3 gap-2.5 rounded-[6px] px-3 py-1 text-center"
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </div>
     </article>
   );
