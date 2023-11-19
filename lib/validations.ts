@@ -59,7 +59,7 @@ export const GroupSchema = z.object({
   description: z
     .string()
     .min(3, { message: "Must be 3 or more characters long" })
-    .max(100, { message: "Must be 100 or less characters long" }),
+    .max(200, { message: "Must be 200 or less characters long" }),
 
   admins: z.string().refine(
     (val) => {
