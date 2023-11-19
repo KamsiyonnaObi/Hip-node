@@ -10,6 +10,7 @@ import {
   OtherProfile,
 } from "@/components";
 import { getCurrentUser } from "@/utils/actions/user.action";
+import { countComments, hasUserReply } from "@/utils";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUser = await getCurrentUser();
@@ -34,6 +35,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   const getMorePosts = await getPostsByUserId(userId?._id, postopen.data._id);
   const morePosts = getMorePosts.data;
+  const numComments = countComments(comments);
+  const hasCommented = hasUserReply({
+    comments,
+    userId: JSON.stringify(currentUser?._id),
+  });
 
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
@@ -51,11 +57,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             postId={JSON.stringify(_id)}
             userId={JSON.stringify(currentUser?._id)}
             hasLiked={likes?.includes(currentUser?._id)}
-            // hasCommented={comments?.includes(currentUserId)}
+            hasCommented={hasCommented}
             hasShared={shares?.includes(currentUser?._id)}
             hasReported={reports?.includes(currentUser?._id)}
             likes={likes?.length}
-            comments={comments?.length}
+            comments={numComments}
             shares={shares?.length}
           />
           {groupId && (
@@ -83,11 +89,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           postId={JSON.stringify(_id)}
           userId={JSON.stringify(currentUser?._id)}
           hasLiked={likes?.includes(currentUser?._id)}
-          // hasCommented={comments?.includes(currentUser?._id)}
+          hasCommented={hasCommented}
           hasShared={shares?.includes(currentUser?._id)}
           hasReported={reports?.includes(currentUser?._id)}
           likes={likes?.length}
-          comments={comments?.length}
+          comments={numComments}
           shares={shares?.length}
         />
         {groupId && (
