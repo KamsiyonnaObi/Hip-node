@@ -29,7 +29,6 @@ import { useSession } from "next-auth/react";
 
 export function InputPost() {
   const { data: session } = useSession();
-  const userId = session?.user.id;
   const { theme } = useTheme();
 
   const editorRef = useRef(null);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Collapsible,
@@ -14,6 +15,7 @@ import { cn } from "@/utils";
 
 const InterviewCategory = ({ categories }: { categories: string[] }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
 
   return (
     <div className="w-full rounded-2xl bg-bkg-2 p-5 text-defaultText md:w-52">
@@ -33,6 +35,13 @@ const InterviewCategory = ({ categories }: { categories: string[] }) => {
             />
           </CollapsibleTrigger>
         </div>
+        <button
+          onClick={() =>
+            router.push("/interview?revenue=" + Math.random() * 20000)
+          }
+        >
+          Hello
+        </button>
         <CollapsibleContent>
           <ul className="flex flex-col gap-3">
             {categories.map((category) => (

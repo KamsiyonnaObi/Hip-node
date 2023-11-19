@@ -1,38 +1,34 @@
 import Image from "next/image";
+import parse from "html-react-parser";
 
 import PageWrapper from "@/components/PageWrapper";
-import { InterviewPostImage } from "@/utils/images";
 import { Tags } from "@/components";
-import { dummyTags } from "@/constants/dummy";
+import { getInterview } from "@/utils/actions/interview.action";
+import { AspectRatio } from "@/components/ui/AspectRatio";
 
-const InterviewArticle = ({ params }: { params: { id: string } }) => {
+const InterviewArticle = async ({ params }: { params: { id: string } }) => {
+  const interviewData = await getInterview(params.id);
+
+  const { title, desc, tags, image } = interviewData;
+
   return (
     <PageWrapper>
-      <article className="w-full bg-bkg-2 max-w-[785px] mx-auto rounded-2xl">
-        <Image
-          src={InterviewPostImage}
-          alt="Group Meeting"
-          className="rounded-t-lg"
-          priority
-        />
-        <div className="px-5 sm:px-10 pb-10 pt-5 flex flex-col gap-5">
-          <h1 className="font-semibold sm:h1-semibold">
-            Leading with Empathy: An Interview with HR and People Management
-            Experts
-          </h1>
-          <Tags tags={dummyTags} />
-          <p className="text-secondary3">
-            In a recent interview with HR and people management experts, we
-            explored the significance of leading with empathy in today&apos;s
-            business world. Here are the key takeaways: Empathy in Leadership:
-            Empathy is foundational for effective leadership, creating a more
-            supportive work culture. Mental Health: Prioritizing employee mental
-            health is essential, especially in high-pressure work environments.
-            Inclusivity and Diversity: Fostering inclusivity and diversity is a
-            priority, ensuring everyone&apos;s voice is heard. Remote Work
-            Challenges: Managing and engaging remote teams require adaptability
-            and strong communication.
-          </p>
+      <article className="mx-auto w-full max-w-[785px] rounded-2xl bg-bkg-2">
+        <div className="relative h-64 w-full">
+          {/* <AspectRatio ratio={16 / 9}> */}
+          <Image
+            src={image}
+            fill
+            alt="Group Meeting"
+            className="rounded-t-lg object-cover"
+            priority
+          />
+          {/* </AspectRatio> */}
+        </div>
+        <div className="flex flex-col gap-5 px-5 pb-10 pt-5 sm:px-10">
+          <h1 className="sm:h1-semibold font-semibold">{title}</h1>
+          {tags.length > 0 && <Tags tags={tags} />}
+          <div className="text-secondary3">{parse(desc)}</div>
         </div>
       </article>
     </PageWrapper>

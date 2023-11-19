@@ -34,11 +34,11 @@ export async function createInterview(params: Partial<IInterview>) {
   }
 }
 
-export async function getInterview(InterviewId: number) {
+export async function getInterview(InterviewId: string) {
   try {
     await dbConnect();
     const interview = await Interview.findById(InterviewId);
-    return interview;
+    return interview as IInterview;
   } catch (error) {
     console.log(error);
     throw error;
@@ -67,10 +67,12 @@ export async function deleteInterview(InterviewId: number) {
 }
 
 export async function getAllInterviews(params: any) {
+  const { revenue } = params;
+
   try {
     await dbConnect();
 
-    const interviews = await Interview.find({})
+    const interviews = await Interview.find({ revenue: { $lte: revenue } })
       .populate("userId")
       .sort({ createdAt: -1 });
     return { interviews };
