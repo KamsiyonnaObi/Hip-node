@@ -326,7 +326,6 @@ export async function addComments({
       createdAt: new Date(),
     });
   }
-
   await post.save();
   revalidatePath("/?postId=" + postId);
 }
@@ -342,39 +341,44 @@ export async function likeComment({
   currentUserId: string;
   hasLiked?: boolean;
 }) {
-  await dbConnect();
-  console.log(hasLiked);
+  try {
+    await dbConnect();
 
-  const post = await Post.findById(postId);
-  if (!post) {
-    throw new Error("Post not found");
-  }
-
-  if (commentId) {
-    const target = findCommentOrReply({ comments: post.comments, commentId });
-    if (!target) {
-      return;
+    const post = await Post.findById(postId);
+    if (!post) {
+      throw new Error("Post not found");
     }
 
-    if (!target.likes) {
-      target.likes = [];
+    if (commentId) {
+      const target = findCommentOrReply({ comments: post.comments, commentId });
+      if (!target) {
+        return;
+      }
+
+      if (!target.likes) {
+        target.likes = [];
+      }
+      const objCurrentUserId = new mongoose.Schema.Types.ObjectId(
+        currentUserId
+      );
+
+      if (hasLiked) {
+        // User already liked, remove their ID
+        target.likes = target.likes.filter((id) => id !== objCurrentUserId);
+      } else {
+        // User has not liked yet, add their ID
+        target.likes.push(objCurrentUserId);
+      }
+
+      const likedStatus = target.likes.includes(objCurrentUserId);
+      await post.save();
+      await revalidatePath("/?postId=" + postId);
+      return {
+        status: likedStatus,
+      };
     }
-    const objCurrentUserId = JSON.parse(currentUserId);
-
-    if (hasLiked) {
-      // User already liked, remove their ID
-      target.likes = target.likes.filter((id) => id !== objCurrentUserId);
-    } else {
-      // User has not liked yet, add their ID
-      target.likes.push(objCurrentUserId);
-    }
-
-    const likedStatus = target.likes.includes(objCurrentUserId);
-    console.log(target);
-    console.log(target.likes);
-
-    return {
-      status: likedStatus,
-    };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

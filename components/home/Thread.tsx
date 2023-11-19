@@ -1,6 +1,5 @@
 import { Comment } from "@/components";
 import { IComments } from "@/models/post.model";
-import { comment } from "postcss";
 
 interface ThreadProps {
   currentUserId: string;
