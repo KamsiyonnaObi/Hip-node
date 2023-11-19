@@ -82,9 +82,10 @@ export async function getAllMeetups(params: any) {
     await dbConnect();
     let query = {};
     if (jobArray.length > 0) {
-      query = { type: { $in: jobArray } };
+      query = { jobType: { $in: jobArray } };
     }
-    const meetups = await Meetup.find({ query })
+
+    const meetups = await Meetup.find(query)
       .populate("userId")
       .sort({ createdAt: -1 });
     return { meetups };

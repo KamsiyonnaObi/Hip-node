@@ -58,7 +58,7 @@ const MeetupCardBig = ({
             {jobType.map((type, index) => (
               <div
                 key={index}
-                className="text-xs-semibold md:caption-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4"
+                className="text-xs-semibold md:caption-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4 dark:bg-dark4"
               >
                 {type}
               </div>
