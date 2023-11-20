@@ -63,6 +63,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             likes={likes?.length}
             comments={numComments}
             shares={shares?.length}
+            title={title}
+            body={content}
           />
           {groupId && (
             <GroupPostDate
@@ -95,6 +97,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           likes={likes?.length}
           comments={numComments}
           shares={shares?.length}
+          title={title}
+          body={content}
         />
         {groupId && (
           <GroupPostDate

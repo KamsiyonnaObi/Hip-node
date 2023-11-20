@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import clsx from "clsx";
 
 import FillIcon from "../icons/FillIcon";
 import { likePost, reportPost, sharePost } from "@/utils/actions/post.action";
+import ShareModal from "./ShareModal";
 
 interface Props {
   postId: string;
@@ -16,6 +17,8 @@ interface Props {
   likes: number;
   shares: number;
   comments: number;
+  title: string;
+  body: string;
 }
 
 const ActionBar = ({
@@ -28,15 +31,23 @@ const ActionBar = ({
   likes,
   shares,
   comments,
+  title,
+  body,
 }: Props) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
-  const [isShared, setIsShared] = useState<boolean | null>(hasShared || null);
-  const [numberShared, setNumberShared] = useState<number>(shares || 0);
   const [isReported, setIsReported] = useState<boolean | null>(
     hasReported || null
   );
   const [isPending, startTransition] = useTransition();
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showModal]);
 
   const handleLike = async () => {
     if (userId) {
@@ -54,20 +65,12 @@ const ActionBar = ({
     }
   };
 
-  // TODO: implement sharing function later
-  const handleShare = async () => {
-    if (userId) {
-      startTransition(async () => {
-        const shared = await sharePost({
-          postId: JSON.parse(postId),
-          userId: JSON.parse(userId),
-          hasShared: isShared,
-        });
-        if (!shared) return;
-        setIsShared(shared.status);
-        setNumberShared(shared.number);
-      });
-    }
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   // TODO: implement report function later
@@ -140,28 +143,28 @@ const ActionBar = ({
       <div className="flex gap-[14px] rounded-md">
         <button
           disabled={isPending}
-          className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": isShared,
-            "bg-background2 dark:bg-dark4": !isShared,
-          })}
-          onClick={handleShare}
+          className="h-7 w-7 rounded-md bg-background2 p-1 dark:bg-dark4"
+          onClick={openModal}
         >
-          <FillIcon.Share
-            className={clsx({
-              "fill-red80": isShared,
-              "fill-secondary3": !isShared,
-            })}
-          />
+          <FillIcon.Share className="fill-secondary3" />
         </button>
-        <div
-          className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": isShared,
-            "text-secondary3": !isShared,
-          })}
-        >
-          <p>{new Intl.NumberFormat().format(numberShared ?? 0)} Shares</p>
-        </div>
+
+        <p className="text-secondary3">Share</p>
       </div>
+      {showModal && (
+        <>
+          <div
+            className="fixed inset-0 z-10 bg-black opacity-50"
+            onClick={closeModal}
+          ></div>
+          <ShareModal
+            url={`/posts/{$postId}`}
+            close={closeModal}
+            title={title}
+            body={body}
+          />
+        </>
+      )}
 
       <div className="flex gap-[14px] rounded-md">
         <button

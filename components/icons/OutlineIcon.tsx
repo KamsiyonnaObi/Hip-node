@@ -56,6 +56,7 @@ import { Send } from "./fillIcons";
 import { ReactNode } from "react";
 import { cn } from "@/utils";
 import { Trash } from "./outlineIcons/Trash";
+import { Copy } from "./outlineIcons/Copy";
 
 interface Props {
   children?: ReactNode;
@@ -411,6 +412,12 @@ OutlineIcon.Voice = ({ className }: Props) => (
 OutlineIcon.Web = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Web />
+  </OutlineIcon>
+);
+
+OutlineIcon.Copy = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Copy />
   </OutlineIcon>
 );
 
