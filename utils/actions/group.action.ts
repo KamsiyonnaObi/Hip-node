@@ -68,7 +68,7 @@ export async function getGroupById(groupId: string) {
     const group = await Group.findById(groupId)
       .populate("userId")
       .populate("admins")
-      .populate({ path: "members" });
+      .populate("members");
 
     if (group) {
       return { success: true, data: group };

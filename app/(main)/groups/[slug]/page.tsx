@@ -30,6 +30,14 @@ const page = async ({ params }: { params: { slug: string } }) => {
       profileImage: admin.profileImage,
     })
   );
+  const members = group.data.members.map(
+    (member: { _id: any; profileImage: any }) => ({
+      _id: member._id,
+
+      profileImage: member.profileImage,
+    })
+  );
+
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] lg:max-w-[1400px]">
       <div className="grid grid-cols-1 gap-[1.25rem] sm:px-[5rem] md:grid-cols-[65%_auto] lg:grid-cols-[auto_58%_auto] ">
@@ -103,7 +111,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </div>
         </section>
         <section className="md:col-start-2 md:row-start-2 lg:col-start-3 lg:mt-[-1rem]">
-          <ActiveMembers avatar={"/Avatar.png"} />
+          <ActiveMembers members={members} />
         </section>
         <section className="md:col-start-2 lg:col-start-3 lg:row-start-3">
           <RecentMedia media={"/bird.png"} />
