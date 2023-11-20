@@ -5,6 +5,7 @@ import mongoose, { ObjectId, ConnectOptions } from "mongoose";
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { id } from "date-fns/locale";
 
 const { UserModel } = require("@/models/User");
 const { GroupModel } = require("@/models/group.model");
@@ -255,5 +256,25 @@ export async function reportPost({
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getPostByGroupId(groupId: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({
+      groupId,
+    });
+    if (posts.length > 0) {
+      return { success: true, data: posts };
+    } else {
+      throw new Error("post not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the posts.",
+    };
   }
 }
