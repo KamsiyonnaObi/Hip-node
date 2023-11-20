@@ -1,14 +1,12 @@
 "use server";
 
-import mongoose, { ObjectId, ConnectOptions } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
-import { id } from "date-fns/locale";
 
 const { UserModel } = require("@/models/User");
-const { GroupModel } = require("@/models/group.model");
 
 export async function createPost(params: any) {
   try {
