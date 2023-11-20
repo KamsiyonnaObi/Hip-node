@@ -135,7 +135,8 @@ export function InputPost() {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -188,7 +189,7 @@ export function InputPost() {
                         <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                       </Button>
                       {expanded === 2 && (
-                        <div className="absolute left-0 mt-2 z-50">
+                        <div className="absolute left-0 z-50 mt-2">
                           <PostCategory closeCategory={closeCategory} />
                         </div>
                       )}

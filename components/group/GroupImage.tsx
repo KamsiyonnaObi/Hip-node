@@ -19,10 +19,10 @@ const GroupImage: React.FC<GroupImageProps> = ({ setParentFormData }) => {
 
   return (
     <div className="flex items-center">
-      <div className="flex gap-[.62rem] my-[1.25rem]">
-        <div className="rounded-full w-[3.75rem] h-[3.75rem] bg-background2 dark:bg-dark4">
+      <div className="my-[1.25rem] flex gap-[.62rem]">
+        <div className="h-[3.75rem] w-[3.75rem] rounded-full bg-background2 dark:bg-dark4">
           {!imageUrl ? (
-            <OutlineIcon.Image2 className="fill-white dark:stroke-secondary4 dark:fill-dark4 m-auto mt-[1.2rem]" />
+            <OutlineIcon.Image2 className="m-auto mt-[1.2rem] fill-white dark:fill-dark4 dark:stroke-secondary4" />
           ) : (
             <div>
               <div className="m-auto">
@@ -40,7 +40,8 @@ const GroupImage: React.FC<GroupImageProps> = ({ setParentFormData }) => {
       </div>
       <div className="ml-[.62rem]">
         <CldUploadWidget
-          uploadPreset="bl8ltxxe"
+          uploadPreset="ml_images"
+          options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
           onUpload={(result: any) => {
             updateForm(result?.info?.secure_url);
             setImageUrl(result?.info?.secure_url);
@@ -54,11 +55,11 @@ const GroupImage: React.FC<GroupImageProps> = ({ setParentFormData }) => {
             return (
               <div className="flex">
                 <button
-                  className="flex gap-[.62rem] items-center"
+                  className="flex items-center gap-[.62rem]"
                   onClick={handleOnClick}
                 >
-                  <OutlineIcon.Image1 className="dark:fill-background2 fill-secondary2 w-[22px]" />
-                  <p className="text-sm-regular dark:text-background2 text-secondary2">
+                  <OutlineIcon.Image1 className="w-[22px] fill-secondary2 dark:fill-background2" />
+                  <p className="text-sm-regular text-secondary2 dark:text-background2">
                     Set Profile Photo
                   </p>
                 </button>
