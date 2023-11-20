@@ -44,13 +44,13 @@ const InterviewPage = ({ result }: { result: ResultType }) => {
                 <p className="text-sm font-bold">{result.updates}</p>
                 <small className="text-xs text-secondary3">Updates</small>
               </div>
-              <div
-                className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6"
-                onClick={() =>
-                  window.open(`https://${result.website}`, "_blank")
-                }
-              >
-                <p className="text-sm font-bold">
+              <div className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6">
+                <p
+                  className="cursor-pointer text-sm font-bold"
+                  onClick={() =>
+                    window.open(`https://${result.website}`, "_blank")
+                  }
+                >
                   <OutlineIcon.Web className="fill-secondary2 dark:fill-background2" />
                 </p>
                 <small className="text-xs text-secondary3">Website</small>
