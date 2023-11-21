@@ -152,3 +152,14 @@ export async function getUsersBySimilarName(name: string) {
     return "[]";
   }
 }
+
+export async function getAllGroups(params: any) {
+  try {
+    await dbConnect();
+    const groups = await Group.find().populate("userId");
+    return { groups };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

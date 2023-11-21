@@ -42,7 +42,7 @@ const PostGroup = ({
         <Image
           src={image}
           alt="image"
-          className="w-full sm:w-[228px]"
+          className="h-[106px] w-[228px]"
           width={228}
           height={106}
         />
