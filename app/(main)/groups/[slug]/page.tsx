@@ -111,7 +111,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <Admin />
         </section>
         <section className="mb-[1.25rem] md:col-start-2 lg:col-start-3 lg:row-start-4">
-          <PopularTags />
+
+          <PopularTagsGroups />
         </section>
       </div>
     </main>

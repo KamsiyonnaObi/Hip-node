@@ -6,10 +6,14 @@ import { CldUploadWidget } from "next-cloudinary";
 
 interface CoverImageProps {
   setParentFormData: (prevData: any) => void;
+  defaultImage?: string;
 }
 
-const CoverImage: React.FC<CoverImageProps> = ({ setParentFormData }) => {
-  const [imageUrl, setImageUrl] = useState("");
+const CoverImage: React.FC<CoverImageProps> = ({
+  setParentFormData,
+  defaultImage,
+}) => {
+  const [imageUrl, setImageUrl] = useState(defaultImage || "");
 
   const updateForm = (url: any) => {
     setParentFormData((prevData: any) => ({
@@ -38,7 +42,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ setParentFormData }) => {
               <div className="flex">
                 <button
                   onClick={handleOnClick}
-                  className="flex w-[6rem] items-center gap-[.625rem] rounded-[.25rem] bg-background2 px-[.625rem] py-[.25rem] dark:bg-dark4"
+                  className="mb-[1.25rem] flex w-[6rem] items-center gap-[.625rem] rounded-[.25rem] bg-background2 px-[.625rem] py-[.25rem] dark:bg-dark4"
                 >
                   <OutlineIcon.Image1 className="w-[22px] fill-black dark:fill-white" />
                   <p className="text-sm-regular text-secondary2 dark:text-background">
@@ -55,15 +59,13 @@ const CoverImage: React.FC<CoverImageProps> = ({ setParentFormData }) => {
           <OutlineIcon.Image2 className="h-[1.875rem] w-[1.875rem] fill-white dark:fill-dark4 dark:stroke-secondary4 lg:h-[2.5rem] lg:w-[2.5rem]" />
         ) : (
           <div>
-            <div>
-              <Image
-                src={imageUrl}
-                alt={"Cover"}
-                width={840}
-                height={167}
-                className="h-[167px] w-[840px] lg:h-[223px] lg:w-[1120px]"
-              />
-            </div>
+            <Image
+              src={imageUrl}
+              alt={"Cover"}
+              width={840}
+              height={167}
+              className="h-[167px] w-[840px] lg:h-[223px] lg:w-[1120px]"
+            />
           </div>
         )}
       </div>
