@@ -61,7 +61,7 @@ const InterviewPost = ({
             <OutlineIcon.VerticalDots className="fill-secondary5" />
             {showPopup && (
               <div className="absolute right-1 top-6">
-                <EditDeletePopup />
+                <EditDeletePopup interviewId={_id} />
               </div>
             )}
           </div>

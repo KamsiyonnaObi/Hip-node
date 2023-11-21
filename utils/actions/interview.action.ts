@@ -60,7 +60,7 @@ export async function updateInterview(params: Partial<IInterview>) {
   }
 }
 
-export async function deleteInterview(InterviewId: number) {
+export async function deleteInterview(InterviewId: string) {
   try {
     await dbConnect();
     const deletedInterview = await Interview.findByIdAndDelete(InterviewId);

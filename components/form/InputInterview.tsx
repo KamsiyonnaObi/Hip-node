@@ -26,7 +26,7 @@ import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
 import { createInterview } from "@/utils/actions/interview.action";
 
-export function InputInterview() {
+export function InputInterview({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,6 +34,8 @@ export function InputInterview() {
   const [coverUrl, setCoverUrl] = useState("");
 
   const router = useRouter();
+
+  const parsedDetail = editDetail && JSON.parse(editDetail || "");
 
   const updateForm = (url: string) => {
     setCoverUrl(url);
@@ -43,12 +45,12 @@ export function InputInterview() {
   const form = useForm<z.infer<typeof InterviewSchema>>({
     resolver: zodResolver(InterviewSchema),
     defaultValues: {
-      title: "",
-      desc: "",
+      title: parsedDetail?.title || "",
+      desc: parsedDetail?.desc || "",
       interviewTags: [],
-      revenue: 0,
-      updates: 0,
-      website: "",
+      revenue: parsedDetail?.revenue || 0,
+      updates: parsedDetail?.updates || 0,
+      website: parsedDetail?.website || "",
     },
   });
 

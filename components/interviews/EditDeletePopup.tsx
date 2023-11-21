@@ -3,15 +3,24 @@
 import React, { useState } from "react";
 
 import OutlineIcon from "../icons/OutlineIcon";
+import { deleteInterview } from "@/utils/actions/interview.action";
 
-const EditDeletePopup = () => {
+const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
   const [selected, setSelected] = useState(0);
 
   const handleSelect = (val: any) => {
     setSelected(val);
   };
 
-  const handleCloseForm = (val: any) => {
+  const handleCloseForm = async (val: any) => {
+    if (val === "Delete") {
+      try {
+        await deleteInterview(interviewId);
+        window.location.reload();
+      } catch (error) {
+        console.error("Error deleting interview");
+      }
+    }
     setSelected(0);
   };
   return (
@@ -24,7 +33,7 @@ const EditDeletePopup = () => {
               : "text-secondary2 dark:text-background2"
           }`}
           onMouseOver={() => handleSelect(1)}
-          onClick={() => handleCloseForm("Post")}
+          onClick={() => handleCloseForm("Edit")}
         >
           <OutlineIcon.Edit
             className={`${
@@ -42,7 +51,7 @@ const EditDeletePopup = () => {
               : "text-secondary2 dark:text-background2"
           }`}
           onMouseOver={() => handleSelect(2)}
-          onClick={() => handleCloseForm("Meetup")}
+          onClick={() => handleCloseForm("Delete")}
         >
           <OutlineIcon.Trash
             className={`${
