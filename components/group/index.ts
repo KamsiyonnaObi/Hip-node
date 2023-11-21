@@ -14,7 +14,7 @@ export { default as MostPopularButton } from "./MostPopularButton";
 export { default as NewlyLaunched } from "./NewlyLaunched";
 export { default as PodcastCard } from "./PodcastCard";
 export { default as Podcasts } from "./Podcasts";
-export { default as PopularTags } from "./PopularTags";
+export { default as PopularTagsGroups } from "./PopularTagsGroups";
 export { default as Post } from "./Post";
 export { default as PostGroup } from "./PostGroup";
 export { default as RecentMedia } from "./RecentMedia";

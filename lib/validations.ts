@@ -59,7 +59,7 @@ export const GroupSchema = z.object({
   description: z
     .string()
     .min(3, { message: "Must be 3 or more characters long" })
-    .max(100, { message: "Must be 100 or less characters long" }),
+    .max(200, { message: "Must be 200 or less characters long" }),
 
   admins: z.string().refine(
     (val) => {
@@ -90,7 +90,7 @@ export const InterviewSchema = z.object({
       message: "Description must be at least 12 characters.",
     })
     .max(200, { message: "Description must be less than 200 characters." }),
-  tags: z.array(z.string().min(1).max(15)).min(1).max(3),
+  interviewTags: z.array(z.string().min(1).max(15)).min(1).max(3),
   revenue: z.number(),
   updates: z.number(),
   website: z.string(),

@@ -13,6 +13,7 @@ import {
 } from "@/utils/actions/group.action";
 import useDebounce from "./GetUser";
 import UserSelect from "./UserSelect";
+import Link from "next/link";
 
 interface User {
   _id: string;
@@ -78,8 +79,6 @@ const AddGroup: React.FC = () => {
       }
     } catch (e) {
       if (e instanceof z.ZodError) {
-        console.log(e.issues);
-
         const errors: Record<string, string> = {};
 
         e.issues.forEach((issue) => {
@@ -115,10 +114,6 @@ const AddGroup: React.FC = () => {
 
   const [, setSuggestedUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -148,97 +143,95 @@ const AddGroup: React.FC = () => {
   }, [debouncedUserSearch]);
 
   return (
-    <>
-      <div className="flex max-w-[20.9375rem] xs:max-w-[30rem] sm:max-w-[38rem] md:max-w-[46rem]  flex-col gap-[1.25em] p-[1.25rem] bg-background dark:bg-dark3 lg:max-w-[55rem] w-full rounded-[1rem] mb-[13.44rem] lg:mb-[5.37rem] mt-[1.25rem] lg:mt-[1.88rem] sm">
-        <div>
-          <CoverImage setParentFormData={setFormData} />
-        </div>
-        <div>
-          <GroupImage setParentFormData={setFormData} />
-        </div>
-        <form>
-          <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
-              Group Name
-            </label>
-            <div>
-              <input
-                type="text"
-                name="title"
-                placeholder="Name..."
-                value={formData.title}
-                onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
-                  validationErrors.title ? "border-red" : ""
-                }`}
-              />
-              {validationErrors.title && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
-                  {validationErrors.title}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
-              Description
-            </label>
-            <div>
-              <textarea
-                name="description"
-                placeholder="Provide a short description..."
-                value={formData.description}
-                onChange={handleChange}
-                className={`border-background2 dark:border-dark4 flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] px-[1.25rem] py-[.75rem] caption-regular text-secondary3 dark:bg-dark3 ${
-                  validationErrors.description ? "border-red" : ""
-                }`}
-              />
-              {validationErrors.description && (
-                <p className="text-red text-xs-regular mb-[.62rem]">
-                  {validationErrors.description}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
-              Add admins
-            </label>
-            <div>
-              <UserSelect setter={setFormData} formKey="admins" />
-            </div>
-          </div>
-          <div className="flex flex-col gap-[.62rem]">
-            <label className="text-secondary2 caption-semibold dark:text-background2">
-              Add members
-            </label>
-            <div>
-              <UserSelect setter={setFormData} formKey="members" />
-            </div>
-          </div>
-
-          <div className="flex gap-[1.25rem]">
-            <button
-              type="button"
-              onClick={submitForm}
-              className="flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem]"
-            >
-              <p className="body-semibold text-background">Create</p>
-            </button>
-            <button className="my-auto flex items-center">
-              <p className="body-semibold  text-secondary3">Cancel</p>
-            </button>
-          </div>
-          <p
-            className={`text-xs-regular mt-[.1rem] ${
-              submitStatus === "Success" ? "text-green" : "text-red"
+    <main className="xs:max-w-[30rem] sm mb-[13.44rem] mt-[1.25rem] flex  w-full max-w-[20.9375rem] flex-col gap-[1.25em] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:max-w-[38rem] md:max-w-[46rem] lg:mb-[5.37rem] lg:mt-[1.88rem] lg:max-w-[55rem]">
+      <CoverImage setParentFormData={setFormData} />
+      <GroupImage setParentFormData={setFormData} />
+      <form>
+        <section className="flex flex-col gap-[.62rem]">
+          <label className="caption-semibold text-secondary2 dark:text-background2">
+            Group Name
+          </label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Name..."
+            value={formData.title}
+            onChange={handleChange}
+            className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
+              validationErrors.title ? "border-red" : ""
             }`}
+          />
+          {validationErrors.title && (
+            <p className="text-sm-regular mb-[.62rem] text-red">
+              {validationErrors.title}
+            </p>
+          )}
+        </section>
+        <section className="flex flex-col gap-[.62rem]">
+          <label className="caption-semibold text-secondary2 dark:text-background2">
+            Description
+          </label>
+          <textarea
+            name="description"
+            placeholder="Provide a short description..."
+            value={formData.description}
+            onChange={handleChange}
+            className={`caption-regular flex w-full min-w-[18.4375rem] max-w-[52.5rem] items-center rounded-[.5rem] border-[2px] border-background2 px-[1.25rem] py-[.75rem] text-secondary3 dark:border-dark4 dark:bg-dark3 ${
+              validationErrors.description ? "border-red" : ""
+            }`}
+          />
+          {validationErrors.description && (
+            <p className="text-sm-regular mb-[.62rem] text-red">
+              {validationErrors.description}
+            </p>
+          )}
+        </section>
+        <section className="flex flex-col gap-[.62rem]">
+          <label className="caption-semibold text-secondary2 dark:text-background2">
+            Add admins
+          </label>
+          <UserSelect setter={setFormData} formKey="admins" />
+          {validationErrors.admins && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.admins}
+            </p>
+          )}
+        </section>
+        <section className="flex flex-col gap-[.62rem]">
+          <label className="caption-semibold text-secondary2 dark:text-background2">
+            Add members
+          </label>
+          <UserSelect setter={setFormData} formKey="members" />
+          {validationErrors.members && (
+            <p className="text-sm-regular my-[.62rem] text-red">
+              {validationErrors.members}
+            </p>
+          )}
+        </section>
+
+        <section className="flex gap-[1.25rem]">
+          <button
+            type="button"
+            onClick={submitForm}
+            className="body-semibold flex w-[7.5rem] items-center justify-center gap-[0.625rem] rounded-[0.5rem] bg-blue px-[2.5rem] py-[0.625rem] text-background"
           >
-            {formStatus()}
-          </p>
-        </form>
-      </div>
-    </>
+            Create
+          </button>
+          <Link href="/groups">
+            <button className="body-semibold my-auto flex items-center text-secondary3">
+              Cancel
+            </button>
+          </Link>
+        </section>
+        <p
+          className={`text-sm-regular mt-[.1rem] ${
+            submitStatus === "Success" ? "text-green" : "text-red"
+          }`}
+        >
+          {formStatus()}
+        </p>
+      </form>
+    </main>
   );
 };
 
