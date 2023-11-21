@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Schema } from "mongoose";
 
+import moment from "moment";
 import { Input } from "../form/Input";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -24,16 +25,8 @@ const ProfileDetails = ({ profileData }: Props) => {
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
-  function monthsSinceJoined(joinedDate: Date): number {
-    const today = new Date();
-    const joined = new Date(joinedDate);
-    const todayMonth = today.getMonth();
-    const joinedMonth = joined.getMonth();
-    const months =
-      (today.getFullYear() - joined.getFullYear()) * 12 +
-      todayMonth -
-      joinedMonth;
-    return Math.abs(months);
+  function monthsSinceJoined(joinedDate: Date) {
+    return moment().diff(moment(joinedDate), "months");
   }
 
   // Use dummy data for remaining user data
