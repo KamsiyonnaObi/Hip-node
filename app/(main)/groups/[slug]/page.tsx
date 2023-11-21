@@ -10,11 +10,9 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
-import {
-  getGroupById,
-  getUsersBySimilarEmail,
-} from "@/utils/actions/group.action";
+
 import GroupError from "@/components/group/GroupError";
+import { getGroupById } from "@/utils/actions/group.action";
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
 
