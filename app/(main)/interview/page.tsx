@@ -32,6 +32,7 @@ const InterviewHomePage = async () => {
                 revenue={interview.revenue}
                 updates={interview.updates}
                 website={interview.website}
+                userId={interview.userId._id || "unknown"}
               />
             ))
           : "No Posts to Show!"}
