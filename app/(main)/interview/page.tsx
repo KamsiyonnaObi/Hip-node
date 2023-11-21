@@ -1,8 +1,8 @@
-import { InterviewCategory, InterviewPost, StartInterview } from "@/components";
+import { InterviewCategory, StartInterview } from "@/components";
 import PageWrapper from "@/components/PageWrapper";
 import PodcastsPreview from "@/components/interviews/podcasts/PodcastsPreview";
 import PostsRender from "@/components/interviews/posts/PostsRender";
-import { getAllInterviews } from "@/utils/actions/interview.action";
+import ArticleSkeleton from "@/components/interviews/skeleton/ArticleSkeleton";
 import { Suspense } from "react";
 
 const InterviewHomePage = async ({
@@ -23,7 +23,10 @@ const InterviewHomePage = async ({
           ]}
         />
       </aside>
-      <Suspense key={JSON.stringify(searchParams)} fallback={<p>Loading</p>}>
+      <Suspense
+        key={JSON.stringify(searchParams)}
+        fallback={<ArticleSkeleton />}
+      >
         <PostsRender searchParams={searchParams} />
       </Suspense>
       {/* Right Side Content */}
