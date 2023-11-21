@@ -4,8 +4,9 @@ import { useEffect, useState, useTransition } from "react";
 import clsx from "clsx";
 
 import FillIcon from "../icons/FillIcon";
-import { likePost, reportPost, sharePost } from "@/utils/actions/post.action";
+import { likePost, reportPost } from "@/utils/actions/post.action";
 import ShareModal from "./ShareModal";
+import ReportModal from "./ReportModal";
 
 interface Props {
   postId: string;
@@ -40,14 +41,23 @@ const ActionBar = ({
     hasReported || null
   );
   const [isPending, startTransition] = useTransition();
-  const [showModal, setShowModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
   useEffect(() => {
-    if (showModal) {
+    if (showShareModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [showModal]);
+  }, [showShareModal]);
+
+  useEffect(() => {
+    if (showReportModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showReportModal]);
 
   const handleLike = async () => {
     if (userId) {
@@ -65,12 +75,20 @@ const ActionBar = ({
     }
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const openShareModal = () => {
+    setShowShareModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeShareModal = () => {
+    setShowShareModal(false);
+  };
+
+  const openReportModal = () => {
+    setShowReportModal(true);
+  };
+
+  const closeReportModal = () => {
+    setShowReportModal(false);
   };
 
   // TODO: implement report function later
@@ -144,22 +162,22 @@ const ActionBar = ({
         <button
           disabled={isPending}
           className="h-7 w-7 rounded-md bg-background2 p-1 dark:bg-dark4"
-          onClick={openModal}
+          onClick={openShareModal}
         >
           <FillIcon.Share className="fill-secondary3" />
         </button>
 
         <p className="text-secondary3">Share</p>
       </div>
-      {showModal && (
+      {showShareModal && (
         <>
           <div
             className="fixed inset-0 z-10 bg-black opacity-50"
-            onClick={closeModal}
+            onClick={closeShareModal}
           ></div>
           <ShareModal
             url={`/posts/{$postId}`}
-            close={closeModal}
+            close={closeShareModal}
             title={title}
             body={body}
           />
@@ -173,7 +191,7 @@ const ActionBar = ({
             "bg-red10": isReported,
             "bg-background2 dark:bg-dark4": !isReported,
           })}
-          onClick={handleReport}
+          onClick={openReportModal}
         >
           <FillIcon.Report
             className={clsx({
@@ -191,6 +209,16 @@ const ActionBar = ({
           <p>Report</p>
         </div>
       </div>
+
+      {showReportModal && (
+        <>
+          <div
+            className="fixed inset-0 z-10 bg-black opacity-50"
+            onClick={openReportModal}
+          ></div>
+          <ReportModal close={closeReportModal} />
+        </>
+      )}
     </section>
   );
 };

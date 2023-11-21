@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { useState, useTransition } from "react";
 
 import FillIcon from "../icons/FillIcon";
-import OutlineIcon from "../icons/OutlineIcon";
 import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 import { ChatInput } from "@/components";
@@ -47,22 +46,24 @@ const Comment = ({
   const [isLiked, setIsLiked] = useState(hasLiked || false);
   const [showComment, setShowComment] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [showAllReplies, setShowAllReplies] = useState(false);
   const replyList = JSON.parse(replies || "");
+  const repliesToShow = showAllReplies ? replyList : replyList.slice(0, 3);
 
-  const handleLike = async () => {
-    if (currentUserId) {
-      startTransition(async () => {
-        const liked = await likeComment({
-          postId,
-          commentId,
-          currentUserId,
-          hasLiked,
-        });
-        if (!liked) return;
-        setIsLiked(liked.status);
-      });
-    }
-  };
+  // const handleLike = async () => {
+  //   if (currentUserId) {
+  //     startTransition(async () => {
+  //       const liked = await likeComment({
+  //         postId,
+  //         commentId,
+  //         currentUserId,
+  //         hasLiked,
+  //       });
+  //       if (!liked) return;
+  //       setIsLiked(liked.status);
+  //     });
+  //   }
+  // };
 
   let editedText;
   if (updatedAt) {
@@ -95,20 +96,33 @@ const Comment = ({
           <p className="body-regular text-secondary3">{text}</p>
         </article>
         <div className="flex gap-5 pl-[15px]">
-          <button disabled={isPending} onClick={handleLike}>
+          {/* <button disabled={isPending} onClick={handleLike}>
             <FillIcon.Heart
               className={clsx({
                 "fill-red80": isLiked,
                 "fill-secondary3": !isLiked,
               })}
             />
-          </button>
+          </button> */}
           <button onClick={() => setShowComment(!showComment)}>
             <FillIcon.Reply className="h-5 w-5 fill-secondary3" />
           </button>
-          <button>
-            <OutlineIcon.More className="h-5 w-5 fill-secondary3" />
-          </button>
+
+          {replyList.length > 5 && !showAllReplies ? (
+            <button onClick={() => setShowAllReplies(true)}>
+              <p className="md:h3-semibold body-semibold  text-secondary3">
+                View all comments
+              </p>
+            </button>
+          ) : (
+            showAllReplies && (
+              <button onClick={() => setShowAllReplies(false)}>
+                <p className="md:h3-semibold body-semibold text-secondary3">
+                  Hide comments
+                </p>
+              </button>
+            )
+          )}
         </div>
         {showComment && (
           <ChatInput
@@ -117,7 +131,7 @@ const Comment = ({
             currentUserImage={currentUserImage}
           />
         )}
-        {replyList.map((reply: IComments) => (
+        {repliesToShow.map((reply: IComments) => (
           <div key={JSON.stringify(reply._id)} className="text-lg text-white">
             <Comment
               commentId={reply._id}
