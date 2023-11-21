@@ -1,6 +1,6 @@
 import React from "react";
 import Html from "../shared/html";
-import { ImageFallback as Image } from "../shared/ImageFallback";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 interface Props {
   title: string;
@@ -16,9 +16,9 @@ const PodcastCardBig = ({ title, desc, name, location, avatar }: Props) => {
       <div className="gap-5">
         <div className="gap-2.5">
           <h3 className="md:h3-semibold display-semibold">{title}</h3>
-          <p className="md:body-regular caption-regular line-clamp-6">
+          <div className="md:body-regular caption-regular line-clamp-6">
             <Html htmltext={desc} />
-          </p>
+          </div>
         </div>
         <div className="flex flex-row gap-5">
           <Image src={avatar} alt="image" width={30} height={30} />

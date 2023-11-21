@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 
 import Html from "../shared/html";

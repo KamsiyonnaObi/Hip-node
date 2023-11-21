@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { Input } from "../form/Input";
 import React, { useState } from "react";
 import { Button } from "../ui/Button";
