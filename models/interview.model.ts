@@ -9,7 +9,7 @@ export interface IInterview extends Document {
   revenue: number;
   updates: number;
   website: string;
-  tags: string[];
+  interviewTags: string[];
 }
 
 const InterviewSchema = new Schema({
@@ -21,7 +21,7 @@ const InterviewSchema = new Schema({
   revenue: { type: Number, required: true },
   updates: { type: Number, default: 0 },
   website: { type: String, required: true },
-  tags: { type: [String] },
+  interviewTags: { type: [String] },
 });
 
 const Interview = models.Interview || model("Interview", InterviewSchema);
