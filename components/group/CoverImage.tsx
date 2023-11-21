@@ -25,7 +25,8 @@ const CoverImage: React.FC<CoverImageProps> = ({
   return (
     <div>
       <CldUploadWidget
-        uploadPreset="bl8ltxxe"
+        uploadPreset="ml_images"
+        options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
         onUpload={(result: any) => {
           updateForm(result?.info?.secure_url);
           setImageUrl(result?.info?.secure_url);

@@ -126,7 +126,8 @@ export function InputInterview() {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}

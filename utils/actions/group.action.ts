@@ -152,3 +152,16 @@ export async function getUsersBySimilarName(name: string) {
     return "[]";
   }
 }
+
+export async function findById(admins: any) {
+  try {
+    await dbConnect();
+    const users = await UserModel.find({
+      _id: { $in: admins },
+    }).select("username");
+    return JSON.stringify(users);
+  } catch (error) {
+    return "[]";
+  }
+}
+
