@@ -6,18 +6,16 @@ type Props = { profileImage: string; _id: string };
 
 const Member = ({ profileImage, _id }: Props) => {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex h-[2.5rem] w-[2.5rem] rounded-full bg-purple10">
-        <Link href={`/profile/${_id}`}>
-          <Image
-            src={profileImage}
-            width={34}
-            height={34}
-            alt="Avatar"
-            className="m-auto mt-1"
-          />
-        </Link>
-      </div>
+    <div className="flex h-[2.5rem] w-[2.5rem] content-center items-center justify-center overflow-hidden rounded-full bg-purple10">
+      <Link href={`/profile/${_id}`}>
+        <Image
+          src={profileImage}
+          width={34}
+          height={34}
+          alt="Avatar"
+          className="rounded-full"
+        />
+      </Link>
     </div>
   );
 };
