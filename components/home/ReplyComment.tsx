@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { format } from "date-fns";
 
 import FillIcon from "../icons/FillIcon";
@@ -28,7 +28,7 @@ const ReplyComment = ({
   }
 
   return (
-    <section className="flex gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3">
+    <section className="flex gap-5 bg-background2 dark:bg-dark2 md:bg-background md:dark:bg-dark3">
       <div className="flex">
         <Curve className="h-11 w-11 stroke-secondary5" />
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">

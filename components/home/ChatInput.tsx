@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import { profileData } from "@/constants/dummy";
 import FillIcon from "../icons/FillIcon";

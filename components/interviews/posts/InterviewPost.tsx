@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { ShadButton } from "@/components/ui/ShadButton";

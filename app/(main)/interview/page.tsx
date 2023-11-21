@@ -1,7 +1,8 @@
 import { InterviewCategory, InterviewPost, StartInterview } from "@/components";
 import PageWrapper from "@/components/PageWrapper";
-import PodcastsPreview from "@/components/interviews/podcasts/PodcastsPreview";
 import UserModel from "@/models/User";
+
+import Podcasts from "@/components/Podcasts";
 import { getAllInterviews } from "@/utils/actions/interview.action";
 import { getServerSession } from "next-auth";
 
@@ -51,7 +52,7 @@ const InterviewHomePage = async () => {
         {/* Start your interview */}
         <StartInterview />
         {/* Podcasts */}
-        <PodcastsPreview />
+        <Podcasts />
       </aside>
     </PageWrapper>
   );
