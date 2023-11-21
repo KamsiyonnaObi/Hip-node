@@ -92,7 +92,7 @@ const ProfileDetails = ({ profileData }: Props) => {
               </h1>
               <textarea
                 placeholder="Add a bio"
-                className="body-regular w-full rounded-md border border-secondary2 bg-transparent px-3 py-2 "
+                className="resize-none body-regular w-full rounded-md border border-secondary2 bg-transparent px-3 py-2 "
               />
             </div>
             <article className="flex flex-col gap-2.5">
