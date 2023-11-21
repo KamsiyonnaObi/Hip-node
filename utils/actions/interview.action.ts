@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 export async function createInterview(params: Partial<IInterview>) {
   try {
     await dbConnect();
-    await dbConnect();
+
     // get the userID from the session
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;

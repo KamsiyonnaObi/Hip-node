@@ -23,6 +23,7 @@ const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
     }
     setSelected(0);
   };
+
   return (
     <ul className=" w-[170px] gap-2.5 rounded-[10px] border border-secondary5 bg-background p-4 dark:border-secondary2 dark:bg-dark4">
       <ul className="flex flex-col gap-2.5">

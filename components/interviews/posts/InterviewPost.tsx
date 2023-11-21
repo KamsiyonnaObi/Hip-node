@@ -8,7 +8,7 @@ import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditDeletePopup from "../EditDeletePopup";
 
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
   image: string;
   _id: string;
   userId?: string;
+  showEdit: boolean;
 }
 
 const InterviewPost = ({
@@ -35,9 +36,25 @@ const InterviewPost = ({
   image,
   _id,
   userId,
+  showEdit,
 }: Props) => {
   const [showPopup, setShowPopup] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (!menuRef.current) return;
+    if (!menuRef.current.contains(e.target as Node)) {
+      setShowPopup(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
   return (
     <article className="flex w-full items-center justify-between gap-8 rounded-2xl bg-bkg-2 p-5 text-interviewText md:flex-row">
       <div className="flex w-full flex-col gap-5 lg:max-w-[435px]">
@@ -57,8 +74,14 @@ const InterviewPost = ({
               </time>
             </div>
           </div>
-          <div className="relative" onClick={() => setShowPopup(!showPopup)}>
-            <OutlineIcon.VerticalDots className="fill-secondary5" />
+          <div
+            className="relative"
+            ref={menuRef}
+            onClick={() => setShowPopup(!showPopup)}
+          >
+            {showEdit && (
+              <OutlineIcon.VerticalDots className="fill-secondary5" />
+            )}
             {showPopup && (
               <div className="absolute right-1 top-6">
                 <EditDeletePopup interviewId={_id} />
