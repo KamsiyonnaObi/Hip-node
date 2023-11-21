@@ -26,30 +26,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
     );
   const { title, coverUrl, groupUrl, description } = group.data;
   const { username } = group.data.userId;
-  const admins = group.data.admins;
-  const members = group.data.members;
-
-  const adminData = admins.map(
-    (admin: { username: string; avatar: string; link: string }) => {
-      return {
-        username: admin.username,
-        avatar: admin.avatar,
-        link: admin.link,
-      };
-    }
-  );
-
-  const memberData = members.map(
-    (member: { username: string; avatar: string; link: string }) => {
-      return {
-        username: member.username,
-        avatar: member.avatar,
-        link: member.link,
-      };
-    }
-  );
-
-  console.log(adminData, memberData);
 
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] lg:max-w-[1400px]">
