@@ -1,6 +1,6 @@
 import React from "react";
-import Image from "next/image";
 import Html from "../shared/html";
+import { ImageFallback as Image } from "../shared/ImageFallback";
 
 interface Props {
   title: string;

@@ -1,5 +1,5 @@
 import PodcastBanner from "@/components/podcasts/PodcastBanner";
-import { html } from "@/lib/utils";
+import Html from "@/components/shared/html";
 import { getPodcast } from "@/utils/actions/podcast.action";
 import React from "react";
 
@@ -17,7 +17,9 @@ const page = async ({ params }: { params: { id: string } }) => {
       <div className="w-[335px] rounded-[16px] bg-background p-5 dark:bg-dark3 md:w-[785px]">
         <div className="gap-5">
           <h1 className="h1-semibold dark:text-background2">{result.title}</h1>
-          <p className="display-regular text-secondary3">{html(result.desc)}</p>
+          <div className="display-regular text-secondary3">
+            <Html htmltext={result.desc} />
+          </div>
         </div>
       </div>
     </main>

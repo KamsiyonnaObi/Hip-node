@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { ImageFallback as Image } from "../shared/ImageFallback";
 import OutlineIcon from "../icons/OutlineIcon";
 
 interface Props {
