@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import Link from "next/link";
 
 function monthsSinceJoined(joinedDate: Date): number {

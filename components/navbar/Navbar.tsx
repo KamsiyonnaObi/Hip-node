@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";

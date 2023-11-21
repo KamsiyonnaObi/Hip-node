@@ -1,5 +1,5 @@
 import ProfileDetails from "./ProfileDetails";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { getServerSession } from "next-auth/next";
 
 import { getUserProfile } from "@/utils/actions/user.action";

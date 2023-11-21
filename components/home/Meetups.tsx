@@ -2,6 +2,7 @@ import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import MeetupCard from "./MeetupCard";
 import { getAllMeetups } from "@/utils/actions/meetup.action";
+import Link from "next/link";
 
 const Meetups = async () => {
   const result = await getAllMeetups({});
@@ -10,7 +11,9 @@ const Meetups = async () => {
     <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2">
       <section className="display-semibold mb-5 flex flex-row items-center gap-[3px]">
         <p>Meetups</p>
-        <OutlineIcon.ArrowLeft />
+        <Link href="./meetups">
+          <OutlineIcon.ArrowLeft className="stroke-secondary2 dark:stroke-background2" />
+        </Link>
       </section>
       <div className="flex flex-col gap-[20px] rounded-[16px] dark:bg-dark3">
         {result.meetups.length > 0

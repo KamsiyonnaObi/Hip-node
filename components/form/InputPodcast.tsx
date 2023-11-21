@@ -8,25 +8,22 @@ import { z } from "zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Badge } from "../ui/badge";
-import { PostSchema } from "@/lib/validations";
+import { PodcastSchema } from "@/lib/validations";
 import { Input } from "../ui/input";
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   Form,
 } from "../ui/form";
 import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
-import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
+import { createPodcast } from "@/utils/actions/podcast.action";
 
-export function InputPost() {
+export function InputPodcast() {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
@@ -36,29 +33,19 @@ export function InputPost() {
 
   const router = useRouter();
 
-  const [expanded, setExpanded] = useState(0);
-  const [create, setCreate] = useState("Post");
-
-  const toggleCategory = () => {
-    setExpanded(expanded !== 2 ? 2 : 0);
-  };
-
-  const closeCategory = (val: any) => {
-    setExpanded(0);
-    setCreate(val);
-  };
-
   const updateForm = (url: string) => {
     setCoverUrl(url);
   };
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof PostSchema>>({
-    resolver: zodResolver(PostSchema),
+  const form = useForm<z.infer<typeof PodcastSchema>>({
+    resolver: zodResolver(PodcastSchema),
     defaultValues: {
       title: "",
-      contents: "",
-      tags: [],
+      desc: "",
+      type: "",
+      episode: 0,
+      location: "",
     },
   });
 
@@ -67,49 +54,21 @@ export function InputPost() {
     setIsSubmitting(true);
     try {
       const values = form.getValues();
-      const postData = {
+      const podcastData = {
         title: values.title,
-        content: values.contents,
-        tags: values.tags,
+        desc: values.desc,
         image: coverUrl,
-        avatar: "/Avatar.png",
+        audioPath: "this is an audio path",
+        type: values.type,
+        episode: values.episode,
+        location: values.location,
       };
-      const id = await createPost(postData);
+      const id = await createPodcast(podcastData);
+      console.log(id);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleInputKeydown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
-  ) => {
-    if (e.key === "Enter" && field.name === "tags") {
-      e.preventDefault();
-      const tagInput = e.target as HTMLInputElement;
-      const tagValue = tagInput.value.trim();
-      if (tagValue !== "") {
-        if (tagValue.length > 15) {
-          return form.setError("tags", {
-            type: "required",
-            message: "Tag must be less than 15 characters.",
-          });
-        }
-        if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
-          tagInput.value = "";
-          form.clearErrors("tags");
-        }
-      } else {
-        form.trigger();
-      }
-    }
-  };
-
-  const handleTagRemove = (tag: string, field: any) => {
-    const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("tags", newTags);
   };
 
   return (
@@ -161,35 +120,6 @@ export function InputPost() {
                         );
                       }}
                     </CldUploadWidget>
-
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2"
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Select Group
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
-                    <div className="relative">
-                      <Button
-                        color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
-                        type="button"
-                        onClick={toggleCategory}
-                      >
-                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                          <span className="text-secondary3">Create</span> -{" "}
-                          {create}
-                        </p>
-                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                      </Button>
-                      {expanded === 2 && (
-                        <div className="absolute left-0 z-50 mt-2">
-                          <PostCategory closeCategory={closeCategory} />
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
               </FormControl>
@@ -200,7 +130,7 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="contents"
+          name="desc"
           render={({ field }) => (
             <FormItem>
               <div className="flex">
@@ -276,35 +206,59 @@ export function InputPost() {
 
         <FormField
           control={form.control}
-          name="tags"
+          name="episode"
           render={({ field }) => (
-            <FormItem className="my-5">
-              <FormLabel className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
-                Add or change tags (up to 5) so readers know what your story is
-                about
-              </FormLabel>
-              <FormControl>
-                <>
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <h3 className="h3-semibold text-secondary2 dark:text-background2">
+                    Episode #:
+                  </h3>
                   <Input
-                    placeholder="Add a tag..."
-                    className="caption-regular md:body-regular border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
-                    onKeyDown={(e) => handleInputKeydown(e, field)}
+                    defaultValue={1}
+                    type="number"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
                   />
-                  {Array.isArray(field.value) && field.value.length > 0 && (
-                    <div className="mt-2.5 flex items-start gap-2.5">
-                      {field.value.map((tag: any) => (
-                        <Badge
-                          key={tag}
-                          className="flex items-center justify-center gap-2 rounded-md border-none bg-background px-4 py-2 capitalize text-secondary2 hover:bg-background/80 dark:bg-dark4 dark:text-background2 hover:dark:bg-dark4/80"
-                          onClick={() => handleTagRemove(tag, field)}
-                        >
-                          {tag}
-                          <OutlineIcon.Close className="cursor-pointer object-contain invert-0 dark:invert" />
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </>
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Type..."
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Location..."
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage className="text-red90" />
             </FormItem>
@@ -312,7 +266,7 @@ export function InputPost() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/home">
+          <Link href="/podcast">
             <Button
               type="submit"
               color="blue"
