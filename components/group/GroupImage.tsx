@@ -5,10 +5,14 @@ import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
 interface GroupImageProps {
   setParentFormData: (prevData: any) => void;
+  defaultImage?: string;
 }
 
-const GroupImage: React.FC<GroupImageProps> = ({ setParentFormData }) => {
-  const [imageUrl, setImageUrl] = useState("");
+const GroupImage: React.FC<GroupImageProps> = ({
+  setParentFormData,
+  defaultImage,
+}) => {
+  const [imageUrl, setImageUrl] = useState(defaultImage || "");
 
   const updateForm = (url: any) => {
     setParentFormData((prevData: any) => ({

@@ -84,11 +84,7 @@ export function InputMeetup() {
         day: day.toString(),
       };
 
-      console.log(meetupData);
-      console.log("HERE");
-
       const id = await createMeetup(meetupData);
-      console.log(id);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
