@@ -12,6 +12,12 @@ import {
 } from "@/components/group";
 import { getGroupById } from "@/utils/actions/group.action";
 import GroupError from "@/components/group/GroupError";
+interface UserAdmin {
+  _id: string;
+  fullName?: string;
+  profileImage: string;
+}
+
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
 
@@ -23,23 +29,18 @@ const page = async ({ params }: { params: { slug: string } }) => {
     );
   const { title, coverUrl, groupUrl, description } = group.data;
   const { username } = group.data.userId;
-  const admins = group.data.admins.map(
-    (admin: { _id: any; fullName: any; profileImage: any }) => ({
-      _id: admin._id,
-      fullName: admin.fullName,
-      profileImage: admin.profileImage,
-    })
-  );
-  const members = group.data.members.map(
-    (member: { _id: any; profileImage: any }) => ({
-      _id: member._id,
-
-      profileImage: member.profileImage,
-    })
-  );
+  const admins = group.data.admins.map((admin: UserAdmin) => ({
+    _id: admin._id,
+    fullName: admin.fullName,
+    profileImage: admin.profileImage,
+  }));
+  const members = group.data.members.map((member: UserAdmin) => ({
+    _id: member._id,
+    profileImage: member.profileImage,
+  }));
 
   return (
-    <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] lg:max-w-[1400px]">
+    <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] ">
       <div className="grid grid-cols-1 gap-[1.25rem] sm:px-[5rem] md:grid-cols-[65%_auto] lg:grid-cols-[auto_58%_auto] ">
         <section className="md:h-0 lg:col-start-2 lg:row-start-1">
           <div className="lg:w-[800px]">

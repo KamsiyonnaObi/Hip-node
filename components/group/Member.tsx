@@ -1,19 +1,22 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-type Props = { profileImage: string };
+type Props = { profileImage: string; _id: string };
 
-const Member = ({ profileImage }: Props) => {
+const Member = ({ profileImage, _id }: Props) => {
   return (
     <div className="flex items-center justify-between">
-      <div className="h-[2.5rem] w-[2.5rem] rounded-full bg-purple10">
-        <Image
-          src={profileImage}
-          width={34}
-          height={34}
-          alt="Avatar"
-          className="m-auto mt-1"
-        />
+      <div className="flex h-[2.5rem] w-[2.5rem] rounded-full bg-purple10">
+        <Link href={`/profile/${_id}`}>
+          <Image
+            src={profileImage}
+            width={34}
+            height={34}
+            alt="Avatar"
+            className="m-auto mt-1"
+          />
+        </Link>
       </div>
     </div>
   );
