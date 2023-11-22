@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import clsx from "clsx";
 
 import FillIcon from "../icons/FillIcon";
-import { likePost, reportPost } from "@/utils/actions/post.action";
+import { likePost } from "@/utils/actions/post.action";
 import ShareModal from "./ShareModal";
 import ReportModal from "./ReportModal";
 
@@ -85,19 +85,19 @@ const ActionBar = ({
   };
 
   // TODO: implement report function later
-  const handleReport = async () => {
-    if (userId) {
-      startTransition(async () => {
-        const reported = await reportPost({
-          postId: JSON.parse(postId),
-          userId: JSON.parse(userId),
-          hasReported: isReported,
-        });
-        if (!reported) return;
-        setIsReported(reported.status);
-      });
-    }
-  };
+  // const handleReport = async () => {
+  //   if (userId) {
+  //     startTransition(async () => {
+  //       const reported = await reportPost({
+  //         postId: JSON.parse(postId),
+  //         userId: JSON.parse(userId),
+  //         hasReported: isReported,
+  //       });
+  //       if (!reported) return;
+  //       setIsReported(reported.status);
+  //     });
+  //   }
+  // };
 
   return (
     <section className="flex w-full flex-col items-start justify-start gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
@@ -38,7 +37,7 @@ const ChatInput = ({
     };
   }, [showPicker]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       await addComments({

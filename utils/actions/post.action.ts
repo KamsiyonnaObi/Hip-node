@@ -8,7 +8,6 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 import UserModel from "@/models/User";
-const { GroupModel } = require("@/models/group.model");
 
 export async function createPost(params: any) {
   try {
