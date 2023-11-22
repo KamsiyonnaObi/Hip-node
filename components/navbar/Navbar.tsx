@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
@@ -16,8 +16,10 @@ import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
+  const [searchText, setSearchText] = useState("");
 
   const toggleMenu = () => {
     setExpanded(expanded !== 1 ? 1 : 0);
@@ -29,6 +31,19 @@ const Navbar = () => {
 
   const toggleNotif = () => {
     setExpanded(expanded !== 3 ? 3 : 0);
+  };
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      const currentPath = pathname.split("/")[1];
+      if (searchText === "") {
+        router.push(currentPath);
+      } else {
+        const route = `/${currentPath}?search=${searchText}`;
+        setSearchText("");
+        router.push(route);
+      }
+    }
   };
 
   return (
@@ -100,6 +115,9 @@ const Navbar = () => {
               divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
+              onChange={(e: any) => setSearchText(e.target.value)}
+              value={searchText}
+              onKeyDown={(e: any) => handleKeyDown(e)}
             >
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>

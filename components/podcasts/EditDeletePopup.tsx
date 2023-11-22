@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import OutlineIcon from "../icons/OutlineIcon";
-import { deleteInterview } from "@/utils/actions/interview.action";
+import { deletePodcast } from "@/utils/actions/podcast.action";
 
-const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
+const EditDeletePopup = ({ podcastId }: { podcastId: string }) => {
   const router = useRouter();
   const [selected, setSelected] = useState(0);
 
@@ -16,12 +16,12 @@ const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
 
   const handleCloseForm = async (val: any) => {
     if (val === "Edit") {
-      router.push(`/interview/edit/${interviewId}`);
+      router.push(`/podcast/edit/${podcastId}`);
     }
     if (val === "Delete") {
       try {
-        await deleteInterview(interviewId);
-        window.location.reload();
+        await deletePodcast(podcastId);
+        router.push("/podcast");
       } catch (error) {
         console.error("Error deleting interview");
       }

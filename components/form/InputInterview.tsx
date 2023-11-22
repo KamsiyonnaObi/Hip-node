@@ -24,19 +24,23 @@ import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
-import { createInterview } from "@/utils/actions/interview.action";
+import {
+  createInterview,
+  updateInterview,
+} from "@/utils/actions/interview.action";
 
 export function InputInterview({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [coverUrl, setCoverUrl] = useState("");
-
   const router = useRouter();
 
   const parsedDetail = editDetail && JSON.parse(editDetail || "");
 
+  const groupedTags = parsedDetail?.interviewTags.map((tag: any) => tag);
+
+  const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
   const updateForm = (url: string) => {
     setCoverUrl(url);
   };
@@ -47,7 +51,7 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
     defaultValues: {
       title: parsedDetail?.title || "",
       desc: parsedDetail?.desc || "",
-      interviewTags: [],
+      interviewTags: groupedTags || [],
       revenue: parsedDetail?.revenue || 0,
       updates: parsedDetail?.updates || 0,
       website: parsedDetail?.website || "",
@@ -59,7 +63,6 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
     setIsSubmitting(true);
     try {
       const values = form.getValues();
-
       const interviewData = {
         title: values.title,
         revenue: values.revenue,
@@ -70,7 +73,14 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
         image: coverUrl,
       };
 
-      const id = await createInterview(interviewData);
+      if (editDetail) {
+        await updateInterview({
+          ...interviewData,
+          interviewId: parsedDetail?._id,
+        });
+      } else {
+        await createInterview(interviewData);
+      }
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -187,7 +197,7 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Meetup Details..."
+                  initialValue={parsedDetail?.desc || `Interview Details...`}
                   init={{
                     height: 376,
                     menubar: false,

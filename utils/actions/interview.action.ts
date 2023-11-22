@@ -50,10 +50,30 @@ export async function getInterview(InterviewId: string) {
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
-export async function updateInterview(params: Partial<IInterview>) {
+export async function updateInterview(params: any) {
   try {
     await dbConnect();
+    const {
+      title,
+      desc,
+      image,
+      revenue,
+      updates,
+      website,
+      interviewTags,
+      interviewId,
+    } = params;
+
+    const interview = await Interview.findById(interviewId);
+    interview.title = title;
+    interview.desc = desc;
+    interview.image = image;
+    interview.revenue = revenue;
+    interview.updates = updates;
+    interview.website = website;
+    interview.interviewTags = interviewTags;
+
+    await interview.save();
   } catch (error) {
     console.log(error);
     throw error;
