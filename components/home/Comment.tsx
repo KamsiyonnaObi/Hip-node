@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import clsx from "clsx";
 import { useState, useTransition } from "react";
 
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
@@ -71,6 +71,7 @@ const Comment = ({
   }
   return (
     <section className="flex gap-5 bg-background2 dark:bg-dark2 md:bg-background md:dark:bg-dark3">
+    <section className="flex gap-5 bg-background2 dark:bg-dark2 md:bg-background md:dark:bg-dark3">
       <div className="flex w-11 flex-col">
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
           <Image
@@ -86,6 +87,7 @@ const Comment = ({
         </div>
         <VerticalLine className="w-11 grow basis-0 stroke-secondary5" />
       </div>
+      <section className="flex flex-col gap-[15px] pb-5 md:pb-[30px]">
       <section className="flex flex-col gap-[15px] pb-5 md:pb-[30px]">
         <article className="flex flex-col gap-[15px] rounded-3xl border border-secondary5 p-[15px]">
           <p className="md:body-regular caption-regular text-secondary2 dark:text-background2 ">

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import Link from "next/link";

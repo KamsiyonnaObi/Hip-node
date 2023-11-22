@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { ChatInput } from "@/components";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import ChatInput from "./ChatInput";
 
 interface Props {
   title: string;
