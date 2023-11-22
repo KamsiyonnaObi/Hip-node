@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -25,6 +25,7 @@ import { useTheme } from "next-themes";
 import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPost } from "@/utils/actions/post.action";
+import GroupCategory from "../group/GroupCategory";
 
 export function InputPost() {
   const { theme } = useTheme();
@@ -37,10 +38,15 @@ export function InputPost() {
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
+  const [showGroup, setShowGroup] = useState(false);
   const [create, setCreate] = useState("Post");
 
   const toggleCategory = () => {
     setExpanded(expanded !== 2 ? 2 : 0);
+  };
+
+  const toggleGroups = () => {
+    setShowGroup(!showGroup);
   };
 
   const closeCategory = (val: any) => {
@@ -59,9 +65,13 @@ export function InputPost() {
       title: "",
       contents: "",
       tags: [],
+      groupId: "",
     },
   });
 
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
   // 2. Define a submit handler.
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -162,16 +172,24 @@ export function InputPost() {
                         );
                       }}
                     </CldUploadWidget>
-
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2"
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Select Group
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
+                    <div className="relative">
+                      <Button
+                        color="blackWhite"
+                        className="items-center justify-between px-2.5 py-2"
+                        type="button"
+                        onClick={toggleGroups}
+                      >
+                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                          Select Group
+                        </p>
+                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
+                      </Button>
+                      {showGroup && (
+                        <div className="absolute left-0 z-50 mt-2">
+                          <GroupCategory form={form} />
+                        </div>
+                      )}
+                    </div>
                     <div className="relative">
                       <Button
                         color="blackWhite"

@@ -166,3 +166,12 @@ export async function findById(admins: any) {
   }
 }
 
+export async function findAllGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({});
+    return JSON.stringify(groups);
+  } catch (error) {
+    return "[]";
+  }
+}

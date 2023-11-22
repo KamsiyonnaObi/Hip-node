@@ -7,6 +7,7 @@ export const PostSchema = z.object({
       message: "Title must be at least 5 characters.",
     })
     .max(60, { message: "Title must be less than 60 characters." }),
+  groupId: z.string(),
   contents: z
     .string()
     .min(12, {
