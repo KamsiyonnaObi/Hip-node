@@ -14,8 +14,29 @@ import OutlineIcon from "@/components/icons/OutlineIcon";
 import { cn } from "@/utils";
 
 const InterviewCategory = ({ categories }: { categories: string[] }) => {
-  const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(true);
+  const [checkedState, setCheckedState] = useState(
+    Object.assign({}, ...categories.map((key) => ({ [key]: false })))
+  );
+
+  const handleOnChange = (value: boolean, category: string) => {
+    setCheckedState((prevState: object) => ({
+      ...prevState,
+      [category]: value,
+    }));
+
+    const newObj = { ...checkedState, [category]: value };
+
+    const filtered = Object.keys(newObj).filter((k) => newObj[k] === true);
+
+    const mappedCats = filtered.map((cat) => `tags=${cat}`);
+
+    const params = mappedCats.join("&");
+    const searchParams = `?${params}`;
+
+    router.push("interview" + searchParams);
+  };
 
   return (
     <div className="w-full rounded-2xl bg-bkg-2 p-5 text-defaultText md:w-52">
@@ -35,19 +56,13 @@ const InterviewCategory = ({ categories }: { categories: string[] }) => {
             />
           </CollapsibleTrigger>
         </div>
-        <button
-          onClick={() =>
-            router.push("/interview?revenue=" + Math.random() * 20000)
-          }
-        >
-          Hello
-        </button>
         <CollapsibleContent>
           <ul className="flex flex-col gap-3">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <CategoryLabel
                 key={category.toLocaleLowerCase()}
                 category={category}
+                onChange={handleOnChange}
               />
             ))}
           </ul>

@@ -10,18 +10,18 @@ const InterviewHomePage = async ({
 }: {
   searchParams: URLSearchParams;
 }) => {
+  const categories = [
+    "technology",
+    "marketing",
+    "finance",
+    "education",
+    "healthcare",
+  ];
+
   return (
     <PageWrapper>
       <aside className="order-2 md:order-1">
-        <InterviewCategory
-          categories={[
-            "technology",
-            "marketing",
-            "finance",
-            "education",
-            "healthcare",
-          ]}
-        />
+        <InterviewCategory categories={categories} />
       </aside>
       <Suspense
         key={JSON.stringify(searchParams)}

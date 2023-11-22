@@ -71,15 +71,22 @@ export async function deleteInterview(InterviewId: number) {
   }
 }
 
+function convertTags(item: string | Array<String> | undefined) {
+  if (!item) return {};
+  if (typeof item === "string") return { tags: { $in: [item] } };
+  return { tags: { $in: [...item] } };
+}
+
 export async function getAllInterviews(params: any) {
-  const { revenue } = params;
+  const { tags } = params;
 
   try {
     await dbConnect();
 
-    const interviews = await Interview.find({ revenue: { $lte: revenue } })
+    const interviews = await Interview.find(convertTags(tags))
       .populate("userId")
       .sort({ createdAt: -1 });
+
     return { interviews };
   } catch (error) {
     console.log(error);
