@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";

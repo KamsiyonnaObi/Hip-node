@@ -1,6 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import Link from "next/link";
 
 import FillIcon from "../icons/FillIcon";

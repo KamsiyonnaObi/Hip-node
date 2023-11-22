@@ -1,6 +1,7 @@
 import Html from "../shared/html";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
+import OutlineIcon from "../icons/OutlineIcon";
 
 interface Props {
   image: string;
@@ -52,15 +53,18 @@ const MeetupCardBig = ({
         <section className="caption-regular md:body-regular text-secondary2 dark:text-background2">
           <Html htmltext={desc} />
         </section>
-        <section className="flex flex-row gap-[10px]">
-          {jobType.map((type, index) => (
-            <div
-              key={index}
-              className="text-xs-semibold md:caption-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4"
-            >
-              {type}
-            </div>
-          ))}
+        <section className="flex flex-row justify-between">
+          <section className="flex flex-row gap-[10px]">
+            {jobType.map((type, index) => (
+              <div
+                key={index}
+                className="text-xs-semibold md:caption-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4 dark:bg-dark4"
+              >
+                {type}
+              </div>
+            ))}
+          </section>
+          <OutlineIcon.VerticalDots className="fill-dark1 dark:fill-secondary5" />
         </section>
       </div>
     </article>

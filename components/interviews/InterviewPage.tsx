@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 
+import Html from "../shared/html";
 import { formatNumber } from "@/utils";
 import PageWrapper from "../PageWrapper";
 import OutlineIcon from "../icons/OutlineIcon";
-import { html } from "@/lib/utils";
 
 interface ResultType {
   image: string;
@@ -64,7 +64,9 @@ const InterviewPage = ({ result }: { result: ResultType }) => {
               ))}
             </div>
           </div>
-          <section className="text-secondary3">{html(result.desc)}</section>
+          <section className="text-secondary3">
+            <Html htmltext={result.desc} />
+          </section>
         </div>
       </article>
     </PageWrapper>

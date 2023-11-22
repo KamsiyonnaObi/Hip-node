@@ -10,7 +10,7 @@ import {
   Post,
   CreateGroup,
 } from "@/components/group";
-import { getGroupById } from "@/utils/actions/group.action";
+
 import GroupError from "@/components/group/GroupError";
 interface UserAdmin {
   _id: string;
@@ -18,6 +18,7 @@ interface UserAdmin {
   profileImage: string;
 }
 
+import { getGroupById } from "@/utils/actions/group.action";
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
 
@@ -38,6 +39,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     _id: member._id,
     profileImage: member.profileImage,
   }));
+
 
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] ">
