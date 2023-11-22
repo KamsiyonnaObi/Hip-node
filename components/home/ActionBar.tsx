@@ -43,21 +43,14 @@ const ActionBar = ({
   const [isPending, startTransition] = useTransition();
   const [showShareModal, setShowShareModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
-  useEffect(() => {
-    if (showShareModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [showShareModal]);
 
   useEffect(() => {
-    if (showReportModal) {
+    if (showShareModal || showReportModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [showReportModal]);
+  }, [showShareModal, showReportModal]);
 
   const handleLike = async () => {
     if (userId) {
@@ -176,7 +169,7 @@ const ActionBar = ({
             onClick={closeShareModal}
           ></div>
           <ShareModal
-            url={`/posts/{$postId}`}
+            url={window.location.href}
             close={closeShareModal}
             title={title}
             body={body}
