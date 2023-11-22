@@ -6,7 +6,7 @@ import Post, { IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 
-const { UserModel } = require("@/models/User");
+import UserModel from "@/models/User";
 
 export async function createPost(params: any) {
   try {
@@ -17,7 +17,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar } = params;
+    const { title, content, image, tags, avatar, groupId } = params;
 
     const post = await Post.create({
       title,
@@ -25,6 +25,7 @@ export async function createPost(params: any) {
       image,
       tags,
       userId,
+      groupId,
       avatar,
     });
 

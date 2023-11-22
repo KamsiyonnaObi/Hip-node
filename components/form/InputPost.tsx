@@ -69,10 +69,6 @@ export function InputPost() {
     },
   });
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
   const onSubmit = async () => {
     setIsSubmitting(true);
     try {
@@ -81,10 +77,11 @@ export function InputPost() {
         title: values.title,
         content: values.contents,
         tags: values.tags,
+        groupId: values.groupId,
         image: coverUrl,
         avatar: "/Avatar.png",
       };
-      const id = await createPost(postData);
+      await createPost(postData);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -331,19 +328,15 @@ export function InputPost() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/home">
-            <Button
-              type="submit"
-              color="blue"
-              className="md:display-semibold body-semibold px-10 py-2.5"
-              disabled={isSubmitting}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {isSubmitting ? <>Posting...</> : <>Publish</>}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            color="blue"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
+          </Button>
+
           <Button
             type="button"
             color="gray"

@@ -31,27 +31,29 @@ const GroupCategory = ({ form }: any) => {
     selectedGroup,
     name,
     onSelect,
+    id,
   }: {
     selectedGroup: string | null;
     name: string;
+    id: string;
     onSelect: (name: string) => void;
   }) => (
     <div
-      onClick={() => onSelect(name)}
+      onClick={() => onSelect(id)}
       id={name}
       className={`mt-[10px] flex select-none flex-row justify-between md:w-[170px] ${
-        selectedGroup === name ? "border-primary6 rounded-[8px] border" : ""
+        selectedGroup === id ? "border-primary6 rounded-[8px] border" : ""
       }`}
     >
       <p
         className={`caption-semibold ${
-          selectedGroup === name ? "" : "text-secondary3"
+          selectedGroup === id ? "" : "text-secondary3"
         }`}
       >
         {name}
       </p>
 
-      {selectedGroup === name ? (
+      {selectedGroup === id ? (
         <OutlineIcon.Checkmark className="fill-none stroke-background" />
       ) : (
         <OutlineIcon.Uncheck className="fill-none" />
@@ -61,7 +63,7 @@ const GroupCategory = ({ form }: any) => {
 
   function handleGroupSelection(name: string): void {
     form.setValue("groupId", name);
-    console.log(name);
+
     setSelectedGroup(name);
   }
 
@@ -76,6 +78,7 @@ const GroupCategory = ({ form }: any) => {
           <SingleSelector
             key={JSON.stringify(group._id)}
             selectedGroup={selectedGroup}
+            id={group._id}
             name={group.title}
             onSelect={handleGroupSelection}
           />
