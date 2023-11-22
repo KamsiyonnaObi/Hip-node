@@ -72,7 +72,7 @@ export function InputPost() {
   useEffect(() => {
     console.log(form);
   }, [form]);
-  // 2. Define a submit handler.
+
   const onSubmit = async () => {
     setIsSubmitting(true);
     try {

@@ -4,6 +4,11 @@ import React, { useEffect, useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import { findAllGroups } from "@/utils/actions/group.action";
 
+interface Group {
+  title: string;
+  _id: string;
+}
+
 const GroupCategory = ({ form }: any) => {
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
@@ -20,8 +25,7 @@ const GroupCategory = ({ form }: any) => {
     }
 
     fetchGroups();
-    form.setValue("groupId", selectedGroup);
-  }, [selectedGroup, form]);
+  }, []);
 
   const SingleSelector = ({
     selectedGroup,
@@ -56,6 +60,8 @@ const GroupCategory = ({ form }: any) => {
   );
 
   function handleGroupSelection(name: string): void {
+    form.setValue("groupId", name);
+    console.log(name);
     setSelectedGroup(name);
   }
 
@@ -66,9 +72,9 @@ const GroupCategory = ({ form }: any) => {
           <h3 className="h3-semibold ">Group List</h3>
           <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
         </div>
-        {groups.map((group) => (
+        {groups.map((group: Group) => (
           <SingleSelector
-            key={group}
+            key={JSON.stringify(group._id)}
             selectedGroup={selectedGroup}
             name={group.title}
             onSelect={handleGroupSelection}
