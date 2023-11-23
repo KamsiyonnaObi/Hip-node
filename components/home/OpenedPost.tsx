@@ -1,5 +1,6 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import ChatInput from "./ChatInput";
+import Html from "../shared/html";
 
 interface Props {
   title: string;
@@ -45,7 +46,7 @@ const OpenedPost = ({
         </p>
 
         <h3 className="body-regular md:h3-semibold mb-2.5 whitespace-pre-wrap pl-[47px] text-secondary3 md:mb-5">
-          {content}
+          <Html htmltext={content} />
         </h3>
         <div className="">
           <ChatInput
