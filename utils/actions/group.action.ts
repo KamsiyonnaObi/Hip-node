@@ -67,8 +67,9 @@ export async function getGroupById(groupId: string) {
     await dbConnect();
     const group = await Group.findById(groupId)
       .populate("userId")
-      .populate({ path: "admins", select: "username _id" })
-      .populate({ path: "members", select: "username _id" });
+      .populate("admins")
+      .populate("members");
+
     if (group) {
       return { success: true, data: group };
     } else {
