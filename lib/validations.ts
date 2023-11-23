@@ -123,3 +123,25 @@ export const emailSchema = z.string().email("Invalid email address.");
 export const passwordSchema = z
   .string()
   .min(8, "Password must be at least 8 characters.");
+
+export const profileSchema = z.object({
+  username: z.string().min(2),
+  bio: z.string().optional(),
+  job: z.string(),
+  website: z.string().url({ message: "Invalid url" }).optional(),
+  twitter: z
+    .string()
+    .url()
+    .includes("twitter", { message: "invalid twitter profile" })
+    .optional(),
+  facebook: z
+    .string()
+    .url()
+    .includes("facebook", { message: "invalid facebook profile" })
+    .optional(),
+  instagram: z
+    .string()
+    .url()
+    .includes("instagram", { message: "invalid instagram profile" })
+    .optional(),
+});
