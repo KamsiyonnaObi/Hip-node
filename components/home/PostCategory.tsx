@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import FillIcon from "../icons/FillIcon";
 
-const PostCategory = ({ closeCategory }) => {
+const PostCategory = ({ closeCategory }: { closeCategory: Function }) => {
   const [selected, setSelected] = useState(0);
 
   const handleSelect = (val: any) => {

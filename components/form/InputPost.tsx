@@ -74,7 +74,7 @@ export function InputPost() {
         image: coverUrl,
         avatar: "/Avatar.png",
       };
-      const id = await createPost(postData);
+      await createPost(postData);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
