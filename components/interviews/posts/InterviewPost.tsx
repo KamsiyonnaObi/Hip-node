@@ -92,9 +92,11 @@ const InterviewPost = ({
 
         <div className="rounded-lg lg:hidden ">
           <Image
-            src={InterviewImage}
+            src={image}
             alt="Interview Image"
-            className="w-full object-cover"
+            width={280}
+            height={180}
+            className="w-full rounded-[16px] object-cover"
           />
         </div>
         <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>

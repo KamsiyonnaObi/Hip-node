@@ -115,9 +115,11 @@ const Navbar = () => {
               divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
-              onChange={(e: any) => setSearchText(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchText(e.target.value)
+              }
               value={searchText}
-              onKeyDown={(e: any) => handleKeyDown(e)}
+              onKeyDown={handleKeyDown}
             >
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>
