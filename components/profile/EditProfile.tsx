@@ -1,14 +1,37 @@
 "use client";
 import React, { MouseEventHandler, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { profileSchema } from "@/lib/validations";
 import { Input } from "../form/Input";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
+type ProfileSchema = z.infer<typeof profileSchema>;
 const EditProfile = ({
   onCancel,
 }: {
   onCancel: MouseEventHandler<HTMLButtonElement>;
 }) => {
+  // extract register, handleSubmit from useForm
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      username: "",
+      job: "",
+      bio: "",
+      website: "",
+      twitter: "",
+      facebook: "",
+      instagram: "",
+    },
+  });
+
   const [formData, setFormData] = useState({
     username: "",
     job: "",
@@ -17,15 +40,22 @@ const EditProfile = ({
     facebook: "",
     instagram: "",
   });
-
+  console.log(errors);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // create onSubmit function
+  const onSubmit = (data: ProfileSchema) => {
+    console.log(data);
+  };
   return (
     <>
-      <form className="flex w-full flex-col gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-4"
+      >
         <div>
           <h1 className="body-semibold text-secondary2 dark:text-background2">
             Name
@@ -120,7 +150,7 @@ const EditProfile = ({
             Save
           </button>
           <button
-            type="submit"
+            type="button"
             onClick={onCancel}
             className="caption-semibold flex rounded-md bg-blue10 px-2 py-1 text-red dark:bg-dark4"
           >
