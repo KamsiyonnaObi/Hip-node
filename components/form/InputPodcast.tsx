@@ -1,0 +1,294 @@
+"use client";
+
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { z } from "zod";
+import { Editor } from "@tinymce/tinymce-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { PodcastSchema } from "@/lib/validations";
+import { Input } from "../ui/input";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  Form,
+} from "../ui/form";
+import { Button } from "../ui/Button";
+import OutlineIcon from "../icons/OutlineIcon";
+import { useTheme } from "next-themes";
+import { CldUploadWidget } from "next-cloudinary";
+import { createPodcast } from "@/utils/actions/podcast.action";
+
+export function InputPodcast() {
+  const { theme } = useTheme();
+
+  const editorRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [coverUrl, setCoverUrl] = useState("");
+
+  const router = useRouter();
+
+  const updateForm = (url: string) => {
+    setCoverUrl(url);
+  };
+
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof PodcastSchema>>({
+    resolver: zodResolver(PodcastSchema),
+    defaultValues: {
+      title: "",
+      desc: "",
+      type: "",
+      episode: 0,
+      location: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  const onSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const values = form.getValues();
+      const podcastData = {
+        title: values.title,
+        desc: values.desc,
+        image: coverUrl,
+        audioPath: "this is an audio path",
+        type: values.type,
+        episode: values.episode,
+        location: values.location,
+      };
+      const id = await createPodcast(podcastData);
+      console.log(id);
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="rounded-2xl bg-background p-5 dark:bg-dark3"
+      >
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    placeholder="Title..."
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                  <div className="flex justify-between md:justify-start md:gap-5">
+                    <CldUploadWidget
+                      uploadPreset="bl8ltxxe"
+                      onUpload={(result: any) => {
+                        updateForm(result?.info?.secure_url);
+                      }}
+                    >
+                      {({ open }) => {
+                        function handleOnClick(e: React.MouseEvent) {
+                          e.preventDefault();
+                          open();
+                        }
+                        return (
+                          <div className="mb-[1.25rem]">
+                            <div className="flex">
+                              <Button
+                                color="blackWhite"
+                                type="button"
+                                onClick={handleOnClick}
+                                className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                              >
+                                <OutlineIcon.Image1 />
+                                <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                                  Set Cover
+                                </p>
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      }}
+                    </CldUploadWidget>
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="desc"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex">
+                <Link
+                  href="/"
+                  className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
+                >
+                  Code of Conduct
+                </Link>
+              </div>
+              <FormControl>
+                <Editor
+                  onEditorChange={(content) => field.onChange(content)}
+                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onInit={(evt, editor) =>
+                    // @ts-ignore
+                    (editorRef.current = editor)
+                  }
+                  key={theme}
+                  initialValue="Tell your story..."
+                  init={{
+                    height: 376,
+                    menubar: false,
+                    plugins: [
+                      "advlist",
+                      "autolink",
+                      "lists",
+                      "link",
+                      "image",
+                      "charmap",
+                      "print",
+                      "preview",
+                      "anchor",
+                      "searchreplace",
+                      "visualblocks",
+                      "code",
+                      "fullscreen",
+                      "insertdatetime",
+                      "media",
+                      "table",
+                      "paste",
+                      "code",
+                      "help",
+                      "wordcount",
+                    ],
+                    toolbar_mode: "floating",
+                    skin: theme === "dark" ? "oxide-dark" : "oxide",
+                    toolbar:
+                      "codeofconduct h1 bold italic underline strikethrough link image alignleft aligncenter " +
+                      "alignright bullist numlist",
+                    mobile: {
+                      toolbar:
+                        "h1 bold italic underline strikethrough link image alignleft aligncenter " +
+                        "alignright bullist numlist",
+                      toolbar_mode: "floating",
+                    },
+                    content_css: theme === "dark" ? "dark" : "light",
+                    setup: (editor) => {
+                      editor.ui.registry.addButton("codeofconduct", {
+                        text: "Code of Conduct",
+                        onAction: () => {
+                          window.open("/codeofconduct", "_blank");
+                        },
+                      });
+                    },
+                  }}
+                />
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="episode"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <h3 className="h3-semibold text-secondary2 dark:text-background2">
+                    Episode #:
+                  </h3>
+                  <Input
+                    defaultValue={1}
+                    type="number"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Type..."
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="mb-10">
+              <FormControl className="flex flex-col">
+                <div className="gap-5">
+                  <Input
+                    className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    placeholder="Location..."
+                    {...field}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage className="text-red90" />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex justify-start gap-5">
+          <Link href="/podcast">
+            <Button
+              type="submit"
+              color="blue"
+              className="md:display-semibold body-semibold px-10 py-2.5"
+              disabled={isSubmitting}
+              onClick={() => {
+                onSubmit();
+              }}
+            >
+              {isSubmitting ? <>Posting...</> : <>Publish</>}
+            </Button>
+          </Link>
+          <Button
+            type="button"
+            color="gray"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            onClick={() => router.push("/")}
+          >
+            <p className="text-secondary3">Cancel</p>
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+}

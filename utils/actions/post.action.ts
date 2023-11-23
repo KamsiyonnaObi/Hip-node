@@ -1,6 +1,6 @@
 "use server";
 
-import mongoose, { ObjectId, ConnectOptions } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";

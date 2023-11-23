@@ -1,84 +1,27 @@
-import { Schema } from "mongoose";
-import Image from "next/image";
-import Link from "next/link";
+import ProfileDetails from "./ProfileDetails";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { getServerSession } from "next-auth/next";
 
-interface userProfileData {
-  id: string;
-  name: string;
-  email: string;
-  profileImage: string;
-  job: string;
-  followers: Schema.Types.ObjectId[];
-  following: Schema.Types.ObjectId[];
-  points: number;
-  bio: string;
-}
+import { getUserProfile } from "@/utils/actions/user.action";
 
-type Props = { profileData: userProfileData | null };
+export default async function LeftSideBar() {
+  const session = await getServerSession();
 
-const LeftSideBar = ({ profileData }: Props) => {
-  // format timestamp to months
-  function monthsSinceJoined(joinedDate: Date): number {
-    const today = new Date();
-    const joined = new Date(joinedDate);
-    const todayMonth = today.getMonth();
-    const joinedMonth = joined.getMonth();
-    const months =
-      (today.getFullYear() - joined.getFullYear()) * 12 +
-      todayMonth -
-      joinedMonth;
-    return Math.abs(months);
-  }
-
-  // Use dummy data for remaining user data
-  const dummyProfileData = {
-    imgUrl: "/ExampleAvatar.png",
-    profileUrl: "/",
-    joinedDate: "2-28-2023",
-    points: 501,
-    bio: "Hey there.. I am AR Jakir! I am here to learn from and support the other members of this community!",
-    website: "www.uikit.to",
-  };
-
+  const profileData = await getUserProfile(session?.user?.email);
   return (
-    <section className="flex flex-col items-center justify-center gap-5 rounded-2xl bg-background px-5 py-[30px] dark:bg-dark3">
-      <div className="relative h-24 w-24 rounded-full bg-yellow30">
-        <Image
-          className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
-          src={dummyProfileData.imgUrl}
-          alt="profile"
-          width="80"
-          height="80"
-        />
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        <p className="text-secondary2 dark:text-background2">
-          {profileData?.name}
-        </p>
-        <p className="text-secondary3">{profileData?.job}</p>
-      </div>
-      <Link
-        className="h3-semibold flex h-11 w-72 items-center justify-center gap-2.5 rounded-md bg-blue text-background"
-        href={dummyProfileData.profileUrl}
-      >
-        Follow
-      </Link>
-      <div className="flex items-center justify-center gap-3">
-        <p className="text-secondary2 dark:text-background2">
-          {`${profileData?.followers.length} Followers`}
-        </p>
-        <p className="text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
-      </div>
-      <p className="text-secondary3">{profileData?.bio}</p>
-      <p className="text-secondary2 dark:text-background2">
-        {dummyProfileData.website}
-      </p>
-      <p className="text-secondary3">
-        Joined {monthsSinceJoined(new Date(dummyProfileData.joinedDate))} months
-        ago
-      </p>
+    <section className="flex-center rounded-2xl bg-background p-5 dark:bg-dark3">
+      <article className="flex-center w-[295px] flex-col gap-5 bg-background px-5 py-10 dark:bg-dark3">
+        <div className="relative h-24 w-24 rounded-full border-4 border-dark3 bg-yellow30">
+          <Image
+            className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
+            src="/ExampleAvatar.png"
+            alt="profile"
+            width="80"
+            height="80"
+          />
+        </div>
+        <ProfileDetails profileData={profileData} />
+      </article>
     </section>
   );
-};
-
-export default LeftSideBar;
+}

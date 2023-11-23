@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { addComments } from "@/utils/actions/post.action";
 

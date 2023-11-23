@@ -45,7 +45,7 @@ export function InputInterview() {
     defaultValues: {
       title: "",
       desc: "",
-      tags: [],
+      interviewTags: [],
       revenue: 0,
       updates: 0,
       website: "",
@@ -62,7 +62,7 @@ export function InputInterview() {
         title: values.title,
         revenue: values.revenue,
         updates: values.updates,
-        tags: values.tags,
+        interviewTags: values.interviewTags,
         desc: values.desc,
         website: values.website,
         image: coverUrl,
@@ -79,21 +79,21 @@ export function InputInterview() {
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
   ) => {
-    if (e.key === "Enter" && field.name === "jobType") {
+    if (e.key === "Enter" && field.name === "interviewTags") {
       e.preventDefault();
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
       if (tagValue !== "") {
         if (tagValue.length > 15) {
-          return form.setError("tags", {
-            type: "required",
+          return form.setError("interviewTags", {
+            type: "maxLength",
             message: "Tag must be less than 15 characters.",
           });
         }
         if (!field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
+          form.setValue("interviewTags", [...field.value, tagValue]);
           tagInput.value = "";
-          form.clearErrors("tags");
+          form.clearErrors("interviewTags");
         }
       } else {
         form.trigger();
@@ -103,7 +103,7 @@ export function InputInterview() {
 
   const handleTagRemove = (tag: string, field: any) => {
     const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("tags", newTags);
+    form.setValue("interviewTags", newTags);
   };
 
   return (
@@ -126,7 +126,8 @@ export function InputInterview() {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -250,9 +251,9 @@ export function InputInterview() {
                     Revenue per Hour:
                   </h3>
                   <Input
-                    placeholder="Subtitle..."
+                    placeholder="Revenue..."
                     type="number"
-                    className="w-[20%] h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
                   />
                 </div>
@@ -273,9 +274,9 @@ export function InputInterview() {
                     Updates:
                   </h3>
                   <Input
-                    placeholder="Subtitle..."
+                    placeholder="Updates..."
                     type="number"
-                    className="w-[20%] h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+                    className="h3-semibold md:h1-semibold w-[20%] border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
                   />
                 </div>
@@ -306,7 +307,7 @@ export function InputInterview() {
 
         <FormField
           control={form.control}
-          name="tags"
+          name="interviewTags"
           render={({ field }) => (
             <FormItem className="my-5">
               <FormLabel className="caption-semibold md:body-semibold text-secondary2 dark:text-background2">
