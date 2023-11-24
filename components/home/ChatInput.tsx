@@ -8,6 +8,7 @@ import Picker from "@emoji-mart/react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { addComments } from "@/utils/actions/post.action";
+import { useOutsideClick } from "@/hooks/useOutsideClicks";
 
 const ChatInput = ({
   postId,
@@ -22,20 +23,15 @@ const ChatInput = ({
   const [showPicker, setShowPicker] = useState(false);
   const { theme } = useTheme();
 
+  const { ref, isOpen, toggleOpen } = useOutsideClick();
+
   useEffect(() => {
-    function handleClickOutside(event: Event) {
-      const targetEl = event.target as Element;
-      if (showPicker && !targetEl.closest(".emoji-picker")) {
-        setShowPicker(false);
-      }
-    }
+    setShowPicker(isOpen);
+  }, [isOpen]);
 
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [showPicker]);
+  const handleEmojiClick = () => {
+    toggleOpen();
+  };
 
   const handleSubmit = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -66,6 +62,7 @@ const ChatInput = ({
             className={
               "relative flex flex-1 flex-wrap items-center justify-between gap-[15px] rounded-3xl border border-secondary5 bg-background px-[15px] py-2.5 text-contents dark:bg-dark3 md:w-5"
             }
+            ref={ref}
           >
             <textarea
               className="md:display-regular body-regular h-[22px] flex-1 resize-none items-center justify-start rounded-lg bg-background text-secondary3 placeholder:text-secondary5 focus:outline-none dark:bg-dark3 md:h-[24px]"
@@ -74,7 +71,7 @@ const ChatInput = ({
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleSubmit}
             />
-            <button onClick={() => setShowPicker((prev) => !prev)}>
+            <button onClick={handleEmojiClick}>
               <FillIcon.Emoji className="h-6 w-6 shrink-0 md:h-8 md:w-8" />
             </button>
           </div>
