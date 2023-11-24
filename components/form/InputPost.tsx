@@ -24,16 +24,18 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
+import { createPost, updatePost } from "@/utils/actions/post.action";
 
-export function InputPost() {
+export function InputPost({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [coverUrl, setCoverUrl] = useState("");
+  const parsedDetail = editDetail && JSON.parse(editDetail || "");
+  const groupedTags = parsedDetail?.tags.map((tag: any) => tag);
 
+  const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
@@ -56,9 +58,9 @@ export function InputPost() {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: "",
-      contents: "",
-      tags: [],
+      title: parsedDetail?.title || "",
+      contents: parsedDetail?.content || "",
+      tags: groupedTags || [],
     },
   });
 
@@ -74,7 +76,14 @@ export function InputPost() {
         image: coverUrl,
         avatar: "/Avatar.png",
       };
-      await createPost(postData);
+      if (editDetail) {
+        await updatePost({
+          ...postData,
+          postId: parsedDetail?._id,
+        });
+      } else {
+        await createPost(postData);
+      }
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -221,7 +230,7 @@ export function InputPost() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue={parsedDetail?.content || `Tell your story...`}
                   init={{
                     height: 376,
                     menubar: false,

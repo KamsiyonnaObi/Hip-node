@@ -44,7 +44,7 @@ export async function getPostById(postId: string) {
       .populate("userId")
       .populate("groupId");
     if (post) {
-      return { success: true, data: post };
+      return post;
     } else {
       throw new Error("post not found.");
     }
@@ -82,17 +82,26 @@ export async function getPostsByUserId(
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
-export async function updatePost(params: Partial<IPost>) {
+export async function updatePost(params: any) {
   try {
     await dbConnect();
+    const { title, content, image, tags, avatar, postId } = params;
+    const post = await Post.findById(postId);
+
+    post.title = title;
+    post.content = content;
+    post.image = image;
+    post.tags = tags;
+    post.avatar = avatar;
+
+    await post.save();
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-export async function deletePost(postId: number) {
+export async function deletePost(postId: string) {
   try {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);

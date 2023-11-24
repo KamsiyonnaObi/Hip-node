@@ -3,7 +3,6 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { Input } from "../form/Input";
 import React, { useState } from "react";
 import { Button } from "../ui/Button";
-import { createPost } from "@/utils/actions/post.action";
 import Link from "next/link";
 
 const CreatePost = () => {
@@ -12,21 +11,7 @@ const CreatePost = () => {
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
-  async function handleSubmit() {
-    try {
-      await createPost({
-        title: inputValue,
-        content: inputValue,
-        tags: ["java", "css"],
-        userId: "John Smith",
-        image: "/PostImage.png",
-        avatar: "/Avatar.png",
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+
   return (
     <article className="flex flex-row gap-[10px] rounded-[16px] bg-background p-[14px] dark:bg-dark3 md:p-[20px]">
       <div className="flex flex-row gap-[10px] md:gap-[20px]">
