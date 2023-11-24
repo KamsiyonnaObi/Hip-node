@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { CldUploadWidget } from "next-cloudinary";
 
 interface CoverImageProps {
@@ -25,7 +25,8 @@ const CoverImage: React.FC<CoverImageProps> = ({
   return (
     <div>
       <CldUploadWidget
-        uploadPreset="bl8ltxxe"
+        uploadPreset="ml_images"
+        options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
         onUpload={(result: any) => {
           updateForm(result?.info?.secure_url);
           setImageUrl(result?.info?.secure_url);

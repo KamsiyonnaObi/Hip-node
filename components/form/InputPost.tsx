@@ -25,11 +25,8 @@ import { useTheme } from "next-themes";
 import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPost } from "@/utils/actions/post.action";
-import { useSession } from "next-auth/react";
 
 export function InputPost() {
-  const { data: session } = useSession();
-  const userId = session?.user.id;
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
@@ -77,7 +74,7 @@ export function InputPost() {
         image: coverUrl,
         avatar: "/Avatar.png",
       };
-      const id = await createPost(postData);
+      await createPost(postData);
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -135,7 +132,8 @@ export function InputPost() {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -188,7 +186,7 @@ export function InputPost() {
                         <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                       </Button>
                       {expanded === 2 && (
-                        <div className="absolute left-0 mt-2 z-50">
+                        <div className="absolute left-0 z-50 mt-2">
                           <PostCategory closeCategory={closeCategory} />
                         </div>
                       )}

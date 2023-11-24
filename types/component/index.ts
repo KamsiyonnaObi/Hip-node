@@ -12,15 +12,15 @@ export interface ActionBarLink {
 
 export interface commentDataType {
   name: string;
-  commentedDate: string;
-  lastEditDate: string;
+  createdAt: string;
+  updatedAt: string;
   imgUrl: string;
-  comment: string;
+  text: string;
   reply: {
     name: string;
-    commentedDate: string;
-    lastEditDate: string;
+    createdAt: string;
+    updatedAt: string;
     imgUrl: string;
-    comment: string;
+    text: string;
   }[];
 }

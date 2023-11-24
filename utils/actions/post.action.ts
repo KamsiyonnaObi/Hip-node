@@ -1,13 +1,13 @@
 "use server";
 
-import mongoose, { ObjectId, ConnectOptions } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-import Post, { IPost } from "@/models/post.model";
+import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
-const { UserModel } = require("@/models/User");
-const { GroupModel } = require("@/models/group.model");
+import UserModel from "@/models/User";
 
 export async function createPost(params: any) {
   try {
@@ -71,7 +71,7 @@ export async function getPostsByUserId(
     if (posts.length > 0) {
       return { success: true, data: posts };
     } else {
-      throw new Error("post not found.");
+      return { success: false, data: [] };
     }
   } catch (error) {
     console.log(error);
@@ -252,6 +252,149 @@ export async function reportPost({
       throw new Error("Post not found");
     }
     return { status: reportedStatus };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getPostByGroupId(groupId: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({
+      groupId,
+    });
+    if (posts.length > 0) {
+      return { success: true, data: posts };
+    } else {
+      throw new Error("post not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the posts.",
+    };
+  }
+}
+
+function findCommentOrReply({
+  comments,
+  commentId,
+}: {
+  comments: IComments[];
+  commentId: string;
+}): IComments | null {
+  for (const comment of comments) {
+    if (comment?._id?.toString() === commentId) {
+      return comment;
+    }
+    const found = findCommentOrReply({
+      comments: comment.replies ?? [],
+      commentId,
+    });
+    if (found) {
+      return found;
+    }
+  }
+  return null;
+}
+
+export async function addComments({
+  postId,
+  text,
+  commentId,
+}: {
+  postId: string;
+  text: string;
+  commentId: string | null;
+}) {
+  await dbConnect();
+  // get the userID from the session
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const userId = User?._id;
+  const name = User?.username;
+  const imgUrl = User?.profileImage;
+  const post = await Post.findById(postId);
+  if (!commentId) {
+    post.comments.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+      likes: [],
+    });
+  } else {
+    // Adding a reply to a comment or a nested reply
+    const target = findCommentOrReply({ comments: post.comments, commentId });
+    if (!target) {
+      return;
+    }
+
+    if (!target.replies) {
+      target.replies = [];
+    }
+    target?.replies?.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+    });
+  }
+  await post.save();
+  revalidatePath("/?postId=" + postId);
+}
+
+export async function likeComment({
+  postId,
+  commentId,
+  currentUserId,
+  hasLiked,
+}: {
+  postId: string;
+  commentId: string;
+  currentUserId: string;
+  hasLiked?: boolean;
+}) {
+  try {
+    await dbConnect();
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    if (commentId) {
+      const target = findCommentOrReply({ comments: post.comments, commentId });
+      if (!target) {
+        return;
+      }
+
+      if (!target.likes) {
+        target.likes = [];
+      }
+      const objCurrentUserId = new mongoose.Schema.Types.ObjectId(
+        currentUserId
+      );
+
+      if (hasLiked) {
+        // User already liked, remove their ID
+        target.likes = target.likes.filter((id) => id !== objCurrentUserId);
+      } else {
+        // User has not liked yet, add their ID
+        target.likes.push(objCurrentUserId);
+      }
+
+      const likedStatus = target.likes.includes(objCurrentUserId);
+      await post.save();
+      await revalidatePath("/?postId=" + postId);
+      return {
+        status: likedStatus,
+      };
+    }
   } catch (error) {
     console.log(error);
     throw error;

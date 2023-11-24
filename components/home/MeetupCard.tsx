@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 interface Props {
   month: string;
@@ -21,7 +21,7 @@ const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
         <p className="body-semibold">{title}</p>
         <div className="flex flex-row gap-[6px]">
           <Image src="/MeetupIcon.svg" alt="meetup" width={16} height={16} />
-          <p className="text-sm-semibold text-secondary3 line-clamp-1">
+          <p className="text-sm-semibold line-clamp-1 text-secondary3">
             {desc}
           </p>
         </div>

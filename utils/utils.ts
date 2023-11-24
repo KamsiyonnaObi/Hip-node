@@ -1,3 +1,5 @@
+import { IComments } from "@/models/post.model";
+
 export const getTimestamp = (createdAt: Date): string => {
   const now = new Date();
   const diffInMilliseconds = now.getTime() - createdAt.getTime();
@@ -45,3 +47,46 @@ export const formatNumber = (num: number): string => {
   }
   return num.toString();
 };
+
+export function countComments(comments: IComments[]) {
+  let total = 0;
+
+  comments.forEach((comment) => {
+    function countReplies(comment: IComments) {
+      if (comment.replies) {
+        total += comment.replies.length;
+        comment.replies.forEach(countReplies);
+      }
+    }
+
+    countReplies(comment);
+  });
+
+  return total;
+}
+
+export function hasUserReply({
+  comments,
+  userId,
+}: {
+  comments: IComments[] | undefined;
+  userId: string;
+}) {
+  if (comments) {
+    for (const comment of comments) {
+      // Check current comment for userId
+      if (JSON.stringify(comment?.userId) === userId) {
+        return true;
+      }
+
+      if (comment.replies) {
+        for (const reply of comment.replies) {
+          if (hasUserReply({ comments: reply.replies, userId })) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}

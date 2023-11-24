@@ -1,5 +1,17 @@
 import { Schema, models, model, Document } from "mongoose";
 
+export interface IComments {
+  _id?: Schema.Types.ObjectId;
+  userId?: Schema.Types.ObjectId;
+  name?: string | "";
+  imgUrl?: string | "";
+  text?: string | "";
+  createdAt?: Date;
+  updatedAt?: Date;
+  replies?: IComments[];
+  likes?: Schema.Types.ObjectId[];
+}
+
 export interface IPost extends Document {
   title: string;
   image: string;
@@ -10,7 +22,6 @@ export interface IPost extends Document {
   createdAt: Date;
   views?: Schema.Types.ObjectId[];
   likes?: Schema.Types.ObjectId[];
-  comments?: Schema.Types.ObjectId[];
   shares?: Schema.Types.ObjectId[];
   reports?: Schema.Types.ObjectId[];
   hasLiked?: boolean;
@@ -18,7 +29,25 @@ export interface IPost extends Document {
   hasShared?: boolean;
   hasReported?: boolean;
   postId: Schema.Types.ObjectId;
+  comments: IComments[];
 }
+
+const commentSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  name: { type: String },
+  imgUrl: { type: String },
+  text: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+});
+
+commentSchema.add({ replies: [commentSchema] });
 
 const PostSchema = new Schema({
   title: { type: String, required: true },
@@ -40,12 +69,6 @@ const PostSchema = new Schema({
       ref: "User",
     },
   ],
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
   shares: [
     {
       type: Schema.Types.ObjectId,
@@ -58,6 +81,7 @@ const PostSchema = new Schema({
       ref: "User",
     },
   ],
+  comments: [commentSchema],
 });
 
 const Post = models.Post || model("Post", PostSchema);
