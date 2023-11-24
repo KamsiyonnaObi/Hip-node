@@ -164,6 +164,7 @@ export async function getAllGroups(params: any) {
     throw error;
   }
 }
+
 export async function findById(admins: any) {
   try {
     await dbConnect();

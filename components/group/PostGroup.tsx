@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import { Button } from "../ui/Button";
 
 interface Props {
   avatar: string;
@@ -35,14 +36,22 @@ const PostGroup = ({
   return (
     <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 dark:text-background2 sm:w-[248px]">
       <div className="mx-auto flex flex-col gap-[10px]">
-        <section className="flex flex-row sm:gap-[10px]">
-          <Image src={avatar} alt="avatar" width={34} height={34} />
-          <div className="flex flex-col">
-            <Link to={`/groups/${_id}`}>
+        <section className="flex flex-row justify-between sm:gap-[10px]">
+          <div className="flex flex-row">
+            <Image src={avatar} alt="avatar" width={34} height={34} />
+            <div className="flex flex-col">
               <p className="caption-semibold line-clamp-1">{title}</p>
-            </Link>
-            <p className="text-sm-regular line-clamp-1">{name}</p>
+              <p className="text-sm-regular line-clamp-1">{name}</p>
+            </div>
           </div>
+          <Link href={`/groups/${_id}`}>
+            <Button
+              color="white"
+              className="body-semibold w-fit justify-end rounded-[6px] bg-background2 p-[9px] text-red80 dark:bg-background2"
+            >
+              Visit Group
+            </Button>
+          </Link>
         </section>
         <Image
           src={image}

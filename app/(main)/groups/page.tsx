@@ -9,18 +9,14 @@ import {
 } from "@/components/group";
 import { getAllGroups } from "@/utils/actions/group.action";
 
-interface AllGroups {
-  _id: string;
-  title: string;
-}
-
 const page = async ({ params }: { params: { slug: string } }) => {
   const groups = await getAllGroups(params.slug);
 
-  const mapGroups = groups.groups.map((groups: AllGroups) => ({
+  const mapGroups = groups.groups.map((groups) => ({
     _id: groups._id,
     title: groups.title,
   }));
+  console.log(mapGroups);
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
@@ -31,7 +27,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-            {mapGroups.map((group) => (
+            {mapGroups.map((group: any) => (
               <div key={group._id}>
                 <PostGroup
                   avatar={""}
