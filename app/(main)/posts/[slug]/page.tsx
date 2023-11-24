@@ -54,7 +54,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         />
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
-            postId={JSON.stringify(_id)}
+            postId={params.slug}
             userId={JSON.stringify(currentUser?._id)}
             hasLiked={likes?.includes(currentUser?._id)}
             hasCommented={hasCommented}
@@ -88,7 +88,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       </section>
       <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar
-          postId={JSON.stringify(_id)}
+          postId={params.slug}
           userId={JSON.stringify(currentUser?._id)}
           hasLiked={likes?.includes(currentUser?._id)}
           hasCommented={hasCommented}
