@@ -1,9 +1,5 @@
 "use client";
 
-// fix the valadation for the whole form
-// fix the validation of creating a group
-// make sure that the group stays selected when you press off
-
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
