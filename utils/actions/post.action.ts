@@ -44,7 +44,7 @@ export async function getPostById(postId: string) {
       .populate("userId")
       .populate("groupId");
     if (post) {
-      return post;
+      return { success: true, data: post };
     } else {
       throw new Error("post not found.");
     }
