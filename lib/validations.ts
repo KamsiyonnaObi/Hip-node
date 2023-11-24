@@ -125,7 +125,9 @@ export const passwordSchema = z
   .min(8, "Password must be at least 8 characters.");
 
 export const profileSchema = z.object({
-  username: z.string().min(2),
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters" }),
   bio: z.string().optional(),
   job: z.string(),
   website: z.string().url({ message: "Invalid url" }).optional(),

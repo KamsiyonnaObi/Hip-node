@@ -26,9 +26,9 @@ const EditProfile = ({
       job: "",
       bio: "",
       website: "",
-      twitter: "",
-      facebook: "",
-      instagram: "",
+      twitter: undefined,
+      facebook: undefined,
+      instagram: undefined,
     },
   });
 
@@ -140,6 +140,18 @@ const EditProfile = ({
               onChange={handleChange}
               value={formData.instagram}
             />
+          </div>
+          <div>
+            {errors.username && (
+              <p className="caption-regular text-red">
+                {errors.username.message}
+              </p>
+            )}
+            {errors.twitter && (
+              <p className="caption-regular text-red">
+                {errors.twitter.message}
+              </p>
+            )}
           </div>
         </article>
         <div className="flex gap-1 ">
