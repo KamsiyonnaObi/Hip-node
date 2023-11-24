@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface Props {
-  src: string;
+  src: string | StaticImageData;
   alt: string;
   [key: string]: any;
 }

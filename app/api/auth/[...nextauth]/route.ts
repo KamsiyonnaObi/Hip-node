@@ -20,7 +20,7 @@ interface Profile {
   [key: string]: any;
 }
 
-export const authOptions = {
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -29,6 +29,7 @@ export const authOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+      // @ts-ignore
       async authorize(
         credentials: Record<"email" | "password", string>,
         req: any
@@ -96,6 +97,6 @@ export const authOptions = {
   },
 };
 
-export const handler = NextAuth(authOptions as any);
+const handler = NextAuth(authOptions as any);
 
 export { handler as GET, handler as POST };

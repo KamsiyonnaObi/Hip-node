@@ -21,17 +21,19 @@ import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPodcast } from "@/utils/actions/podcast.action";
+import { createPodcast, updatePodcast } from "@/utils/actions/podcast.action";
 
-export function InputPodcast() {
+export function InputPodcast({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [coverUrl, setCoverUrl] = useState("");
-
   const router = useRouter();
+
+  const parsedDetail = editDetail && JSON.parse(editDetail || "");
+
+  const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
 
   const updateForm = (url: string) => {
     setCoverUrl(url);
@@ -41,11 +43,11 @@ export function InputPodcast() {
   const form = useForm<z.infer<typeof PodcastSchema>>({
     resolver: zodResolver(PodcastSchema),
     defaultValues: {
-      title: "",
-      desc: "",
-      type: "",
-      episode: 0,
-      location: "",
+      title: parsedDetail?.title || "",
+      desc: parsedDetail?.desc || "",
+      type: parsedDetail?.type || "",
+      episode: parsedDetail?.episode || 0,
+      location: parsedDetail?.location || "",
     },
   });
 
@@ -63,8 +65,14 @@ export function InputPodcast() {
         episode: values.episode,
         location: values.location,
       };
-      const id = await createPodcast(podcastData);
-      console.log(id);
+      if (editDetail) {
+        await updatePodcast({
+          ...podcastData,
+          podcastId: parsedDetail?._id,
+        });
+      } else {
+        await createPodcast(podcastData);
+      }
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -150,7 +158,7 @@ export function InputPodcast() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue={parsedDetail?.desc || `Podcast Details...`}
                   init={{
                     height: 376,
                     menubar: false,

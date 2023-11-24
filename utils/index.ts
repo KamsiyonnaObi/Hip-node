@@ -15,10 +15,11 @@ export function findProperty(key: string, object: { [x: string]: any }) {
   return object[key];
 }
 
-export function formDataToObject(formData) {
+export function formDataToObject(formData: FormData) {
   const object = {};
+  // @ts-ignore
   for (const [key, value] of formData.entries()) {
-    object[key] = value;
+    object[key as keyof Object] = value;
   }
   return object;
 }
