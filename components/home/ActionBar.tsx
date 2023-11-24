@@ -177,7 +177,7 @@ const ActionBar = ({
         </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": !hasReported,
+            "text-secondary2 dark:text-background": hasReported,
             "text-secondary3": !hasReported,
           })}
         >
