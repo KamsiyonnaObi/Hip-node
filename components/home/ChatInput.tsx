@@ -36,6 +36,11 @@ const ChatInput = ({
     }
   };
 
+  const handleEmoji = (emoji: any) => {
+    setInputValue((prev) => prev + emoji.native);
+    toggleOpen();
+  };
+
   return (
     <section className="flex items-center gap-5">
       <div className="relative h-9 w-9 shrink-0 rounded-full bg-yellow30 md:h-11 md:w-11">
@@ -70,9 +75,7 @@ const ChatInput = ({
                 {isOpen && (
                   <Picker
                     data={data}
-                    onEmojiSelect={(emoji: any) =>
-                      setInputValue((prev) => prev + emoji.native)
-                    }
+                    onEmojiSelect={handleEmoji}
                     theme={theme === "dark" ? "dark" : "light"}
                   />
                 )}
