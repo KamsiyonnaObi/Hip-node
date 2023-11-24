@@ -72,7 +72,6 @@ const GroupCategory = ({ form }: any) => {
       <div className="w-[331px] gap-[20px] p-[20px] dark:text-background md:gap-[12px] md:p-0">
         <div className="flex flex-row justify-between">
           <h3 className="h3-semibold ">Group List</h3>
-          <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
         </div>
         {groups.map((group: Group) => (
           <SingleSelector
