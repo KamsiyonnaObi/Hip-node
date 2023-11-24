@@ -1,15 +1,5 @@
 import { Schema, models, model, Document } from "mongoose";
 
-export type ReportReason =
-  | "Offensive"
-  | "Harassment"
-  | "Impersonation"
-  | "Spam"
-  | "Explicit"
-  | "Misinformation";
-
-type Reports = Record<ReportReason, Schema.Types.ObjectId[]>;
-
 export interface IComments {
   _id?: Schema.Types.ObjectId;
   userId?: Schema.Types.ObjectId;
@@ -33,12 +23,11 @@ export interface IPost extends Document {
   views?: Schema.Types.ObjectId[];
   likes?: Schema.Types.ObjectId[];
   shares?: Schema.Types.ObjectId[];
-  reports?: Reports;
+  reports?: { [key: string]: Schema.Types.ObjectId };
   hasLiked?: boolean;
   hasCommented?: boolean;
   hasShared?: boolean;
   hasReported?: boolean;
-
   postId: Schema.Types.ObjectId;
   comments: IComments[];
 }
@@ -88,12 +77,15 @@ const PostSchema = new Schema({
   ],
   reports: {
     type: Map,
-    of: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    of: [Schema.Types.ObjectId],
+    default: {
+      Offensive: [],
+      Harassment: [],
+      Impersonation: [],
+      Spam: [],
+      Explicit: [],
+      Misinformation: [],
+    },
   },
   comments: [commentSchema],
 });

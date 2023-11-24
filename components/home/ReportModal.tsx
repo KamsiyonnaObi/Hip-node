@@ -21,6 +21,7 @@ const ReportModal = ({ postId, userId, close }: Props) => {
       selectedReason,
     });
   };
+
   return (
     <section className="fixed left-1/2 top-1/2 z-10 flex h-auto w-96 -translate-x-1/2 -translate-y-1/2 flex-col gap-[30px] rounded-lg bg-secondary p-[30px] dark:bg-dark3">
       <div className="flex items-center justify-between">

@@ -234,17 +234,11 @@ export async function reportPost({
   try {
     dbConnect();
     const post = await getPostById(postId);
-    const report = post.data.reports[selectedReason] || [];
-    report.push(userId);
-    post.data.reports[selectedReason] = report;
-
+    post.data.reports.get(selectedReason).push(userId);
     await post.data.save();
-    const reportedStatus = post.data.reports.includes(userId);
-
     if (!post) {
       throw new Error("Post not found");
     }
-    return { status: reportedStatus };
   } catch (error) {
     console.log(error);
     throw error;

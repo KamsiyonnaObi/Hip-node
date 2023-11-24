@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { countComments, hasUserReply } from "@/utils";
+import { reportReasons } from "@/lib/constants";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUser = await getCurrentUser();
@@ -19,7 +20,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   if (!postopen.success) return <div>Post Not Found</div>;
   const {
-    _id,
     title,
     tags,
     content,
@@ -41,6 +41,10 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     userId: JSON.stringify(currentUser?._id),
   });
 
+  const hasReported = reportReasons.some((reason) => {
+    return reports.get(reason).includes(currentUser?._id);
+  });
+
   return (
     <article className="flex min-h-screen flex-col gap-5 bg-background2 p-5 dark:bg-dark2 md:flex-row md:px-10">
       <section className="w-full md:order-2">
@@ -55,11 +59,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar
             postId={params.slug}
-            userId={JSON.stringify(currentUser?._id)}
+            userId={currentUser?._id.toString()}
             hasLiked={likes?.includes(currentUser?._id)}
             hasCommented={hasCommented}
             hasShared={shares?.includes(currentUser?._id)}
-            hasReported={reports?.includes(currentUser?._id)}
+            hasReported={hasReported}
             likes={likes?.length}
             comments={numComments}
             shares={shares?.length}
@@ -89,11 +93,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       <div className="hidden flex-col gap-5 md:order-1 md:flex md:min-w-[210px]">
         <ActionBar
           postId={params.slug}
-          userId={JSON.stringify(currentUser?._id)}
+          userId={currentUser?._id.toString()}
           hasLiked={likes?.includes(currentUser?._id)}
           hasCommented={hasCommented}
           hasShared={shares?.includes(currentUser?._id)}
-          hasReported={reports?.includes(currentUser?._id)}
+          hasReported={hasReported}
           likes={likes?.length}
           comments={numComments}
           shares={shares?.length}
