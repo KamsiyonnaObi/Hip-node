@@ -58,36 +58,33 @@ export const postData = [
 export const commentData = [
   {
     name: "Mishacreatrix",
-    commentedDate: "2-1-2022",
-    lastEditDate: "2-1-2022",
+    createdAt: "2-1-2022",
+    updatedAt: "2-1-2022",
     imgUrl: "/ExampleAvatar2.png",
-    comment:
-      "As an ex-dev, I believed nocode to be only useful for small prototypes or things like landing pages/portfolio pages etc After tinkering around with Bubble for a bit, I now see that you can indeed build fully fledged apps! It is still not ideal, but I reckon nocode builders will only get more powerful as time goes by",
+    text: "As an ex-dev, I believed nocode to be only useful for small prototypes or things like landing pages/portfolio pages etc After tinkering around with Bubble for a bit, I now see that you can indeed build fully fledged apps! It is still not ideal, but I reckon nocode builders will only get more powerful as time goes by",
     reply: [
       {
         name: "PB, Delwar",
-        commentedDate: "2-1-2023",
-        lastEditDate: "",
+        createdAt: "2-1-2023",
+        updatedAt: "",
         imgUrl: "/ExampleAvatar.png",
-        comment:
-          "Yep 100% agreed! After tinkering around with Bubble for a bit, I now see that you can indeed build fully fledged apps!",
+        text: "Yep 100% agreed! After tinkering around with Bubble for a bit, I now see that you can indeed build fully fledged apps!",
       },
     ],
   },
   {
     name: "AR Jakir",
-    commentedDate: "2-2-2023",
-    lastEditDate: "",
+    createdAt: "2-2-2023",
+    updatedAt: "",
     imgUrl: "/ExampleAvatar3.png",
-    comment:
-      "What a fantastic article! Thank you for putting so much work into writing this for us.",
+    text: "What a fantastic article! Thank you for putting so much work into writing this for us.",
     reply: [
       {
         name: "PB, Delwar",
-        commentedDate: "2-2-2023",
-        lastEditDate: "",
+        createdAt: "2-2-2023",
+        updatedAt: "",
         imgUrl: "/ExampleAvatar.png",
-        comment: "Thanks AR Jakir",
+        text: "Thanks AR Jakir",
       },
     ],
   },
