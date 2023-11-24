@@ -2,7 +2,7 @@
 
 import mongoose, { ObjectId } from "mongoose";
 
-import Post, { IComments, IPost } from "@/models/post.model";
+import Post, { IComments } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
