@@ -16,7 +16,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
     _id: groups._id,
     title: groups.title,
   }));
-  console.log(mapGroups);
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
