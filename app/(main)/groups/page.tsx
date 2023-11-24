@@ -10,33 +10,17 @@ import {
 import { getAllGroups } from "@/utils/actions/group.action";
 
 interface AllGroups {
-  description: string;
   _id: string;
   title: string;
-  createdAt: string;
-  coverUrl: string;
-  groupUrl: string;
 }
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const groups = await getAllGroups(params.slug);
-  // if (!groups.success)
-  //   return (
-  //     <div className="flex justify-center">
-  //       <GroupError />
-  //     </div>
-  //   );
-  // const { title, description, createdAt, coverUrl, groupUrl } = groups;
 
   const mapGroups = groups.groups.map((groups: AllGroups) => ({
     _id: groups._id,
-    description: groups.description,
     title: groups.title,
-    createdAt: groups.createdAt,
-    coverUrl: groups.coverUrl,
-    groupUrl: groups.groupUrl,
   }));
-  console.log(groups);
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
@@ -47,27 +31,18 @@ const page = async ({ params }: { params: { slug: string } }) => {
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-            {/* <PostGroup
-              avatar={groupUrl}
-              image={coverUrl}
-              title={title}
-              name={"Moinul Hassan"}
-              desc={description}
-              date={createdAt}
-              descTitle={title}
-            /> */}
             {mapGroups.map((group) => (
               <div key={group._id}>
                 <PostGroup
-                  avatar={group.groupUrl}
-                  image={group.coverUrl}
+                  avatar={""}
+                  image={""}
                   title={group.title}
-                  descTitle={group.description}
-                  desc={"group"}
+                  descTitle={"Desc"}
+                  desc={"DESC"}
                   date={"date"}
                   name={"name"}
+                  _id={group._id}
                 />
-                {/* Add more group properties here */}
               </div>
             ))}
           </div>

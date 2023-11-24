@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
+import { Link } from "react-router-dom";
 
 interface Props {
   avatar: string;
@@ -12,6 +13,7 @@ interface Props {
   descTitle: string;
   desc: string;
   date: string;
+  _id: string;
 }
 
 const PostGroup = ({
@@ -22,6 +24,7 @@ const PostGroup = ({
   descTitle,
   desc,
   date,
+  _id,
 }: Props) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
@@ -35,7 +38,9 @@ const PostGroup = ({
         <section className="flex flex-row sm:gap-[10px]">
           <Image src={avatar} alt="avatar" width={34} height={34} />
           <div className="flex flex-col">
-            <p className="caption-semibold line-clamp-1">{title}</p>
+            <Link to={`/groups/${_id}`}>
+              <p className="caption-semibold line-clamp-1">{title}</p>
+            </Link>
             <p className="text-sm-regular line-clamp-1">{name}</p>
           </div>
         </section>
