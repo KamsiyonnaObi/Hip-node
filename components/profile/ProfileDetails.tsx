@@ -20,8 +20,10 @@ interface userProfileData {
   bio: string;
 }
 
-type Props = { profileData: userProfileData | null };
-const ProfileDetails = ({ profileData }: Props) => {
+type Props = { JSONProfileData: string };
+const ProfileDetails = ({ JSONProfileData }: Props) => {
+  const profileData: userProfileData = JSON.parse(JSONProfileData);
+
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
