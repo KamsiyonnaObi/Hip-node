@@ -8,7 +8,6 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 import UserModel from "@/models/User";
-const { GroupModel } = require("@/models/group.model");
 
 export async function createPost(params: any) {
   try {
@@ -256,6 +255,25 @@ export async function reportPost({
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+export async function getPostByGroupId(groupId: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({
+      groupId,
+    });
+    if (posts.length > 0) {
+      return { success: true, data: posts };
+    } else {
+      throw new Error("post not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the posts.",
+    };
   }
 }
 

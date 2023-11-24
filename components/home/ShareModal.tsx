@@ -17,12 +17,16 @@ import {
 
 import OutlineIcon from "../icons/OutlineIcon";
 
-const ShareModal = ({ url, close, title, body }) => {
+interface Props {
+  url: string;
+  close: () => void;
+  title: string;
+  body: string;
+}
+
+const ShareModal = ({ url, close, title, body }: Props) => {
   const [isCopied, setIsCopied] = useState(false);
-  const handleCopy = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    url: string
-  ) => {
+  const handleCopy = () => {
     setIsCopied(true);
     copy(url);
     setTimeout(() => {
@@ -62,10 +66,13 @@ const ShareModal = ({ url, close, title, body }) => {
       <p className="h3-semibold text-secondary3">Or copy link</p>
       <Tooltip open={isCopied} title="Copied!" placement="right-end">
         <button
-          onClick={(event) => handleCopy(event, url)}
+          onClick={handleCopy}
           className="h3-semibold flex justify-between border border-secondary3 p-2.5 text-secondary3"
         >
-          {url}
+          <input
+            className="w-full bg-transparent focus:outline-none"
+            value={url}
+          />
           <OutlineIcon.Copy className="fill-secondary3" />
         </button>
       </Tooltip>

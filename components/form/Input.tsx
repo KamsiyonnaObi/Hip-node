@@ -9,6 +9,7 @@ type Props = {
   name?: string;
   onChange?: any;
   type?: "text" | "password" | "email";
+  onKeyDown?: any;
 };
 
 export const Input = ({
@@ -21,6 +22,7 @@ export const Input = ({
   frontChildren,
   className,
   divClassName,
+  onKeyDown,
 }: Props) => {
   return (
     <div className={`${divClassName}`}>
@@ -32,6 +34,7 @@ export const Input = ({
         value={value}
         onChange={onChange}
         type={type}
+        onKeyDown={onKeyDown}
       />
       {children}
     </div>

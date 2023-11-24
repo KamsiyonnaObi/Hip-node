@@ -1,10 +1,17 @@
 import PodcastBanner from "@/components/podcasts/PodcastBanner";
 import Html from "@/components/shared/html";
+import UserModel from "@/models/User";
 import { getPodcast } from "@/utils/actions/podcast.action";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getPodcast(params.id);
+
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const currentUserId = User?._id.toString();
   return (
     <main className="flex flex-col items-center gap-5 p-5">
       <PodcastBanner
@@ -13,6 +20,8 @@ const page = async ({ params }: { params: { id: string } }) => {
         episode={result.episode}
         name={result.userId?.username || "unknown"}
         audioPath={result.audoPath}
+        showEdit={result.userId?._id.toString() === currentUserId}
+        _id={result._id.toString()}
       />
       <div className="w-[335px] rounded-[16px] bg-background p-5 dark:bg-dark3 md:w-[785px]">
         <div className="gap-5">

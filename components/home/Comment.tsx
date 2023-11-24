@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 import { ChatInput } from "@/components";
 import { IComments } from "@/models/post.model";
-import { likeComment } from "@/utils/actions/post.action";
+// import { likeComment } from "@/utils/actions/post.action";
 
 interface CommentProps {
   commentId: any;
@@ -44,9 +44,9 @@ const Comment = ({
   hasReplied,
 }: CommentProps) => {
   const formattedDate = format(new Date(createdAt ?? new Date()), "MMM dd");
-  const [isLiked, setIsLiked] = useState(hasLiked || false);
+  // const [isLiked, setIsLiked] = useState(hasLiked || false);
   const [showComment, setShowComment] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  // const [isPending, startTransition] = useTransition();
   const [showAllReplies, setShowAllReplies] = useState(false);
   const replyList = JSON.parse(replies || "");
   const repliesToShow = showAllReplies ? replyList : replyList.slice(0, 3);

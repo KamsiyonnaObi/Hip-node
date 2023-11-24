@@ -59,9 +59,11 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/node": "20.8.7",
     "@types/react": "18.2.30",
+    "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "^18",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10",
