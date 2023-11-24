@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -17,6 +17,7 @@ const EditProfile = ({
 }) => {
   // extract register, handleSubmit from useForm
   const {
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileSchema>({
@@ -31,20 +32,6 @@ const EditProfile = ({
       instagram: undefined,
     },
   });
-
-  const [formData, setFormData] = useState({
-    username: "",
-    job: "",
-    web: "",
-    twitter: "",
-    facebook: "",
-    instagram: "",
-  });
-  console.log(errors);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
 
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
@@ -67,8 +54,7 @@ const EditProfile = ({
             divClassName="bg-background rounded-md px-3 py-[5px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
             className="body-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
             placeholder="Name"
-            onChange={handleChange}
-            value={formData.username}
+            register={register}
           />
         </div>
         <div>
@@ -76,6 +62,7 @@ const EditProfile = ({
             Bio
           </h1>
           <textarea
+            {...register("bio")}
             placeholder="Add a bio"
             className="body-regular w-full resize-none rounded-md border border-secondary2 bg-transparent px-3 py-2 "
           />
@@ -89,8 +76,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Occupation"
-              onChange={handleChange}
-              value={formData.job}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -101,8 +87,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Website"
-              onChange={handleChange}
-              value={formData.web}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -113,8 +98,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.twitter}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -125,8 +109,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.facebook}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -137,8 +120,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.instagram}
+              register={register}
             />
           </div>
           <div>
