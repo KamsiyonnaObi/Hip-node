@@ -1,11 +1,10 @@
 "use client";
 
-  //  Fix the style of selecting a group
-  // fix the valadation for the whole form
-  // fix the validation of creating a group
-  // make sure that the group stays selected when you press off
+// fix the valadation for the whole form
+// fix the validation of creating a group
+// make sure that the group stays selected when you press off
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

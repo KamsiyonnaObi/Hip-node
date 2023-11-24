@@ -42,7 +42,7 @@ const GroupCategory = ({ form }: any) => {
       onClick={() => onSelect(id)}
       id={name}
       className={`mt-[10px] flex select-none flex-row justify-between md:w-[170px] ${
-        selectedGroup === id ? "border-primary6 rounded-[8px] border" : ""
+        selectedGroup === id ? "rounded-[8px underline" : ""
       }`}
     >
       <p
@@ -54,7 +54,7 @@ const GroupCategory = ({ form }: any) => {
       </p>
 
       {selectedGroup === id ? (
-        <OutlineIcon.Checkmark className="fill-none stroke-background" />
+        <OutlineIcon.Checkmark className="fill-none" />
       ) : (
         <OutlineIcon.Uncheck className="fill-none" />
       )}
@@ -68,7 +68,7 @@ const GroupCategory = ({ form }: any) => {
   }
 
   return (
-    <article className="rounded-[16px] bg-background dark:bg-dark3 md:w-[210px] md:gap-[10px] md:p-[20px]">
+    <article className="rounded-[16px] border border-dark1 bg-background dark:border-background2 dark:bg-dark3 md:w-[210px] md:gap-[10px] md:p-[20px]">
       <div className="w-[331px] gap-[20px] p-[20px] dark:text-background md:gap-[12px] md:p-0">
         <div className="flex flex-row justify-between">
           <h3 className="h3-semibold ">Group List</h3>
