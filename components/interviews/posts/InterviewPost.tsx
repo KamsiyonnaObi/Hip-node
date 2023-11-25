@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
@@ -8,6 +8,8 @@ import { ShadButton } from "@/components/ui/ShadButton";
 import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
 import OutlineIcon from "@/components/icons/OutlineIcon";
+import { useEffect, useRef, useState } from "react";
+import EditDeletePopup from "../EditDeletePopup";
 
 interface Props {
   username: string;
@@ -19,6 +21,8 @@ interface Props {
   website: string;
   image: string;
   _id: string;
+  userId?: string;
+  showEdit: boolean;
 }
 
 const InterviewPost = ({
@@ -31,32 +35,68 @@ const InterviewPost = ({
   website,
   image,
   _id,
+  userId,
+  showEdit,
 }: Props) => {
+  const [showPopup, setShowPopup] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (!menuRef.current) return;
+    if (!menuRef.current.contains(e.target as Node)) {
+      setShowPopup(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
   return (
     <article className="flex w-full items-center justify-between gap-8 rounded-2xl bg-bkg-2 p-5 text-interviewText md:flex-row">
       <div className="flex w-full flex-col gap-5 lg:max-w-[435px]">
-        <div className="flex items-center gap-4">
-          <Avatar>
-            {/* Dynamic Image for users need to be implemented */}
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              alt="User Avatar"
-            />
-            {/* Modify to say username initials */}
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div>
-            <address className="font-semibold not-italic">{username}</address>
-            <time className="text-sm text-secondary3">
-              {getTimestamp(createdAt)}
-            </time>
+        <div className="flex flex-row justify-between">
+          <div className="flex items-center gap-4">
+            <Avatar>
+              <AvatarImage
+                src="https://github.com/shadcn.png"
+                alt="User Avatar"
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <div>
+              <address className="font-semibold not-italic">{username}</address>
+              <time className="text-sm text-secondary3">
+                {getTimestamp(createdAt)}
+              </time>
+            </div>
+          </div>
+          <div
+            className="relative"
+            ref={menuRef}
+            onClick={() => setShowPopup(!showPopup)}
+          >
+            {showEdit && (
+              <OutlineIcon.VerticalDots className="fill-secondary5" />
+            )}
+            {showPopup && (
+              <div className="absolute right-1 top-6">
+                <EditDeletePopup interviewId={_id} />
+              </div>
+            )}
           </div>
         </div>
+
         <div className="rounded-lg lg:hidden ">
           <Image
-            src={InterviewImage}
+            src={image}
             alt="Interview Image"
-            className="w-full object-cover"
+            width={280}
+            height={180}
+            className="w-full rounded-[16px] object-cover"
           />
         </div>
         <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>

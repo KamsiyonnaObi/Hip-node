@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import OutlineIcon from "./icons/OutlineIcon";
 
 interface Props {
@@ -11,7 +11,13 @@ interface Props {
 const PodcastCard = ({ image, title, author }: Props) => {
   return (
     <article className="flex flex-row gap-[14px]">
-      <Image src={image} alt="" width={58} height={58} className="shadow-md" />
+      <Image
+        src={image}
+        alt=""
+        width={58}
+        height={58}
+        className="rounded-[10px] shadow-md"
+      />
       <div className="flex flex-col gap-[6px]">
         <div className="flex flex-row">
           <p className="caption-semibold w-[193px]">{title}</p>

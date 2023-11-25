@@ -1,10 +1,13 @@
 import { InterviewCategory, StartInterview } from "@/components";
 import PageWrapper from "@/components/PageWrapper";
-import PodcastsPreview from "@/components/interviews/podcasts/PodcastsPreview";
+import UserModel from "@/models/User";
+
+import Podcasts from "@/components/Podcasts";
 import PostsRender from "@/components/interviews/posts/PostsRender";
 import ArticleSkeleton from "@/components/interviews/skeleton/ArticleSkeleton";
 import { getAllInterviews } from "@/utils/actions/interview.action";
 import { Suspense } from "react";
+import { getServerSession } from "next-auth";
 
 const InterviewHomePage = async ({
   searchParams,
@@ -20,6 +23,11 @@ const InterviewHomePage = async ({
     "education",
     "healthcare",
   ];
+
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const currentUserId = User?._id.toString();
 
   return (
     <PageWrapper>
@@ -37,7 +45,7 @@ const InterviewHomePage = async ({
         {/* Start your interview */}
         <StartInterview />
         {/* Podcasts */}
-        <PodcastsPreview />
+        <Podcasts />
       </aside>
     </PageWrapper>
   );

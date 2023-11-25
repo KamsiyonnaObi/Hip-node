@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
@@ -46,7 +46,7 @@ const Cover = ({
     };
   }, []);
   return (
-    <div className="lex h-[9.5rem] w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
+    <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
         <Image
           src={coverUrl}
