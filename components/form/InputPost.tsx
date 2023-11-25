@@ -26,7 +26,7 @@ import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPost } from "@/utils/actions/post.action";
 import GroupCategory from "../group/GroupCategory";
-import { useOutsideClick } from "hooks/useOutsideClick";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function InputPost({ title }: { title: string }) {
   const { theme } = useTheme();
@@ -39,18 +39,22 @@ export function InputPost({ title }: { title: string }) {
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
-  const [showGroup, setShowGroup] = useState(false);
+  // const [showGroup, setShowGroup] = useState(false);
   const [create, setCreate] = useState("Post");
 
   const toggleCategory = () => {
     setExpanded(expanded !== 2 ? 2 : 0);
   };
 
-  const toggleGroups = () => {
-    setShowGroup(!showGroup);
-  };
+  // const toggleGroups = () => {
+  //   setShowGroup(!showGroup);
+  // };
 
-  // const {ref: groupRef, isOpen: groupOpen, toggleOpen: groupToggle} = useOutsideClick();
+  const {
+    ref: groupRef,
+    isOpen: groupOpen,
+    toggleOpen: groupToggle,
+  } = useOutsideClick();
 
   const closeCategory = (val: any) => {
     setExpanded(0);
@@ -173,19 +177,19 @@ export function InputPost({ title }: { title: string }) {
                         );
                       }}
                     </CldUploadWidget>
-                    <div className="relative">
+                    <div className="relative" ref={groupRef}>
                       <Button
                         color="blackWhite"
                         className="items-center justify-between px-2.5 py-2"
                         type="button"
-                        onClick={toggleGroups}
+                        onClick={groupToggle}
                       >
                         <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
                           Select Group
                         </p>
                         <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                       </Button>
-                      {showGroup && (
+                      {groupOpen && (
                         <div className="absolute left-0 z-50 mt-2">
                           <GroupCategory form={form} />
                         </div>
