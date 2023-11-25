@@ -29,7 +29,6 @@ interface CommentProps {
 const Comment = ({
   commentId,
   postId,
-  userId,
   currentUserId,
   currentUserImage,
   name,
