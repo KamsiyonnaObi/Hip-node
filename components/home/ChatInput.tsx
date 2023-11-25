@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTheme } from "next-themes";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { addComments } from "@/utils/actions/post.action";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 const ChatInput = ({
   postId,
@@ -19,23 +20,9 @@ const ChatInput = ({
   currentUserImage: string;
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [showPicker, setShowPicker] = useState(false);
   const { theme } = useTheme();
 
-  useEffect(() => {
-    function handleClickOutside(event: Event) {
-      const targetEl = event.target as Element;
-      if (showPicker && !targetEl.closest(".emoji-picker")) {
-        setShowPicker(false);
-      }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [showPicker]);
+  const { ref, isOpen, toggleOpen } = useOutsideClick();
 
   const handleSubmit = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -47,6 +34,11 @@ const ChatInput = ({
       });
       setInputValue("");
     }
+  };
+
+  const handleEmoji = (emoji: any) => {
+    setInputValue((prev) => prev + emoji.native);
+    toggleOpen();
   };
 
   return (
@@ -74,25 +66,26 @@ const ChatInput = ({
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleSubmit}
             />
-            <button onClick={() => setShowPicker((prev) => !prev)}>
-              <FillIcon.Emoji className="h-6 w-6 shrink-0 md:h-8 md:w-8" />
-            </button>
+
+            <div ref={ref} className=" flex items-center">
+              <button onClick={toggleOpen}>
+                <FillIcon.Emoji className="h-6 w-6 shrink-0 md:h-8 md:w-8" />
+              </button>
+              <div className="absolute bottom-[-440px] right-0 z-10">
+                {isOpen && (
+                  <Picker
+                    data={data}
+                    onEmojiSelect={handleEmoji}
+                    theme={theme === "dark" ? "dark" : "light"}
+                  />
+                )}
+              </div>
+            </div>
           </div>
           <button className="relative h-8 w-8 shrink-0 rounded-full text-secondary2 dark:text-background md:hidden">
             <FillIcon.Send className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 fill-secondary3" />
           </button>
         </div>
-        {showPicker && (
-          <div className="absolute bottom-[-440px] right-0 z-10">
-            <Picker
-              data={data}
-              onEmojiSelect={(emoji: any) =>
-                setInputValue((prev) => prev + emoji.native)
-              }
-              theme={theme === "dark" ? "dark" : "light"}
-            />
-          </div>
-        )}
       </section>
     </section>
   );
