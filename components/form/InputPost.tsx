@@ -46,10 +46,6 @@ export function InputPost({ title }: { title: string }) {
     setExpanded(expanded !== 2 ? 2 : 0);
   };
 
-  // const toggleGroups = () => {
-  //   setShowGroup(!showGroup);
-  // };
-
   const {
     ref: groupRef,
     isOpen: groupOpen,
