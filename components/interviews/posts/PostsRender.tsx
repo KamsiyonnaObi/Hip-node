@@ -1,13 +1,7 @@
 import { InterviewPost } from ".";
-import { getAllInterviews } from "@/utils/actions/interview.action";
 
-const PostsRender = async ({
-  searchParams,
-}: {
-  searchParams: URLSearchParams;
-}) => {
-  const result = await getAllInterviews(searchParams);
-
+const PostsRender = async ({ search }: { search: Promise<any> }) => {
+  const result = await search;
   return (
     <section className="order-3 flex w-full flex-col gap-5 md:order-2">
       {result.interviews.length > 0

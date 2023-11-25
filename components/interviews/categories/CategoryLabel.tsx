@@ -3,15 +3,18 @@
 import { Checkbox } from "@/components/ui/CheckBox";
 
 const CategoryLabel = ({
+  pending,
   category,
   onChange,
 }: {
+  pending: boolean;
   category: string;
   onChange: any;
 }) => {
   return (
     <li className="flex flex-row-reverse items-center justify-between">
       <Checkbox
+        disabled={pending}
         id={category}
         onCheckedChange={(checked) => onChange(checked, category)}
       />

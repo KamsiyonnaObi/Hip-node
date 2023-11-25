@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -13,12 +13,34 @@ import { CategoryLabel } from ".";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { cn } from "@/utils";
 
-const InterviewCategory = ({ categories }: { categories: string[] }) => {
+const InterviewCategory = ({
+  categories,
+  search,
+}: {
+  categories: string[];
+  search: Promise<any>;
+}) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const [checkedState, setCheckedState] = useState(
     Object.assign({}, ...categories.map((key) => ({ [key]: false })))
   );
+
+  const [pending, setPending] = useState(true);
+
+  useEffect(() => {
+    setPending(true);
+    search.then(
+      () => {
+        // handle fulfilled
+        setPending(false);
+      },
+      () => {
+        // handle rejection
+        setPending(false);
+      }
+    );
+  }, [search]);
 
   const handleOnChange = (value: boolean, category: string) => {
     setCheckedState((prevState: object) => ({
@@ -60,6 +82,7 @@ const InterviewCategory = ({ categories }: { categories: string[] }) => {
           <ul className="flex flex-col gap-3">
             {categories.map((category, index) => (
               <CategoryLabel
+                pending={pending}
                 key={category.toLocaleLowerCase()}
                 category={category}
                 onChange={handleOnChange}

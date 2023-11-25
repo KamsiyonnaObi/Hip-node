@@ -78,6 +78,7 @@ function convertTags(item: string | Array<String> | undefined) {
 }
 
 export async function getAllInterviews(params: any) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const { tags } = params;
 
   try {
