@@ -30,7 +30,7 @@ const CreatePost = () => {
           value={inputValue}
           onChange={handleInputChange}
         />
-        <Link href="/posts/new">
+        <Link href={`/posts/new?title=${inputValue}`}>
           <Button
             color="orange"
             className="caption-semibold md:body-semibold gap-2.5 rounded-[6px] px-3 py-2 text-center md:px-4 md:py-3"

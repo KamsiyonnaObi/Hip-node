@@ -232,38 +232,26 @@ export async function sharePost({
 export async function reportPost({
   postId,
   userId,
-  hasReported,
+  selectedReason,
 }: {
   postId: string;
-  userId: string;
-  hasReported: boolean | null;
+  userId?: string;
+  selectedReason: string;
 }) {
   try {
     dbConnect();
-    const { ObjectId } = mongoose.Types;
-    const id = new ObjectId(postId);
-    let updateQuery = {};
-    // Remove like if it is already reported
-    if (hasReported) {
-      updateQuery = { $pull: { reports: userId } };
-    } else {
-      updateQuery = { $addToSet: { reports: userId } };
-    }
-
-    const post = await Post.findByIdAndUpdate(id, updateQuery, {
-      new: true,
-    });
-    const reportedStatus = post.reports.includes(userId);
-
+    const post = await getPostById(postId);
+    post.data.reports.get(selectedReason).push(userId);
+    await post.data.save();
     if (!post) {
       throw new Error("Post not found");
     }
-    return { status: reportedStatus };
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
+
 export async function getPostByGroupId(groupId: string) {
   try {
     await dbConnect();

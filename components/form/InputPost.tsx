@@ -266,6 +266,14 @@ export function InputPost({ editDetail }: { editDetail?: string }) {
                         "alignright bullist numlist",
                       toolbar_mode: "floating",
                     },
+                    init_instance_callback: function (editor) {
+                      editor.on("focus", function (e) {
+                        const currentContent = editor.getContent();
+                        if (currentContent === "<p>Tell your story...</p>") {
+                          editor.setContent("");
+                        }
+                      });
+                    },
                     content_css: theme === "dark" ? "dark" : "light",
                     setup: (editor) => {
                       editor.ui.registry.addButton("codeofconduct", {
