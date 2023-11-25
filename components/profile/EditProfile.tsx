@@ -26,9 +26,9 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      username: "",
-      job: "",
-      bio: "",
+      username: profileData.name,
+      job: profileData.job,
+      bio: profileData.bio,
       website: undefined,
       twitter: undefined,
       facebook: undefined,
@@ -39,6 +39,7 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
     console.log(data);
+    console.log(profileData.id);
   };
   return (
     <>
