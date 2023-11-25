@@ -26,6 +26,7 @@ import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPost } from "@/utils/actions/post.action";
 import GroupCategory from "../group/GroupCategory";
+import { useOutsideClick } from "hooks/useOutsideClick";
 
 export function InputPost({ title }: { title: string }) {
   const { theme } = useTheme();
@@ -48,6 +49,8 @@ export function InputPost({ title }: { title: string }) {
   const toggleGroups = () => {
     setShowGroup(!showGroup);
   };
+
+  // const {ref: groupRef, isOpen: groupOpen, toggleOpen: groupToggle} = useOutsideClick();
 
   const closeCategory = (val: any) => {
     setExpanded(0);

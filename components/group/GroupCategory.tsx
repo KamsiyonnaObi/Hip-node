@@ -65,7 +65,15 @@ const GroupCategory = ({ form }: any) => {
     form.setValue("groupId", name);
 
     setSelectedGroup(name);
+    localStorage.setItem("selectedGroup", name);
   }
+
+  useEffect(() => {
+    const storedGroup = localStorage.getItem("selectedGroup");
+    if (storedGroup) {
+      setSelectedGroup(storedGroup);
+    }
+  }, []);
 
   return (
     <article className="w-[210px] rounded-[16px] border border-dark1 bg-background dark:border-background2 dark:bg-dark3 md:gap-[10px] md:p-[20px]">
