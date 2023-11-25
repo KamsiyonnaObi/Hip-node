@@ -50,8 +50,8 @@ export const formatNumber = (num: number): string => {
 
 export function countComments(comments: IComments[]) {
   let total = 0;
-
   comments.forEach((comment) => {
+    total++;
     function countReplies(comment: IComments) {
       if (comment.replies) {
         total += comment.replies.length;
