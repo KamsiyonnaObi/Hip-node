@@ -183,3 +183,14 @@ export async function findById(admins: any) {
     return "[]";
   }
 }
+
+export async function findAllGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({});
+    return JSON.stringify(groups);
+  } catch (error) {
+    return "[]";
+  }
+}
+
