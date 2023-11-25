@@ -7,8 +7,17 @@ import {
   Meetups,
   CreateGroup,
 } from "@/components/group";
+import { getAllGroups } from "@/utils/actions/group.action";
 
-const page = () => {
+const page = async ({ params }: { params: string }) => {
+  const groups = await getAllGroups(params);
+
+  const mapGroups = groups.groups.map((groups) => ({
+    _id: groups._id.toString(),
+    title: groups.title,
+    post: groups.post,
+  }));
+
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
@@ -19,50 +28,15 @@ const page = () => {
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-            <PostGroup
-              avatar={"/Avatar.png"}
-              image={"/bird.png"}
-              title={"Browser Extension Makers"}
-              name={"Moinul Hassan"}
-              descTitle={"Database Backups as a Service?"}
-              desc={
-                "I wouldn't mind a daily (or more) backup of my database to be done automatically. I've had a google around, and there are services; but none I've heard of..."
-              }
-              date={"wed, 15 Fabruary 2022"}
-            />
-            <PostGroup
-              avatar={"/Avatar.png"}
-              image={"/bird.png"}
-              title={"Browser Extension Makers"}
-              name={"Moinul Hassan"}
-              descTitle={"Database Backups as a Service?"}
-              desc={
-                "I wouldn't mind a daily (or more) backup of my database to be done automatically. I've had a google around, and there are services; but none I've heard of..."
-              }
-              date={"wed, 15 Fabruary 2022"}
-            />
-            <PostGroup
-              avatar={"/Avatar.png"}
-              image={"/bird.png"}
-              title={"Browser Extension Makers"}
-              name={"Moinul Hassan"}
-              descTitle={"Database Backups as a Service?"}
-              desc={
-                "I wouldn't mind a daily (or more) backup of my database to be done automatically. I've had a google around, and there are services; but none I've heard of..."
-              }
-              date={"wed, 15 Fabruary 2022"}
-            />
-            <PostGroup
-              avatar={"/Avatar.png"}
-              image={"/bird.png"}
-              title={"Browser Extension Makers"}
-              name={"Moinul Hassan"}
-              descTitle={"Database Backups as a Service?"}
-              desc={
-                "I wouldn't mind a daily (or more) backup of my database to be done automatically. I've had a google around, and there are services; but none I've heard of..."
-              }
-              date={"wed, 15 Fabruary 2022"}
-            />
+            {mapGroups.map((group: any) => (
+              <div key={group._id}>
+                <PostGroup
+                  post={JSON.stringify(group.post)}
+                  title={group.title}
+                  _id={group._id}
+                />
+              </div>
+            ))}
           </div>
         </section>
         <section>
