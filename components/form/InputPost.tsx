@@ -137,7 +137,7 @@ export function InputPost() {
                     className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
                   />
-
+                  <FormMessage className="text-red90" />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
                       uploadPreset="ml_images"
@@ -187,6 +187,9 @@ export function InputPost() {
                           <GroupCategory form={form} />
                         </div>
                       )}
+                      <div className="text-sm font-medium text-red90">
+                        {form.formState.errors.groupId && "Must choose a group"}
+                      </div>
                     </div>
                     <div className="relative">
                       <Button
@@ -210,7 +213,6 @@ export function InputPost() {
                   </div>
                 </div>
               </FormControl>
-              <FormMessage className="text-red90" />
             </FormItem>
           )}
         />
