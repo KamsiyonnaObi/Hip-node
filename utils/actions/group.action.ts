@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 
 import Group from "@/models/group.model";
+import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 
@@ -158,7 +159,13 @@ export async function getAllGroups(params: any) {
   try {
     await dbConnect();
     const groups = await Group.find().populate("userId");
-    return { groups };
+    const returnGroups = [];
+
+    for (let i = 0; i < groups.length; i++) {
+      const post = await Post.find({ groupId: groups[i]._id });
+      returnGroups.push({ ...groups[i]._doc, post });
+    }
+    return { groups: returnGroups };
   } catch (error) {
     console.log(error);
     throw error;

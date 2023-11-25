@@ -9,9 +9,12 @@ import { Button } from "../ui/Button";
 interface Props {
   title: string;
   _id: string;
+  post: string;
 }
 
-const PostGroup = ({ title, _id }: Props) => {
+const PostGroup = ({ title, _id, post }: Props) => {
+  const groupPost = JSON.parse(post);
+  console.log(groupPost);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const toggleHeartColor = () => {
