@@ -5,16 +5,19 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { profileSchema } from "@/lib/validations";
+import { userProfileData } from "@/types/component";
 import { Input } from "../form/Input";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
 type ProfileSchema = z.infer<typeof profileSchema>;
-const EditProfile = ({
-  onCancel,
-}: {
+
+interface EditProfileProps {
+  JSONProfileData: string;
   onCancel: MouseEventHandler<HTMLButtonElement>;
-}) => {
+}
+const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
+  const profileData: userProfileData = JSON.parse(JSONProfileData);
   // extract register, handleSubmit from useForm
   const {
     register,

@@ -1,24 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Schema } from "mongoose";
 import moment from "moment";
 
+import { userProfileData } from "@/types/component";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
-
-interface userProfileData {
-  id: string;
-  name: string;
-  email: string;
-  profileImage: string;
-  job: string;
-  followers: Schema.Types.ObjectId[];
-  following: Schema.Types.ObjectId[];
-  points: number;
-  bio: string;
-}
 
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
@@ -46,7 +34,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
   return (
     <>
       {isProfileEdit ? (
-        <EditProfile onCancel={onCancel} />
+        <EditProfile JSONProfileData={JSONProfileData} onCancel={onCancel} />
       ) : (
         <>
           <div className="flex flex-col items-center justify-center">
