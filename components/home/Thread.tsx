@@ -35,11 +35,6 @@ const Thread = ({
               ?.map((id) => id.toString())
               .includes(currentUserId || "") || false
           }
-          hasReplied={
-            (comment?.replies || [])
-              .map((reply) => reply?._id?.toString())
-              .includes(currentUserId) || false
-          }
         />
       ))}
     </section>

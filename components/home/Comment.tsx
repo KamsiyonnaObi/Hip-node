@@ -24,7 +24,6 @@ interface CommentProps {
   text?: string;
   replies?: string;
   hasLiked?: boolean | false;
-  hasReplied?: boolean | false;
 }
 
 const Comment = ({
@@ -143,8 +142,11 @@ const Comment = ({
               imgUrl={reply?.imgUrl}
               text={reply.text}
               replies={JSON.stringify(reply.replies)}
-              hasLiked={reply.likes?.includes(JSON.parse(userId)) || false}
-              hasReplied={reply.replies?.includes(JSON.parse(userId)) || false}
+              hasLiked={
+                reply?.likes
+                  ?.map((id) => id.toString())
+                  .includes(currentUserId || "") || false
+              }
             />
           </div>
         ))}
