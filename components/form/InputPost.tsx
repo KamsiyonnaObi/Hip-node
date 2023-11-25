@@ -26,7 +26,7 @@ import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPost } from "@/utils/actions/post.action";
 
-export function InputPost() {
+export function InputPost({ title }: { title: string }) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
@@ -56,7 +56,7 @@ export function InputPost() {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: "",
+      title,
       contents: "",
       tags: [],
     },
@@ -257,6 +257,14 @@ export function InputPost() {
                         "h1 bold italic underline strikethrough link image alignleft aligncenter " +
                         "alignright bullist numlist",
                       toolbar_mode: "floating",
+                    },
+                    init_instance_callback: function (editor) {
+                      editor.on("focus", function (e) {
+                        const currentContent = editor.getContent();
+                        if (currentContent === "<p>Tell your story...</p>") {
+                          editor.setContent("");
+                        }
+                      });
                     },
                     content_css: theme === "dark" ? "dark" : "light",
                     setup: (editor) => {

@@ -23,7 +23,7 @@ export interface IPost extends Document {
   views?: Schema.Types.ObjectId[];
   likes?: Schema.Types.ObjectId[];
   shares?: Schema.Types.ObjectId[];
-  reports?: Schema.Types.ObjectId[];
+  reports?: { [key: string]: Schema.Types.ObjectId };
   hasLiked?: boolean;
   hasCommented?: boolean;
   hasShared?: boolean;
@@ -75,12 +75,18 @@ const PostSchema = new Schema({
       ref: "User",
     },
   ],
-  reports: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+  reports: {
+    type: Map,
+    of: [Schema.Types.ObjectId],
+    default: {
+      Offensive: [],
+      Harassment: [],
+      Impersonation: [],
+      Spam: [],
+      Explicit: [],
+      Misinformation: [],
     },
-  ],
+  },
   comments: [commentSchema],
 });
 

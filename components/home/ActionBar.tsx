@@ -37,9 +37,6 @@ const ActionBar = ({
 }: Props) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
-  const [isReported, setIsReported] = useState<boolean | null>(
-    hasReported || null
-  );
   const [isPending, startTransition] = useTransition();
   const [showShareModal, setShowShareModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
@@ -83,21 +80,6 @@ const ActionBar = ({
   const closeReportModal = () => {
     setShowReportModal(false);
   };
-
-  // TODO: implement report function later
-  // const handleReport = async () => {
-  //   if (userId) {
-  //     startTransition(async () => {
-  //       const reported = await reportPost({
-  //         postId: JSON.parse(postId),
-  //         userId: JSON.parse(userId),
-  //         hasReported: isReported,
-  //       });
-  //       if (!reported) return;
-  //       setIsReported(reported.status);
-  //     });
-  //   }
-  // };
 
   return (
     <section className="flex w-full flex-col items-start justify-start gap-5 rounded-2xl bg-background p-5 dark:bg-dark3">
@@ -181,22 +163,22 @@ const ActionBar = ({
         <button
           disabled={isPending}
           className={clsx("h-7 w-7 rounded-md p-1", {
-            "bg-red10": isReported,
-            "bg-background2 dark:bg-dark4": !isReported,
+            "bg-red10": hasReported,
+            "bg-background2 dark:bg-dark4": !hasReported,
           })}
           onClick={openReportModal}
         >
           <FillIcon.Report
             className={clsx({
-              "fill-red80": isReported,
-              "fill-secondary3": !isReported,
+              "fill-red80": hasReported,
+              "fill-secondary3": !hasReported,
             })}
           />
         </button>
         <div
           className={clsx("flex gap-1", {
-            "text-secondary2 dark:text-background": isReported,
-            "text-secondary3": !isReported,
+            "text-secondary2 dark:text-background": hasReported,
+            "text-secondary3": !hasReported,
           })}
         >
           <p>Report</p>
@@ -209,7 +191,11 @@ const ActionBar = ({
             className="fixed inset-0 z-10 bg-black opacity-50"
             onClick={openReportModal}
           ></div>
-          <ReportModal close={closeReportModal} />
+          <ReportModal
+            postId={postId}
+            userId={userId}
+            close={closeReportModal}
+          />
         </>
       )}
     </section>
