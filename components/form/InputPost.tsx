@@ -74,7 +74,6 @@ export function InputPost({ editDetail }: { editDetail?: string }) {
         content: values.contents,
         tags: values.tags,
         image: coverUrl,
-        avatar: "/Avatar.png",
       };
       if (editDetail) {
         await updatePost({

@@ -2,7 +2,7 @@
 
 import mongoose, { ObjectId } from "mongoose";
 
-import Post, { IComments } from "@/models/post.model";
+import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -18,7 +18,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar } = params;
+    const { title, content, image, tags } = params;
 
     const post = await Post.create({
       title,
@@ -26,7 +26,6 @@ export async function createPost(params: any) {
       image,
       tags,
       userId,
-      avatar,
     });
 
     // return the postID, not the entire Post
@@ -82,17 +81,16 @@ export async function getPostsByUserId(
   }
 }
 
-export async function updatePost(params: any) {
+export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
-    const { title, content, image, tags, avatar, postId } = params;
+    const { title, content, image, tags, postId } = params;
     const post = await Post.findById(postId);
 
     post.title = title;
     post.content = content;
     post.image = image;
     post.tags = tags;
-    post.avatar = avatar;
 
     await post.save();
   } catch (error) {

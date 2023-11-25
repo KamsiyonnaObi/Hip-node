@@ -85,11 +85,11 @@ const Post = ({
               <section className="flex h-[30px] w-[30px] items-center justify-center rounded-[15px] bg-secondary6 dark:bg-dark4 md:gap-[5px] md:p-[5px]">
                 <FillIcon.Heart className="hidden fill-secondary5 md:flex" />
                 <Image
-                  className="md:hidden"
+                  className="rounded-full md:hidden"
                   src={avatar}
                   alt="avatar"
-                  width={20}
-                  height={25}
+                  width={30}
+                  height={30}
                 />
               </section>
               <div
@@ -110,7 +110,13 @@ const Post = ({
           </div>
           <div className="flex flex-row gap-[10px]">
             <section className="hidden items-center justify-center rounded-full bg-purple10 md:flex md:h-[40px] md:w-[40px]">
-              <Image src={avatar} alt="avatar" width={28} height={32} />
+              <Image
+                src={avatar}
+                alt="avatar"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
             </section>
             <section className="flex flex-row justify-between md:w-[521px]">
               <div className="hidden flex-col md:flex">

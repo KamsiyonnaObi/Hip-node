@@ -21,7 +21,13 @@ const PodcastCardBig = ({ title, desc, name, location, avatar }: Props) => {
           </div>
         </div>
         <div className="flex flex-row gap-5">
-          <Image src={avatar} alt="image" width={30} height={30} />
+          <Image
+            src={avatar}
+            alt="image"
+            width={30}
+            height={30}
+            className="mt-1 h-[30px] w-[30px] rounded-full"
+          />
           <div className="flex flex-col">
             <p className="body-semibold">{name}</p>
             <p className="text-sm-regular">{location}</p>
