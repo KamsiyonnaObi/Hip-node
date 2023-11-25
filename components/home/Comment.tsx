@@ -9,13 +9,13 @@ import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 import { ChatInput } from "@/components";
 import { IComments } from "@/models/post.model";
-// import { likeComment } from "@/utils/actions/post.action";
+import { likeComment } from "@/utils/actions/post.action";
 
 interface CommentProps {
   commentId: any;
   postId: string;
   userId: string;
-  currentUserId: string;
+  currentUserId?: string;
   currentUserImage: string;
   name?: string;
   createdAt?: Date;
@@ -24,13 +24,11 @@ interface CommentProps {
   text?: string;
   replies?: string;
   hasLiked?: boolean | false;
-  hasReplied?: boolean | false;
 }
 
 const Comment = ({
   commentId,
   postId,
-  userId,
   currentUserId,
   currentUserImage,
   name,
@@ -40,30 +38,28 @@ const Comment = ({
   text,
   replies,
   hasLiked,
-  hasReplied,
 }: CommentProps) => {
   const formattedDate = format(new Date(createdAt ?? new Date()), "MMM dd");
-  // const [isLiked, setIsLiked] = useState(hasLiked || false);
+  const [isLiked, setIsLiked] = useState(hasLiked || false);
   const [showComment, setShowComment] = useState(false);
-  // const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [showAllReplies, setShowAllReplies] = useState(false);
   const replyList = JSON.parse(replies || "");
   const repliesToShow = showAllReplies ? replyList : replyList.slice(0, 3);
 
-  // const handleLike = async () => {
-  //   if (currentUserId) {
-  //     startTransition(async () => {
-  //       const liked = await likeComment({
-  //         postId,
-  //         commentId,
-  //         currentUserId,
-  //         hasLiked,
-  //       });
-  //       if (!liked) return;
-  //       setIsLiked(liked.status);
-  //     });
-  //   }
-  // };
+  const handleLike = async () => {
+    if (currentUserId) {
+      startTransition(async () => {
+        const liked = await likeComment({
+          postId,
+          commentId,
+          hasLiked,
+        });
+        if (!liked) return;
+        setIsLiked(liked.status);
+      });
+    }
+  };
 
   let editedText;
   if (updatedAt) {
@@ -96,14 +92,14 @@ const Comment = ({
           <p className="body-regular text-secondary3">{text}</p>
         </article>
         <div className="flex gap-5 pl-[15px]">
-          {/* <button disabled={isPending} onClick={handleLike}>
+          <button disabled={isPending} onClick={handleLike}>
             <FillIcon.Heart
               className={clsx({
                 "fill-red80": isLiked,
                 "fill-secondary3": !isLiked,
               })}
             />
-          </button> */}
+          </button>
           <button onClick={() => setShowComment(!showComment)}>
             <FillIcon.Reply className="h-5 w-5 fill-secondary3" />
           </button>
@@ -145,8 +141,11 @@ const Comment = ({
               imgUrl={reply?.imgUrl}
               text={reply.text}
               replies={JSON.stringify(reply.replies)}
-              hasLiked={reply.likes?.includes(JSON.parse(userId)) || false}
-              hasReplied={reply.replies?.includes(JSON.parse(userId)) || false}
+              hasLiked={
+                reply?.likes
+                  ?.map((id) => id.toString())
+                  .includes(currentUserId || "") || false
+              }
             />
           </div>
         ))}

@@ -6,11 +6,11 @@ import Post from "@/components/home/Post";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
 import { getAllPosts } from "@/utils/actions/post.action";
-import React from "react";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 export default async function Home() {
   const result = await getAllPosts({});
-
+  const currentUser = await getCurrentUser();
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -33,7 +33,8 @@ export default async function Home() {
           ? result.posts.map((post) => (
               <Post
                 key={post._id}
-                _id={post._id}
+                _id={post._id.toString()}
+                currentUserId={currentUser?._id.toString()}
                 postImage={post.image}
                 title={post.title}
                 tags={post.tags}
@@ -42,6 +43,7 @@ export default async function Home() {
                 createdAt={post.createdAt}
                 views={post?.views?.length}
                 likes={post?.likes?.length}
+                hasLiked={post?.likes?.includes(currentUser?._id) || false}
                 comments={post?.comments?.length}
               />
             ))
