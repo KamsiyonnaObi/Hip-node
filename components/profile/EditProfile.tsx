@@ -26,7 +26,7 @@ const EditProfile = ({
       username: "",
       job: "",
       bio: "",
-      website: "",
+      website: undefined,
       twitter: undefined,
       facebook: undefined,
       instagram: undefined,

@@ -130,7 +130,7 @@ export const profileSchema = z.object({
     .min(2, { message: "Username must be at least 2 characters" }),
   bio: z.string().optional(),
   job: z.string(),
-  website: z.string().url({ message: "Invalid url" }).optional(),
+  website: z.string().url({ message: "Invalid website url" }).optional(),
   twitter: z
     .string()
     .url()
