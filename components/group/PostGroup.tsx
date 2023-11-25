@@ -23,7 +23,7 @@ const PostGroup = ({ title, _id }: Props) => {
       <div className="mx-auto flex flex-col gap-[10px]">
         <section className="flex flex-row justify-between sm:gap-[10px]">
           <div className="flex flex-row">
-            <Image src={"avatar"} alt="avatar" width={34} height={34} />
+            {/* <Image src={"avatar"} alt="avatar" width={34} height={34} /> */}
             <div className="flex flex-col">
               <p className="caption-semibold line-clamp-1">{title}</p>
               <p className="text-sm-regular line-clamp-1">{"name"}</p>

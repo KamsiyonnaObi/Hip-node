@@ -9,11 +9,11 @@ import {
 } from "@/components/group";
 import { getAllGroups } from "@/utils/actions/group.action";
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const groups = await getAllGroups(params.slug);
+const page = async ({ params }: { params: string }) => {
+  const groups = await getAllGroups(params);
 
   const mapGroups = groups.groups.map((groups) => ({
-    _id: groups._id,
+    _id: groups._id.toString(),
     title: groups.title,
   }));
   return (
@@ -28,16 +28,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
             {mapGroups.map((group: any) => (
               <div key={group._id}>
-                <PostGroup
-                  // avatar={""}
-                  // image={""}
-                  title={group.title}
-                  // descTitle={"Desc"}
-                  // desc={"DESC"}
-                  // date={"date"}
-                  // name={"name"}
-                  _id={group._id}
-                />
+                <PostGroup title={group.title} _id={group._id} />
               </div>
             ))}
           </div>
