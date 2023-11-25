@@ -39,7 +39,6 @@ export function InputPost({ title }: { title: string }) {
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
-  // const [showGroup, setShowGroup] = useState(false);
   const [create, setCreate] = useState("Post");
 
   const toggleCategory = () => {
