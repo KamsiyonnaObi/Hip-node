@@ -29,13 +29,13 @@ const page = async ({ params }: { params: { slug: string } }) => {
             {mapGroups.map((group: any) => (
               <div key={group._id}>
                 <PostGroup
-                  avatar={""}
-                  image={""}
+                  // avatar={""}
+                  // image={""}
                   title={group.title}
-                  descTitle={"Desc"}
-                  desc={"DESC"}
-                  date={"date"}
-                  name={"name"}
+                  // descTitle={"Desc"}
+                  // desc={"DESC"}
+                  // date={"date"}
+                  // name={"name"}
                   _id={group._id}
                 />
               </div>
