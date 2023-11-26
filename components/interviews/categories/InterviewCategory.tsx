@@ -12,6 +12,7 @@ import {
 import { CategoryLabel } from ".";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { cn } from "@/utils";
+import { Slider } from "@/components/ui/Slider";
 
 const InterviewCategory = ({
   categories,

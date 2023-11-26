@@ -1,6 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/CheckBox";
+import { cn } from "@/utils";
 
 const CategoryLabel = ({
   pending,
@@ -12,7 +13,7 @@ const CategoryLabel = ({
   onChange: any;
 }) => {
   return (
-    <li className="flex flex-row-reverse items-center justify-between">
+    <li className={cn("flex flex-row-reverse items-center justify-between")}>
       <Checkbox
         disabled={pending}
         id={category}

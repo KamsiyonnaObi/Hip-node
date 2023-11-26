@@ -24,3 +24,16 @@ export interface commentDataType {
     text: string;
   }[];
 }
+
+export interface interviewData {
+  _id: string;
+  title: string;
+  desc: string;
+  userId: { username: any; _id: { toString: () => string | undefined } };
+  createdAt: Date;
+  image: string;
+  revenue: number;
+  updates: number;
+  website: string;
+  tags: string[];
+}
