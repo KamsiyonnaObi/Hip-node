@@ -133,6 +133,27 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
                 {errors.username.message}
               </p>
             )}
+            {errors.website && (
+              <p className="caption-regular text-red">
+                {errors.website.message}
+              </p>
+            )}
+            {errors.bio && (
+              <p className="caption-regular text-red">{errors.bio.message}</p>
+            )}
+            {errors.job && (
+              <p className="caption-regular text-red">{errors.job.message}</p>
+            )}
+            {errors.facebook && (
+              <p className="caption-regular text-red">
+                {errors.facebook.message}
+              </p>
+            )}
+            {errors.instagram && (
+              <p className="caption-regular text-red">
+                {errors.instagram.message}
+              </p>
+            )}
             {errors.twitter && (
               <p className="caption-regular text-red">
                 {errors.twitter.message}

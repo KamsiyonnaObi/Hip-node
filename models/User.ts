@@ -50,7 +50,16 @@ const userSchema: Schema = new Schema<IUser>(
     bio: {
       type: String,
     },
-    socialMedia: {
+    website: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
+    facebook: {
+      type: String,
+    },
+    instagram: {
       type: String,
     },
     followers: [

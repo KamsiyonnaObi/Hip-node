@@ -131,11 +131,7 @@ export const profileSchema = z.object({
   bio: z.string().optional(),
   job: z.string(),
   website: z.string().url({ message: "Invalid website url" }).optional(),
-  twitter: z
-    .string()
-    .url()
-    .includes("twitter", { message: "invalid twitter profile" })
-    .optional(),
+  twitter: z.union([z.literal(""), z.string().trim().url()]),
   facebook: z
     .string()
     .url()

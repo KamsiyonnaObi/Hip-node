@@ -1,8 +1,7 @@
 "use server";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
-import User from "@/models/User";
-import mongoose, { ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 export async function newUser(user: FormData) {
@@ -34,6 +33,7 @@ export async function newUser(user: FormData) {
   }
 }
 
+// user action to fetch logged in user profile details
 export async function getUserProfile(email: string | null | undefined) {
   try {
     await dbConnect();
@@ -62,6 +62,9 @@ export async function getUserProfile(email: string | null | undefined) {
   }
 }
 
+// user action to update logged in user profile details
+export async function updateProfileDetails() {}
+
 export async function followAuthor({
   userId,
   currentUserId,
@@ -80,7 +83,7 @@ export async function followAuthor({
       updateQuery = { $addToSet: { followers: currentUserId } };
     }
 
-    const user = await User.findByIdAndUpdate(userId, updateQuery, {
+    const user = await UserModel.findByIdAndUpdate(userId, updateQuery, {
       new: true,
     });
     const followedStatus = user?.followers.includes(currentUserId);
