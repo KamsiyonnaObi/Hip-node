@@ -26,7 +26,6 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
     joinedDate: "2-28-2023",
     points: 501,
     bio: "Hey there... I'm AR Jakir! I'm here to learn from and support the other members of this community!",
-    website: "www.uikit.to",
   };
 
   const onEdit = () => setIsProfileEdit(true);
@@ -80,12 +79,14 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             </p>
           </div>
           <div className="flex gap-5">
-            <div className="flex gap-2.5">
-              <OutlineIcon.Web />
-              <p className="body-semibold text-secondary2 dark:text-background2">
-                {dummyProfileData.website}
-              </p>
-            </div>
+            {profileData.website && (
+              <div className="flex gap-2.5">
+                <OutlineIcon.Web />
+                <p className="body-semibold text-secondary2 dark:text-background2">
+                  {profileData.website}
+                </p>
+              </div>
+            )}
 
             {/* display socials based on user's profile */}
             <div className="flex gap-5">

@@ -15,6 +15,10 @@ export interface userProfileData {
   following: Schema.Types.ObjectId[];
   points: number;
   bio: string;
+  website: string;
+  twitter: string;
+  facebook: string;
+  instagram: string;
 }
 
 export interface ActionBarLink {

@@ -1,8 +1,10 @@
 "use server";
-import dbConnect from "../mongooseConnect";
-import UserModel from "@/models/User";
 import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
+
+import { ProfileSchema } from "@/components/profile/EditProfile";
+import dbConnect from "../mongooseConnect";
+import UserModel from "@/models/User";
 
 export async function newUser(user: FormData) {
   try {
@@ -51,6 +53,10 @@ export async function getUserProfile(email: string | null | undefined) {
         following: loggedInUser.following,
         points: loggedInUser.points,
         bio: loggedInUser.bio,
+        website: loggedInUser.website,
+        twitter: loggedInUser.twitter,
+        facebook: loggedInUser.facebook,
+        instagram: loggedInUser.instagram,
       };
       return userObj;
     }
@@ -63,7 +69,22 @@ export async function getUserProfile(email: string | null | undefined) {
 }
 
 // user action to update logged in user profile details
-export async function updateProfileDetails() {}
+export async function updateProfileDetails(id: string, data: ProfileSchema) {
+  try {
+    await dbConnect();
+
+    const profileData = await UserModel.findByIdAndUpdate(id);
+
+    if (profileData) {
+      console.log(profileData);
+      return "success";
+    }
+    return "no user found";
+  } catch (error) {
+    console.log(error);
+    return "error";
+  }
+}
 
 export async function followAuthor({
   userId,

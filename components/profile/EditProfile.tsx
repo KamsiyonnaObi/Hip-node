@@ -6,11 +6,12 @@ import * as z from "zod";
 
 import { profileSchema } from "@/lib/validations";
 import { userProfileData } from "@/types/component";
+import { updateProfileDetails } from "@/utils/actions/user.action";
 import { Input } from "../form/Input";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
-type ProfileSchema = z.infer<typeof profileSchema>;
+export type ProfileSchema = z.infer<typeof profileSchema>;
 
 interface EditProfileProps {
   JSONProfileData: string;
@@ -29,17 +30,17 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
       username: profileData.name,
       job: profileData.job,
       bio: profileData.bio,
-      website: undefined,
-      twitter: undefined,
-      facebook: undefined,
-      instagram: undefined,
+      website: profileData.website,
+      twitter: profileData.twitter,
+      facebook: profileData.facebook,
+      instagram: profileData.instagram,
     },
   });
 
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
     console.log(data);
-    console.log(profileData.id);
+    updateProfileDetails(profileData.id, data);
   };
   return (
     <>

@@ -135,15 +135,28 @@ export const profileSchema = z.object({
   bio: z.string().optional(),
   job: z.string(),
   website: z.string().url({ message: "Invalid website url" }).optional(),
-  twitter: z.union([z.literal(""), z.string().trim().url()]),
-  facebook: z
-    .string()
-    .url()
-    .includes("facebook", { message: "invalid facebook profile" })
-    .optional(),
-  instagram: z
-    .string()
-    .url()
-    .includes("instagram", { message: "invalid instagram profile" })
-    .optional(),
+  twitter: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .includes("twitter", { message: "invalid twitter profile" })
+      .url(),
+  ]),
+  facebook: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .includes("facebook", { message: "invalid facebook profile" })
+      .url(),
+  ]),
+  instagram: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .includes("instagram", { message: "invalid instagram profile" })
+      .url(),
+  ]),
 });
