@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { getTimestamp } from "@/utils";
 import Link from "next/link";
 import EditDeletePopup from "./EditDeletePopup";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 interface Props {
   postImage: string;
@@ -34,23 +35,7 @@ const Post = ({
   _id,
   showEdit,
 }: Props) => {
-  const [showPopup, setShowPopup] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (!menuRef.current) return;
-    if (!menuRef.current.contains(e.target as Node)) {
-      setShowPopup(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
+  const { isOpen: showPopup, ref: menuRef, toggleOpen } = useOutsideClick();
   return (
     <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:rounded-[16px] md:p-[20px]">
       <div className="flex flex-row gap-[14px]">
@@ -95,7 +80,7 @@ const Post = ({
               <div
                 className="relative"
                 ref={menuRef}
-                onClick={() => setShowPopup(!showPopup)}
+                onClick={() => toggleOpen()}
               >
                 {showEdit && (
                   <OutlineIcon.VerticalDots className="mt-1 hidden fill-secondary5 md:flex" />
