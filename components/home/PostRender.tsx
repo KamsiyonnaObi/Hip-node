@@ -25,6 +25,7 @@ const PostRender = async ({
               createdAt={post.createdAt}
               views={post?.views?.length}
               likes={post?.likes?.length}
+              hasLiked={post?.likes?.includes(currentUserId) || false}
               comments={post?.comments?.length}
               showEdit={post.userId?._id.toString() === currentUserId}
             />

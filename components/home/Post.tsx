@@ -91,38 +91,42 @@ const Post = ({
                 ))}
               </div>
             </section>
-            <section
-              className={clsx(
-                "flex h-[30px] w-[30px] items-center justify-center rounded-[15px] md:gap-[5px] md:p-[5px]",
-                {
-                  "bg-red10 dark:bg-dark4": isLiked,
-                  "bg-secondary6 dark:bg-dark4": !isLiked,
-                }
-              )}
-            >
-              <button
-                disabled={isPending}
-                className={clsx("relative hidden h-7 w-7 rounded-2xl md:block")}
-                onClick={handleLike}
+            <section className="flex flex-row gap-2.5">
+              <section
+                className={clsx(
+                  "flex h-[30px] w-[30px] items-center justify-center rounded-[15px] md:gap-[5px] md:p-[5px]",
+                  {
+                    "bg-red10 dark:bg-dark4": isLiked,
+                    "bg-secondary6 dark:bg-dark4": !isLiked,
+                  }
+                )}
               >
-                <FillIcon.Heart
+                <button
+                  disabled={isPending}
                   className={clsx(
-                    "left-1/2 top-1/2 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 md:absolute md:block",
-                    {
-                      "fill-red80": isLiked,
-                      "fill-secondary5": !isLiked,
-                    }
+                    "relative hidden h-7 w-7 rounded-2xl md:block"
                   )}
+                  onClick={handleLike}
+                >
+                  <FillIcon.Heart
+                    className={clsx(
+                      "left-1/2 top-1/2 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 md:absolute md:block",
+                      {
+                        "fill-red80": isLiked,
+                        "fill-secondary5": !isLiked,
+                      }
+                    )}
+                  />
+                </button>
+                <Image
+                  className="md:hidden"
+                  src={avatar}
+                  alt="avatar"
+                  width={20}
+                  height={25}
                 />
-              </button>
-              <Image
-                className="md:hidden"
-                src={avatar}
-                alt="avatar"
-                width={20}
-                height={25}
-              />
-                            <div
+              </section>
+              <div
                 className="relative"
                 ref={menuRef}
                 onClick={() => toggleOpen()}

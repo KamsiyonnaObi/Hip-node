@@ -6,15 +6,14 @@ import PostRender from "@/components/home/PostRender";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
 
-import { getAllPosts } from "@/utils/actions/post.action";
 import { getCurrentUser } from "@/utils/actions/user.action";
+import { Suspense } from "react";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: URLSearchParams;
 }) {
-  const result = await getAllPosts({});
   const currentUser = await getCurrentUser();
 
   return (
@@ -47,7 +46,7 @@ export default async function Home({
         >
           <PostRender
             searchParams={searchParams}
-            currentUserId={currentUserId || ""}
+            currentUserId={currentUser?._id.toString() || ""}
           />
         </Suspense>
       </section>
