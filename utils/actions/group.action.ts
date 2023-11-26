@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 
 import Group from "@/models/group.model";
+import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 
@@ -154,6 +155,23 @@ export async function getUsersBySimilarName(name: string) {
   }
 }
 
+export async function getAllGroups(params: any) {
+  try {
+    await dbConnect();
+    const groups = await Group.find().populate("userId");
+    const returnGroups = [];
+
+    for (let i = 0; i < groups.length; i++) {
+      const post = await Post.find({ groupId: groups[i]._id });
+      returnGroups.push({ ...groups[i]._doc, post });
+    }
+    return { groups: returnGroups };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function findById(admins: any) {
   try {
     await dbConnect();
@@ -161,6 +179,16 @@ export async function findById(admins: any) {
       _id: { $in: admins },
     }).select("username");
     return JSON.stringify(users);
+  } catch (error) {
+    return "[]";
+  }
+}
+
+export async function findAllGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({});
+    return JSON.stringify(groups);
   } catch (error) {
     return "[]";
   }

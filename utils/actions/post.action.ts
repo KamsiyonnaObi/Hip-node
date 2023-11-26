@@ -18,7 +18,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar } = params;
+    const { title, content, image, tags, avatar, groupId } = params;
 
     const post = await Post.create({
       title,
@@ -26,6 +26,7 @@ export async function createPost(params: any) {
       image,
       tags,
       userId,
+      groupId,
       avatar,
     });
 
@@ -245,6 +246,7 @@ export async function reportPost({
   }
 }
 
+
 export async function getPostByGroupId(groupId: string) {
   try {
     await dbConnect();
@@ -264,6 +266,7 @@ export async function getPostByGroupId(groupId: string) {
     };
   }
 }
+
 
 function findCommentOrReply({
   comments,
@@ -339,16 +342,18 @@ export async function addComments({
 export async function likeComment({
   postId,
   commentId,
-  currentUserId,
   hasLiked,
 }: {
   postId: string;
   commentId: string;
-  currentUserId: string;
   hasLiked?: boolean;
 }) {
   try {
     await dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const userId = User?._id;
 
     const post = await Post.findById(postId);
     if (!post) {
@@ -364,19 +369,16 @@ export async function likeComment({
       if (!target.likes) {
         target.likes = [];
       }
-      const objCurrentUserId = new mongoose.Schema.Types.ObjectId(
-        currentUserId
-      );
-
       if (hasLiked) {
         // User already liked, remove their ID
-        target.likes = target.likes.filter((id) => id !== objCurrentUserId);
+        target.likes = target.likes.filter(
+          (id) => id.toString() !== userId?.toString()
+        );
       } else {
         // User has not liked yet, add their ID
-        target.likes.push(objCurrentUserId);
+        userId && target.likes.push(userId);
       }
-
-      const likedStatus = target.likes.includes(objCurrentUserId);
+      const likedStatus = userId ? target.likes.includes(userId) : false;
       await post.save();
       await revalidatePath("/?postId=" + postId);
       return {

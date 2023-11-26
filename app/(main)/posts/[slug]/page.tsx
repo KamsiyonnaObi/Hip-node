@@ -83,7 +83,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </div>
         {comments && (
           <Thread
-            currentUserId={JSON.stringify(currentUser?._id)}
+            currentUserId={currentUser?._id?.toString()}
             currentUserImage={currentUser?.profileImage || ""}
             postId={params.slug}
             comments={comments}
@@ -127,7 +127,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <OtherProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
-              currentUserId={JSON.stringify(currentUser?._id)}
+              currentUserId={currentUser?._id.toString()}
               hasFollowed={userId.followers?.includes(currentUser?._id)}
             />
           ))}{" "}
