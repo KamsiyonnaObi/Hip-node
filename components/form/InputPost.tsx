@@ -69,7 +69,7 @@ export function InputPost({ editDetail }: { editDetail?: string }) {
       title: parsedDetail?.title || "",
       contents: parsedDetail?.content || "",
       tags: groupedTags || [],
-      groupId: "",
+      groupId: parsedDetail?.groupId || "",
     },
   });
 
@@ -95,6 +95,7 @@ export function InputPost({ editDetail }: { editDetail?: string }) {
     } catch (error) {
     } finally {
       setIsSubmitting(false);
+      router.push("/");
     }
   };
 

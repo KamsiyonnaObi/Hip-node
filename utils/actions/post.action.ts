@@ -85,13 +85,14 @@ export async function getPostsByUserId(
 export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
-    const { title, content, image, tags, postId } = params;
+    const { title, content, image, tags, groupId, postId } = params;
     const post = await Post.findById(postId);
 
     post.title = title;
     post.content = content;
     post.image = image;
     post.tags = tags;
+    post.groupId = groupId;
 
     await post.save();
   } catch (error) {
@@ -253,7 +254,6 @@ export async function reportPost({
   }
 }
 
-
 export async function getPostByGroupId(groupId: string) {
   try {
     await dbConnect();
@@ -273,7 +273,6 @@ export async function getPostByGroupId(groupId: string) {
     };
   }
 }
-
 
 function findCommentOrReply({
   comments,
