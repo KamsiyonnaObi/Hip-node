@@ -17,6 +17,7 @@ const PostRender = async ({
             <Post
               key={post._id}
               _id={post._id.toString()}
+              currentUserId={currentUserId}
               postImage={post.image}
               title={post.title}
               tags={post.tags}
