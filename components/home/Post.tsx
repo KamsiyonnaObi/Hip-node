@@ -1,5 +1,7 @@
 "use client";
-import React from "react";
+import React, { useState, useTransition } from "react";
+import clsx from "clsx";
+
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -7,8 +9,10 @@ import { getTimestamp } from "@/utils";
 import Link from "next/link";
 import EditDeletePopup from "./EditDeletePopup";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { likePost } from "@/utils/actions/post.action";
 
 interface Props {
+  currentUserId?: string;
   postImage: string;
   title: string;
   tags: string[];
@@ -20,9 +24,11 @@ interface Props {
   comments: number;
   _id: string;
   showEdit: any;
+  hasLiked: boolean | false;
 }
 
 const Post = ({
+  currentUserId,
   postImage,
   title,
   tags,
@@ -32,10 +38,29 @@ const Post = ({
   views,
   likes,
   comments,
+  hasLiked,
   _id,
   showEdit,
 }: Props) => {
   const { isOpen: showPopup, ref: menuRef, toggleOpen } = useOutsideClick();
+  const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
+  const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
+  const [isPending, startTransition] = useTransition();
+
+  const handleLike = async () => {
+    if (currentUserId) {
+      startTransition(async () => {
+        const liked = await likePost({
+          postId: _id,
+          userId: currentUserId,
+          hasLiked: isLiked,
+        });
+        if (!liked) return;
+        setIsLiked(liked.status);
+        setNumberLiked(liked.number);
+      });
+    }
+  };
   return (
     <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:rounded-[16px] md:p-[20px]">
       <div className="flex flex-row gap-[14px]">
@@ -66,18 +91,38 @@ const Post = ({
                 ))}
               </div>
             </section>
-            <section className="flex flex-row gap-2.5">
-              <section className="flex h-[30px] w-[30px] items-center justify-center rounded-[15px] bg-secondary6 dark:bg-dark4 md:gap-[5px] md:p-[5px]">
-                <FillIcon.Heart className="hidden fill-secondary5 md:flex" />
-                <Image
-                  className="rounded-full md:hidden"
-                  src={avatar}
-                  alt="avatar"
-                  width={30}
-                  height={30}
+            <section
+              className={clsx(
+                "flex h-[30px] w-[30px] items-center justify-center rounded-[15px] md:gap-[5px] md:p-[5px]",
+                {
+                  "bg-red10 dark:bg-dark4": isLiked,
+                  "bg-secondary6 dark:bg-dark4": !isLiked,
+                }
+              )}
+            >
+              <button
+                disabled={isPending}
+                className={clsx("relative hidden h-7 w-7 rounded-2xl md:block")}
+                onClick={handleLike}
+              >
+                <FillIcon.Heart
+                  className={clsx(
+                    "left-1/2 top-1/2 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 md:absolute md:block",
+                    {
+                      "fill-red80": isLiked,
+                      "fill-secondary5": !isLiked,
+                    }
+                  )}
                 />
-              </section>
-              <div
+              </button>
+              <Image
+                className="md:hidden"
+                src={avatar}
+                alt="avatar"
+                width={20}
+                height={25}
+              />
+                            <div
                 className="relative"
                 ref={menuRef}
                 onClick={() => toggleOpen()}
@@ -117,7 +162,7 @@ const Post = ({
               </div>
               <div className="md:body-regular text-xs-regular flex flex-row items-center justify-center gap-[40px] text-secondary3 dark:text-secondary5">
                 <p>{views !== undefined ? views : 0} Views</p>
-                <p>{likes !== undefined ? likes : 0} Likes</p>
+                <p>{numberLiked !== undefined ? numberLiked : 0} Likes</p>
                 <p>{comments !== undefined ? comments : 0} Comments</p>
               </div>
             </section>

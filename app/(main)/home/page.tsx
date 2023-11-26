@@ -5,19 +5,17 @@ import PopularTags from "@/components/home/PopularTags";
 import PostRender from "@/components/home/PostRender";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
-import UserModel from "@/models/User";
-import { getServerSession } from "next-auth";
-import React, { Suspense } from "react";
+
+import { getAllPosts } from "@/utils/actions/post.action";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: URLSearchParams;
 }) {
-  const currentUser: any = await getServerSession();
-  const { email } = currentUser?.user;
-  const User = await UserModel.findOne({ email });
-  const currentUserId = User?._id.toString();
+  const result = await getAllPosts({});
+  const currentUser = await getCurrentUser();
 
   return (
     <main className="page-formatting">
