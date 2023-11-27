@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Podcasts,
   PostGroup,
@@ -11,13 +10,13 @@ import { getAllGroups } from "@/utils/actions/group.action";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);
-
-  const mapGroups = groups.groups.map((groups) => ({
-    _id: groups._id.toString(),
-    title: groups.title,
-    post: groups.post,
+  const mapGroups = groups.groups.map((group) => ({
+    _id: group._id.toString(),
+    title: group.title,
+    groupUrl: group.groupUrl,
+    post: group.post,
   }));
-
+  const numberOfColumns = 3;
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
@@ -28,15 +27,29 @@ const page = async ({ params }: { params: string }) => {
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
-            {mapGroups.map((group: any) => (
-              <div key={group._id}>
-                <PostGroup
-                  post={JSON.stringify(group.post)}
-                  title={group.title}
-                  _id={group._id}
-                />
-              </div>
-            ))}
+            {mapGroups
+              .reduce((columns: React.JSX.Element[][], group, index) => {
+                const columnIndex = index % numberOfColumns;
+                if (!columns[columnIndex]) {
+                  columns[columnIndex] = [];
+                }
+                columns[columnIndex].push(
+                  <div key={group._id}>
+                    <PostGroup
+                      post={JSON.stringify(group.post)}
+                      title={group.title}
+                      _id={group._id}
+                      groupUrl={group.groupUrl}
+                    />
+                  </div>
+                );
+                return columns;
+              }, [])
+              .map((column, columnIndex) => (
+                <div key={columnIndex} className="flex flex-col gap-5">
+                  {column}
+                </div>
+              ))}
           </div>
         </section>
         <section>
