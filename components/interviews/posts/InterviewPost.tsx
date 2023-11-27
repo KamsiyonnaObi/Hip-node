@@ -21,6 +21,7 @@ interface Props {
   website: string;
   image: string;
   _id: string;
+  avatar: string;
   userId?: string;
   showEdit: boolean;
 }
@@ -34,6 +35,7 @@ const InterviewPost = ({
   updates,
   website,
   image,
+  avatar,
   _id,
   userId,
   showEdit,
@@ -61,10 +63,7 @@ const InterviewPost = ({
         <div className="flex flex-row justify-between">
           <div className="flex items-center gap-4">
             <Avatar>
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt="User Avatar"
-              />
+              <AvatarImage src={avatar} alt="User Avatar" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div>
