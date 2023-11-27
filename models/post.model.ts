@@ -18,7 +18,7 @@ export interface IPost extends Document {
   tags: string[];
   content: string;
   userId: Schema.Types.ObjectId;
-  groupId: Schema.Types.ObjectId;
+  groupId: string;
   createdAt: Date;
   views?: Schema.Types.ObjectId[];
   likes?: Schema.Types.ObjectId[];

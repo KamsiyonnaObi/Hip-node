@@ -41,6 +41,7 @@ const InterviewHomePage = async () => {
                 revenue={interview.revenue}
                 updates={interview.updates}
                 website={interview.website}
+                avatar={interview.userId?.profileImage}
                 userId={JSON.stringify(interview.userId._id) || "unknown"}
                 showEdit={interview.userId?._id.toString() === currentUserId}
               />
