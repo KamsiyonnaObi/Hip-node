@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
@@ -14,6 +14,7 @@ import MessageList from "./MessageList";
 import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -35,6 +36,24 @@ const Navbar = () => {
     ref: notifRef,
     toggleOpen: toggleNotif,
   } = useOutsideClick();
+
+  const [avatar, setAvatar] = useState("");
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const getAvatar = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        // setAvatar(currentUser?.profileImage.toString() || "");
+        setAvatar("/Avatar.png");
+        setUsername(currentUser?.username.toString() || "");
+      } catch (error) {
+        console.error("Error fetching avatar:", error);
+      }
+    };
+
+    getAvatar();
+  }, []);
 
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
@@ -83,7 +102,7 @@ const Navbar = () => {
               <div ref={menuRef} onClick={() => toggleMenu()}>
                 <Image
                   className="w-[22px] md:w-[30px]"
-                  src="/ExampleAvatar.png"
+                  src={avatar}
                   alt="profile"
                   width="30"
                   height="32"
@@ -155,7 +174,7 @@ const Navbar = () => {
                       <div ref={menuRef} onClick={() => toggleMenu()}>
                         <Image
                           className="w-[22px] md:w-[30px]"
-                          src="/ExampleAvatar.png"
+                          src={avatar}
                           alt="profile"
                           width="30"
                           height="32"
@@ -165,7 +184,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <p className="display-bold text-secondary1 dark:text-background2">
-                    John Smith
+                    {username}
                   </p>
                 </div>
                 <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
