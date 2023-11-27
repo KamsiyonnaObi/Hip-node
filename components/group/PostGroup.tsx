@@ -19,7 +19,6 @@ const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
   const postImage = groupPost[0]?.image;
   const postContent = groupPost[0]?.content;
   const postDate = groupPost[0]?.createdAt;
-  console.log(groupPost);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const toggleHeartColor = () => {
