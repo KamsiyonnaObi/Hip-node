@@ -5,6 +5,7 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import Link from "next/link";
 import { Button } from "../ui/Button";
+import Html from "../shared/html";
 
 interface Props {
   title: string;
@@ -70,7 +71,7 @@ const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
         </section>
         <section className="flex flex-col gap-[10px]">
           <div className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">
-            {postContent}
+            <Html htmltext={postContent} />
           </div>
           <div className="caption-regular text-secondary3">{postDate}</div>
         </section>
