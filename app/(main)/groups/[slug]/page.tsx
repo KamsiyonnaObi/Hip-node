@@ -13,7 +13,8 @@ import {
 
 import GroupError from "@/components/group/GroupError";
 
-import { getGroupById } from "@/utils/actions/group.action";
+import { getAllGroups, getGroupById } from "@/utils/actions/group.action";
+import { getPostByGroupId } from "@/utils/actions/post.action";
 interface UserAdmin {
   _id: string;
   fullName?: string;
@@ -39,6 +40,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
     _id: member._id,
     profileImage: member.profileImage,
   }));
+
+  const post = await getAllGroups(params.slug);
+  const groupPost = JSON.parse(post);
+
+  console.log(groupPost);
 
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] ">
