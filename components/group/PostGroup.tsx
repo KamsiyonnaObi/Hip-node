@@ -69,10 +69,10 @@ const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
           <FillIcon.Share className="fill-secondary5" />
         </section>
         <section className="flex flex-col gap-[10px]">
-          <p className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">
+          <div className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">
             {postContent}
-          </p>
-          <p className="caption-regular text-secondary3">{postDate}</p>
+          </div>
+          <div className="caption-regular text-secondary3">{postDate}</div>
         </section>
       </div>
     </article>
