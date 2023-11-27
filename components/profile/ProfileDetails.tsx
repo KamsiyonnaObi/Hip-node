@@ -25,7 +25,6 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
     profileUrl: "/",
     joinedDate: "2-28-2023",
     points: 501,
-    bio: "Hey there... I'm AR Jakir! I'm here to learn from and support the other members of this community!",
   };
 
   const onEdit = () => setIsProfileEdit(true);
@@ -75,7 +74,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
           </div>
           <div>
             <p className="body-semibold text-center text-secondary3">
-              {dummyProfileData?.bio}
+              {profileData?.bio}
             </p>
           </div>
           <div className="flex gap-5">
