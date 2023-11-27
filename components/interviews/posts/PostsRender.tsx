@@ -15,6 +15,7 @@ const PostsRender = async ({
         ? result.interviews.map((interview: interviewData) => (
             <InterviewPost
               key={interview._id.toString()}
+              avatar={interview.userId?.profileImage}
               _id={interview._id.toString()}
               image={interview.image}
               title={interview.title}
