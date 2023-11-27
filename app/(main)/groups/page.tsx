@@ -11,10 +11,10 @@ import { getAllGroups } from "@/utils/actions/group.action";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);
-
   const mapGroups = groups.groups.map((groups) => ({
     _id: groups._id.toString(),
     title: groups.title,
+    groupUrl: groups.groupUrl,
     post: groups.post,
   }));
 
@@ -34,6 +34,7 @@ const page = async ({ params }: { params: string }) => {
                   post={JSON.stringify(group.post)}
                   title={group.title}
                   _id={group._id}
+                  groupUrl={group.groupUrl}
                 />
               </div>
             ))}

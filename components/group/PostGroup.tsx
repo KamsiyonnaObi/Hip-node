@@ -9,11 +9,16 @@ import { Button } from "../ui/Button";
 interface Props {
   title: string;
   _id: string;
+  groupUrl: string;
   post: string;
 }
 
-const PostGroup = ({ title, _id, post }: Props) => {
+const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
   const groupPost = JSON.parse(post);
+  const postTitle = groupPost[0]?.title;
+  const postImage = groupPost[0]?.image;
+  const postContent = groupPost[0]?.content;
+  const postDate = groupPost[0]?.createdAt;
   console.log(groupPost);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
@@ -25,11 +30,17 @@ const PostGroup = ({ title, _id, post }: Props) => {
     <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 dark:text-background2 sm:w-[248px]">
       <div className="mx-auto flex flex-col gap-[10px]">
         <section className="flex flex-row justify-between sm:gap-[10px]">
-          <div className="flex flex-row">
-            {/* <Image src={"avatar"} alt="avatar" width={34} height={34} /> */}
+          <div className="flex h-[34px] w-[34px] flex-row rounded-full">
+            <Image
+              src={groupUrl}
+              alt="avatar"
+              width={34}
+              height={34}
+              className="mr-[.62rem] h-[34px] w-[34px] rounded-full"
+            />
             <div className="flex flex-col">
               <p className="caption-semibold line-clamp-1">{title}</p>
-              <p className="text-sm-regular line-clamp-1">{"name"}</p>
+              <p className="text-sm-regular line-clamp-1">{postTitle}</p>
             </div>
           </div>
           <Link href={`/groups/${_id}`}>
@@ -42,9 +53,9 @@ const PostGroup = ({ title, _id, post }: Props) => {
           </Link>
         </section>
         <Image
-          src={""}
-          alt="image"
-          className="h-[106px] w-[228px]"
+          src={postImage}
+          alt="Post Image"
+          className="h-[106px] w-[228px] rounded-[.625rem]"
           width={228}
           height={106}
         />
@@ -60,12 +71,9 @@ const PostGroup = ({ title, _id, post }: Props) => {
         </section>
         <section className="flex flex-col gap-[10px]">
           <p className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">
-            {"descTitle"}
+            {postContent}
           </p>
-          <p className="caption-regular line-clamp-4 w-[315px] sm:w-[228px]">
-            {"desc"}
-          </p>
-          <p className="caption-regular text-secondary3">{"date"}</p>
+          <p className="caption-regular text-secondary3">{postDate}</p>
         </section>
       </div>
     </article>
