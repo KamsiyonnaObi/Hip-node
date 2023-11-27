@@ -93,13 +93,13 @@ export async function deleteInterview(InterviewId: string) {
 
 function convertTags(item: string | Array<String> | undefined) {
   if (!item) return {};
-  if (typeof item === "string") return { tags: { $in: [item] } };
+  if (typeof item === "string") return { tags: { $in: [...item.split(",")] } };
   return { tags: { $in: [...item] } };
 }
 
-export async function getAllInterviews(params: any) {
-  const { tags } = params;
-
+export async function getAllInterviews(
+  tags: string | Array<String> | undefined
+) {
   try {
     await dbConnect();
 

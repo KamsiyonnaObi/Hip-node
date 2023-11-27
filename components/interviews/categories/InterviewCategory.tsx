@@ -12,7 +12,6 @@ import {
 import { CategoryLabel } from ".";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { cn } from "@/utils";
-import { Slider } from "@/components/ui/Slider";
 
 const InterviewCategory = ({
   categories,
@@ -32,14 +31,8 @@ const InterviewCategory = ({
   useEffect(() => {
     setPending(true);
     search.then(
-      () => {
-        // handle fulfilled
-        setPending(false);
-      },
-      () => {
-        // handle rejection
-        setPending(false);
-      }
+      () => setPending(false),
+      () => setPending(false)
     );
   }, [search]);
 
@@ -51,12 +44,9 @@ const InterviewCategory = ({
 
     const newObj = { ...checkedState, [category]: value };
 
-    const filtered = Object.keys(newObj).filter((k) => newObj[k] === true);
+    const filtered = Object.keys(newObj).filter((k) => newObj[k]);
 
-    const mappedCats = filtered.map((cat) => `tags=${cat}`);
-
-    const params = mappedCats.join("&");
-    const searchParams = `?${params}`;
+    const searchParams = filtered.length > 0 ? `?tags=${filtered}` : "";
 
     router.push("interview" + searchParams);
   };
@@ -81,7 +71,7 @@ const InterviewCategory = ({
         </div>
         <CollapsibleContent>
           <ul className="flex flex-col gap-3">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <CategoryLabel
                 pending={pending}
                 key={category.toLocaleLowerCase()}
