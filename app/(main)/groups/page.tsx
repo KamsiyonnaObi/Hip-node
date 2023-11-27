@@ -28,8 +28,7 @@ const page = async ({ params }: { params: string }) => {
         <section>
           <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
             {mapGroups
-              // eslint-disable-next-line no-undef
-              .reduce((columns: JSX.Element[][], group, index) => {
+              .reduce((columns: React.JSX.Element[][], group, index) => {
                 const columnIndex = index % numberOfColumns;
                 if (!columns[columnIndex]) {
                   columns[columnIndex] = [];
