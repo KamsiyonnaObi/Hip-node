@@ -79,7 +79,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             </p>
           </div>
           <div className="flex gap-5">
-            {profileData.website && (
+            {profileData?.website && (
               <div className="flex gap-2.5">
                 <OutlineIcon.Web />
                 <p className="body-semibold text-secondary2 dark:text-background2">
