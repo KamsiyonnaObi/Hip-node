@@ -29,7 +29,11 @@ export interface interviewData {
   _id: string;
   title: string;
   desc: string;
-  userId: { username: any; _id: { toString: () => string | undefined } };
+  userId: {
+    username: any;
+    _id: { toString: () => string | undefined };
+    profileImage: string;
+  };
   createdAt: Date;
   image: string;
   revenue: number;
