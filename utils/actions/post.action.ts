@@ -260,13 +260,14 @@ export async function getPostByGroupId(groupId: string) {
     const posts = await Post.find({
       groupId,
     });
+
     if (posts.length > 0) {
       return { success: true, data: posts };
     } else {
-      throw new Error("post not found.");
+      throw new Error(`Posts not found for the specified group ID: ${groupId}`);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       success: false,
       message: "An error occurred while retrieving the posts.",
