@@ -40,7 +40,6 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
     updateProfileDetails(profileData.id, data);
-    console.log(data);
   };
   return (
     <>

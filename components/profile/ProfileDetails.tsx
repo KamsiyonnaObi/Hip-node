@@ -11,7 +11,7 @@ import EditProfile from "./EditProfile";
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
-  console.log("profile: ", profileData);
+
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
