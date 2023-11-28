@@ -254,11 +254,21 @@ export async function reportPost({
   }
 }
 
-export async function getPostByGroupId(groupId: string) {
+export async function getPostByGroupId({
+  groupId,
+  title,
+  _id,
+}: {
+  groupId: string;
+  title: string;
+  _id: string;
+}) {
   try {
     await dbConnect();
     const posts = await Post.find({
       groupId,
+      title: { $regex: title, $options: "i" },
+      _id: { $ne: _id },
     });
 
     if (posts.length > 0) {
