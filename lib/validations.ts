@@ -136,7 +136,7 @@ export const profileSchema = z.object({
   job: z.string(),
   website: z.union([
     z.literal(""),
-    z.string().url({ message: "Invalid website url" }),
+    z.string().trim().url({ message: "Invalid website url" }),
   ]),
   twitter: z.union([
     z.literal(""),
@@ -151,8 +151,8 @@ export const profileSchema = z.object({
     z
       .string()
       .trim()
-      .includes("facebook", { message: "invalid facebook profile" })
-      .url(),
+      .url()
+      .includes("facebook", { message: "invalid facebook profile" }),
   ]),
   instagram: z.union([
     z.literal(""),

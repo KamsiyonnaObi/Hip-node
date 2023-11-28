@@ -52,15 +52,19 @@ const userSchema: Schema = new Schema<IUser>(
     },
     website: {
       type: String,
+      default: "",
     },
     twitter: {
       type: String,
+      default: "",
     },
     facebook: {
       type: String,
+      default: "",
     },
     instagram: {
       type: String,
+      default: "",
     },
     followers: [
       {
