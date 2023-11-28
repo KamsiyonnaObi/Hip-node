@@ -48,7 +48,7 @@ export async function getUserProfile(email: string | null | undefined) {
         name: loggedInUser.username,
         email: loggedInUser.email,
         profileImage: loggedInUser.profileImage,
-        job: loggedInUser.occupation,
+        occupation: loggedInUser.occupation,
         followers: loggedInUser.followers,
         following: loggedInUser.following,
         points: loggedInUser.points,
@@ -73,13 +73,21 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
   try {
     await dbConnect();
 
-    const profileData = await UserModel.findByIdAndUpdate(id);
+    const profileData = await UserModel.findByIdAndUpdate(id, {
+      username: data.username,
+      bio: data.bio,
+      occupation: data.occupation,
+      website: data.website,
+      twitter: data.twitter,
+      facebook: data.facebook,
+      instagram: data.instagram,
+    });
 
-    if (profileData) {
+    if (!profileData) {
       console.log(profileData);
-      return "success";
+      return "no user found";
     }
-    return "no user found";
+    return "success";
   } catch (error) {
     console.log(error);
     return "error";

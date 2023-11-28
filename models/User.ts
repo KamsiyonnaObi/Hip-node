@@ -29,6 +29,7 @@ const userSchema: Schema = new Schema<IUser>(
     },
     occupation: {
       type: String,
+      default: "",
     },
     profileImage: {
       type: String,

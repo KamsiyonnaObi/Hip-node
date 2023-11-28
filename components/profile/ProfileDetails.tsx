@@ -11,7 +11,7 @@ import EditProfile from "./EditProfile";
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
-
+  console.log("profile: ", profileData);
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
@@ -40,7 +40,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
               {profileData?.name}
             </p>
             <p className="display-regular text-secondary3">
-              {profileData?.job}
+              {profileData?.occupation}
             </p>
           </div>
           <div className="flex gap-2.5">
@@ -81,9 +81,9 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             {profileData?.website && (
               <div className="flex gap-2.5">
                 <OutlineIcon.Web />
-                <p className="body-semibold text-secondary2 dark:text-background2">
+                {/* <p className="body-semibold text-secondary2 dark:text-background2">
                   {profileData.website}
-                </p>
+                </p> */}
               </div>
             )}
 

@@ -28,7 +28,7 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
     resolver: zodResolver(profileSchema),
     defaultValues: {
       username: profileData.name,
-      job: profileData.job,
+      occupation: profileData.occupation,
       bio: profileData.bio,
       website: profileData.website,
       twitter: profileData.twitter,
@@ -39,8 +39,8 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
 
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
-    console.log(data);
     updateProfileDetails(profileData.id, data);
+    console.log(data);
   };
   return (
     <>
@@ -76,7 +76,7 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
           <div className="flex h-7 w-full items-center gap-2">
             <FillIcon.Business className="h-6 w-5 stroke-secondary2 dark:stroke-background2" />
             <Input
-              name="job"
+              name="occupation"
               type="text"
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
@@ -87,7 +87,7 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
           <div className="flex h-7 w-full items-center gap-2">
             <OutlineIcon.Web />
             <Input
-              name="web"
+              name="website"
               type="text"
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
@@ -142,8 +142,10 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
             {errors.bio && (
               <p className="caption-regular text-red">{errors.bio.message}</p>
             )}
-            {errors.job && (
-              <p className="caption-regular text-red">{errors.job.message}</p>
+            {errors.occupation && (
+              <p className="caption-regular text-red">
+                {errors.occupation.message}
+              </p>
             )}
             {errors.facebook && (
               <p className="caption-regular text-red">

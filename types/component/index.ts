@@ -10,7 +10,7 @@ export interface userProfileData {
   name: string;
   email: string;
   profileImage: string;
-  job: string;
+  occupation: string;
   followers: Schema.Types.ObjectId[];
   following: Schema.Types.ObjectId[];
   points: number;
