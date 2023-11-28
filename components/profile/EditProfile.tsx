@@ -16,8 +16,13 @@ export type ProfileSchema = z.infer<typeof profileSchema>;
 interface EditProfileProps {
   JSONProfileData: string;
   onCancel: MouseEventHandler<HTMLButtonElement>;
+  isEdit: any;
 }
-const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
+const EditProfile = ({
+  JSONProfileData,
+  onCancel,
+  isEdit,
+}: EditProfileProps) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
   // extract register, handleSubmit from useForm
   const {
@@ -40,6 +45,7 @@ const EditProfile = ({ JSONProfileData, onCancel }: EditProfileProps) => {
   // create onSubmit function
   const onSubmit = (data: ProfileSchema) => {
     updateProfileDetails(profileData.id, data);
+    isEdit(false);
   };
   return (
     <>

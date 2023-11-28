@@ -32,7 +32,11 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
   return (
     <>
       {isProfileEdit ? (
-        <EditProfile JSONProfileData={JSONProfileData} onCancel={onCancel} />
+        <EditProfile
+          JSONProfileData={JSONProfileData}
+          onCancel={onCancel}
+          isEdit={setIsProfileEdit}
+        />
       ) : (
         <>
           <div className="flex flex-col items-center justify-center">
