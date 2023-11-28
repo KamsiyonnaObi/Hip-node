@@ -1,13 +1,13 @@
 "use client";
 
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { ShadButton } from "@/components/ui/ShadButton";
 import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
 import OutlineIcon from "@/components/icons/OutlineIcon";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import EditDeletePopup from "../EditDeletePopup";
 
@@ -126,8 +126,7 @@ const InterviewPost = ({
                 </a>
               </div>
             </div>
-            <Link href={`/interview/${_id}`}>
-              {" "}
+            <Link href={"/interview/" + _id}>
               <ShadButton className="bg-blue text-white hover:bg-blue/70 hover:text-white">
                 Full Details
               </ShadButton>
@@ -141,7 +140,7 @@ const InterviewPost = ({
           alt="Interview Image"
           width={280}
           height={180}
-          className="h-[200px] w-[307px] rounded-[16px] md:h-[180px] md:w-[280px]"
+          className="h-[200px] w-[307px] rounded-xl md:h-[180px] md:w-[280px]"
         />
       </div>
     </article>

@@ -1,13 +1,29 @@
-import { InterviewCategory, InterviewPost, StartInterview } from "@/components";
+import { InterviewCategory, StartInterview } from "@/components";
 import PageWrapper from "@/components/PageWrapper";
 import UserModel from "@/models/User";
 
 import Podcasts from "@/components/Podcasts";
+import PostsRender from "@/components/interviews/posts/PostsRender";
+import ArticleSkeleton from "@/components/interviews/skeleton/ArticleSkeleton";
 import { getAllInterviews } from "@/utils/actions/interview.action";
+import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 
-const InterviewHomePage = async () => {
-  const result = await getAllInterviews({});
+const InterviewHomePage = async ({
+  searchParams,
+}: {
+  searchParams: { tags: string };
+}) => {
+  const tags = searchParams?.tags;
+  const result = getAllInterviews(tags);
+
+  const categories = [
+    "technology",
+    "marketing",
+    "finance",
+    "education",
+    "healthcare",
+  ];
 
   const currentUser: any = await getServerSession();
   const { email } = currentUser?.user;
@@ -17,37 +33,14 @@ const InterviewHomePage = async () => {
   return (
     <PageWrapper>
       <aside className="order-2 md:order-1">
-        <InterviewCategory
-          categories={[
-            "technology",
-            "marketing",
-            "finance",
-            "education",
-            "healthcare",
-          ]}
-        />
+        <InterviewCategory categories={categories} search={result} />
       </aside>
-      <section className="order-3 flex w-full flex-col gap-5 md:order-2">
-        {result.interviews.length > 0
-          ? result.interviews?.map((interview) => (
-              <InterviewPost
-                key={interview._id}
-                _id={interview._id.toString()}
-                image={interview.image}
-                title={interview.title}
-                username={interview.userId?.username || "unknown"}
-                createdAt={interview.createdAt}
-                content={interview.desc}
-                revenue={interview.revenue}
-                updates={interview.updates}
-                website={interview.website}
-                avatar={interview.userId?.profileImage}
-                userId={JSON.stringify(interview.userId._id) || "unknown"}
-                showEdit={interview.userId?._id.toString() === currentUserId}
-              />
-            ))
-          : "No Posts to Show!"}
-      </section>
+      <Suspense
+        key={JSON.stringify(searchParams)}
+        fallback={<ArticleSkeleton />}
+      >
+        <PostsRender search={result} currUser={currentUserId} />
+      </Suspense>
       {/* Right Side Content */}
       <aside className="order-1 flex w-full flex-col gap-5 md:order-3 md:max-w-[325px]">
         {/* Start your interview */}
