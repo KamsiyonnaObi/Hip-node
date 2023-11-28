@@ -79,19 +79,32 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
           </div>
           <div className="flex gap-5">
             {profileData?.website && (
-              <div className="flex gap-2.5">
-                <OutlineIcon.Web />
-                {/* <p className="body-semibold text-secondary2 dark:text-background2">
-                  {profileData.website}
-                </p> */}
-              </div>
+              <>
+                <a href={profileData.website} target="_blank">
+                  <div className="flex gap-2.5">
+                    <OutlineIcon.Web />
+                  </div>
+                </a>
+              </>
             )}
 
             {/* display socials based on user's profile */}
             <div className="flex gap-5">
-              <OutlineIcon.Twitter className="fill-secondary4 dark:fill-secondary6" />
-              <OutlineIcon.Facebook className="fill-secondary4 dark:fill-secondary6" />
-              <OutlineIcon.Instagram className="fill-secondary4 dark:fill-secondary6" />
+              {profileData?.twitter && (
+                <a href={profileData.twitter} target="_blank">
+                  <OutlineIcon.Twitter className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
+              {profileData?.facebook && (
+                <a href={profileData.facebook} target="_blank">
+                  <OutlineIcon.Facebook className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
+              {profileData?.instagram && (
+                <a href={profileData.instagram} target="_blank">
+                  <OutlineIcon.Instagram className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
             </div>
           </div>
           <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>
