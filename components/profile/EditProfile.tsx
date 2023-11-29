@@ -28,6 +28,7 @@ const EditProfile = ({
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
@@ -43,8 +44,16 @@ const EditProfile = ({
   });
 
   // create onSubmit function
-  const onSubmit = (data: ProfileSchema) => {
-    updateProfileDetails(profileData.id, data);
+  const onSubmit = async (data: ProfileSchema) => {
+    const res = await updateProfileDetails(profileData.id, data);
+    if (res === "DuplicateKey") {
+      setError("username", {
+        type: "manual",
+        message: "Username already exists. Choose a different one.",
+      });
+
+      return;
+    }
     isEdit(false);
   };
   return (
@@ -57,7 +66,11 @@ const EditProfile = ({
           <h1 className="body-semibold text-secondary2 dark:text-background2">
             Name
           </h1>
-
+          {errors.username && (
+            <p className="caption-regular text-red">
+              {errors.username.message}
+            </p>
+          )}
           <Input
             name="username"
             type="text"
@@ -134,11 +147,6 @@ const EditProfile = ({
             />
           </div>
           <div>
-            {errors.username && (
-              <p className="caption-regular text-red">
-                {errors.username.message}
-              </p>
-            )}
             {errors.website && (
               <p className="caption-regular text-red">
                 {errors.website.message}
