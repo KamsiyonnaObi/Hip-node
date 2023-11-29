@@ -66,7 +66,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         </section>
         <section className="flex w-fit flex-col gap-5 sm:w-full md:row-start-2 md:mt-32 lg:col-start-2 lg:mt-28">
           <Frame />
-          <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden md:h-0 ">
+          <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden md:h-0">
             <PostByGroup groupId={params.slug} />
           </div>
         </section>

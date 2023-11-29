@@ -28,7 +28,7 @@ const Post = ({
   comments,
 }: Props) => {
   return (
-    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
+    <article className="mb-[1.25rem] flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
       <div className="flex flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -67,7 +67,13 @@ const Post = ({
           </div>
           <div className="flex flex-row gap-[10px]">
             <section className="hidden items-center justify-center rounded-full bg-purple10 sm:flex sm:h-[40px] sm:w-[40px]">
-              <Image src={avatar} alt="avatar" width={28} height={32} />
+              <Image
+                src={avatar}
+                alt="avatar"
+                width={28}
+                height={32}
+                className="m-auto h-[40px] w-[40px] rounded-full"
+              />
             </section>
             <section className="flex flex-row justify-between md:w-full lg:w-[521px]">
               <div className="hidden flex-col sm:flex">
