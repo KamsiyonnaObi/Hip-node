@@ -10,7 +10,7 @@ type Props = {
   onChange?: any;
   type?: "text" | "password" | "email";
   onKeyDown?: any;
-  register: any;
+  register?: any;
 };
 
 export const Input = ({
