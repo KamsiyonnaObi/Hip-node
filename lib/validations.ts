@@ -131,7 +131,8 @@ export const passwordSchema = z
 export const profileSchema = z.object({
   username: z
     .string()
-    .min(2, { message: "Username must be at least 2 characters" }),
+    .min(2, { message: "Username must be at least 2 characters" })
+    .max(20, { message: "Username must be less than 20 characters" }),
   bio: z.string().optional(),
   occupation: z.string(),
   website: z.union([
