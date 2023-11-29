@@ -18,7 +18,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar, groupId } = params;
+    const { title, content, image, tags, groupId } = params;
 
     const post = await Post.create({
       title,
@@ -27,7 +27,6 @@ export async function createPost(params: any) {
       tags,
       userId,
       groupId,
-      avatar,
     });
 
     // return the postID, not the entire Post
@@ -83,17 +82,26 @@ export async function getPostsByUserId(
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
 export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
+    const { title, content, image, tags, groupId, postId } = params;
+    const post = await Post.findById(postId);
+
+    post.title = title;
+    post.content = content;
+    post.image = image;
+    post.tags = tags;
+    post.groupId = groupId;
+
+    await post.save();
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-export async function deletePost(postId: number) {
+export async function deletePost(postId: string) {
   try {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
@@ -246,7 +254,6 @@ export async function reportPost({
   }
 }
 
-
 export async function getPostByGroupId(groupId: string) {
   try {
     await dbConnect();
@@ -266,7 +273,6 @@ export async function getPostByGroupId(groupId: string) {
     };
   }
 }
-
 
 function findCommentOrReply({
   comments,
