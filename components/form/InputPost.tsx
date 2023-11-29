@@ -28,7 +28,13 @@ import { createPost, updatePost } from "@/utils/actions/post.action";
 import GroupCategory from "../group/GroupCategory";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-export function InputPost({ editDetail }: { editDetail?: string }) {
+export function InputPost({
+  editDetail,
+  title,
+}: {
+  editDetail?: string;
+  title?: string;
+}) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
@@ -66,7 +72,7 @@ export function InputPost({ editDetail }: { editDetail?: string }) {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: parsedDetail?.title || "",
+      title: parsedDetail?.title || title || "",
       contents: parsedDetail?.content || "",
       tags: groupedTags || [],
       groupId: parsedDetail?.groupId || "",
