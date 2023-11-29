@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 export async function createInterview(params: Partial<IInterview>) {
   try {
     await dbConnect();
-    await dbConnect();
+
     // get the userID from the session
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;
@@ -43,24 +43,44 @@ export async function getInterview(InterviewId: string) {
     if (!interview) {
       notFound();
     }
-    return interview;
+    return interview as IInterview;
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
-export async function updateInterview(params: Partial<IInterview>) {
+export async function updateInterview(params: any) {
   try {
     await dbConnect();
+    const {
+      title,
+      desc,
+      image,
+      revenue,
+      updates,
+      website,
+      interviewTags,
+      interviewId,
+    } = params;
+
+    const interview = await Interview.findById(interviewId);
+    interview.title = title;
+    interview.desc = desc;
+    interview.image = image;
+    interview.revenue = revenue;
+    interview.updates = updates;
+    interview.website = website;
+    interview.interviewTags = interviewTags;
+
+    await interview.save();
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-export async function deleteInterview(InterviewId: number) {
+export async function deleteInterview(InterviewId: string) {
   try {
     await dbConnect();
     const deletedInterview = await Interview.findByIdAndDelete(InterviewId);
@@ -71,13 +91,22 @@ export async function deleteInterview(InterviewId: number) {
   }
 }
 
-export async function getAllInterviews(params: any) {
+function convertTags(item: string | Array<String> | undefined) {
+  if (!item) return {};
+  if (typeof item === "string") return { tags: { $in: [...item.split(",")] } };
+  return { tags: { $in: [...item] } };
+}
+
+export async function getAllInterviews(
+  tags: string | Array<String> | undefined
+) {
   try {
     await dbConnect();
 
-    const interviews = await Interview.find({})
+    const interviews = await Interview.find(convertTags(tags))
       .populate("userId")
       .sort({ createdAt: -1 });
+
     return { interviews };
   } catch (error) {
     console.log(error);

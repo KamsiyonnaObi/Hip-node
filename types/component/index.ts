@@ -12,15 +12,32 @@ export interface ActionBarLink {
 
 export interface commentDataType {
   name: string;
-  commentedDate: string;
-  lastEditDate: string;
+  createdAt: string;
+  updatedAt: string;
   imgUrl: string;
-  comment: string;
+  text: string;
   reply: {
     name: string;
-    commentedDate: string;
-    lastEditDate: string;
+    createdAt: string;
+    updatedAt: string;
     imgUrl: string;
-    comment: string;
+    text: string;
   }[];
+}
+
+export interface interviewData {
+  _id: string;
+  title: string;
+  desc: string;
+  userId: {
+    username: any;
+    _id: { toString: () => string | undefined };
+    profileImage: string;
+  };
+  createdAt: Date;
+  image: string;
+  revenue: number;
+  updates: number;
+  website: string;
+  tags: string[];
 }

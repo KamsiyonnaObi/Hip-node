@@ -14,7 +14,7 @@ type Props = {
   rounded?: boolean;
   full?: boolean;
   type?: "button" | "submit" | "reset";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 };
 
 export const Button = ({

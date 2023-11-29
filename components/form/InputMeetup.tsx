@@ -142,7 +142,8 @@ export function InputMeetup() {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -222,7 +223,7 @@ export function InputMeetup() {
           onChange={handleDateChange}
           dateFormat="MM/dd"
           placeholderText="Select a date"
-          className="rounded-[8px] mb-5 p-1 pl-3 h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
+          className="h3-semibold md:h1-semibold mb-5 rounded-[8px] border-none bg-background2 p-1 pl-3 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
         />
 
         <FormField

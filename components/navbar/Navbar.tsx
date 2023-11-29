@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
@@ -13,22 +13,40 @@ import Popup from "./Popup";
 import MessageList from "./MessageList";
 import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const [expanded, setExpanded] = useState(0);
+  const [searchText, setSearchText] = useState("");
+  const {
+    isOpen: menuExpanded,
+    ref: menuRef,
+    toggleOpen: toggleMenu,
+  } = useOutsideClick();
+  const {
+    isOpen: messageExpanded,
+    ref: messageRef,
+    toggleOpen: toggleMessage,
+  } = useOutsideClick();
+  const {
+    isOpen: notifExpanded,
+    ref: notifRef,
+    toggleOpen: toggleNotif,
+  } = useOutsideClick();
 
-  const toggleMenu = () => {
-    setExpanded(expanded !== 1 ? 1 : 0);
-  };
-
-  const toggleMessage = () => {
-    setExpanded(expanded !== 2 ? 2 : 0);
-  };
-
-  const toggleNotif = () => {
-    setExpanded(expanded !== 3 ? 3 : 0);
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      const currentPath = pathname.split("/")[1];
+      if (searchText === "") {
+        router.push(currentPath);
+      } else {
+        const route = `/${currentPath}?search=${searchText}`;
+        setSearchText("");
+        router.push(route);
+      }
+    }
   };
 
   return (
@@ -46,31 +64,32 @@ const Navbar = () => {
         </section>
         {/* MOBILE */}
         <section className="flex flex-row gap-5 md:hidden">
-          <Button
-            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
-            onClick={toggleMessage}
-          >
-            <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
-          </Button>
-          {expanded === 2 && <MessageList />}
-          <Button
-            className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
-            onClick={toggleNotif}
-          >
-            <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
-          </Button>
-          {expanded === 3 && <Notification />}
+          <div ref={messageRef} onClick={() => toggleMessage()}>
+            <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+              <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
+            </Button>
+          </div>
+
+          {messageExpanded && <MessageList />}
+          <div ref={notifRef} onClick={() => toggleNotif()}>
+            <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+              <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
+            </Button>
+          </div>
+
+          {notifExpanded && <Notification />}
           <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
             <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
-              <Image
-                className="w-[22px] md:w-[30px]"
-                src="/ExampleAvatar.png"
-                alt="profile"
-                width="30"
-                height="32"
-                onClick={toggleMenu}
-              />
-              {expanded === 1 && <Popup />}
+              <div ref={menuRef} onClick={() => toggleMenu()}>
+                <Image
+                  className="w-[22px] md:w-[30px]"
+                  src="/ExampleAvatar.png"
+                  alt="profile"
+                  width="30"
+                  height="32"
+                />
+              </div>
+              {menuExpanded && <Popup />}
             </div>
           </div>
         </section>
@@ -100,44 +119,49 @@ const Navbar = () => {
               divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchText(e.target.value)
+              }
+              value={searchText}
+              onKeyDown={handleKeyDown}
             >
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>
             <div className="flex flex-row md:gap-[25px]">
               <div className="relative">
-                {" "}
-                <Button
-                  className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
-                  onClick={toggleMessage}
-                >
-                  <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
-                </Button>
-                {expanded === 2 && <MessageList />}
+                <div ref={messageRef} onClick={() => toggleMessage()}>
+                  <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+                    <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
+                  </Button>
+                </div>
+
+                {messageExpanded && <MessageList />}
               </div>
 
               <div className="relative">
-                <Button
-                  className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5"
-                  onClick={toggleNotif}
-                >
-                  <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
-                </Button>
-                {expanded === 3 && <Notification />}
+                <div ref={notifRef} onClick={() => toggleNotif()}>
+                  <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+                    <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
+                  </Button>
+                </div>
+
+                {notifExpanded && <Notification />}
               </div>
 
               <section className="flex flex-row items-center md:gap-2.5">
                 <div className="flex flex-row md:gap-4">
                   <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
                     <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
-                      <Image
-                        className="w-[22px] md:w-[30px]"
-                        src="/ExampleAvatar.png"
-                        alt="profile"
-                        width="30"
-                        height="32"
-                        onClick={toggleMenu}
-                      />
-                      {expanded === 1 && <Popup />}
+                      <div ref={menuRef} onClick={() => toggleMenu()}>
+                        <Image
+                          className="w-[22px] md:w-[30px]"
+                          src="/ExampleAvatar.png"
+                          alt="profile"
+                          width="30"
+                          height="32"
+                        />
+                      </div>
+                      {menuExpanded && <Popup />}
                     </div>
                   </div>
                   <p className="display-bold text-secondary1 dark:text-background2">

@@ -6,7 +6,11 @@ export const PostSchema = z.object({
     .min(5, {
       message: "Title must be at least 5 characters.",
     })
-    .max(60, { message: "Title must be less than 60 characters." }),
+    .max(60, {
+      message:
+        "Title must be less than 60 characters. Must choose a cover image, group and relation.",
+    }),
+  groupId: z.string().min(12, { message: "Must choose a group." }),
   contents: z
     .string()
     .min(12, {
@@ -59,7 +63,7 @@ export const GroupSchema = z.object({
   description: z
     .string()
     .min(3, { message: "Must be 3 or more characters long" })
-    .max(100, { message: "Must be 100 or less characters long" }),
+    .max(200, { message: "Must be 200 or less characters long" }),
 
   admins: z.string().refine(
     (val) => {
@@ -75,6 +79,29 @@ export const GroupSchema = z.object({
     },
     { message: "Must choose at least one member" }
   ),
+});
+
+export const PodcastSchema = z.object({
+  title: z
+    .string()
+    .min(5, {
+      message: "Title must be at least 5 characters.",
+    })
+    .max(60, { message: "Title must be less than 60 characters." }),
+  desc: z
+    .string()
+    .min(12, {
+      message: "Contents must be at least 5 characters.",
+    })
+    .max(200, { message: "Contents must be less than 200 characters." }),
+  type: z
+    .string()
+    .min(3, {
+      message: "Type must be at least 3 characters.",
+    })
+    .max(60, { message: "Type must be less than 60 characters." }),
+  episode: z.number(),
+  location: z.string(),
 });
 
 export const InterviewSchema = z.object({

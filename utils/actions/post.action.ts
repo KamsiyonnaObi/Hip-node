@@ -1,13 +1,13 @@
 "use server";
 
-import mongoose, { ObjectId, ConnectOptions } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-import Post, { IPost } from "@/models/post.model";
+import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
-const { UserModel } = require("@/models/User");
-const { GroupModel } = require("@/models/group.model");
+import UserModel from "@/models/User";
 
 export async function createPost(params: any) {
   try {
@@ -18,7 +18,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar } = params;
+    const { title, content, image, tags, groupId } = params;
 
     const post = await Post.create({
       title,
@@ -26,7 +26,7 @@ export async function createPost(params: any) {
       image,
       tags,
       userId,
-      avatar,
+      groupId,
     });
 
     // return the postID, not the entire Post
@@ -71,7 +71,7 @@ export async function getPostsByUserId(
     if (posts.length > 0) {
       return { success: true, data: posts };
     } else {
-      throw new Error("post not found.");
+      return { success: false, data: [] };
     }
   } catch (error) {
     console.log(error);
@@ -82,17 +82,26 @@ export async function getPostsByUserId(
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
 export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
+    const { title, content, image, tags, groupId, postId } = params;
+    const post = await Post.findById(postId);
+
+    post.title = title;
+    post.content = content;
+    post.image = image;
+    post.tags = tags;
+    post.groupId = groupId;
+
+    await post.save();
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-export async function deletePost(postId: number) {
+export async function deletePost(postId: string) {
   try {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
@@ -225,33 +234,163 @@ export async function sharePost({
 export async function reportPost({
   postId,
   userId,
-  hasReported,
+  selectedReason,
 }: {
   postId: string;
-  userId: string;
-  hasReported: boolean | null;
+  userId?: string;
+  selectedReason: string;
 }) {
   try {
     dbConnect();
-    const { ObjectId } = mongoose.Types;
-    const id = new ObjectId(postId);
-    let updateQuery = {};
-    // Remove like if it is already reported
-    if (hasReported) {
-      updateQuery = { $pull: { reports: userId } };
-    } else {
-      updateQuery = { $addToSet: { reports: userId } };
-    }
-
-    const post = await Post.findByIdAndUpdate(id, updateQuery, {
-      new: true,
-    });
-    const reportedStatus = post.reports.includes(userId);
-
+    const post = await getPostById(postId);
+    post.data.reports.get(selectedReason).push(userId);
+    await post.data.save();
     if (!post) {
       throw new Error("Post not found");
     }
-    return { status: reportedStatus };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getPostByGroupId(groupId: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({
+      groupId,
+    });
+    if (posts.length > 0) {
+      return { success: true, data: posts };
+    } else {
+      throw new Error("post not found.");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the posts.",
+    };
+  }
+}
+
+function findCommentOrReply({
+  comments,
+  commentId,
+}: {
+  comments: IComments[];
+  commentId: string;
+}): IComments | null {
+  for (const comment of comments) {
+    if (comment?._id?.toString() === commentId) {
+      return comment;
+    }
+    const found = findCommentOrReply({
+      comments: comment.replies ?? [],
+      commentId,
+    });
+    if (found) {
+      return found;
+    }
+  }
+  return null;
+}
+
+export async function addComments({
+  postId,
+  text,
+  commentId,
+}: {
+  postId: string;
+  text: string;
+  commentId: string | null;
+}) {
+  await dbConnect();
+  // get the userID from the session
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const userId = User?._id;
+  const name = User?.username;
+  const imgUrl = User?.profileImage;
+  const post = await Post.findById(postId);
+  if (!commentId) {
+    post.comments.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+      likes: [],
+    });
+  } else {
+    // Adding a reply to a comment or a nested reply
+    const target = findCommentOrReply({ comments: post.comments, commentId });
+    if (!target) {
+      return;
+    }
+
+    if (!target.replies) {
+      target.replies = [];
+    }
+    target?.replies?.push({
+      userId,
+      name,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+    });
+  }
+  await post.save();
+  revalidatePath("/?postId=" + postId);
+}
+
+export async function likeComment({
+  postId,
+  commentId,
+  hasLiked,
+}: {
+  postId: string;
+  commentId: string;
+  hasLiked?: boolean;
+}) {
+  try {
+    await dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const userId = User?._id;
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    if (commentId) {
+      const target = findCommentOrReply({ comments: post.comments, commentId });
+      if (!target) {
+        return;
+      }
+
+      if (!target.likes) {
+        target.likes = [];
+      }
+      if (hasLiked) {
+        // User already liked, remove their ID
+        target.likes = target.likes.filter(
+          (id) => id.toString() !== userId?.toString()
+        );
+      } else {
+        // User has not liked yet, add their ID
+        userId && target.likes.push(userId);
+      }
+      const likedStatus = userId ? target.likes.includes(userId) : false;
+      await post.save();
+      await revalidatePath("/?postId=" + postId);
+      return {
+        status: likedStatus,
+      };
+    }
   } catch (error) {
     console.log(error);
     throw error;

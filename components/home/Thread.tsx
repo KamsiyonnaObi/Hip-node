@@ -1,20 +1,41 @@
-import { commentDataType } from "@/types/component";
-import { Comment, ReplyComment } from "@/components";
+import { Comment } from "@/components";
+import { IComments } from "@/models/post.model";
 
 interface ThreadProps {
-  commentData: commentDataType[];
+  currentUserId?: string;
+  currentUserImage: string;
+  postId: string;
+  comments: IComments[];
 }
 
-const Thread = ({ commentData }: ThreadProps) => {
+const Thread = ({
+  currentUserId,
+  currentUserImage,
+  comments,
+  postId,
+}: ThreadProps) => {
   return (
-    <section className="md:rounded-b-lg flex flex-col gap-5 md:bg-background bg-background2 dark:bg-dark2 md:dark:bg-dark3 px-5 md:pb-[30px] md:gap-[30px] md:px-[30px]">
-      {commentData.map((comment) => (
-        <div key={comment.name}>
-          <Comment {...comment} />
-          {comment.reply.map((reply) => (
-            <ReplyComment key={reply.name} {...reply} />
-          ))}
-        </div>
+    <section className="flex flex-col gap-5 bg-background2 px-5 dark:bg-dark2 md:gap-[30px] md:rounded-b-lg md:bg-background md:px-[30px] md:pb-[30px] md:dark:bg-dark3">
+      {comments?.map((comment) => (
+        <Comment
+          key={comment?._id?.toString()}
+          commentId={comment?._id?.toString()}
+          postId={postId}
+          userId={JSON.stringify(comment?.userId)}
+          currentUserId={currentUserId}
+          currentUserImage={currentUserImage}
+          name={comment?.name}
+          createdAt={comment?.createdAt}
+          updatedAt={comment?.updatedAt}
+          imgUrl={comment?.imgUrl}
+          text={comment?.text}
+          replies={JSON.stringify(comment?.replies)}
+          hasLiked={
+            comment?.likes
+              ?.map((id) => id.toString())
+              .includes(currentUserId || "") || false
+          }
+        />
       ))}
     </section>
   );

@@ -24,19 +24,26 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
-import { useSession } from "next-auth/react";
+import { createPost, updatePost } from "@/utils/actions/post.action";
+import GroupCategory from "../group/GroupCategory";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-export function InputPost() {
-  const { data: session } = useSession();
-  const userId = session?.user.id;
+export function InputPost({
+  editDetail,
+  title,
+}: {
+  editDetail?: string;
+  title?: string;
+}) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [coverUrl, setCoverUrl] = useState("");
+  const parsedDetail = editDetail && JSON.parse(editDetail || "");
+  const groupedTags = parsedDetail?.tags.map((tag: any) => tag);
 
+  const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
@@ -45,6 +52,12 @@ export function InputPost() {
   const toggleCategory = () => {
     setExpanded(expanded !== 2 ? 2 : 0);
   };
+
+  const {
+    ref: groupRef,
+    isOpen: groupOpen,
+    toggleOpen: groupToggle,
+  } = useOutsideClick();
 
   const closeCategory = (val: any) => {
     setExpanded(0);
@@ -59,13 +72,13 @@ export function InputPost() {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title: "",
-      contents: "",
-      tags: [],
+      title: parsedDetail?.title || title || "",
+      contents: parsedDetail?.content || "",
+      tags: groupedTags || [],
+      groupId: parsedDetail?.groupId || "",
     },
   });
 
-  // 2. Define a submit handler.
   const onSubmit = async () => {
     setIsSubmitting(true);
     try {
@@ -74,13 +87,21 @@ export function InputPost() {
         title: values.title,
         content: values.contents,
         tags: values.tags,
+        groupId: values.groupId,
         image: coverUrl,
-        avatar: "/Avatar.png",
       };
-      const id = await createPost(postData);
+      if (editDetail) {
+        await updatePost({
+          ...postData,
+          postId: parsedDetail?._id,
+        });
+      } else {
+        await createPost(postData);
+      }
     } catch (error) {
     } finally {
       setIsSubmitting(false);
+      router.push("/");
     }
   };
 
@@ -133,9 +154,11 @@ export function InputPost() {
                     className="h3-semibold md:h1-semibold border-none bg-background2 text-secondary2 placeholder:text-secondary3 dark:bg-dark4 dark:text-background2"
                     {...field}
                   />
+                  <FormMessage className="text-red90" />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -164,16 +187,27 @@ export function InputPost() {
                         );
                       }}
                     </CldUploadWidget>
-
-                    <Button
-                      color="blackWhite"
-                      className="items-center justify-between px-2.5 py-2"
-                    >
-                      <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                        Select Group
-                      </p>
-                      <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
-                    </Button>
+                    <div className="relative" ref={groupRef}>
+                      <Button
+                        color="blackWhite"
+                        className="items-center justify-between px-2.5 py-2"
+                        type="button"
+                        onClick={groupToggle}
+                      >
+                        <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                          Select Group
+                        </p>
+                        <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
+                      </Button>
+                      {groupOpen && (
+                        <div className="absolute left-0 z-50 mt-2">
+                          <GroupCategory form={form} />
+                        </div>
+                      )}
+                      <div className="text-sm font-medium text-red90">
+                        {form.formState.errors.groupId && "Must choose a group"}
+                      </div>
+                    </div>
                     <div className="relative">
                       <Button
                         color="blackWhite"
@@ -188,7 +222,7 @@ export function InputPost() {
                         <OutlineIcon.DownArrow className="h-3 w-3 fill-secondary6 dark:fill-secondary3" />
                       </Button>
                       {expanded === 2 && (
-                        <div className="absolute left-0 mt-2 z-50">
+                        <div className="absolute left-0 z-50 mt-2">
                           <PostCategory closeCategory={closeCategory} />
                         </div>
                       )}
@@ -196,7 +230,6 @@ export function InputPost() {
                   </div>
                 </div>
               </FormControl>
-              <FormMessage className="text-red90" />
             </FormItem>
           )}
         />
@@ -223,7 +256,7 @@ export function InputPost() {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue={parsedDetail?.content || `Tell your story...`}
                   init={{
                     height: 376,
                     menubar: false,
@@ -259,6 +292,14 @@ export function InputPost() {
                         "h1 bold italic underline strikethrough link image alignleft aligncenter " +
                         "alignright bullist numlist",
                       toolbar_mode: "floating",
+                    },
+                    init_instance_callback: function (editor) {
+                      editor.on("focus", function (e) {
+                        const currentContent = editor.getContent();
+                        if (currentContent === "<p>Tell your story...</p>") {
+                          editor.setContent("");
+                        }
+                      });
                     },
                     content_css: theme === "dark" ? "dark" : "light",
                     setup: (editor) => {
@@ -315,19 +356,15 @@ export function InputPost() {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/home">
-            <Button
-              type="submit"
-              color="blue"
-              className="md:display-semibold body-semibold px-10 py-2.5"
-              disabled={isSubmitting}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {isSubmitting ? <>Posting...</> : <>Publish</>}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            color="blue"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
+          </Button>
+
           <Button
             type="button"
             color="gray"
