@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/Button";
 import Link from "next/link";
 
-const CreatePost = () => {
+const CreatePost = ({ avatar }: { avatar: string }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: any) => {
@@ -17,8 +17,8 @@ const CreatePost = () => {
       <div className="flex flex-row gap-[10px] md:gap-[20px]">
         <div className=" flex h-[30px] w-[30px] items-center justify-center rounded-full bg-yellow30 md:h-[40px] md:w-[40px]">
           <Image
-            className="w-[22px] md:w-[30px]"
-            src="/ExampleAvatar.png"
+            className="w-[30px] rounded-full md:w-[40px]"
+            src={avatar}
             alt="profile"
             width="30"
             height="32"

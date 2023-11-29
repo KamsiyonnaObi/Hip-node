@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
@@ -15,7 +15,11 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-const Navbar = () => {
+const Navbar = ({
+  user,
+}: {
+  user: { profileImage: string; username: string };
+}) => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -36,6 +40,9 @@ const Navbar = () => {
     toggleOpen: toggleNotif,
   } = useOutsideClick();
 
+  const avatar = user?.profileImage || "";
+  const username = user?.username || "";
+
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       const currentPath = pathname.split("/")[1];
@@ -50,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <article className="sticky top-0 z-10 flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
+    <article className="sticky top-0 z-10 flex h-[60px] justify-center bg-background px-5 py-3 dark:bg-dark3 md:h-[80px] md:px-[40px] md:py-[20px]">
       <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-5 lg:gap-[84px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
@@ -62,39 +69,7 @@ const Navbar = () => {
           </h1>
           <OutlineIcon.SearchIcon className="stroke-secondary5 dark:stroke-secondary4 md:hidden" />
         </section>
-        {/* MOBILE */}
-        <section className="flex flex-row gap-5 md:hidden">
-          <div ref={messageRef} onClick={() => toggleMessage()}>
-            <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-              <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
-            </Button>
-          </div>
-
-          {messageExpanded && <MessageList />}
-          <div ref={notifRef} onClick={() => toggleNotif()}>
-            <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
-              <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
-            </Button>
-          </div>
-
-          {notifExpanded && <Notification />}
-          <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
-            <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
-              <div ref={menuRef} onClick={() => toggleMenu()}>
-                <Image
-                  className="w-[22px] md:w-[30px]"
-                  src="/ExampleAvatar.png"
-                  alt="profile"
-                  width="30"
-                  height="32"
-                />
-              </div>
-              {menuExpanded && <Popup />}
-            </div>
-          </div>
-        </section>
-        {/* DESKTOP */}
-        <div className="hidden flex-row md:flex md:gap-5 md2:gap-[65px]">
+        <div className=" flex flex-row md:gap-5 md2:gap-[65px]">
           <section className="hidden flex-row items-center gap-[20px] bg-background  dark:bg-dark3 md:flex">
             <NavbarLink path="/home" pathname={pathname} iconName="Home" />
             <NavbarLink
@@ -116,7 +91,7 @@ const Navbar = () => {
           </section>
           <div className="flex flex-row md:gap-5 md2:gap-[58px]">
             <Input
-              divClassName="flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
+              divClassName="hidden md:flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -127,10 +102,10 @@ const Navbar = () => {
             >
               <OutlineIcon.SearchIcon className="fill-none stroke-secondary2 dark:fill-secondary3" />
             </Input>
-            <div className="flex flex-row md:gap-[25px]">
-              <div className="relative">
-                <div ref={messageRef} onClick={() => toggleMessage()}>
-                  <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+            <div className="flex flex-row gap-5 md:gap-[25px]">
+              <div ref={messageRef} className="relative">
+                <div onClick={() => toggleMessage()}>
+                  <Button className="items-center gap-2.5 bg-secondary6 p-2.5 dark:bg-dark4">
                     <FillIcon.Message className="fill-secondary4 dark:fill-secondary6" />
                   </Button>
                 </div>
@@ -138,9 +113,9 @@ const Navbar = () => {
                 {messageExpanded && <MessageList />}
               </div>
 
-              <div className="relative">
-                <div ref={notifRef} onClick={() => toggleNotif()}>
-                  <Button className="items-center bg-secondary6 dark:bg-dark4 md:gap-2.5 md:p-2.5">
+              <div ref={notifRef} className="relative">
+                <div onClick={() => toggleNotif()}>
+                  <Button className="items-center gap-2.5 bg-secondary6 p-2.5 dark:bg-dark4">
                     <FillIcon.Notifications className="fill-secondary4 dark:fill-secondary6" />
                   </Button>
                 </div>
@@ -150,25 +125,30 @@ const Navbar = () => {
 
               <section className="flex flex-row items-center md:gap-2.5">
                 <div className="flex flex-row md:gap-4">
-                  <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
-                    <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
-                      <div ref={menuRef} onClick={() => toggleMenu()}>
-                        <Image
-                          className="w-[22px] md:w-[30px]"
-                          src="/ExampleAvatar.png"
-                          alt="profile"
-                          width="30"
-                          height="32"
-                        />
-                      </div>
-                      {menuExpanded && <Popup />}
+                  <div
+                    ref={menuRef}
+                    className="flex aspect-square h-[34px] w-[34px] flex-row items-center justify-center rounded-full border-4 border-yellow"
+                  >
+                    <div
+                      className="relative h-full w-full rounded-full"
+                      onClick={() => toggleMenu()}
+                    >
+                      <Image
+                        src={avatar}
+                        alt="profile"
+                        fill
+                        className="rounded-full object-fill"
+                      />
                     </div>
+                    {menuExpanded && <Popup />}
                   </div>
-                  <p className="display-bold text-secondary1 dark:text-background2">
-                    John Smith
+                  <p className="display-bold hidden self-center whitespace-nowrap text-secondary1 dark:text-background2 md:flex">
+                    {username}
                   </p>
                 </div>
-                <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
+                <div className="hidden md:flex">
+                  <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
+                </div>
               </section>
             </div>
           </div>

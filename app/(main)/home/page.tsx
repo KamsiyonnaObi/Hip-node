@@ -33,7 +33,7 @@ export default async function Home({
         <div className="hidden md:flex lg:hidden">
           <Sidebar small />
         </div>
-        <CreatePost />
+        <CreatePost avatar={currentUser?.profileImage.toString() || ""} />
         <Suspense
           key={JSON.stringify(searchParams)}
           fallback={
