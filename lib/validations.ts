@@ -127,3 +127,40 @@ export const emailSchema = z.string().email("Invalid email address.");
 export const passwordSchema = z
   .string()
   .min(8, "Password must be at least 8 characters.");
+
+export const profileSchema = z.object({
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters" })
+    .max(20, { message: "Username must be less than 20 characters" }),
+  bio: z.string().optional(),
+  occupation: z.string(),
+  website: z.union([
+    z.literal(""),
+    z.string().trim().url({ message: "Invalid website url" }),
+  ]),
+  twitter: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .includes("twitter", { message: "invalid twitter profile" })
+      .url(),
+  ]),
+  facebook: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .url()
+      .includes("facebook", { message: "invalid facebook profile" }),
+  ]),
+  instagram: z.union([
+    z.literal(""),
+    z
+      .string()
+      .trim()
+      .includes("instagram", { message: "invalid instagram profile" })
+      .url(),
+  ]),
+});

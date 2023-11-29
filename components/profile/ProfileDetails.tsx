@@ -1,27 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import { Schema } from "mongoose";
 import moment from "moment";
 
+import { userProfileData } from "@/types/component";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 
-interface userProfileData {
-  id: string;
-  name: string;
-  email: string;
-  profileImage: string;
-  job: string;
-  followers: Schema.Types.ObjectId[];
-  following: Schema.Types.ObjectId[];
-  points: number;
-  bio: string;
-}
+type Props = { JSONProfileData: string };
+const ProfileDetails = ({ JSONProfileData }: Props) => {
+  const profileData: userProfileData = JSON.parse(JSONProfileData);
 
-type Props = { profileData: userProfileData | null };
-const ProfileDetails = ({ profileData }: Props) => {
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
@@ -35,8 +25,6 @@ const ProfileDetails = ({ profileData }: Props) => {
     profileUrl: "/",
     joinedDate: "2-28-2023",
     points: 501,
-    bio: "Hey there... I'm AR Jakir! I'm here to learn from and support the other members of this community!",
-    website: "www.uikit.to",
   };
 
   const onEdit = () => setIsProfileEdit(true);
@@ -44,7 +32,11 @@ const ProfileDetails = ({ profileData }: Props) => {
   return (
     <>
       {isProfileEdit ? (
-        <EditProfile onCancel={onCancel} />
+        <EditProfile
+          JSONProfileData={JSONProfileData}
+          onCancel={onCancel}
+          isEdit={setIsProfileEdit}
+        />
       ) : (
         <>
           <div className="flex flex-col items-center justify-center">
@@ -52,7 +44,7 @@ const ProfileDetails = ({ profileData }: Props) => {
               {profileData?.name}
             </p>
             <p className="display-regular text-secondary3">
-              {profileData?.job}
+              {profileData?.occupation}
             </p>
           </div>
           <div className="flex gap-2.5">
@@ -86,22 +78,37 @@ const ProfileDetails = ({ profileData }: Props) => {
           </div>
           <div>
             <p className="body-semibold text-center text-secondary3">
-              {dummyProfileData?.bio}
+              {profileData?.bio}
             </p>
           </div>
           <div className="flex gap-5">
-            <div className="flex gap-2.5">
-              <OutlineIcon.Web />
-              <p className="body-semibold text-secondary2 dark:text-background2">
-                {dummyProfileData.website}
-              </p>
-            </div>
+            {profileData?.website && (
+              <>
+                <a href={profileData.website} target="_blank">
+                  <div className="flex gap-2.5">
+                    <OutlineIcon.Web />
+                  </div>
+                </a>
+              </>
+            )}
 
             {/* display socials based on user's profile */}
             <div className="flex gap-5">
-              <OutlineIcon.Twitter className="fill-secondary4 dark:fill-secondary6" />
-              <OutlineIcon.Facebook className="fill-secondary4 dark:fill-secondary6" />
-              <OutlineIcon.Instagram className="fill-secondary4 dark:fill-secondary6" />
+              {profileData?.twitter && (
+                <a href={profileData.twitter} target="_blank">
+                  <OutlineIcon.Twitter className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
+              {profileData?.facebook && (
+                <a href={profileData.facebook} target="_blank">
+                  <OutlineIcon.Facebook className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
+              {profileData?.instagram && (
+                <a href={profileData.instagram} target="_blank">
+                  <OutlineIcon.Instagram className="fill-secondary4 dark:fill-secondary6" />
+                </a>
+              )}
             </div>
           </div>
           <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>

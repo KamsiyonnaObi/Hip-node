@@ -10,6 +10,7 @@ type Props = {
   onChange?: any;
   type?: "text" | "password" | "email";
   onKeyDown?: any;
+  register?: any;
 };
 
 export const Input = ({
@@ -23,6 +24,7 @@ export const Input = ({
   className,
   divClassName,
   onKeyDown,
+  register,
 }: Props) => {
   return (
     <div className={`${divClassName}`}>
@@ -35,6 +37,7 @@ export const Input = ({
         onChange={onChange}
         type={type}
         onKeyDown={onKeyDown}
+        {...(register ? register(name) : {})}
       />
       {children}
     </div>
