@@ -254,34 +254,19 @@ export async function reportPost({
   }
 }
 
-export async function getPostByGroupId({
-  groupId,
-  title,
-  _id,
-}: {
-  groupId: string;
-  title: string;
-  _id: string;
-}) {
+export async function getPostsByGroupId(id: string) {
   try {
     await dbConnect();
-    const posts = await Post.find({
-      groupId,
-      title: { $regex: title, $options: "i" },
-      _id: { $ne: _id },
-    });
-
-    if (posts.length > 0) {
-      return { success: true, data: posts };
-    } else {
-      throw new Error(`Posts not found for the specified group ID: ${groupId}`);
-    }
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: "An error occurred while retrieving the posts.",
-    };
+    const posts = await Post.find({ groupId: id })
+      .populate("userId")
+      .populate("tags")
+      .populate("views")
+      .populate("likes")
+      .populate("comments")
+      .populate("createdAt");
+    return posts;
+  } catch (e) {
+    console.log(e);
   }
 }
 
