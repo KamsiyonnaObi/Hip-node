@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -14,9 +14,12 @@ import MessageList from "./MessageList";
 import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { getCurrentUser } from "@/utils/actions/user.action";
 
-const Navbar = () => {
+const Navbar = ({
+  user,
+}: {
+  user: { profileImage: string; username: string };
+}) => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -37,23 +40,8 @@ const Navbar = () => {
     toggleOpen: toggleNotif,
   } = useOutsideClick();
 
-  const [avatar, setAvatar] = useState("");
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    const getAvatar = async () => {
-      try {
-        const currentUser = await getCurrentUser();
-        setAvatar(currentUser?.profileImage.toString() || "");
-        console.log(currentUser?.profileImage.toString());
-        setUsername(currentUser?.username.toString() || "");
-      } catch (error) {
-        console.error("Error fetching avatar:", error);
-      }
-    };
-
-    getAvatar();
-  }, []);
+  const avatar = user?.profileImage || "";
+  const username = user?.username || "";
 
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
