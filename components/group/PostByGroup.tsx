@@ -1,11 +1,13 @@
 import { getPostsByGroupId } from "@/utils/actions/post.action";
-
-import { Post } from "@/components/group";
+import Post from "../home/Post";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 const PostByGroup = async ({ groupId }: { groupId: string }) => {
+  const currentUser = await getCurrentUser();
+  const userId = currentUser?._id.toString() || "";
   const posts = await getPostsByGroupId(groupId);
   return (
-    <div className="gap-5">
+    <div className="flex flex-col gap-5">
       {posts?.map((post) => (
         <Post
           key={post._id}
@@ -18,6 +20,10 @@ const PostByGroup = async ({ groupId }: { groupId: string }) => {
           views={post.views.length}
           likes={post.likes.length}
           comments={post.comments.length}
+          _id={post._id.toString()}
+          showEdit={post?.userId?._id.toString() === userId}
+          hasLiked={post?.likes?.includes(userId) || false}
+          currentUserId={userId}
         />
       ))}
     </div>
