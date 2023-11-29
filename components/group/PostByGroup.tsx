@@ -14,7 +14,7 @@ const PostByGroup = async ({ groupId }: { groupId: string }) => {
           tags={[post.tags]}
           avatar={post.userId.profileImage}
           username={post.userId.username}
-          createdAt={""}
+          createdAt={post.createdAt}
           views={post.views.length}
           likes={post.likes.length}
           comments={post.comments.length}
