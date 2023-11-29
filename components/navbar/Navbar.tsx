@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
@@ -14,12 +14,14 @@ import MessageList from "./MessageList";
 import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { getCurrentUsername } from "@/utils/actions/user.action";
 
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
   const [searchText, setSearchText] = useState("");
+  const [userName, setUserName] = useState("");
   const {
     isOpen: menuExpanded,
     ref: menuRef,
@@ -48,6 +50,18 @@ const Navbar = () => {
       }
     }
   };
+  useEffect(() => {
+    async function getUserName() {
+      try {
+        const userName = await getCurrentUsername();
+        userName ? setUserName(userName) : setUserName("");
+        console.log("here", userName);
+      } catch (error) {
+        console.error("Error fetching user name");
+      }
+    }
+    getUserName();
+  }, []);
 
   return (
     <article className="sticky top-0 z-10 flex justify-center bg-background px-5 py-3 dark:bg-dark3 md:px-[40px] md:py-[20px]">
@@ -149,7 +163,7 @@ const Navbar = () => {
               </div>
 
               <section className="flex flex-row items-center md:gap-2.5">
-                <div className="flex flex-row md:gap-4">
+                <div className="flex flex-row items-center md:gap-4">
                   <div className="flex flex-row items-center justify-center rounded-[8px] border-[1px] border-yellow md:h-[40px] md:w-[40px]">
                     <div className="flex flex-row items-center justify-center rounded-[6px] bg-yellow30 md:h-[34px] md:w-[34px]">
                       <div ref={menuRef} onClick={() => toggleMenu()}>
@@ -164,9 +178,11 @@ const Navbar = () => {
                       {menuExpanded && <Popup />}
                     </div>
                   </div>
-                  <p className="display-bold text-secondary1 dark:text-background2">
-                    John Smith
-                  </p>
+                  {userName && (
+                    <p className="display-bold text-secondary1 dark:text-background2">
+                      {userName}
+                    </p>
+                  )}
                 </div>
                 <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
               </section>
