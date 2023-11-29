@@ -13,7 +13,10 @@ export interface IUser {
   businessStage: string;
   codingLevel: string;
   bio: string;
-  socialMedia: string;
+  website: string;
+  twitter: string;
+  facebook: string;
+  instagram: string;
   points: number;
   following: Schema.Types.ObjectId[];
   followers: Schema.Types.ObjectId[];

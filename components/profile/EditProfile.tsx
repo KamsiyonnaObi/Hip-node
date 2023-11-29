@@ -1,44 +1,83 @@
 "use client";
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { profileSchema } from "@/lib/validations";
+import { userProfileData } from "@/types/component";
+import { updateProfileDetails } from "@/utils/actions/user.action";
 import { Input } from "../form/Input";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
-const EditProfile = ({
-  onCancel,
-}: {
+export type ProfileSchema = z.infer<typeof profileSchema>;
+
+interface EditProfileProps {
+  JSONProfileData: string;
   onCancel: MouseEventHandler<HTMLButtonElement>;
-}) => {
-  const [formData, setFormData] = useState({
-    username: "",
-    job: "",
-    web: "",
-    twitter: "",
-    facebook: "",
-    instagram: "",
+  isEdit: any;
+}
+const EditProfile = ({
+  JSONProfileData,
+  onCancel,
+  isEdit,
+}: EditProfileProps) => {
+  const profileData: userProfileData = JSON.parse(JSONProfileData);
+  // extract register, handleSubmit from useForm
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      username: profileData.name,
+      occupation: profileData.occupation,
+      bio: profileData.bio,
+      website: profileData.website,
+      twitter: profileData.twitter,
+      facebook: profileData.facebook,
+      instagram: profileData.instagram,
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  // create onSubmit function
+  const onSubmit = async (data: ProfileSchema) => {
+    const res = await updateProfileDetails(profileData.id, data);
+    if (res === "DuplicateKey") {
+      setError("username", {
+        type: "manual",
+        message: "Username already exists. Choose a different one.",
+      });
 
+      return;
+    }
+    isEdit(false);
+  };
   return (
     <>
-      <form className="flex w-full flex-col gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-4"
+      >
         <div>
           <h1 className="body-semibold text-secondary2 dark:text-background2">
             Name
           </h1>
-
+          {errors.username && (
+            <p className="caption-regular text-red">
+              {errors.username.message}
+            </p>
+          )}
           <Input
             name="username"
             type="text"
             divClassName="bg-background rounded-md px-3 py-[5px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
             className="body-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
             placeholder="Name"
-            onChange={handleChange}
-            value={formData.username}
+            register={register}
           />
         </div>
         <div>
@@ -46,6 +85,7 @@ const EditProfile = ({
             Bio
           </h1>
           <textarea
+            {...register("bio")}
             placeholder="Add a bio"
             className="body-regular w-full resize-none rounded-md border border-secondary2 bg-transparent px-3 py-2 "
           />
@@ -54,25 +94,23 @@ const EditProfile = ({
           <div className="flex h-7 w-full items-center gap-2">
             <FillIcon.Business className="h-6 w-5 stroke-secondary2 dark:stroke-background2" />
             <Input
-              name="job"
+              name="occupation"
               type="text"
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Occupation"
-              onChange={handleChange}
-              value={formData.job}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
             <OutlineIcon.Web />
             <Input
-              name="web"
+              name="website"
               type="text"
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Website"
-              onChange={handleChange}
-              value={formData.web}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -83,8 +121,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.twitter}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -95,8 +132,7 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.facebook}
+              register={register}
             />
           </div>
           <div className="flex h-7 w-full items-center gap-2">
@@ -107,9 +143,38 @@ const EditProfile = ({
               divClassName="bg-background w-full rounded-md px-3 py-[3px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
               className="caption-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               placeholder="Link to social profile"
-              onChange={handleChange}
-              value={formData.instagram}
+              register={register}
             />
+          </div>
+          <div>
+            {errors.website && (
+              <p className="caption-regular text-red">
+                {errors.website.message}
+              </p>
+            )}
+            {errors.bio && (
+              <p className="caption-regular text-red">{errors.bio.message}</p>
+            )}
+            {errors.occupation && (
+              <p className="caption-regular text-red">
+                {errors.occupation.message}
+              </p>
+            )}
+            {errors.facebook && (
+              <p className="caption-regular text-red">
+                {errors.facebook.message}
+              </p>
+            )}
+            {errors.instagram && (
+              <p className="caption-regular text-red">
+                {errors.instagram.message}
+              </p>
+            )}
+            {errors.twitter && (
+              <p className="caption-regular text-red">
+                {errors.twitter.message}
+              </p>
+            )}
           </div>
         </article>
         <div className="flex gap-1 ">
@@ -120,7 +185,7 @@ const EditProfile = ({
             Save
           </button>
           <button
-            type="submit"
+            type="button"
             onClick={onCancel}
             className="caption-semibold flex rounded-md bg-blue10 px-2 py-1 text-red dark:bg-dark4"
           >
