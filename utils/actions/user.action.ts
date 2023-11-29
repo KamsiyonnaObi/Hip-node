@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { ProfileSchema } from "@/components/profile/EditProfile";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
+import { revalidatePath } from "next/cache";
 
 export async function newUser(user: FormData) {
   try {
@@ -87,10 +88,10 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
       console.log(profileData);
       return "no user found";
     }
+    revalidatePath("/profile");
     return "success";
-  } catch (error) {
-    console.log(error);
-    return "error";
+  } catch (error: any) {
+    return error.codeName;
   }
 }
 
