@@ -74,7 +74,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <ActiveMembers members={members} />
         </section>
         <section className="md:col-start-2 lg:col-start-3 lg:row-start-3">
-          <RecentMedia media={"/bird.png"} />
+          <RecentMedia groupId={params.slug} />
         </section>
         <section className="md:col-start-2 md:row-start-2 md:mt-[14.5rem] lg:col-start-1 lg:row-start-1 lg:mt-0">
           <About description={description} />
