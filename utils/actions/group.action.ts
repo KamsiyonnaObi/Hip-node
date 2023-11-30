@@ -6,6 +6,7 @@ import Group from "@/models/group.model";
 import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
+import { FilterQuery } from "mongoose";
 
 interface NewGroup {
   title: string;
@@ -156,9 +157,18 @@ export async function getUsersBySimilarName(name: string) {
 }
 
 export async function getAllGroups(params: any) {
+  const { search } = params;
   try {
     await dbConnect();
-    const groups = await Group.find().populate("userId");
+
+    const query: FilterQuery<any> = {};
+    if (search) {
+      query.$or = [
+        { title: { $regex: new RegExp(search, "i") } },
+        { desc: { $regex: new RegExp(search, "i") } },
+      ];
+    }
+    const groups = await Group.find(query).populate("userId");
     const returnGroups = [];
 
     for (let i = 0; i < groups.length; i++) {
@@ -193,4 +203,3 @@ export async function findAllGroups() {
     return "[]";
   }
 }
-

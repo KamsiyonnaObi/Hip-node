@@ -46,6 +46,7 @@ const Navbar = ({
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       const currentPath = pathname.split("/")[1];
+
       if (searchText === "") {
         router.push(currentPath);
       } else {
