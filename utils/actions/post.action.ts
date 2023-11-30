@@ -275,13 +275,11 @@ export async function getPostTagsByGroupId(id: string) {
     await dbConnect();
     const posts = await Post.find({ groupId: id });
 
-    // Use reduce to aggregate all tags
     const tags = posts.reduce((allTags, post) => {
       allTags.push(...post.tags);
       return allTags;
     }, [] as string[]);
 
-    // Count occurrences of each tag
     const tagCounts = tags.reduce(
       (counts: { [key: string]: any }, tag: string) => {
         counts[tag] = (counts[tag] || 0) + 1;
@@ -290,25 +288,22 @@ export async function getPostTagsByGroupId(id: string) {
       {}
     );
 
-    // Convert to an array of objects with tag names and counts
     const tagsWithCount = Object.keys(tagCounts).map((tagName) => ({
       name: tagName,
       count: tagCounts[tagName],
     }));
 
-    // Sort by count descending
     tagsWithCount.sort((a, b) => b.count - a.count);
 
-    // Slice it to get only the top 4 or 5
     const topTags = tagsWithCount.slice(0, 5);
 
-    // Return the result
     return topTags;
   } catch (e) {
     console.error(e);
     throw e;
   }
 }
+
 function findCommentOrReply({
   comments,
   commentId,
