@@ -62,8 +62,8 @@ const Post = ({
     }
   };
   return (
-    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:rounded-[16px] md:p-[20px]">
-      <div className="flex flex-row gap-[14px]">
+    <article className="flex w-full flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
+      <div className="flex w-full flex-row gap-[14px]">
         <Image
           src={postImage}
           alt="Post"
@@ -71,9 +71,9 @@ const Post = ({
           width={56}
           height={56}
         />
-        <div className="flex flex-col gap-[30px]">
-          <div className="flex flex-row gap-5">
-            <section className="flex w-[187px] flex-col md:w-[512px]">
+        <div className="flex w-full flex-col gap-[30px]">
+          <div className="flex w-full flex-row justify-between">
+            <section className="flex w-[187px] flex-col md:w-full">
               <Link
                 href={`/posts/${_id}`}
                 className="md:h3-semibold caption-semibold dark:text-background2"
@@ -143,7 +143,7 @@ const Post = ({
             </section>
           </div>
           <div className="flex flex-row gap-[10px]">
-            <section className="hidden items-center justify-center rounded-full bg-purple10 md:flex md:h-[40px] md:w-[40px]">
+            <section className="hidden aspect-square items-center justify-center rounded-full bg-purple10 md:flex md:h-[40px] md:w-[40px]">
               <Image
                 src={avatar}
                 alt="avatar"
@@ -152,7 +152,7 @@ const Post = ({
                 className="rounded-full"
               />
             </section>
-            <section className="flex flex-row justify-between md:w-[521px]">
+            <section className="flex flex-row justify-between md:w-full">
               <div className="hidden flex-col md:flex">
                 <div className="flex gap-[.25rem]">
                   <p className="md:body-semibold dark:text-secondary6">
