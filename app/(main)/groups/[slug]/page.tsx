@@ -7,18 +7,19 @@ import {
   ActiveMembers,
   PopularTagsGroups,
   RecentMedia,
-  Post,
   CreateGroup,
 } from "@/components/group";
 
 import GroupError from "@/components/group/GroupError";
 
 import { getGroupById } from "@/utils/actions/group.action";
+import PostByGroup from "@/components/group/PostByGroup";
 interface UserAdmin {
   _id: string;
   fullName?: string;
   profileImage: string;
 }
+
 const page = async ({ params }: { params: { slug: string } }) => {
   const group = await getGroupById(params.slug);
 
@@ -66,57 +67,14 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <section className="flex w-fit flex-col gap-5 sm:w-full md:row-start-2 md:mt-32 lg:col-start-2 lg:mt-28">
           <Frame />
           <div className="flex flex-col gap-[1.25rem] max-md:overflow-hidden md:h-0">
-            <Post
-              postImage="/PostImage.png"
-              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-              tags={["remote", "part time", "test"]}
-              avatar="/Avatar.png"
-              username={"John Smith"}
-              createdAt={"2 months ago"}
-              views={420}
-              likes={69}
-              comments={75}
-            />
-            <Post
-              postImage="/PostImage.png"
-              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-              tags={["remote", "part time", "test"]}
-              avatar="/Avatar.png"
-              username={"John Smith"}
-              createdAt={"2 months ago"}
-              views={420}
-              likes={69}
-              comments={75}
-            />
-            <Post
-              postImage="/PostImage.png"
-              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-              tags={["remote", "part time", "test"]}
-              avatar="/Avatar.png"
-              username={"John Smith"}
-              createdAt={"2 months ago"}
-              views={420}
-              likes={69}
-              comments={75}
-            />
-            <Post
-              postImage="/PostImage.png"
-              title="Bitcoin has tumbled from its record high of $58,000 after words from three wise men and women..."
-              tags={["remote", "part time", "test"]}
-              avatar="/Avatar.png"
-              username={"John Smith"}
-              createdAt={"2 months ago"}
-              views={420}
-              likes={69}
-              comments={75}
-            />
+            <PostByGroup groupId={params.slug} />
           </div>
         </section>
         <section className="md:col-start-2 md:row-start-2 lg:col-start-3 lg:mt-[-1rem]">
           <ActiveMembers members={members} />
         </section>
         <section className="md:col-start-2 lg:col-start-3 lg:row-start-3">
-          <RecentMedia media={"/bird.png"} />
+          <RecentMedia groupId={params.slug} />
         </section>
         <section className="md:col-start-2 md:row-start-2 md:mt-[14.5rem] lg:col-start-1 lg:row-start-1 lg:mt-0">
           <About description={description} />
