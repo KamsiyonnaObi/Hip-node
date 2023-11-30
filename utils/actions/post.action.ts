@@ -274,13 +274,11 @@ export async function getPostTagsByGroupId(id: string) {
   try {
     await dbConnect();
     const posts = await Post.find({ groupId: id });
-    // Extract tags from posts
     const tags = posts.reduce((allTags, post) => {
       allTags.push(...post.tags);
       return allTags;
     }, [] as string[]);
 
-    // Remove duplicate tags, if any
     const uniqueTags = Array.from(new Set(tags));
 
     return uniqueTags;
@@ -289,50 +287,6 @@ export async function getPostTagsByGroupId(id: string) {
     throw e;
   }
 }
-
-// export async function getPostTagsByGroupId(id: string) {
-//   try {
-//     await dbConnect();
-//     const posts = await Post.find({ groupId: id });
-
-//     // Extract tags from posts
-//     const tags = posts.reduce((allTags, post) => {
-//       allTags.push(...post.tags);
-//       return allTags;
-//     }, [] as string[]);
-
-//     // Remove duplicate tags, if any
-//     const uniqueTags = Array.from(new Set(tags));
-
-//     // Create and save PopularTag instances
-//     const popularTags = await Promise.all(
-//       uniqueTags.map(async (tag) => {
-//         // Check if the tag already exists
-//         const existingTag = await PopularTag.findOne({ title: tag });
-
-//         if (existingTag) {
-//           return existingTag;
-//         } else {
-//           // Create a new PopularTag instance
-//           const newPopularTag = new PopularTag({
-//             title: tag,
-//             // You may set default values for image, postNum, and desc here
-//           });
-
-//           // Save the new PopularTag instance
-//           await newPopularTag.save();
-
-//           return newPopularTag;
-//         }
-//       })
-//     );
-
-//     return popularTags;
-//   } catch (e) {
-//     console.error(e);
-//     throw e;
-//   }
-// }
 
 function findCommentOrReply({
   comments,
