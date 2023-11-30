@@ -194,3 +194,15 @@ export async function findAllGroups() {
   }
 }
 
+export async function getNewestGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({}).sort({ createdAt: +1 });
+    console.log(groups);
+
+    return JSON.stringify(groups);
+  } catch (error) {
+    console.log("error");
+    throw error;
+  }
+}
