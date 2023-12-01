@@ -13,6 +13,7 @@ import {
 import GroupError from "@/components/group/GroupError";
 
 import { getGroupById } from "@/utils/actions/group.action";
+import { getPostTagsByGroupId } from "@/utils/actions/post.action";
 import PostByGroup from "@/components/group/PostByGroup";
 interface UserAdmin {
   _id: string;
@@ -40,6 +41,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     _id: member._id,
     profileImage: member.profileImage,
   }));
+  const tags = await getPostTagsByGroupId(params.slug);
 
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] ">
@@ -83,7 +85,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <Admin admins={admins} />
         </section>
         <section className="mb-[1.25rem] md:col-start-2 lg:col-start-3 lg:row-start-4">
-          <PopularTagsGroups />
+          <PopularTagsGroups tags={tags} />
         </section>
       </div>
     </main>
