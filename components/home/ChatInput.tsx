@@ -16,8 +16,8 @@ const ChatInput = ({
   currentUserImage,
 }: {
   postId: string;
-  commentId: string | null;
-  currentUserImage: string;
+  commentId?: string;
+  currentUserImage?: string;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { theme } = useTheme();

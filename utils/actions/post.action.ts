@@ -246,7 +246,6 @@ export async function reportPost({
   }
 }
 
-
 export async function getPostByGroupId(groupId: string) {
   try {
     await dbConnect();
@@ -267,7 +266,6 @@ export async function getPostByGroupId(groupId: string) {
   }
 }
 
-
 function findCommentOrReply({
   comments,
   commentId,
@@ -278,13 +276,6 @@ function findCommentOrReply({
   for (const comment of comments) {
     if (comment?._id?.toString() === commentId) {
       return comment;
-    }
-    const found = findCommentOrReply({
-      comments: comment.replies ?? [],
-      commentId,
-    });
-    if (found) {
-      return found;
     }
   }
   return null;
@@ -297,7 +288,7 @@ export async function addComments({
 }: {
   postId: string;
   text: string;
-  commentId: string | null;
+  commentId?: string;
 }) {
   await dbConnect();
   // get the userID from the session
@@ -318,21 +309,14 @@ export async function addComments({
       likes: [],
     });
   } else {
-    // Adding a reply to a comment or a nested reply
-    const target = findCommentOrReply({ comments: post.comments, commentId });
-    if (!target) {
-      return;
-    }
-
-    if (!target.replies) {
-      target.replies = [];
-    }
-    target?.replies?.push({
+    post.comments.push({
       userId,
       name,
+      parentId: commentId,
       imgUrl,
       text,
       createdAt: new Date(),
+      likes: [],
     });
   }
   await post.save();

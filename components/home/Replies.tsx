@@ -26,7 +26,7 @@ interface CommentProps {
   hasLiked?: boolean | false;
 }
 
-const Comment = ({
+const Replies = ({
   commentId,
   postId,
   currentUserId,
@@ -67,10 +67,7 @@ const Comment = ({
         <div className="relative h-11 w-11 shrink-0 rounded-full bg-yellow30">
           <Image
             className="absolute left-1/2 top-1/2 h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            src={
-              imgUrl ||
-              "https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/v1699055056/CldUploadWidget-unsigned/n58gdqqxsb90qaqjadra.png"
-            }
+            src={imgUrl}
             alt="profile"
             width="80"
             height="80"
@@ -112,4 +109,4 @@ const Comment = ({
   );
 };
 
-export default Comment;
+export default Replies;
