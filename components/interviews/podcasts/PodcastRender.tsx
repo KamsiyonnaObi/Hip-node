@@ -25,7 +25,7 @@ const PodcastRender = async ({
                   desc={podcast.desc}
                   name={podcast.userId?.username || "unknown"}
                   location={podcast.location}
-                  avatar={podcast.userId?.profileImage}
+                  avatar={podcast.userId?.profileImage || "unknown"}
                 />
               </Link>
             ))

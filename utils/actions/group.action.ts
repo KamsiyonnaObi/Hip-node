@@ -156,25 +156,28 @@ export async function getUsersBySimilarName(name: string) {
   }
 }
 
-export async function getAllGroups(params: any) {
+export async function getAllGroups(params: string) {
   const { search } = params;
+
   try {
     await dbConnect();
 
     const query: FilterQuery<any> = {};
     if (search) {
       query.$or = [
-        { title: { $regex: new RegExp(search, "i") } },
-        { desc: { $regex: new RegExp(search, "i") } },
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
       ];
     }
     const groups = await Group.find(query).populate("userId");
-    const returnGroups = [];
 
-    for (let i = 0; i < groups.length; i++) {
-      const post = await Post.find({ groupId: groups[i]._id });
-      returnGroups.push({ ...groups[i]._doc, post });
-    }
+    const fetchPostPromises = groups.map(async (group) => {
+      const posts = await Post.find({ groupId: group._id });
+      return { ...group._doc, posts };
+    });
+
+    const returnGroups = await Promise.all(fetchPostPromises);
+
     return { groups: returnGroups };
   } catch (error) {
     console.log(error);

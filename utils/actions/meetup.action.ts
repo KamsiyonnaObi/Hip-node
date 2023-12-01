@@ -75,7 +75,10 @@ export async function deleteMeetup(meetupId: number) {
   }
 }
 
-export async function getAllMeetups(params: any) {
+export async function getAllMeetups(params: {
+  jobType: string;
+  search: string;
+}) {
   const { jobType, search } = params;
   const jobArray = jobType ? jobType.split(",") : [];
 
@@ -88,8 +91,8 @@ export async function getAllMeetups(params: any) {
 
     if (search) {
       query.$or = [
-        { title: { $regex: new RegExp(search, "i") } },
-        { desc: { $regex: new RegExp(search, "i") } },
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
       ];
     }
 

@@ -12,10 +12,9 @@ import { getServerSession } from "next-auth";
 const InterviewHomePage = async ({
   searchParams,
 }: {
-  searchParams: { tags: string };
+  searchParams: URLSearchParams;
 }) => {
-  const tags = searchParams?.tags;
-  const result = getAllInterviews(tags);
+  const result = getAllInterviews(searchParams);
 
   const categories = [
     "technology",
