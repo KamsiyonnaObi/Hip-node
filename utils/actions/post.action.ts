@@ -243,18 +243,21 @@ export async function sharePost({
 
 export async function reportPost({
   postId,
-  userId,
   selectedReason,
 }: {
   postId: string;
-  userId?: string;
   selectedReason: string;
 }) {
   try {
     dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const currentUserId = User?._id;
     const post = await getPostById(postId);
-    post.data.reports.get(selectedReason).push(userId);
+    post.data.reports.get(selectedReason).push(currentUserId);
     await post.data.save();
+    revalidatePath("/?postId=" + postId);
     if (!post) {
       throw new Error("Post not found");
     }
@@ -325,13 +328,6 @@ function findCommentOrReply({
     if (comment?._id?.toString() === commentId) {
       return comment;
     }
-    const found = findCommentOrReply({
-      comments: comment.replies ?? [],
-      commentId,
-    });
-    if (found) {
-      return found;
-    }
   }
   return null;
 }
@@ -340,10 +336,12 @@ export async function addComments({
   postId,
   text,
   commentId,
+  parentId,
 }: {
   postId: string;
   text: string;
-  commentId: string | null;
+  commentId?: string;
+  parentId?: string;
 }) {
   await dbConnect();
   // get the userID from the session
@@ -363,22 +361,25 @@ export async function addComments({
       createdAt: new Date(),
       likes: [],
     });
-  } else {
-    // Adding a reply to a comment or a nested reply
-    const target = findCommentOrReply({ comments: post.comments, commentId });
-    if (!target) {
-      return;
-    }
-
-    if (!target.replies) {
-      target.replies = [];
-    }
-    target?.replies?.push({
+  } else if (commentId && !parentId) {
+    post.comments.push({
       userId,
       name,
+      parentId: commentId,
       imgUrl,
       text,
       createdAt: new Date(),
+      likes: [],
+    });
+  } else {
+    post.comments.push({
+      userId,
+      name,
+      parentId,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+      likes: [],
     });
   }
   await post.save();

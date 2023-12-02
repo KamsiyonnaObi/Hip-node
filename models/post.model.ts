@@ -3,12 +3,12 @@ import { Schema, models, model, Document } from "mongoose";
 export interface IComments {
   _id?: Schema.Types.ObjectId;
   userId?: Schema.Types.ObjectId;
+  parentId?: Schema.Types.ObjectId;
   name?: string | "";
   imgUrl?: string | "";
   text?: string | "";
   createdAt?: Date;
   updatedAt?: Date;
-  replies?: IComments[];
   likes?: Schema.Types.ObjectId[];
 }
 
@@ -34,6 +34,7 @@ export interface IPost extends Document {
 
 const commentSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  parentId: { type: Schema.Types.ObjectId, ref: "User" },
   name: { type: String },
   imgUrl: { type: String },
   text: { type: String },
@@ -46,8 +47,6 @@ const commentSchema = new Schema({
     },
   ],
 });
-
-commentSchema.add({ replies: [commentSchema] });
 
 const PostSchema = new Schema({
   title: { type: String, required: true },
