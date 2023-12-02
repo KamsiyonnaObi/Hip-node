@@ -1,6 +1,6 @@
 import { Comment } from "@/components";
 import { IComments } from "@/models/post.model";
-import Replies from "./Replies";
+import { Curve } from "../icons/outlineIcons/Curve";
 
 interface ThreadProps {
   currentUserId?: string;
@@ -16,7 +16,7 @@ const Thread = ({
   postId,
 }: ThreadProps) => {
   return (
-    <section className="flex flex-col gap-5 bg-background2 px-5 dark:bg-dark2 md:gap-[30px] md:rounded-b-lg md:bg-background md:px-[30px] md:pb-[30px] md:dark:bg-dark3">
+    <section className="flex flex-col bg-background2 dark:bg-dark2 md:rounded-b-lg md:bg-background md:px-[30px] md:pb-[30px] md:dark:bg-dark3">
       {comments?.map((comment) => {
         if (!comment.parentId) {
           return (
@@ -38,32 +38,47 @@ const Thread = ({
                   false
                 }
               />
+
               {comments.map((reply) => {
                 if (reply?.parentId?.toString() === comment?._id?.toString()) {
-                  // console.log(
-                  //   reply?.parentId?.toString() === comment?._id?.toString()
-                  // );
-                  <div className="ml-[65px]">
-                    <Replies
-                      key={reply?._id?.toString()}
-                      commentId={reply?._id?.toString()}
-                      postId={postId}
-                      parentId={comment?._id?.toString()}
-                      userId={JSON.stringify(comment?.userId)}
-                      currentUserId={currentUserId}
-                      currentUserImage={currentUserImage}
-                      name={reply?.name}
-                      createdAt={reply?.createdAt}
-                      updatedAt={reply?.updatedAt}
-                      imgUrl={reply?.imgUrl}
-                      text={reply?.text}
-                      hasLiked={
-                        reply?.likes
-                          ?.toString()
-                          .includes(currentUserId || "") || false
-                      }
-                    />
-                  </div>;
+                  const replyDate = reply.createdAt || 0;
+
+                  const isFirstReply = !comments.some((r) => {
+                    const date = r.createdAt || 0;
+                    return (
+                      r?.parentId?.toString() === comment?._id?.toString() &&
+                      date < replyDate
+                    );
+                  });
+                  return (
+                    <div className="flex" key={reply?._id?.toString()}>
+                      {isFirstReply && (
+                        <Curve className="h-9 w-9 stroke-secondary5 md:h-11 md:w-11" />
+                      )}
+
+                      {!isFirstReply && (
+                        <div className="h-9 w-9 md:h-11 md:w-11" />
+                      )}
+                      <Comment
+                        commentId={reply?._id?.toString()}
+                        parentId={reply?.parentId?.toString()}
+                        postId={postId}
+                        userId={JSON.stringify(comment?.userId)}
+                        currentUserId={currentUserId}
+                        currentUserImage={currentUserImage}
+                        name={reply?.name}
+                        createdAt={reply?.createdAt}
+                        updatedAt={reply?.updatedAt}
+                        imgUrl={reply?.imgUrl}
+                        text={reply?.text}
+                        hasLiked={
+                          reply?.likes
+                            ?.toString()
+                            .includes(currentUserId || "") || false
+                        }
+                      />
+                    </div>
+                  );
                 }
 
                 return null;

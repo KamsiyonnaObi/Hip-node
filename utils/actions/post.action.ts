@@ -285,10 +285,12 @@ export async function addComments({
   postId,
   text,
   commentId,
+  parentId,
 }: {
   postId: string;
   text: string;
   commentId?: string;
+  parentId?: string;
 }) {
   await dbConnect();
   // get the userID from the session
@@ -308,11 +310,21 @@ export async function addComments({
       createdAt: new Date(),
       likes: [],
     });
-  } else {
+  } else if (commentId && !parentId) {
     post.comments.push({
       userId,
       name,
       parentId: commentId,
+      imgUrl,
+      text,
+      createdAt: new Date(),
+      likes: [],
+    });
+  } else {
+    post.comments.push({
+      userId,
+      name,
+      parentId,
       imgUrl,
       text,
       createdAt: new Date(),
