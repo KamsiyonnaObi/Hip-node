@@ -5,7 +5,10 @@ import { getAllMeetups } from "@/utils/actions/meetup.action";
 import Link from "next/link";
 
 const Meetups = async () => {
-  const result = await getAllMeetups({});
+  const result = await getAllMeetups({
+    jobType: "",
+    search: "",
+  });
 
   return (
     <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2">
