@@ -3,17 +3,11 @@
 import { getServerSession } from "next-auth";
 
 import Group from "@/models/group.model";
+import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
-
-interface NewGroup {
-  title: string;
-  coverUrl: string;
-  groupUrl: string;
-  description: string;
-  admins: string;
-  members: string;
-}
+import { FilterQuery } from "mongoose";
+import { NewGroup, UpdateGroup } from "./shared.types";
 
 export async function createGroup(params: NewGroup) {
   try {
@@ -22,7 +16,9 @@ export async function createGroup(params: NewGroup) {
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;
     const User = await UserModel.findOne({ email });
-    const { title, coverUrl, groupUrl, description } = params;
+    const { title, coverUrl, groupUrl, description, admins, members } = params;
+    const parsedAdmins = JSON.parse(admins);
+    const parseMembers = JSON.parse(members);
 
     const group = await Group.create({
       title,
@@ -30,6 +26,8 @@ export async function createGroup(params: NewGroup) {
       groupUrl,
       userId: User?._id,
       description,
+      admins: parsedAdmins,
+      members: parseMembers,
     });
     if (group) {
       return JSON.stringify({
@@ -52,7 +50,10 @@ export async function createGroup(params: NewGroup) {
 export async function getGroupById(groupId: string) {
   try {
     await dbConnect();
-    const group = await Group.findById(groupId).populate("userId");
+    const group = await Group.findById(groupId)
+      .populate("userId")
+      .populate("admins")
+      .populate("members");
 
     if (group) {
       return { success: true, data: group };
@@ -68,10 +69,30 @@ export async function getGroupById(groupId: string) {
   }
 }
 
-export async function updateGroup(groupId: any) {
+export async function updateGroup(groupId: any, params: UpdateGroup) {
+  const { title, coverUrl, groupUrl, description, admins, members } = params;
+  const currentUser: any = await getServerSession();
+  const { email } = currentUser?.user;
+  const User = await UserModel.findOne({ email });
+  const parsedAdmins = JSON.parse(admins);
+  const parseMembers = JSON.parse(members);
+
   try {
     await dbConnect();
-    const updatedGroup = await Group.findById(groupId);
+    const updatedGroup = await Group.findOneAndUpdate(
+      { _id: groupId },
+      {
+        $set: {
+          title,
+          coverUrl,
+          groupUrl,
+          description,
+          userId: User?._id,
+          admins: parsedAdmins,
+          members: parseMembers,
+        },
+      }
+    );
 
     if (updatedGroup) {
       return { success: true, message: "Group updated successfully" };
@@ -115,5 +136,78 @@ export async function getUsersBySimilarName(name: string) {
     return JSON.stringify(users);
   } catch (error) {
     return "[]";
+  }
+}
+
+export async function getAllGroups(params: string) {
+  const { search } = params;
+
+  try {
+    await dbConnect();
+
+    const query: FilterQuery<any> = {};
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
+      ];
+    }
+    const [groups, postsResults] = await Promise.all([
+      Group.find(query).populate("userId"),
+      Promise.all(
+        (await Group.find(query)).map((group) =>
+          Post.find({ groupId: group._id })
+        )
+      ),
+    ]);
+
+    const returnGroups = groups.map((group, index) => ({
+      ...group._doc,
+      post: postsResults[index],
+    }));
+
+    return { groups: returnGroups };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function findById(admins: any) {
+  try {
+    await dbConnect();
+    const users = await UserModel.find({
+      _id: { $in: admins },
+    }).select("username");
+    return JSON.stringify(users);
+  } catch (error) {
+    return "[]";
+  }
+}
+
+export async function findAllGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({});
+    return JSON.stringify(groups);
+  } catch (error) {
+    return "[]";
+  }
+}
+
+export async function getNewestGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({})
+      .sort({ createdAt: -1 })
+      .populate("userId");
+
+    return JSON.stringify(groups);
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the group.",
+    };
   }
 }

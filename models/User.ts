@@ -29,6 +29,7 @@ const userSchema: Schema = new Schema<IUser>(
     },
     occupation: {
       type: String,
+      default: "",
     },
     profileImage: {
       type: String,
@@ -50,8 +51,21 @@ const userSchema: Schema = new Schema<IUser>(
     bio: {
       type: String,
     },
-    socialMedia: {
+    website: {
       type: String,
+      default: "",
+    },
+    twitter: {
+      type: String,
+      default: "",
+    },
+    facebook: {
+      type: String,
+      default: "",
+    },
+    instagram: {
+      type: String,
+      default: "",
     },
     followers: [
       {

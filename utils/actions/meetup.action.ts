@@ -4,6 +4,7 @@ import Meetup, { IMeetup } from "@/models/meetup.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 import UserModel from "@/models/User";
+import { FilterQuery } from "mongoose";
 
 export async function createMeetup(params: any) {
   try {
@@ -74,11 +75,28 @@ export async function deleteMeetup(meetupId: number) {
   }
 }
 
-export async function getAllMeetups(params: any) {
+export async function getAllMeetups(params: {
+  jobType: string;
+  search: string;
+}) {
+  const { jobType, search } = params;
+  const jobArray = jobType ? jobType.split(",") : [];
+
   try {
     await dbConnect();
+    const query: FilterQuery<any> = {};
+    if (jobArray.length > 0) {
+      query.jobType = { $in: jobArray };
+    }
 
-    const meetups = await Meetup.find({})
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const meetups = await Meetup.find(query)
       .populate("userId")
       .sort({ createdAt: -1 });
     return { meetups };

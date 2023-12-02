@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import { InterviewIllustration } from "@/utils/images";
 import { ShadButton } from "../ui/ShadButton";

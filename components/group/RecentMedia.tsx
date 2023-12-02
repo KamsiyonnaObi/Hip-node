@@ -1,9 +1,10 @@
-import Image from "next/image";
+import { getPostsByGroupId } from "@/utils/actions/post.action";
 import React from "react";
+import Media from "./Media";
 
-type Props = { media: string };
+const RecentMedia = async ({ groupId }: { groupId: string }) => {
+  const posts = await getPostsByGroupId(groupId);
 
-const RecentMedia = ({ media }: Props) => {
   return (
     <div className="flex w-[20.9375rem] flex-col gap-[0.625rem] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:w-full">
       <div className="mb-[.62rem]">
@@ -12,87 +13,7 @@ const RecentMedia = ({ media }: Props) => {
         </h2>
       </div>
       <div className="flex flex-wrap gap-[.62rem]">
-        <div className="min-w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
-        <div className="w-[5.5rem]">
-          <Image
-            src={media}
-            width={88}
-            height={88}
-            alt="Media"
-            className="m-auto mt-1"
-          />
-        </div>
+        {posts?.map((post) => <Media key={post._id} media={post.image} />)}
       </div>
     </div>
   );

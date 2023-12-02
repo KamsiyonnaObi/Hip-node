@@ -1,6 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import Link from "next/link";
 
 import FillIcon from "../icons/FillIcon";
@@ -21,12 +21,10 @@ function monthsSinceJoined(joinedDate: Date): number {
 const OtherProfile = ({
   user,
   joinedDate,
-  currentUserId,
   hasFollowed,
 }: {
   user: string;
   joinedDate: Date;
-  currentUserId: string;
   hasFollowed: boolean;
 }) => {
   const [isFollowing, setIsFollowing] = useState(hasFollowed || false);
@@ -38,7 +36,6 @@ const OtherProfile = ({
       startTransition(async () => {
         const followed = await followAuthor({
           userId: userObj._id,
-          currentUserId: JSON.parse(currentUserId),
           hasFollowed: isFollowing,
         });
         if (!followed) return;

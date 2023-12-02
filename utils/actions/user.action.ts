@@ -1,8 +1,11 @@
 "use server";
+import { ObjectId } from "mongoose";
+import { getServerSession } from "next-auth";
+
+import { ProfileSchema } from "@/components/profile/EditProfile";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
-import User from "@/models/User";
-import mongoose, { ObjectId } from "mongoose";
+import { revalidatePath } from "next/cache";
 
 export async function newUser(user: FormData) {
   try {
@@ -33,6 +36,7 @@ export async function newUser(user: FormData) {
   }
 }
 
+// user action to fetch logged in user profile details
 export async function getUserProfile(email: string | null | undefined) {
   try {
     await dbConnect();
@@ -45,11 +49,15 @@ export async function getUserProfile(email: string | null | undefined) {
         name: loggedInUser.username,
         email: loggedInUser.email,
         profileImage: loggedInUser.profileImage,
-        job: loggedInUser.occupation,
+        occupation: loggedInUser.occupation,
         followers: loggedInUser.followers,
         following: loggedInUser.following,
         points: loggedInUser.points,
         bio: loggedInUser.bio,
+        website: loggedInUser.website,
+        twitter: loggedInUser.twitter,
+        facebook: loggedInUser.facebook,
+        instagram: loggedInUser.instagram,
       };
       return userObj;
     }
@@ -61,17 +69,49 @@ export async function getUserProfile(email: string | null | undefined) {
   }
 }
 
+// user action to update logged in user profile details
+export async function updateProfileDetails(id: string, data: ProfileSchema) {
+  try {
+    await dbConnect();
+
+    const profileData = await UserModel.findByIdAndUpdate(id, {
+      username: data.username,
+      bio: data.bio,
+      occupation: data.occupation,
+      website: data.website,
+      twitter: data.twitter,
+      facebook: data.facebook,
+      instagram: data.instagram,
+    });
+
+    if (!profileData) {
+      console.log(profileData);
+      return "no user found";
+    }
+    revalidatePath("/profile");
+    return "success";
+  } catch (error: any) {
+    return error.codeName;
+  }
+}
+
 export async function followAuthor({
   userId,
-  currentUserId,
   hasFollowed,
 }: {
   userId: ObjectId;
-  currentUserId: ObjectId;
   hasFollowed: boolean;
 }) {
   try {
     dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const currentUserId = User?._id;
+    if (!currentUserId) {
+      throw new Error("Current user ID is undefined");
+    }
+
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };
@@ -79,7 +119,7 @@ export async function followAuthor({
       updateQuery = { $addToSet: { followers: currentUserId } };
     }
 
-    const user = await User.findByIdAndUpdate(userId, updateQuery, {
+    const user = await UserModel.findByIdAndUpdate(userId, updateQuery, {
       new: true,
     });
     const followedStatus = user?.followers.includes(currentUserId);
@@ -90,5 +130,22 @@ export async function followAuthor({
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    await dbConnect();
+
+    // get the current user
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+
+    // Return the user's id
+    return User ?? null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
