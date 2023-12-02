@@ -18,7 +18,15 @@ const Thread = ({
   return (
     <section className="flex flex-col bg-background2 dark:bg-dark2 md:rounded-b-lg md:bg-background md:px-[30px] md:pb-[30px] md:dark:bg-dark3">
       {comments?.map((comment) => {
-        if (!comment.parentId) {
+        if (!comment.parentId && comment.createdAt) {
+          const commentDate = comment.createdAt;
+          const isLastReply = !comments.some((r) => {
+            const date = r.createdAt || 0;
+            return (
+              r?.parentId?.toString() === comment?._id?.toString() &&
+              date > commentDate
+            );
+          });
           return (
             <>
               <Comment
@@ -37,6 +45,7 @@ const Thread = ({
                   comment?.likes?.toString().includes(currentUserId || "") ||
                   false
                 }
+                isLastReply={isLastReply}
               />
 
               {comments.map((reply) => {
@@ -50,6 +59,14 @@ const Thread = ({
                       date < replyDate
                     );
                   });
+                  const isLastReply = !comments.some((r) => {
+                    const date = r.createdAt || 0;
+                    return (
+                      r?.parentId?.toString() === comment?._id?.toString() &&
+                      date > replyDate
+                    );
+                  });
+
                   return (
                     <div className="flex" key={reply?._id?.toString()}>
                       {isFirstReply && (
@@ -76,6 +93,7 @@ const Thread = ({
                             ?.toString()
                             .includes(currentUserId || "") || false
                         }
+                        isLastReply={isLastReply}
                       />
                     </div>
                   );

@@ -24,6 +24,7 @@ interface CommentProps {
   text?: string;
   replies?: string;
   hasLiked?: boolean | false;
+  isLastReply?: boolean | false;
 }
 
 const Comment = ({
@@ -38,6 +39,7 @@ const Comment = ({
   imgUrl,
   text,
   hasLiked,
+  isLastReply,
 }: CommentProps) => {
   const formattedDate = format(new Date(createdAt ?? new Date()), "MMM dd");
   const [isLiked, setIsLiked] = useState(hasLiked || false);
@@ -77,7 +79,9 @@ const Comment = ({
             height="80"
           />
         </div>
-        <VerticalLine className="w-9 grow basis-0 stroke-secondary5 md:w-11" />
+        {!isLastReply && (
+          <VerticalLine className="w-9 grow basis-0 stroke-secondary5 md:w-11" />
+        )}
       </div>
       <section className="flex flex-col gap-[15px] pb-5 md:pb-[30px]">
         <article className="flex max-w-[240px] flex-col gap-[15px] rounded-3xl border border-secondary5 p-[15px] md:max-w-none">
