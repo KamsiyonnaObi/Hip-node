@@ -225,18 +225,21 @@ export async function sharePost({
 
 export async function reportPost({
   postId,
-  userId,
   selectedReason,
 }: {
   postId: string;
-  userId?: string;
   selectedReason: string;
 }) {
   try {
     dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const currentUserId = User?._id;
     const post = await getPostById(postId);
-    post.data.reports.get(selectedReason).push(userId);
+    post.data.reports.get(selectedReason).push(currentUserId);
     await post.data.save();
+    revalidatePath("/?postId=" + postId);
     if (!post) {
       throw new Error("Post not found");
     }
