@@ -12,7 +12,7 @@ import { Suspense } from "react";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { search: string };
 }) {
   const currentUser = await getCurrentUser();
 

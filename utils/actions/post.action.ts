@@ -1,6 +1,6 @@
 "use server";
 
-import mongoose, { ObjectId } from "mongoose";
+import mongoose, { FilterQuery, ObjectId } from "mongoose";
 
 import Post, { IComments, IPost } from "@/models/post.model";
 import dbConnect from "@/utils/mongooseConnect";
@@ -112,11 +112,21 @@ export async function deletePost(postId: string) {
   }
 }
 
-export async function getAllPosts(params: any) {
+export async function getAllPosts(params: { search: string }) {
+  const { search } = params;
   try {
     await dbConnect();
 
-    const posts = await Post.find({})
+    const query: FilterQuery<any> = {};
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const posts = await Post.find(query)
       .populate("userId")
       .sort({ createdAt: -1 });
     return { posts };

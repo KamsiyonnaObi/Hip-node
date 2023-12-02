@@ -6,24 +6,8 @@ import Group from "@/models/group.model";
 import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
-
-interface NewGroup {
-  title: string;
-  coverUrl: string;
-  groupUrl: string;
-  description: string;
-  admins: string;
-  members: string;
-}
-
-interface UpdateGroup {
-  title: string;
-  coverUrl: string;
-  groupUrl: string;
-  description: string;
-  admins: string;
-  members: string;
-}
+import { FilterQuery } from "mongoose";
+import { NewGroup, UpdateGroup } from "./shared.types";
 
 export async function createGroup(params: NewGroup) {
   try {
@@ -155,16 +139,33 @@ export async function getUsersBySimilarName(name: string) {
   }
 }
 
-export async function getAllGroups(params: any) {
+export async function getAllGroups(params: string) {
+  const { search } = params;
+
   try {
     await dbConnect();
-    const groups = await Group.find().populate("userId");
-    const returnGroups = [];
 
-    for (let i = 0; i < groups.length; i++) {
-      const post = await Post.find({ groupId: groups[i]._id });
-      returnGroups.push({ ...groups[i]._doc, post });
+    const query: FilterQuery<any> = {};
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
+      ];
     }
+    const [groups, postsResults] = await Promise.all([
+      Group.find(query).populate("userId"),
+      Promise.all(
+        (await Group.find(query)).map((group) =>
+          Post.find({ groupId: group._id })
+        )
+      ),
+    ]);
+
+    const returnGroups = groups.map((group, index) => ({
+      ...group._doc,
+      post: postsResults[index],
+    }));
+
     return { groups: returnGroups };
   } catch (error) {
     console.log(error);

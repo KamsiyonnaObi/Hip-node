@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { ShadButton } from "@/components/ui/ShadButton";
-import { InterviewImage } from "@/utils/images";
 import { formatNumber, getTimestamp } from "@/utils";
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import { useEffect, useRef, useState } from "react";
@@ -15,14 +14,12 @@ interface Props {
   username: string;
   createdAt: Date;
   title: string;
-  content: string;
   revenue: number;
   updates: number;
   website: string;
   image: string;
   _id: string;
   avatar: string;
-  userId?: string;
   showEdit: boolean;
 }
 
@@ -30,14 +27,12 @@ const InterviewPost = ({
   username,
   createdAt,
   title,
-  content,
   revenue,
   updates,
   website,
   image,
   avatar,
   _id,
-  userId,
   showEdit,
 }: Props) => {
   const [showPopup, setShowPopup] = useState(false);

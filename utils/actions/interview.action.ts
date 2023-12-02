@@ -3,6 +3,7 @@
 import UserModel from "@/models/User";
 import Interview, { IInterview } from "@/models/interview.model";
 import dbConnect from "@/utils/mongooseConnect";
+import { FilterQuery } from "mongoose";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
@@ -29,7 +30,7 @@ export async function createInterview(params: Partial<IInterview>) {
       interviewTags,
     });
 
-    return interview._id.toString();
+    return interview;
   } catch (error) {
     console.log(error);
     throw error;
@@ -39,7 +40,8 @@ export async function createInterview(params: Partial<IInterview>) {
 export async function getInterview(InterviewId: string) {
   try {
     await dbConnect();
-    const interview = await Interview.findById(InterviewId);
+    const interview = await Interview.findById(InterviewId).populate("userId");
+
     if (!interview) {
       notFound();
     }
@@ -91,19 +93,29 @@ export async function deleteInterview(InterviewId: string) {
   }
 }
 
-function convertTags(item: string | Array<String> | undefined) {
-  if (!item) return {};
-  if (typeof item === "string") return { tags: { $in: [...item.split(",")] } };
-  return { tags: { $in: [...item] } };
-}
-
-export async function getAllInterviews(
-  tags: string | Array<String> | undefined
-) {
+export async function getAllInterviews(params: {
+  tags: string;
+  search: string;
+}) {
+  const { tags, search } = params;
+  const tagArray = tags ? tags.split(",") : [];
   try {
     await dbConnect();
 
-    const interviews = await Interview.find(convertTags(tags))
+    const query: FilterQuery<any> = {};
+
+    if (tagArray.length > 0) {
+      query.tags = { $in: tagArray };
+    }
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { desc: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const interviews = await Interview.find(query)
       .populate("userId")
       .sort({ createdAt: -1 });
 
