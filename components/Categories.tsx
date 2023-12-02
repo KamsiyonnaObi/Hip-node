@@ -10,9 +10,16 @@ interface Props {
   categoryList: { [key: string]: boolean };
   web: string;
   filter: string;
+  searchFilter: string;
 }
 
-const Categories = ({ title, categoryList, web, filter }: Props) => {
+const Categories = ({
+  title,
+  categoryList,
+  web,
+  filter,
+  searchFilter,
+}: Props) => {
   const [categories, setCategories] = useState(categoryList);
   const router = useRouter();
 
@@ -28,12 +35,16 @@ const Categories = ({ title, categoryList, web, filter }: Props) => {
     const selectedCategories = Object.entries(categories)
       .filter(([, checked]) => checked)
       .map(([category]) => category);
-    const route =
+
+    const searchParams =
       selectedCategories.length > 0
-        ? `/${web}?${filter}=${selectedCategories.join(",")}`
-        : `/${web}`;
+        ? `?${filter}=${selectedCategories.join(",")}`
+        : "?";
+    const route =
+      web + searchParams + (searchFilter ? `&search=${searchFilter}` : "");
+
     router.push(route);
-  }, [categories, router, filter, web]);
+  }, [categories, router, filter, web, searchFilter]);
 
   const CheckBox = ({ checked, name }: { checked: boolean; name: string }) => (
     <div

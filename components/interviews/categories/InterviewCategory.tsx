@@ -16,9 +16,11 @@ import { cn } from "@/utils";
 const InterviewCategory = ({
   categories,
   search,
+  query,
 }: {
   categories: string[];
   search: Promise<any>;
+  query: string;
 }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
@@ -46,9 +48,9 @@ const InterviewCategory = ({
 
     const filtered = Object.keys(newObj).filter((k) => newObj[k]);
 
-    const searchParams = filtered.length > 0 ? `?tags=${filtered}` : "";
+    const searchParams = filtered.length > 0 ? `?tags=${filtered}` : "?";
 
-    router.push("interview" + searchParams);
+    router.push("interview" + searchParams + (query ? `&search=${query}` : ""));
   };
 
   return (

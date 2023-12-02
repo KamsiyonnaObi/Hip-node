@@ -7,7 +7,7 @@ import PodcastRender from "@/components/interviews/podcasts/PodcastRender";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { type: string; search: string };
 }) {
   return (
     <main className="page-formatting">
@@ -22,6 +22,7 @@ export default async function Home({
           }}
           web="podcast"
           filter="type"
+          searchFilter={searchParams.search}
         />
       </section>
       <section className="flex flex-col md:hidden">

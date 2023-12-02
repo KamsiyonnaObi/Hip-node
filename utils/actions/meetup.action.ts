@@ -75,7 +75,10 @@ export async function deleteMeetup(meetupId: number) {
   }
 }
 
-export async function getAllMeetups(params: any) {
+export async function getAllMeetups(params: {
+  jobType: string;
+  search: string;
+}) {
   const { jobType, search } = params;
   const jobArray = jobType ? jobType.split(",") : [];
 

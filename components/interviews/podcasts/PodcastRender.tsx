@@ -6,9 +6,9 @@ import Link from "next/link";
 const PodcastRender = async ({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { type: string; search: string };
 }) => {
-  const result = await getAllPodcasts(searchParams);
+  const result = await getAllPodcasts({ ...searchParams });
   return (
     <div className="flex flex-col gap-5 lg:w-[784px] lg:flex-row">
       <section className="flex flex-col gap-5">

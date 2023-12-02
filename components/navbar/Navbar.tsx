@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
@@ -22,8 +22,11 @@ const Navbar = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(
+    searchParams.get("search") || ""
+  );
   const {
     isOpen: menuExpanded,
     ref: menuRef,
@@ -43,17 +46,15 @@ const Navbar = ({
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
       const currentPath = pathname.split("/")[1];
-
-      if (searchText === "") {
-        router.push(currentPath);
-      } else {
-        const route = `/${currentPath}?search=${searchText}`;
-        setSearchText("");
-        router.push(route);
-      }
+      const paramsObject = Object.fromEntries(searchParams);
+      delete paramsObject.search;
+      const params = new URLSearchParams(paramsObject).toString();
+      const queryParams = params !== "" ? `?${params}` : "?";
+      const route = `/${currentPath}${queryParams}&search=${searchText}`;
+      router.push(route);
     }
   };
 
