@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 
 interface Props {
-  src: string | StaticImageData;
+  src: string | StaticImageData | undefined;
   alt: string;
   [key: string]: any;
 }

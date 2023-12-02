@@ -1,4 +1,13 @@
+/* eslint-disable */
+
 import mongoose, { ConnectOptions } from "mongoose";
+
+const post = require("@/models/post.model");
+const group = require("@/models/group.model");
+const interview = require("@/models/interview.model");
+const meeup = require("@/models/meetup.model");
+const podcast = require("@/models/podcast.model");
+const user = require("@/models/User");
 
 const connection: {
   [key: string]: any;

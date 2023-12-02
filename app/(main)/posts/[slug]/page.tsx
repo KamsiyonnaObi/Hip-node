@@ -10,8 +10,8 @@ import {
   OtherProfile,
 } from "@/components";
 import { getCurrentUser } from "@/utils/actions/user.action";
-import { countComments, hasUserReply } from "@/utils";
 import { reportReasons } from "@/lib/constants";
+import { IComments } from "@/models/post.model";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUser = await getCurrentUser();
@@ -35,10 +35,30 @@ const Page = async ({ params }: { params: { slug: string } }) => {
 
   const getMorePosts = await getPostsByUserId(userId?._id, postopen.data._id);
   const morePosts = getMorePosts.data;
-  const numComments = countComments(comments);
-  const hasCommented = hasUserReply({
+
+  const hasUserCommented = ({
     comments,
-    userId: JSON.stringify(currentUser?._id),
+    currentUserId,
+  }: {
+    comments: IComments[];
+    currentUserId?: string;
+  }) => {
+    if (!comments) {
+      return false;
+    }
+
+    for (const comment of comments) {
+      if (comment?.userId?.toString() === currentUserId) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const hasCommented = hasUserCommented({
+    comments,
+    currentUserId: currentUser?._id.toString(),
   });
 
   const hasReported = reportReasons.some((reason) => {
@@ -65,7 +85,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             hasShared={shares?.includes(currentUser?._id)}
             hasReported={hasReported}
             likes={likes?.length}
-            comments={numComments}
+            comments={comments?.length}
             shares={shares?.length}
             title={title}
             body={content}
@@ -99,7 +119,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           hasShared={shares?.includes(currentUser?._id)}
           hasReported={hasReported}
           likes={likes?.length}
-          comments={numComments}
+          comments={comments?.length}
           shares={shares?.length}
           title={title}
           body={content}
@@ -127,7 +147,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <OtherProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
-              currentUserId={currentUser?._id.toString()}
               hasFollowed={userId.followers?.includes(currentUser?._id)}
             />
           ))}{" "}

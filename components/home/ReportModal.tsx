@@ -11,13 +11,12 @@ interface Props {
   close: () => void;
 }
 
-const ReportModal = ({ postId, userId, close }: Props) => {
+const ReportModal = ({ postId, close }: Props) => {
   const [selectedReason, setSelectedReason] = useState("");
   const handleSubmitReport = async () => {
     close();
     await reportPost({
       postId,
-      userId,
       selectedReason,
     });
   };

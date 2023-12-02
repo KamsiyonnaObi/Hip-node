@@ -5,9 +5,9 @@ import MeetupCardBig from "./MeetupCardBig";
 const PodcastRender = async ({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { jobType: string; search: string };
 }) => {
-  const result = await getAllMeetups(searchParams);
+  const result = await getAllMeetups({ ...searchParams });
   return (
     <div className="flex flex-col gap-5">
       <section className="flex w-[335px] flex-col gap-5 md:w-[785px]">

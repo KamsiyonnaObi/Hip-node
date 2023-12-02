@@ -6,10 +6,10 @@ const PostRender = async ({
   searchParams,
   currentUserId,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { search: string };
   currentUserId: string;
 }) => {
-  const result = await getAllPosts(searchParams);
+  const result = await getAllPosts({ ...searchParams });
   return (
     <div className="flex flex-col gap-5">
       {result.posts.length > 0

@@ -15,3 +15,21 @@ export interface GetPostByIdParams {
 export interface DeletePostParams {
   postId: string;
 }
+
+export interface NewGroup {
+  title: string;
+  coverUrl: string;
+  groupUrl: string;
+  description: string;
+  admins: string;
+  members: string;
+}
+
+export interface UpdateGroup {
+  title: string;
+  coverUrl: string;
+  groupUrl: string;
+  description: string;
+  admins: string;
+  members: string;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
@@ -22,8 +22,11 @@ const Navbar = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(
+    searchParams.get("search") || ""
+  );
   const {
     isOpen: menuExpanded,
     ref: menuRef,
@@ -43,16 +46,15 @@ const Navbar = ({
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
       const currentPath = pathname.split("/")[1];
-      if (searchText === "") {
-        router.push(currentPath);
-      } else {
-        const route = `/${currentPath}?search=${searchText}`;
-        setSearchText("");
-        router.push(route);
-      }
+      const paramsObject = Object.fromEntries(searchParams);
+      delete paramsObject.search;
+      const params = new URLSearchParams(paramsObject).toString();
+      const queryParams = params !== "" ? `?${params}` : "?";
+      const route = `/${currentPath}${queryParams}&search=${searchText}`;
+      router.push(route);
     }
   };
 
@@ -91,7 +93,7 @@ const Navbar = ({
           </section>
           <div className="flex flex-row md:gap-5 md2:gap-[58px]">
             <Input
-              divClassName="hidden md:flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
+              divClassName="hidden md:flex w-auto lg:max-w-[29rem] md2:max-w-[24rem] md:max-w-[19rem] items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
