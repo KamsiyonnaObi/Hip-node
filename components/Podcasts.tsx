@@ -5,7 +5,10 @@ import { getAllPodcasts } from "@/utils/actions/podcast.action";
 import Link from "next/link";
 
 const Podcasts = async () => {
-  const result = await getAllPodcasts({});
+  const result = await getAllPodcasts({
+    type: "",
+    search: "",
+  });
   return (
     <article className="flex w-[325px] flex-col gap-[10px] rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2">
       <div className="gap-[20px]">
