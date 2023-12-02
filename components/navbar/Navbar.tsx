@@ -25,7 +25,7 @@ const Navbar = ({
   const searchParams = useSearchParams();
 
   const [searchText, setSearchText] = useState(
-    searchParams.get("search") || ""
+    searchParams?.get("search") || ""
   );
   const {
     isOpen: menuExpanded,
@@ -48,8 +48,8 @@ const Navbar = ({
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
-      const currentPath = pathname.split("/")[1];
-      const paramsObject = Object.fromEntries(searchParams);
+      const currentPath = pathname?.split("/")[1];
+      const paramsObject = searchParams ? Object.fromEntries(searchParams) : {};
       delete paramsObject.search;
       const params = new URLSearchParams(paramsObject).toString();
       const queryParams = params !== "" ? `?${params}` : "?";
@@ -142,14 +142,8 @@ const Navbar = ({
                         className="rounded-full object-fill"
                       />
                     </div>
-                    {menuExpanded && <Popup />}
+                    {menuExpanded && <Popup username={username} />}
                   </div>
-                  <p className="display-bold hidden self-center whitespace-nowrap text-secondary1 dark:text-background2 md:flex">
-                    {username}
-                  </p>
-                </div>
-                <div className="hidden md:flex">
-                  <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
                 </div>
               </section>
             </div>

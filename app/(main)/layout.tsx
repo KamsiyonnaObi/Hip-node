@@ -15,7 +15,7 @@ export default async function RootLayout({
   };
 
   const userData = {
-    username: user.username.substring(0, 10),
+    username: user.username,
     profileImage: user.profileImage,
   };
 

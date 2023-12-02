@@ -8,7 +8,7 @@ const NavbarLink = ({
   iconName,
 }: {
   path: string;
-  pathname: string;
+  pathname?: string | null;
   iconName: string;
 }) => {
   const DynamicIcon = FillIcon[iconName as keyof typeof FillIcon];
@@ -16,14 +16,14 @@ const NavbarLink = ({
     <Link href={path}>
       <Button
         className={`items-center gap-2.5 p-2.5 ${
-          pathname.startsWith(path)
+          pathname?.startsWith(path)
             ? "bg-primary"
             : "bg-secondary6  dark:bg-dark4"
         }`}
       >
         <DynamicIcon
           className={`${
-            pathname.startsWith(path)
+            pathname?.startsWith(path)
               ? "fill-background"
               : "fill-secondary4 dark:fill-secondary6"
           }`}
