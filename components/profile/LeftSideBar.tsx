@@ -20,7 +20,7 @@ export default async function LeftSideBar() {
             height="80"
           />
         </div>
-        <ProfileDetails profileData={profileData} />
+        <ProfileDetails JSONProfileData={JSON.stringify(profileData)} />
       </article>
     </section>
   );

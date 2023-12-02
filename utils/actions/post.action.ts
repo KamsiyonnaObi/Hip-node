@@ -18,7 +18,7 @@ export async function createPost(params: any) {
     const User = await UserModel.findOne({ email });
     const userId = User?._id;
 
-    const { title, content, image, tags, avatar, groupId } = params;
+    const { title, content, image, tags, groupId } = params;
 
     const post = await Post.create({
       title,
@@ -27,7 +27,6 @@ export async function createPost(params: any) {
       tags,
       userId,
       groupId,
-      avatar,
     });
 
     // return the postID, not the entire Post
@@ -83,17 +82,26 @@ export async function getPostsByUserId(
   }
 }
 
-// TODO, might not be needed (no edit functionality in figma)
 export async function updatePost(params: Partial<IPost>) {
   try {
     await dbConnect();
+    const { title, content, image, tags, groupId, postId } = params;
+    const post = await Post.findById(postId);
+
+    post.title = title;
+    post.content = content;
+    post.image = image;
+    post.tags = tags;
+    post.groupId = groupId;
+
+    await post.save();
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-export async function deletePost(postId: number) {
+export async function deletePost(postId: string) {
   try {
     await dbConnect();
     const deletedPost = await Post.findByIdAndDelete(postId);
@@ -249,23 +257,53 @@ export async function reportPost({
   }
 }
 
-export async function getPostByGroupId(groupId: string) {
+export async function getPostsByGroupId(id: string) {
   try {
     await dbConnect();
-    const posts = await Post.find({
-      groupId,
-    });
-    if (posts.length > 0) {
-      return { success: true, data: posts };
-    } else {
-      throw new Error("post not found.");
-    }
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      message: "An error occurred while retrieving the posts.",
-    };
+    const posts = await Post.find({ groupId: id })
+      .populate("userId")
+      .populate("tags")
+      .populate("views")
+      .populate("likes")
+      .populate("comments")
+      .populate("createdAt");
+    return posts;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getPostTagsByGroupId(id: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({ groupId: id });
+
+    const tags = posts.reduce((allTags, post) => {
+      allTags.push(...post.tags);
+      return allTags;
+    }, [] as string[]);
+
+    const tagCounts = tags.reduce(
+      (counts: { [key: string]: any }, tag: string) => {
+        counts[tag] = (counts[tag] || 0) + 1;
+        return counts;
+      },
+      {}
+    );
+
+    const tagsWithCount = Object.keys(tagCounts).map((tagName) => ({
+      name: tagName,
+      count: tagCounts[tagName],
+    }));
+
+    tagsWithCount.sort((a, b) => b.count - a.count);
+
+    const topTags = tagsWithCount.slice(0, 5);
+
+    return topTags;
+  } catch (e) {
+    console.error(e);
+    throw e;
   }
 }
 

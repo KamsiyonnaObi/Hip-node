@@ -43,7 +43,7 @@ export async function getInterview(InterviewId: string) {
     if (!interview) {
       notFound();
     }
-    return interview;
+    return interview as IInterview;
   } catch (error) {
     console.log(error);
     throw error;
@@ -91,13 +91,22 @@ export async function deleteInterview(InterviewId: string) {
   }
 }
 
-export async function getAllInterviews(params: any) {
+function convertTags(item: string | Array<String> | undefined) {
+  if (!item) return {};
+  if (typeof item === "string") return { tags: { $in: [...item.split(",")] } };
+  return { tags: { $in: [...item] } };
+}
+
+export async function getAllInterviews(
+  tags: string | Array<String> | undefined
+) {
   try {
     await dbConnect();
 
-    const interviews = await Interview.find({})
+    const interviews = await Interview.find(convertTags(tags))
       .populate("userId")
       .sort({ createdAt: -1 });
+
     return { interviews };
   } catch (error) {
     console.log(error);

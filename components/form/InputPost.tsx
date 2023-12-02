@@ -24,18 +24,26 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import PostCategory from "../home/PostCategory";
 import { CldUploadWidget } from "next-cloudinary";
-import { createPost } from "@/utils/actions/post.action";
+import { createPost, updatePost } from "@/utils/actions/post.action";
 import GroupCategory from "../group/GroupCategory";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-export function InputPost({ title }: { title: string }) {
+export function InputPost({
+  editDetail,
+  title,
+}: {
+  editDetail?: string;
+  title?: string;
+}) {
   const { theme } = useTheme();
 
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [coverUrl, setCoverUrl] = useState("");
+  const parsedDetail = editDetail && JSON.parse(editDetail || "");
+  const groupedTags = parsedDetail?.tags.map((tag: any) => tag);
 
+  const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
   const router = useRouter();
 
   const [expanded, setExpanded] = useState(0);
@@ -64,10 +72,10 @@ export function InputPost({ title }: { title: string }) {
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
     defaultValues: {
-      title,
-      contents: "",
-      tags: [],
-      groupId: "",
+      title: parsedDetail?.title || title || "",
+      contents: parsedDetail?.content || "",
+      tags: groupedTags || [],
+      groupId: parsedDetail?.groupId || "",
     },
   });
 
@@ -81,12 +89,19 @@ export function InputPost({ title }: { title: string }) {
         tags: values.tags,
         groupId: values.groupId,
         image: coverUrl,
-        avatar: "/Avatar.png",
       };
-      await createPost(postData);
+      if (editDetail) {
+        await updatePost({
+          ...postData,
+          postId: parsedDetail?._id,
+        });
+      } else {
+        await createPost(postData);
+      }
     } catch (error) {
     } finally {
       setIsSubmitting(false);
+      router.push("/");
     }
   };
 
@@ -241,7 +256,7 @@ export function InputPost({ title }: { title: string }) {
                     (editorRef.current = editor)
                   }
                   key={theme}
-                  initialValue="Tell your story..."
+                  initialValue={parsedDetail?.content || `Tell your story...`}
                   init={{
                     height: 376,
                     menubar: false,

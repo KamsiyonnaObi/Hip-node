@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { formatDistanceToNow } from "date-fns";
 
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -10,7 +11,7 @@ interface Props {
   tags: string[];
   avatar: string;
   username: string;
-  createdAt: string;
+  createdAt: Date;
   views: number;
   likes: number;
   comments: number;
@@ -27,8 +28,9 @@ const Post = ({
   likes,
   comments,
 }: Props) => {
+  const dateCreatedAt = formatDistanceToNow(createdAt, { addSuffix: true });
   return (
-    <article className="flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
+    <article className="mb-[1.25rem] flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
       <div className="flex flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -67,7 +69,13 @@ const Post = ({
           </div>
           <div className="flex flex-row gap-[10px]">
             <section className="hidden items-center justify-center rounded-full bg-purple10 sm:flex sm:h-[40px] sm:w-[40px]">
-              <Image src={avatar} alt="avatar" width={28} height={32} />
+              <Image
+                src={avatar}
+                alt="avatar"
+                width={28}
+                height={32}
+                className="m-auto h-[40px] w-[40px] rounded-full"
+              />
             </section>
             <section className="flex flex-row justify-between md:w-full lg:w-[521px]">
               <div className="hidden flex-col sm:flex">
@@ -78,7 +86,7 @@ const Post = ({
                   <OutlineIcon.Ellipse />
                 </div>
                 <p className="sm:text-sm-regular text-secondary3 dark:text-secondary5">
-                  {createdAt}
+                  {dateCreatedAt}
                 </p>
               </div>
               <div className="sm:text-sm-regular md:body-regular text-xs-regular flex flex-row items-center justify-center gap-[40px] text-secondary3 dark:text-secondary5">
