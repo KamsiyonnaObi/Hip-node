@@ -1,31 +1,36 @@
 import React from "react";
+import OutlineIcon from "../icons/OutlineIcon";
 
-interface Props {
+interface GroupTagProps {
   title: string;
-  icon: any;
+  count: number;
   className: string;
-  postNum: string;
   desc: string;
 }
 
-const Tag = ({ title, icon, className, postNum, desc }: Props) => {
+const GroupTag: React.FC<GroupTagProps> = ({
+  title,
+  count,
+  className,
+  desc,
+}) => {
   return (
     <article className="flex flex-row items-center gap-[10px] rounded-[6px] ">
       <section
         className={`flex h-[32px] w-[32px] items-center justify-center gap-[10px] rounded-[6px] p-[6px] ${className}`}
       >
-        {icon}
+        <OutlineIcon.Bitcoin />
       </section>
       <section className="flex flex-col gap-[1px] py-1">
         <p className="caption-semibold text-secondary4 dark:text-background2">
           #{title}
         </p>
         <p className="text-sm-regular text-secondary4 dark:text-secondary3">
-          {postNum} {desc}
+          {count} {desc}
         </p>
       </section>
     </article>
   );
 };
 
-export default Tag;
+export default GroupTag;

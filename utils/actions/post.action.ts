@@ -264,23 +264,53 @@ export async function reportPost({
   }
 }
 
-export async function getPostByGroupId(groupId: string) {
+export async function getPostsByGroupId(id: string) {
   try {
     await dbConnect();
-    const posts = await Post.find({
-      groupId,
-    });
-    if (posts.length > 0) {
-      return { success: true, data: posts };
-    } else {
-      throw new Error("post not found.");
-    }
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      message: "An error occurred while retrieving the posts.",
-    };
+    const posts = await Post.find({ groupId: id })
+      .populate("userId")
+      .populate("tags")
+      .populate("views")
+      .populate("likes")
+      .populate("comments")
+      .populate("createdAt");
+    return posts;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getPostTagsByGroupId(id: string) {
+  try {
+    await dbConnect();
+    const posts = await Post.find({ groupId: id });
+
+    const tags = posts.reduce((allTags, post) => {
+      allTags.push(...post.tags);
+      return allTags;
+    }, [] as string[]);
+
+    const tagCounts = tags.reduce(
+      (counts: { [key: string]: any }, tag: string) => {
+        counts[tag] = (counts[tag] || 0) + 1;
+        return counts;
+      },
+      {}
+    );
+
+    const tagsWithCount = Object.keys(tagCounts).map((tagName) => ({
+      name: tagName,
+      count: tagCounts[tagName],
+    }));
+
+    tagsWithCount.sort((a, b) => b.count - a.count);
+
+    const topTags = tagsWithCount.slice(0, 5);
+
+    return topTags;
+  } catch (e) {
+    console.error(e);
+    throw e;
   }
 }
 

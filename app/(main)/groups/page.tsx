@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  Podcasts,
-  PostGroup,
-  GroupName,
-  Meetups,
-  CreateGroup,
-} from "@/components/group";
+import { PostGroup, GroupName, CreateGroup } from "@/components/group";
 import { getAllGroups } from "@/utils/actions/group.action";
+import Podcasts from "@/components/Podcasts";
+import Meetups from "@/components/home/Meetups";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);
@@ -17,6 +13,7 @@ const page = async ({ params }: { params: string }) => {
     post: group.post,
   }));
   const numberOfColumns = 3;
+
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
