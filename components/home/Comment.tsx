@@ -92,6 +92,7 @@ const Comment = ({
           <button disabled={isPending} onClick={handleLike}>
             <FillIcon.Heart
               className={clsx({
+                "opacity-90": isPending,
                 "fill-red80": isLiked,
                 "fill-secondary3": !isLiked,
               })}
