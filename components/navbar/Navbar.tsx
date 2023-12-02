@@ -93,7 +93,7 @@ const Navbar = ({
           </section>
           <div className="flex flex-row md:gap-5 md2:gap-[58px]">
             <Input
-              divClassName="hidden md:flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
+              divClassName="hidden md:flex w-auto lg:max-w-[29rem] md2:max-w-[24rem] md:max-w-[19rem] items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
