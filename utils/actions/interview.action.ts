@@ -93,10 +93,7 @@ export async function deleteInterview(InterviewId: string) {
   }
 }
 
-export async function getAllInterviews(params: {
-  tags: string;
-  search: string;
-}) {
+export async function getAllInterviews(params: any) {
   const { tags, search } = params;
   const tagArray = tags ? tags.split(",") : [];
   try {

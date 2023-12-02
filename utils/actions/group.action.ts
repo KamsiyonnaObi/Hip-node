@@ -194,3 +194,20 @@ export async function findAllGroups() {
     return "[]";
   }
 }
+
+export async function getNewestGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({})
+      .sort({ createdAt: -1 })
+      .populate("userId");
+
+    return JSON.stringify(groups);
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the group.",
+    };
+  }
+}
