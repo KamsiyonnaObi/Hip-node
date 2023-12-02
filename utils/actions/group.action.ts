@@ -7,24 +7,7 @@ import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 import { FilterQuery } from "mongoose";
-
-interface NewGroup {
-  title: string;
-  coverUrl: string;
-  groupUrl: string;
-  description: string;
-  admins: string;
-  members: string;
-}
-
-interface UpdateGroup {
-  title: string;
-  coverUrl: string;
-  groupUrl: string;
-  description: string;
-  admins: string;
-  members: string;
-}
+import { NewGroup, UpdateGroup } from "./shared.types";
 
 export async function createGroup(params: NewGroup) {
   try {
@@ -169,14 +152,19 @@ export async function getAllGroups(params: string) {
         { desc: { $regex: search, $options: "i" } },
       ];
     }
-    const groups = await Group.find(query).populate("userId");
+    const [groups, postsResults] = await Promise.all([
+      Group.find(query).populate("userId"),
+      Promise.all(
+        (await Group.find(query)).map((group) =>
+          Post.find({ groupId: group._id })
+        )
+      ),
+    ]);
 
-    const fetchPostPromises = groups.map(async (group) => {
-      const posts = await Post.find({ groupId: group._id });
-      return { ...group._doc, posts };
-    });
-
-    const returnGroups = await Promise.all(fetchPostPromises);
+    const returnGroups = groups.map((group, index) => ({
+      ...group._doc,
+      post: postsResults[index],
+    }));
 
     return { groups: returnGroups };
   } catch (error) {
