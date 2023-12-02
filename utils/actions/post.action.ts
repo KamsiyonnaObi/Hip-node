@@ -112,7 +112,7 @@ export async function deletePost(postId: string) {
   }
 }
 
-export async function getAllPosts(params: string) {
+export async function getAllPosts(params: any) {
   const { search } = params;
   try {
     await dbConnect();
