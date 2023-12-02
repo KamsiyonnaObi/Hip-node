@@ -1,8 +1,7 @@
 "use server";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
-import User from "@/models/User";
-import mongoose, { ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 export async function newUser(user: FormData) {
@@ -64,15 +63,21 @@ export async function getUserProfile(email: string | null | undefined) {
 
 export async function followAuthor({
   userId,
-  currentUserId,
   hasFollowed,
 }: {
   userId: ObjectId;
-  currentUserId: ObjectId;
   hasFollowed: boolean;
 }) {
   try {
     dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const currentUserId = User?._id;
+    if (!currentUserId) {
+      throw new Error("Current user ID is undefined");
+    }
+
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };
@@ -80,7 +85,7 @@ export async function followAuthor({
       updateQuery = { $addToSet: { followers: currentUserId } };
     }
 
-    const user = await User.findByIdAndUpdate(userId, updateQuery, {
+    const user = await UserModel?.findByIdAndUpdate(userId, updateQuery, {
       new: true,
     });
     const followedStatus = user?.followers.includes(currentUserId);

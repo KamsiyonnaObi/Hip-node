@@ -147,7 +147,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             <OtherProfile
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
-              currentUserId={currentUser?._id.toString()}
               hasFollowed={userId.followers?.includes(currentUser?._id)}
             />
           ))}{" "}
