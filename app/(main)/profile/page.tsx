@@ -14,8 +14,8 @@ export default async function Profile() {
   const dateOfBirth = new Date(1990, 4, 7);
 
   return (
-    <main className="xs:max-w-[320px] mx-auto mt-5 flex w-full max-w-[335px] justify-center sm:max-w-[550px] md:max-w-[500px] xl:max-w-[1100px] lg:max-w-[950px]">
-      <div className="grid grid-cols-1 gap-[1.25rem] md:grid-cols-[30%_auto] lg:grid-cols-[auto_52%_auto]">
+    <main className="">
+      <div className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[auto_52%_auto]">
         {/* Profile */}
         <section className="md:col-start-1 md:row-span-2 md:row-start-1">
           <LeftSideBar profileData={data} />
@@ -32,7 +32,7 @@ export default async function Profile() {
           <section className="">
             <Frame />
           </section>
-          <section className="flex w-fit flex-col gap-[1.25rem] max-md:overflow-hidden">
+          <section className="flex flex-col gap-[1.25rem] max-md:overflow-hidden">
             <div>
               <Post
                 postImage={""}
@@ -45,6 +45,8 @@ export default async function Profile() {
                 likes={0}
                 comments={0}
                 _id={""}
+                showEdit={undefined}
+                hasLiked={false}
               />
             </div>
           </section>
@@ -62,7 +64,6 @@ export default async function Profile() {
           </div>
         </section>
       </div>
-      {/* xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px] */}
     </main>
   );
 }
