@@ -3,22 +3,16 @@ import Post from "@/components/home/Post";
 import LeftSideBar from "@/components/profile/LeftSideBar";
 
 import React from "react";
-import { getServerSession } from "next-auth/next";
-
-import { getUserProfile } from "@/utils/actions/user.action";
 
 export default async function Profile() {
-  const session = await getServerSession();
-
-  const data = await getUserProfile(session?.user?.email);
   const dateOfBirth = new Date(1990, 4, 7);
 
   return (
     <main className="">
-      <div className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[auto_52%_auto]">
+      <div className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[15%_56%_auto]">
         {/* Profile */}
         <section className="md:col-start-1 md:row-span-2 md:row-start-1">
-          <LeftSideBar profileData={data} />
+          <LeftSideBar />
         </section>
         {/* Start Your interview */}
         <section className="md:col-start-2 md:row-span-1 lg:col-start-3">
@@ -36,13 +30,13 @@ export default async function Profile() {
             <div>
               <Post
                 postImage={""}
-                title={""}
-                tags={[]}
+                title={"The New Tech Solution"}
+                tags={["profile"]}
                 avatar={""}
-                username={""}
+                username={"Austin"}
                 createdAt={dateOfBirth}
-                views={0}
-                likes={0}
+                views={100}
+                likes={2}
                 comments={0}
                 _id={""}
                 showEdit={undefined}
