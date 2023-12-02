@@ -41,7 +41,7 @@ const Comment = ({
 }: CommentProps) => {
   const formattedDate = format(new Date(createdAt ?? new Date()), "MMM dd");
   const [isLiked, setIsLiked] = useState(hasLiked || false);
-  const [showComment, setShowComment] = useState(false);
+  const [showInput, setShowInput] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const handleLike = async () => {
@@ -97,17 +97,17 @@ const Comment = ({
               })}
             />
           </button>
-          <button onClick={() => setShowComment(!showComment)}>
+          <button onClick={() => setShowInput(!showInput)}>
             <FillIcon.Reply className="h-5 w-5 fill-secondary3" />
           </button>
         </div>
-        {showComment && (
+        {showInput && (
           <ChatInput
             postId={postId}
             commentId={commentId}
             parentId={parentId}
             currentUserImage={currentUserImage}
-            setShowComment={setShowComment}
+            setShowInput={setShowInput}
           />
         )}
       </section>

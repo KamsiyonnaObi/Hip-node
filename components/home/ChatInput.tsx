@@ -15,13 +15,13 @@ const ChatInput = ({
   commentId,
   parentId,
   currentUserImage,
-  setShowComment,
+  setShowInput = () => {},
 }: {
   postId: string;
   commentId?: string;
   parentId?: string;
   currentUserImage?: string;
-  setShowComment: (state: boolean) => void;
+  setShowInput?: (state: boolean) => void;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { theme } = useTheme();
@@ -40,9 +40,8 @@ const ChatInput = ({
     });
 
     setInputValue("");
-    setTimeout(() => setShowComment(false), 500);
+    setTimeout(() => setShowInput(false), 500);
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
