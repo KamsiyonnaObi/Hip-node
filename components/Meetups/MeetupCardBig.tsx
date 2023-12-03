@@ -25,7 +25,7 @@ const MeetupCardBig = ({
   _id,
 }: Props) => {
   return (
-    <article className="w-[335px] rounded-[16px] bg-background p-[14px] dark:bg-dark3 md:w-[785px] md:gap-[10px] md:p-5">
+    <article className="w-full rounded-[16px] bg-background p-[14px] dark:bg-dark3  md:gap-[10px] md:p-5">
       <div className="flex flex-col gap-[16px] md:gap-[25px]">
         <section className="flex flex-row justify-between md:w-[745px]">
           <div className="flex flex-row gap-5">
@@ -34,7 +34,7 @@ const MeetupCardBig = ({
               alt="meetup"
               width={92}
               height={92}
-              className=" h-[48px] w-[48px] rounded-[6px]  shadow-meetup-card md:h-[72px] md:w-[72px]"
+              className=" h-[48px] w-[48px] rounded-[6px] shadow-meetup-card md:h-[72px] md:w-[72px]"
             />
             <div className="flex flex-col justify-center gap-1 md:gap-2">
               <h3 className="md:h3-semibold caption-semibold w-[177px] text-secondary2 dark:text-background2 md:w-full">
@@ -45,7 +45,7 @@ const MeetupCardBig = ({
               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-center rounded-[6px] border-[1px] border-secondary5 bg-background px-4 py-[5px] text-center shadow-md dark:border-dark3 dark:bg-dark4 md:h-[72px] md:w-[59px]">
+          <div className="flex flex-col items-center justify-center rounded-[6px] border-[1px] border-secondary5 bg-background px-4 py-[5px] text-center shadow-md dark:border-dark3 dark:bg-dark4 md:h-[72px] md:w-[59px]">
             <p className="md:body-semibold caption-semibold">{month}</p>
             <h1 className="display-semibold md:h1-bold text-blue80">{day}</h1>
           </div>

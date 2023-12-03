@@ -10,8 +10,8 @@ export default async function Meetup({
   searchParams: { jobType: string; search: string };
 }) {
   return (
-    <main className="page-formatting">
-      <section className="flex flex-col md:gap-5">
+    <main className="mx-auto mt-2.5 flex w-full max-w-[1440px] flex-col gap-5 px-5 sm:px-10 md:mt-5 md:flex-row">
+      <section>
         <Categories
           title="Categories"
           categoryList={{
