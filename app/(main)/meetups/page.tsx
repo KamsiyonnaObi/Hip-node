@@ -27,7 +27,7 @@ export default async function Meetup({
           searchFilter={searchParams.search}
         />
       </section>
-      <section className="order-3 md:order-2">
+      <section className="order-3 w-full md:order-2">
         <Suspense
           key={JSON.stringify(searchParams)}
           fallback={
