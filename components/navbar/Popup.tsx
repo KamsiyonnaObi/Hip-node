@@ -7,9 +7,9 @@ const Popup = ({ username }: { username: string }) => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <div className="fixed mr-[220px] mt-[300px] flex aspect-square h-[260px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mr-0 md:mt-[320px]">
+    <div className="md:mr-30 fixed mr-[220px] mt-[300px] flex aspect-square h-[260px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mt-[320px]">
       {/* nub */}
-      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[610%]">
+      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[1150%]">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
       <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
