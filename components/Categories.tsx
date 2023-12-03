@@ -57,9 +57,9 @@ const Categories = ({
       </p>
 
       {checked ? (
-        <OutlineIcon.Checkmark className="fill-none stroke-background" />
+        <OutlineIcon.Checkmark className="cursor-pointer fill-none stroke-background" />
       ) : (
-        <OutlineIcon.Uncheck className="fill-none" />
+        <OutlineIcon.Uncheck className="cursor-pointer fill-none " />
       )}
     </div>
   );
@@ -68,7 +68,7 @@ const Categories = ({
     <article className="gap-5 rounded-[16px] bg-background p-5 dark:bg-dark3 dark:text-background md:max-w-[210px] md:gap-3">
       <div className="flex flex-row justify-between">
         <h3 className="h3-semibold ">{title}</h3>
-        <OutlineIcon.DownArrow className="mr-[2px] fill-secondary6 dark:fill-secondary3" />
+        <OutlineIcon.DownArrow className="mr-[2px] cursor-pointer fill-secondary6 dark:fill-secondary3" />
       </div>
       {Object.entries(categories).map(([category, checked], index) => (
         <CheckBox key={index} checked={checked} name={category} />
