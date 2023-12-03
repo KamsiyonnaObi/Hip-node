@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "../ui/Button";
 import Link from "next/link";
+import { ShadButton } from "../ui/ShadButton";
 
 interface Props {
   title: string;
@@ -11,25 +11,22 @@ interface Props {
 
 const HostCard = ({ title, desc, buttonText, buttonLink }: Props) => {
   return (
-    <article className="flex w-full flex-col gap-2.5 rounded-[16px] bg-[#FF7C4D] bg-[url('https://i.ibb.co/ch6kNrt/Host-Meetup.png')] p-5 text-background md:w-[335px]">
-      <div className="flex flex-col gap-5">
-        <section className="flex flex-col gap-[6px]">
-          <h3 className="h3-semibold">{title}</h3>
-          <p className="caption-regular line-clamp-2">{desc}</p>
-        </section>
-        <section className="flex flex-row gap-[21px]">
-          <Button className="body-semibold rounded-[6px] bg-red60 px-4 py-[9px]">
+    <article className="bg-[url('https://i.ibb.co/ch6kNrt/Host-Meetup.png') flex w-full items-center justify-between rounded-2xl bg-[#FF7C4D] p-5  text-white">
+      <div className="flex max-w-[325px] flex-col gap-5">
+        <div className="flex flex-col gap-2">
+          <p className="text-lg font-semibold">{title}</p>
+          <small className="text-xs">{desc}</small>
+        </div>
+        <div className="flex justify-between">
+          <ShadButton className="bg-red60 text-red10">
             Code of Conduct
-          </Button>
+          </ShadButton>
           <Link href={`${buttonLink}`}>
-            <Button
-              color="white"
-              className="body-semibold w-[132px] justify-center rounded-[6px] py-[9px] text-red80 "
-            >
+            <ShadButton className="bg-white text-red80 hover:text-white">
               {buttonText}
-            </Button>
+            </ShadButton>
           </Link>
-        </section>
+        </div>
       </div>
     </article>
   );
