@@ -1,6 +1,6 @@
 import React from "react";
 import { PostGroup, GroupName, CreateGroup } from "@/components/group";
-import { getAllGroups } from "@/utils/actions/group.action";
+import { getAllGroups, getNewestGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 
@@ -14,11 +14,12 @@ const page = async ({ params }: { params: string }) => {
   }));
   const numberOfColumns = 3;
 
+  const newGroups = await getNewestGroups();
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
         <div>
-          <GroupName />
+          <GroupName newGroups={newGroups} />
         </div>
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">

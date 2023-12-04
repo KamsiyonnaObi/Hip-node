@@ -4,7 +4,7 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunched from "./NewlyLaunched";
 
-const NewlyLaunchedButton = () => {
+const NewlyLaunchedButton = ({ newGroups }: { newGroups: any }) => {
   const [isNewlyLaunched, setNewlyLaunched] = useState(false);
 
   return (
@@ -36,7 +36,13 @@ const NewlyLaunchedButton = () => {
         </div>
       </div>
       {/* Dropdown */}
-      {isNewlyLaunched && <NewlyLaunched />}
+      {isNewlyLaunched && (
+        <NewlyLaunched
+          title={newGroups.title}
+          description={newGroups.description}
+          groupUrl={newGroups.groupUrl}
+        />
+      )}
     </div>
   );
 };

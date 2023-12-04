@@ -11,7 +11,7 @@ import {
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
-const GroupName = () => {
+const GroupName = ({ newGroups }: { newGroups: any }) => {
   const [isDropDown, setDropDown] = useState(false);
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
@@ -49,7 +49,7 @@ const GroupName = () => {
         {/* Dropdown */}
         {isDropDown && <FastestGrowing />}
         {isDropDown && <MostPopularButton />}
-        {isDropDown && <NewlyLaunchedButton />}
+        {isDropDown && <NewlyLaunchedButton newGroups={newGroups} />}
       </section>
       <section>
         <div className="hidden md:flex md:flex-col">
@@ -129,7 +129,11 @@ const GroupName = () => {
               <div className="my-auto flex md:hidden"></div>
             </div>
           </div>
-          <NewlyLaunched />
+          <NewlyLaunched
+            title={newGroups.title}
+            description={newGroups.description}
+            groupUrl={newGroups.groupUrl}
+          />
           <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
             <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
               <p className="text-xs-semibold text-purple">See all</p>
