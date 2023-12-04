@@ -3,7 +3,7 @@ import React from "react";
 
 const NewlyLaunched = () => {
   return (
-    <div className="md:hidden">
+    <section>
       <div className="bg-white px-[.62rem] dark:bg-dark3">
         <div className="flex gap-[.5rem] p-[.62rem]">
           <div className="my-auto">
@@ -57,7 +57,7 @@ const NewlyLaunched = () => {
           <p className="text-xs-semibold text-purple">See all</p>
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -201,8 +201,7 @@ export async function getNewestGroups() {
     const groups = await Group.find({})
       .sort({ createdAt: -1 })
       .populate("userId");
-
-    return JSON.stringify(groups);
+    return groups;
   } catch (error) {
     console.log(error);
     return {
