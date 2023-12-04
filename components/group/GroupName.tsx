@@ -51,7 +51,9 @@ const GroupName = ({ stringifiedGroups }: { stringifiedGroups: any }) => {
         {/* Dropdown */}
         {isDropDown && <FastestGrowing />}
         {isDropDown && <MostPopularButton />}
-        {isDropDown && <NewlyLaunchedButton newGroups={newGroups} />}
+        {isDropDown && (
+          <NewlyLaunchedButton stringifiedGroups={stringifiedGroups} />
+        )}
       </section>
       <section>
         <div className="hidden md:flex md:flex-col">
@@ -131,11 +133,8 @@ const GroupName = ({ stringifiedGroups }: { stringifiedGroups: any }) => {
               <div className="my-auto flex md:hidden"></div>
             </div>
           </div>
-          <NewlyLaunched
-            title={newGroups.title}
-            description={newGroups.description}
-            groupUrl={newGroups.groupUrl}
-          />
+          <NewlyLaunched groups={newGroups} />
+
           <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
             <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
               <p className="text-xs-semibold text-purple">See all</p>

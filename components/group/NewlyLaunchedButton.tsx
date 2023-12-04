@@ -4,8 +4,13 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunched from "./NewlyLaunched";
 
-const NewlyLaunchedButton = ({ newGroups }: { newGroups: any }) => {
+const NewlyLaunchedButton = ({
+  stringifiedGroups,
+}: {
+  stringifiedGroups: any[];
+}) => {
   const [isNewlyLaunched, setNewlyLaunched] = useState(false);
+  const newGroups = JSON.parse(stringifiedGroups);
 
   return (
     <div>
@@ -36,13 +41,7 @@ const NewlyLaunchedButton = ({ newGroups }: { newGroups: any }) => {
         </div>
       </div>
       {/* Dropdown */}
-      {isNewlyLaunched && (
-        <NewlyLaunched
-          title={newGroups.title}
-          description={newGroups.description}
-          groupUrl={newGroups.groupUrl}
-        />
-      )}
+      {isNewlyLaunched && <NewlyLaunched groups={newGroups} />}
     </div>
   );
 };
