@@ -36,7 +36,7 @@ const NewlyLaunchedButton = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       {/* Dropdown */}
-      {isNewlyLaunched && <NewlyLaunched groups={newGroups} />}
+      {isNewlyLaunched && children}
     </div>
   );
 };
