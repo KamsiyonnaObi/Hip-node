@@ -4,13 +4,8 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunched from "./NewlyLaunched";
 
-const NewlyLaunchedButton = ({
-  stringifiedGroups,
-}: {
-  stringifiedGroups: string;
-}) => {
+const NewlyLaunchedButton = ({ children }: { children: React.ReactNode }) => {
   const [isNewlyLaunched, setNewlyLaunched] = useState(false);
-  const newGroups = JSON.parse(stringifiedGroups);
 
   return (
     <div>
