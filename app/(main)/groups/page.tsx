@@ -1,8 +1,10 @@
 import React from "react";
-import { PostGroup, GroupName, CreateGroup } from "@/components/group";
-import { getAllGroups, getNewestGroups } from "@/utils/actions/group.action";
+import { PostGroup, CreateGroup, NewlyLaunched } from "@/components/group";
+import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
+import GroupDropdown from "@/components/group/GroupDropdown";
+import FillIcon from "@/components/icons/FillIcon";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);
@@ -14,14 +16,22 @@ const page = async ({ params }: { params: string }) => {
   }));
   const numberOfColumns = 3;
 
-  const newGroups = await getNewestGroups();
-  const stringifiedGroups = JSON.stringify(newGroups);
-
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
         <div>
-          <GroupName />
+          <GroupDropdown
+            name={"Newly Launched"}
+            icon={<FillIcon.Growing className="fill-black" />}
+          >
+            <NewlyLaunched />
+          </GroupDropdown>
+          <GroupDropdown
+            name={"Newly Launched"}
+            icon={<FillIcon.Growing className="fill-black" />}
+          >
+            <NewlyLaunched />
+          </GroupDropdown>
         </div>
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">

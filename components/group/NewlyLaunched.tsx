@@ -1,18 +1,12 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
+import { getNewestGroups } from "@/utils/actions/group.action";
 
-interface Group {
-  _id: string;
-  groupUrl: string;
-  title: string;
-  description: string;
-  // Add other properties as needed
-}
-
-const NewlyLaunched = ({ groups }: { groups: Group[] }) => {
+const NewlyLaunched = async () => {
+  const { groups } = await getNewestGroups();
   return (
     <section>
-      {groups.slice(0, 3).map((group) => (
+      {groups?.slice(0, 3).map((group) => (
         <div key={group._id} className="bg-white px-[.62rem] dark:bg-dark3">
           <div className="flex w-full gap-[.5rem] p-[.62rem]">
             <div className="my-auto w-[20%]">

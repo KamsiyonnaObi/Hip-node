@@ -201,12 +201,13 @@ export async function getNewestGroups() {
     const groups = await Group.find({})
       .sort({ createdAt: -1 })
       .populate("userId");
-    return groups;
+    return { success: true, groups };
   } catch (error) {
     console.log(error);
+
     return {
       success: false,
-      message: "An error occurred while retrieving the group.",
+      groups: [],
     };
   }
 }
