@@ -211,3 +211,19 @@ export async function getNewestGroups() {
     };
   }
 }
+
+export async function getMostPopularGroups() {
+  try {
+    await dbConnect();
+    const groups = await Group.find({})
+      .sort({ members: -1, title: 1 })
+      .populate("userId");
+    return groups;
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the group.",
+    };
+  }
+}

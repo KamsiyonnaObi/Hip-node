@@ -1,7 +1,7 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 
-const MostPopular = () => {
+const MostPopular = ({ popularGroups }: { popularGroups: string[] }) => {
   return (
     <div className="md:hidden">
       <div className="bg-white px-[.62rem] dark:bg-dark3">
@@ -11,7 +11,7 @@ const MostPopular = () => {
           </div>
           <div className="flex-col">
             <h3 className="caption-semibold text-secondary2 dark:text-background2">
-              Looking to Partner Up
+              {popularGroups.title}
             </h3>
             <p className="text-sm-regular text-secondary3">
               Share how to succed and w...

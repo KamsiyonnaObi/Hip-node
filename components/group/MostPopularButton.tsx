@@ -4,9 +4,15 @@ import React, { useState } from "react";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import MostPopular from "./MostPopular";
+import { parse } from "date-fns";
 
-const MostPopularButton = () => {
+const MostPopularButton = ({
+  stringifiedPopGroups,
+}: {
+  stringifiedPopGroups: string[];
+}) => {
   const [isMostPopular, setMostPopular] = useState(false);
+  const popularGroups = JSON.parse(stringifiedPopGroups);
 
   return (
     <div>
@@ -37,7 +43,7 @@ const MostPopularButton = () => {
         </div>
       </div>
       {/* Dropdown */}
-      {isMostPopular && <MostPopular />}
+      {isMostPopular && <MostPopular popularGroups={popularGroups} />}
     </div>
   );
 };

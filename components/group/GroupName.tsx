@@ -7,8 +7,13 @@ import { MostPopularButton, FastestGrowing } from "@/components/group";
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
-const GroupName = () => {
+const GroupName = ({
+  stringifiedPopGroups,
+}: {
+  stringifiedPopGroups: string;
+}) => {
   const [isDropDown, setDropDown] = useState(false);
+  const popularGroups = JSON.parse(stringifiedPopGroups);
 
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
@@ -45,7 +50,9 @@ const GroupName = () => {
         </div>
         {/* Dropdown */}
         {isDropDown && <FastestGrowing />}
-        {isDropDown && <MostPopularButton />}
+        {isDropDown && (
+          <MostPopularButton stringifiedPopGroup={stringifiedPopGroup} />
+        )}
         {isDropDown && <NewlyLaunchedButton />}
       </section>
       <section>
