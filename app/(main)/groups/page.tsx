@@ -15,11 +15,13 @@ const page = async ({ params }: { params: string }) => {
   const numberOfColumns = 3;
 
   const newGroups = await getNewestGroups();
+  const stringifiedGroups = JSON.stringify(newGroups);
+
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
         <div>
-          <GroupName newGroups={newGroups} />
+          <GroupName stringifiedGroups={stringifiedGroups} />
         </div>
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
