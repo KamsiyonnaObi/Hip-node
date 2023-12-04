@@ -13,7 +13,6 @@ import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
 const GroupName = () => {
   const [isDropDown, setDropDown] = useState(false);
-  const newGroups = JSON.parse(stringifiedGroups);
 
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
