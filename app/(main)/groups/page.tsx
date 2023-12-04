@@ -21,7 +21,7 @@ const page = async ({ params }: { params: string }) => {
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
         <div>
-          <GroupName stringifiedGroups={stringifiedGroups} />
+          <GroupName />
         </div>
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
