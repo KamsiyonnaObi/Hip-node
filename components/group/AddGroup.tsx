@@ -167,7 +167,7 @@ const AddGroup: React.FC = () => {
             </p>
           )}
         </section>
-        <section className="flex flex-col gap-[.62rem]">
+        <section className="my-[1.25rem] flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
             Description
           </label>
@@ -197,7 +197,7 @@ const AddGroup: React.FC = () => {
             </p>
           )}
         </section>
-        <section className="flex flex-col gap-[.62rem]">
+        <section className="my-[1.25rem] flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
             Add members
           </label>
@@ -217,8 +217,8 @@ const AddGroup: React.FC = () => {
           >
             Create
           </button>
-          <Link href="/groups">
-            <button className="body-semibold my-auto flex items-center text-secondary3">
+          <Link href="/groups" className="my-auto flex">
+            <button className="body-semibold flex items-center justify-center text-secondary3">
               Cancel
             </button>
           </Link>
