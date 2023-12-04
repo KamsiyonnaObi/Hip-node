@@ -16,7 +16,7 @@ const GroupDropDown = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-72">
+    <div className="w-[20.938rem] sm:w-[37rem] md:w-[13.4em]">
       <div className="flex h-[5rem] w-full shrink-0 gap-[.625rem] bg-background p-[.63rem] dark:bg-dark3">
         <div className="flex h-[3.75rem] w-full shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
           <div className="flex-col">
@@ -32,7 +32,7 @@ const GroupDropDown = ({
               </p>
             </div>
           </div>
-          <div className="my-auto sm:hidden">
+          <div className="my-auto md:hidden">
             <button onClick={() => setIsOpen((prev) => !prev)}>
               {!isOpen ? (
                 <OutlineIcon.DownArrow2 />
@@ -44,9 +44,9 @@ const GroupDropDown = ({
         </div>
       </div>
       {/* Dropdown */}
-      {isOpen && <div className="sm:hidden">{children}</div>}
+      {isOpen && <div className="md:hidden">{children}</div>}
 
-      <div className="max-sm:hidden">{children}</div>
+      <div className="max-md:hidden">{children}</div>
     </div>
   );
 };

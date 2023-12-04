@@ -26,12 +26,6 @@ const page = async ({ params }: { params: string }) => {
           >
             <NewlyLaunched />
           </GroupDropdown>
-          <GroupDropdown
-            name={"Newly Launched"}
-            icon={<FillIcon.Growing className="fill-black" />}
-          >
-            <NewlyLaunched />
-          </GroupDropdown>
         </div>
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
