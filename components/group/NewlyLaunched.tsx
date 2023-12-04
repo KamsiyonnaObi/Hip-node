@@ -1,7 +1,15 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 
-const NewlyLaunched = ({ groups }: { groups: any[] }) => {
+interface Group {
+  _id: string;
+  groupUrl: string;
+  title: string;
+  description: string;
+  // Add other properties as needed
+}
+
+const NewlyLaunched = ({ groups }: { groups: Group[] }) => {
   return (
     <section>
       {groups.slice(0, 3).map((group) => (
