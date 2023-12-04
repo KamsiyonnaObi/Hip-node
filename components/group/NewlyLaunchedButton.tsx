@@ -7,7 +7,7 @@ import NewlyLaunched from "./NewlyLaunched";
 const NewlyLaunchedButton = ({
   stringifiedGroups,
 }: {
-  stringifiedGroups: any[];
+  stringifiedGroups: string;
 }) => {
   const [isNewlyLaunched, setNewlyLaunched] = useState(false);
   const newGroups = JSON.parse(stringifiedGroups);
