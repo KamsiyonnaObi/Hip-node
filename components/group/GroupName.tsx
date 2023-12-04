@@ -52,7 +52,7 @@ const GroupName = () => {
         {isDropDown && <FastestGrowing />}
         {isDropDown && <MostPopularButton />}
         {isDropDown && (
-          <NewlyLaunchedButton stringifiedGroups={stringifiedGroups} />
+          <NewlyLaunchedButton/>
         )}
       </section>
       <section>
