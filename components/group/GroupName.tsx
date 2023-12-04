@@ -11,7 +11,7 @@ import {
 import OutlineIcon from "../icons/OutlineIcon";
 import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
-const GroupName = ({ stringifiedGroups }: { stringifiedGroups: string }) => {
+const GroupName = () => {
   const [isDropDown, setDropDown] = useState(false);
   const newGroups = JSON.parse(stringifiedGroups);
 
