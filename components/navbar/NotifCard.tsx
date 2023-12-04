@@ -34,7 +34,7 @@ const NotifCard = ({ type, avatar, name, comment, title, postedAt }: Props) => {
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="body-semibold md:h2-bold">
-          {name}{" "}
+          {name}
           {type === "comment" && (
             <span className="caption-semibold md:body-semibold">
               commented on your post
