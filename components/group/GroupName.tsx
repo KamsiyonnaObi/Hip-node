@@ -13,7 +13,6 @@ import NewlyLaunchedButton from "./NewlyLaunchedButton";
 
 const GroupName = () => {
   const [isDropDown, setDropDown] = useState(false);
-
   return (
     <div className="mx-auto w-[325px] sm:w-[600px] md:w-[325px] lg:w-[225px]">
       <section>
@@ -72,6 +71,11 @@ const GroupName = () => {
             </div>
           </div>
           <FastestGrowing />
+          <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
+            <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
+              <p className="text-xs-semibold text-purple">See all</p>
+            </button>
+          </div>
         </div>
       </section>
       {/* Most Popular */}
@@ -97,6 +101,11 @@ const GroupName = () => {
             </div>
           </div>
           <MostPopular />
+          <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
+            <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
+              <p className="text-xs-semibold text-purple">See all</p>
+            </button>
+          </div>
         </div>
       </section>
       {/* Newly Launched */}
@@ -121,6 +130,11 @@ const GroupName = () => {
             </div>
           </div>
           <NewlyLaunched />
+          <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
+            <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
+              <p className="text-xs-semibold text-purple">See all</p>
+            </button>
+          </div>
         </div>
       </section>
     </div>

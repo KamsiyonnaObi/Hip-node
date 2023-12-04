@@ -13,7 +13,6 @@ const page = async ({ params }: { params: string }) => {
     post: group.post,
   }));
   const numberOfColumns = 3;
-  // const newestGroups = await getNewestGroups();
 
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
