@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import FillIcon from "../icons/FillIcon";
@@ -22,8 +22,11 @@ const Navbar = ({
 }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(
+    searchParams?.get("search") || ""
+  );
   const {
     isOpen: menuExpanded,
     ref: menuRef,
@@ -43,22 +46,21 @@ const Navbar = ({
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
-      const currentPath = pathname.split("/")[1];
-      if (searchText === "") {
-        router.push(currentPath);
-      } else {
-        const route = `/${currentPath}?search=${searchText}`;
-        setSearchText("");
-        router.push(route);
-      }
+      const currentPath = pathname?.split("/")[1];
+      const paramsObject = searchParams ? Object.fromEntries(searchParams) : {};
+      delete paramsObject.search;
+      const params = new URLSearchParams(paramsObject).toString();
+      const queryParams = params !== "" ? `?${params}` : "?";
+      const route = `/${currentPath}${queryParams}&search=${searchText}`;
+      router.push(route);
     }
   };
 
   return (
-    <article className="sticky top-0 z-10 flex h-[60px] justify-center bg-background px-5 py-3 dark:bg-dark3 md:h-[80px] md:px-[40px] md:py-[20px]">
-      <div className="flex flex-row justify-center gap-[149px] md:w-[1360px] md:gap-5 lg:gap-[84px]">
+    <article className="sticky top-0 z-10 flex h-[60px] justify-center bg-background px-[27px] py-3 dark:bg-dark3 md:h-[80px] md:px-[40px] md:py-[20px] lg:px-0">
+      <div className="flex w-[335px] flex-row justify-between gap-2.5 md:w-[1130px] md:gap-0 lg:w-[1360px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
             <LogoIcon className="fill-background stroke-background dark:fill-dark2 dark:stroke-dark2" />
@@ -69,7 +71,7 @@ const Navbar = ({
           </h1>
           <OutlineIcon.SearchIcon className="stroke-secondary5 dark:stroke-secondary4 md:hidden" />
         </section>
-        <div className=" flex flex-row md:gap-5 md2:gap-[65px]">
+        <div className=" flex flex-row md:gap-[40px]">
           <section className="hidden flex-row items-center gap-[20px] bg-background  dark:bg-dark3 md:flex">
             <NavbarLink path="/home" pathname={pathname} iconName="Home" />
             <NavbarLink
@@ -89,9 +91,9 @@ const Navbar = ({
               iconName="Interviews"
             />
           </section>
-          <div className="flex flex-row md:gap-5 md2:gap-[58px]">
+          <div className="flex flex-row md:gap-[180px]">
             <Input
-              divClassName="hidden md:flex w-full items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
+              divClassName="hidden md:flex w-auto lg:max-w-[29rem] md2:max-w-[24rem] md:max-w-[19rem] items-center rounded-lg bg-secondary6 px-5 dark:bg-dark2"
               placeholder="Type here to search..."
               className="gap-2.5 md:w-[440px]"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -140,14 +142,8 @@ const Navbar = ({
                         className="rounded-full object-fill"
                       />
                     </div>
-                    {menuExpanded && <Popup />}
+                    {menuExpanded && <Popup username={username} />}
                   </div>
-                  <p className="display-bold hidden self-center whitespace-nowrap text-secondary1 dark:text-background2 md:flex">
-                    {username}
-                  </p>
-                </div>
-                <div className="hidden md:flex">
-                  <OutlineIcon.DownArrow className="fill-secondary4 dark:fill-secondary6" />
                 </div>
               </section>
             </div>

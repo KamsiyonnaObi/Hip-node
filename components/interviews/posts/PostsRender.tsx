@@ -9,23 +9,23 @@ const PostsRender = async ({
   currUser: string | undefined;
 }) => {
   const result = await search;
+
   return (
     <section className="order-3 flex w-full flex-col gap-5 md:order-2">
       {result.interviews.length > 0
         ? result.interviews.map((interview: interviewData) => (
             <InterviewPost
               key={interview._id.toString()}
-              avatar={interview.userId?.profileImage}
-              _id={interview._id.toString()}
+              avatar={interview.userId?.profileImage || "unknown"}
+              _id={interview._id?.toString() || "unknown"}
               image={interview.image}
               title={interview.title}
               username={interview.userId?.username || "unknown"}
               createdAt={interview.createdAt}
-              content={interview.desc}
               revenue={interview.revenue}
               updates={interview.updates}
               website={interview.website}
-              showEdit={interview.userId?._id.toString() === currUser}
+              showEdit={interview.userId?._id.toString() === currUser || false}
             />
           ))
         : "No Posts to Show!"}

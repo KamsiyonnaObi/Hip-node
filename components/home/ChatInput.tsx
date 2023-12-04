@@ -13,26 +13,39 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 const ChatInput = ({
   postId,
   commentId,
+  parentId,
   currentUserImage,
+  setShowInput = () => {},
 }: {
   postId: string;
-  commentId: string | null;
-  currentUserImage: string;
+  commentId?: string;
+  parentId?: string;
+  currentUserImage?: string;
+  setShowInput?: (state: boolean) => void;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { theme } = useTheme();
 
   const { ref, isOpen, toggleOpen } = useOutsideClick();
 
-  const handleSubmit = async (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+  const handleSubmit = async () => {
+    if (inputValue.trim() === "") {
+      return;
+    }
+    await addComments({
+      text: inputValue,
+      postId,
+      commentId,
+      parentId,
+    });
+
+    setInputValue("");
+    setTimeout(() => setShowInput(false), 500);
+  };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      await addComments({
-        text: inputValue,
-        postId,
-        commentId,
-      });
-      setInputValue("");
+      handleSubmit();
     }
   };
 
@@ -64,7 +77,7 @@ const ChatInput = ({
               placeholder="Say something..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleSubmit}
+              onKeyDown={handleKeyDown}
             />
 
             <div ref={ref} className=" flex items-center">
@@ -82,7 +95,10 @@ const ChatInput = ({
               </div>
             </div>
           </div>
-          <button className="relative h-8 w-8 shrink-0 rounded-full text-secondary2 dark:text-background md:hidden">
+          <button
+            className="relative h-8 w-8 shrink-0 rounded-full text-secondary2 dark:text-background md:hidden"
+            onClick={handleSubmit}
+          >
             <FillIcon.Send className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 fill-secondary3" />
           </button>
         </div>

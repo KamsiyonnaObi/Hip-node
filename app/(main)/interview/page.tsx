@@ -12,10 +12,9 @@ import { getServerSession } from "next-auth";
 const InterviewHomePage = async ({
   searchParams,
 }: {
-  searchParams: { tags: string };
+  searchParams: { tags: string; search: string };
 }) => {
-  const tags = searchParams?.tags;
-  const result = getAllInterviews(tags);
+  const result = getAllInterviews({ ...searchParams });
 
   const categories = [
     "technology",
@@ -33,7 +32,11 @@ const InterviewHomePage = async ({
   return (
     <PageWrapper>
       <aside className="order-2 md:order-1">
-        <InterviewCategory categories={categories} search={result} />
+        <InterviewCategory
+          categories={categories}
+          search={result}
+          query={searchParams.search}
+        />
       </aside>
       <Suspense
         key={JSON.stringify(searchParams)}

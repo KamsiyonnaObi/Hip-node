@@ -3,16 +3,18 @@ import Link from "next/link";
 import FillIcon from "../icons/FillIcon";
 import { useTheme } from "next-themes";
 
-const Popup = () => {
+const Popup = ({ username }: { username: string }) => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <div className="fixed mr-[160px] mt-[230px] flex h-[182px] w-[182px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mr-0 md:mt-[260px]">
+    <div className="md:mr-30 fixed mr-[220px] mt-[300px] flex aspect-square h-[260px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mt-[320px]">
       {/* nub */}
-      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[400%]">
+      <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[1150%]">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
       </div>
       <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
+        <p className="flex items-center">{username}</p>
+        <hr className="dark:text-secondary3" />
         <Link href={"/profile"}>
           <li className="flex flex-row gap-[14px]">
             <FillIcon.Profile className="fill-secondary2 dark:fill-secondary6" />
@@ -24,7 +26,7 @@ const Popup = () => {
           <p>Settings</p>
         </li>
         <hr className="dark:text-secondary3" />
-        <li className="flex flex-row gap-5">
+        <li className="flex flex-row justify-between gap-5">
           <p>Interface</p>
           <div className="gap-2.5 rounded-[15px] bg-background2 p-[3px] dark:bg-dark3">
             <div className=" flex flex-row gap-[6px]">

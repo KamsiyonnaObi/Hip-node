@@ -49,11 +49,7 @@ const OpenedPost = ({
           <Html htmltext={content} />
         </h3>
         <div className="">
-          <ChatInput
-            postId={postId}
-            commentId={null}
-            currentUserImage={currentUserImage}
-          />
+          <ChatInput postId={postId} currentUserImage={currentUserImage} />
         </div>
       </article>
     </section>

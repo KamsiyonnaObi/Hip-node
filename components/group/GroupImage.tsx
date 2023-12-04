@@ -44,7 +44,7 @@ const GroupImage: React.FC<GroupImageProps> = ({
       </div>
       <div className="ml-[.62rem]">
         <CldUploadWidget
-          uploadPreset="bl8ltxxe"
+          uploadPreset="ml_images"
           onUpload={(result: any) => {
             updateForm(result?.info?.secure_url);
             setImageUrl(result?.info?.secure_url);
@@ -63,7 +63,7 @@ const GroupImage: React.FC<GroupImageProps> = ({
                 >
                   <OutlineIcon.Image1 className="w-[22px] fill-secondary2 dark:fill-background2" />
                   <p className="text-sm-regular text-secondary2 dark:text-background2">
-                    Set Profile Photo
+                    Set Profile Photo ml_images{" "}
                   </p>
                 </button>
               </div>

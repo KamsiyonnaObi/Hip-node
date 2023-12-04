@@ -97,15 +97,21 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
 
 export async function followAuthor({
   userId,
-  currentUserId,
   hasFollowed,
 }: {
   userId: ObjectId;
-  currentUserId: ObjectId;
   hasFollowed: boolean;
 }) {
   try {
     dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const User = await UserModel.findOne({ email });
+    const currentUserId = User?._id;
+    if (!currentUserId) {
+      throw new Error("Current user ID is undefined");
+    }
+
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };

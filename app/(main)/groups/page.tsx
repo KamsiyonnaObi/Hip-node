@@ -7,6 +7,8 @@ import {
   CreateGroup,
 } from "@/components/group";
 import { getAllGroups, getNewestGroups } from "@/utils/actions/group.action";
+import Podcasts from "@/components/Podcasts";
+import Meetups from "@/components/home/Meetups";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);

@@ -2,15 +2,13 @@ import Categories from "@/components/Categories";
 import HostCard from "@/components/Meetups/HostCard";
 import RenderMeetup from "@/components/Meetups/RenderMeetup";
 import Podcasts from "@/components/Podcasts";
-import { getAllMeetups } from "@/utils/actions/meetup.action";
 import React, { Suspense } from "react";
 
 export default async function Meetup({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { jobType: string; search: string };
 }) {
-  const result = await getAllMeetups({});
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -26,6 +24,7 @@ export default async function Meetup({
           }}
           web="meetups"
           filter="jobType"
+          searchFilter={searchParams.search}
         />
       </section>
       <Suspense
