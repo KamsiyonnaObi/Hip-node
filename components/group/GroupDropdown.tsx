@@ -17,11 +17,7 @@ const GroupDropDown = ({
 
   return (
     <div className="w-[20.938rem] sm:w-[37rem] md:w-[13.4em]">
-      <div
-        className={`${
-          isOpen ? "rounded-b-none" : "max-lg:rounded-xl"
-        } h-[5rem] w-full shrink-0 gap-[.625rem] rounded-t-xl bg-background p-[.63rem] dark:bg-dark3 lg:rounded-none`}
-      >
+      <div className="h-[5rem] w-full shrink-0 gap-[.625rem]  rounded-xl bg-background p-[.63rem] dark:bg-dark3">
         <div className="flex h-[3.75rem] w-full shrink-0 justify-between gap-[.625rem] rounded-[.625rem] bg-yellow10 p-[.63rem]">
           <div className="flex-col">
             <div className="flex gap-[.38rem]">
