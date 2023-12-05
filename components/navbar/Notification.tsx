@@ -212,13 +212,22 @@ const Notification = ({
                     className="flex flex-col gap-3"
                     onClick={() => toggleSelect("meetup")}
                   >
-                    <OutlineIcon.Post
-                      className={`${
-                        select === "meetup"
-                          ? "fill-blue dark:fill-blue80"
-                          : "fill-secondary2 dark:fill-secondary3"
-                      } cursor-pointer`}
-                    />
+                    <div className="flex flex-row gap-2">
+                      <OutlineIcon.Post
+                        className={`${
+                          select === "meetup"
+                            ? "fill-blue dark:fill-blue80"
+                            : "fill-secondary2 dark:fill-secondary3"
+                        } cursor-pointer`}
+                      />
+                      <p
+                        className={`display-semibold ${
+                          select === "meetup" && "text-blue dark:text-blue80"
+                        } hidden cursor-pointer md:flex`}
+                      >
+                        Meetup
+                      </p>
+                    </div>
                     <hr
                       className={`${
                         select === "meetup"
