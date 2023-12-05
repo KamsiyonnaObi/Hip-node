@@ -5,9 +5,9 @@ import { getNewestGroups } from "@/utils/actions/group.action";
 const NewlyLaunched = async () => {
   const { groups } = await getNewestGroups();
   return (
-    <section>
+    <section className="rounded-b-xl bg-white px-[.62rem] dark:bg-dark3">
       {groups?.slice(0, 3).map((group) => (
-        <div key={group._id} className=" bg-white px-[.62rem] dark:bg-dark3">
+        <div key={group._id}>
           <div className="flex w-full gap-[.5rem] p-[.62rem]">
             <div className="my-auto w-[20%] sm:w-[10%] md:w-[20%]">
               <Image
