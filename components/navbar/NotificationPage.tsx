@@ -82,7 +82,7 @@ const Notification = () => {
                     <p
                       className={`display-semibold ${
                         select === "all" && "text-blue dark:text-blue80"
-                      }`}
+                      } cursor-pointer`}
                     >
                       All notifications
                     </p>
@@ -91,7 +91,7 @@ const Notification = () => {
                         select === "all"
                           ? "border-blue dark:border-blue80"
                           : "border-background2 dark:border-dark3"
-                      } `}
+                      } cursor-pointer`}
                     />
                   </li>
                   <li
@@ -104,12 +104,12 @@ const Notification = () => {
                           select === "reaction"
                             ? "fill-blue dark:fill-blue80"
                             : "fill-secondary2 dark:fill-secondary3"
-                        }`}
+                        } cursor-pointer`}
                       />
                       <p
                         className={`display-semibold ${
                           select === "reaction" && "text-blue dark:text-blue80"
-                        } hidden md:flex`}
+                        } hidden cursor-pointer md:flex`}
                       >
                         Reactions
                       </p>
@@ -119,7 +119,7 @@ const Notification = () => {
                         select === "reaction"
                           ? "border-blue dark:border-blue80"
                           : "border-background2 dark:border-dark3"
-                      } `}
+                      } cursor-pointer`}
                     />
                   </li>
                   <li
@@ -132,12 +132,12 @@ const Notification = () => {
                           select === "comment"
                             ? "stroke-blue dark:stroke-blue80"
                             : "stroke-secondary2 dark:stroke-secondary3"
-                        } fill-background dark:fill-dark4`}
+                        } cursor-pointer fill-background dark:fill-dark4`}
                       />
                       <p
                         className={`display-semibold ${
                           select === "comment" && "text-blue dark:text-blue80"
-                        } hidden md:flex`}
+                        } hidden cursor-pointer md:flex`}
                       >
                         Comments
                       </p>
@@ -147,7 +147,7 @@ const Notification = () => {
                         select === "comment"
                           ? "border-blue dark:border-blue80"
                           : "border-background2 dark:border-dark3"
-                      } `}
+                      } cursor-pointer`}
                     />
                   </li>
                   <li
@@ -160,12 +160,12 @@ const Notification = () => {
                           select === "mention"
                             ? "fill-blue dark:fill-blue80"
                             : "fill-secondary2 dark:fill-secondary3"
-                        }`}
+                        } cursor-pointer`}
                       />
                       <p
                         className={`display-semibold ${
                           select === "mention" && "text-blue dark:text-blue80"
-                        } hidden md:flex`}
+                        } hidden cursor-pointer md:flex`}
                       >
                         Mentions
                       </p>
@@ -175,7 +175,7 @@ const Notification = () => {
                         select === "mention"
                           ? "border-blue dark:border-blue80"
                           : "border-background2 dark:border-dark3"
-                      } `}
+                      } cursor-pointer`}
                     />
                   </li>
                   <li
@@ -188,12 +188,12 @@ const Notification = () => {
                           select === "meetup"
                             ? "fill-blue dark:fill-blue80"
                             : "fill-secondary2 dark:fill-secondary3"
-                        }`}
+                        } cursor-pointer`}
                       />
                       <p
                         className={`display-semibold ${
                           select === "meetup" && "text-blue dark:text-blue80"
-                        } hidden md:flex`}
+                        } hidden cursor-pointer md:flex`}
                       >
                         Meetups
                       </p>
@@ -203,7 +203,7 @@ const Notification = () => {
                         select === "meetup"
                           ? "border-blue dark:border-blue80"
                           : "border-background2 dark:border-dark3"
-                      } `}
+                      } cursor-pointer`}
                     />
                   </li>
                 </ul>

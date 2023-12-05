@@ -48,7 +48,10 @@ const Navbar = ({
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
-      const currentPath = pathname?.split("/")[1];
+      let currentPath = pathname?.split("/")[1];
+      if (currentPath === "posts" || currentPath === "notification") {
+        currentPath = "home";
+      }
       const paramsObject = searchParams ? Object.fromEntries(searchParams) : {};
       delete paramsObject.search;
       const params = new URLSearchParams(paramsObject).toString();
@@ -122,7 +125,7 @@ const Navbar = ({
                   </Button>
                 </div>
 
-                {notifExpanded && <Notification />}
+                {notifExpanded && <Notification toggle={() => toggleNotif()} />}
               </div>
 
               <section className="flex flex-row items-center md:gap-2.5">
