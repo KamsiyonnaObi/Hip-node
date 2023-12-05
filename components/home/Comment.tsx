@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 import { ChatInput } from "@/components";
 import { likeComment } from "@/utils/actions/post.action";
+import { createNotification } from "@/utils/actions/notification.action";
+import { usePathname } from "next/navigation";
 
 interface CommentProps {
   commentId?: string;
@@ -31,6 +33,7 @@ const Comment = ({
   commentId,
   postId,
   parentId,
+  userId,
   currentUserId,
   currentUserImage,
   name,
@@ -46,6 +49,8 @@ const Comment = ({
   const [showInput, setShowInput] = useState(false);
   const [isPending, startTransition] = useTransition();
 
+  const pathname = usePathname();
+
   const handleLike = async () => {
     if (currentUserId && commentId) {
       startTransition(async () => {
@@ -53,6 +58,12 @@ const Comment = ({
           postId,
           commentId,
           hasLiked,
+        });
+        await createNotification({
+          title: text,
+          type: "reaction",
+          userTo: userId,
+          link: pathname,
         });
         if (!liked) return;
         setIsLiked(liked.status);
@@ -113,6 +124,8 @@ const Comment = ({
             parentId={parentId}
             currentUserImage={currentUserImage}
             setShowInput={setShowInput}
+            content={text || "unknown"}
+            userId={userId}
           />
         )}
       </section>

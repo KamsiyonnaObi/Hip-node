@@ -5,9 +5,11 @@ import Post from "./Post";
 const PostRender = async ({
   searchParams,
   currentUserId,
+  currentUser,
 }: {
   searchParams: { search: string };
   currentUserId: string;
+  currentUser: any;
 }) => {
   const result = await getAllPosts({ ...searchParams });
   return (
@@ -29,6 +31,8 @@ const PostRender = async ({
               hasLiked={post?.likes?.includes(currentUserId) || false}
               comments={post?.comments?.length}
               showEdit={post.userId?._id.toString() === currentUserId}
+              postUser={post.userId?._id || null}
+              currentUser={currentUser}
             />
           ))
         : "No Posts to Show!"}

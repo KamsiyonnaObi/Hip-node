@@ -10,16 +10,17 @@ export async function createNotification(params: Partial<INotif>) {
     await dbConnect();
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;
-    const User = await UserModel.findOne({ email });
-    const userIdfrom = User?._id;
-    const { title, type, userIdto, comment } = params;
+    const userIdfrom = await UserModel.findOne({ email });
+
+    const { title, type, userTo, comment, link } = params;
 
     const notif = await Notification.create({
       title,
       type,
       userIdfrom,
-      userIdto,
+      userTo,
       comment,
+      link,
     });
 
     return notif;
@@ -41,21 +42,63 @@ export async function getNotification(notificationId: string) {
   }
 }
 
-export async function getAllNotification(params: {
-  userId: any;
+export async function getAllNotification({
+  userId,
+  type,
+}: {
+  userId: string;
   type: string;
 }) {
-  const { type, userId } = params;
   try {
     await dbConnect();
-    let notification = await Notification.find({ userIdto: userId });
-    if (type === "all") {
-      return notification;
+
+    const query: Partial<{ userTo: string; type: string }> = { userTo: userId };
+    if (type !== "all") {
+      query.type = type;
     }
-    notification = await Notification.find({ type });
-    return notification;
+
+    const notifications = await Notification.find(query)
+      .populate("userIdfrom")
+      .sort({ createdAt: -1 })
+      .lean();
+    return JSON.stringify(notifications);
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function readPost(notifId: string) {
+  try {
+    await dbConnect();
+    const notification = await Notification.findById(notifId);
+    notification.read = true;
+    await notification.save();
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function readAllNotifications(userId: string) {
+  try {
+    await dbConnect();
+
+    // Find all unread notifications for a specific user
+    const unreadNotifications = await Notification.find({
+      userTo: userId,
+      read: false,
+    });
+
+    // Mark all unread notifications as read
+    await Promise.all(
+      unreadNotifications.map(async (notification) => {
+        notification.read = true;
+        await notification.save();
+      })
+    );
+  } catch (error) {
+    console.error("Error marking notifications as read:", error);
     throw error;
   }
 }

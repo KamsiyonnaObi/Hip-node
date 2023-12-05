@@ -6,8 +6,8 @@ import OutlineIcon from "../icons/OutlineIcon";
 import NotifCard from "./NotifCard";
 import {
   getAllNotification,
-  readAllNotifications,
   readPost,
+  readAllNotifications,
 } from "@/utils/actions/notification.action";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import Link from "next/link";
@@ -48,20 +48,18 @@ const Notification = () => {
     const currentUser = await getCurrentUser();
     const currentUserId = currentUser?._id.toString() || "unknown";
     await readAllNotifications(currentUserId);
+    window.location.reload();
   };
   return (
     <>
-      <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
-        <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
-      </div>
-      <article className="fixed right-[10%] flex w-[335px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2 max-md:top-[3.5rem] md:left-[56%] md:w-[589px]">
+      <article className="flex w-full flex-col rounded-[8px] text-secondary2 dark:text-background2  md:w-[785px] ">
         <div className="mt-2.5 gap-2.5 py-5 md:py-[30px]">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-5 md:gap-[30px]">
               <div className="flex flex-col gap-5 md:gap-[30px]">
-                <div className="flex flex-row justify-center gap-[63px] md:gap-[223px]">
+                <div className="flex flex-row justify-between ">
                   <p className="display-semibold md:h1-semibold">
-                    {notifList?.length || "No"} Notifications
+                    Notifications
                   </p>
                   <Button
                     color="blackBlue"
@@ -76,7 +74,7 @@ const Notification = () => {
                 <hr className="border-background2 dark:border-dark3" />
               </div>
               <div className="flex flex-col">
-                <ul className="flex flex-row justify-center gap-[26px] text-secondary2 dark:text-secondary3">
+                <ul className="flex flex-row justify-start gap-[26px] text-secondary2 dark:text-secondary3">
                   <li
                     className="flex flex-col gap-2.5"
                     onClick={() => toggleSelect("all")}
@@ -184,13 +182,22 @@ const Notification = () => {
                     className="flex flex-col gap-3"
                     onClick={() => toggleSelect("meetup")}
                   >
-                    <OutlineIcon.Post
-                      className={`${
-                        select === "meetup"
-                          ? "fill-blue dark:fill-blue80"
-                          : "fill-secondary2 dark:fill-secondary3"
-                      }`}
-                    />
+                    <div className="flex flex-row gap-2">
+                      <OutlineIcon.Post
+                        className={`${
+                          select === "meetup"
+                            ? "fill-blue dark:fill-blue80"
+                            : "fill-secondary2 dark:fill-secondary3"
+                        }`}
+                      />
+                      <p
+                        className={`display-semibold ${
+                          select === "meetup" && "text-blue dark:text-blue80"
+                        } hidden md:flex`}
+                      >
+                        Meetups
+                      </p>
+                    </div>
                     <hr
                       className={`${
                         select === "meetup"
@@ -203,9 +210,9 @@ const Notification = () => {
                 <hr className="border-background2 dark:border-dark3" />
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center gap-5 md:gap-[30px]">
+            <div className="flex flex-col justify-start gap-5 md:gap-[30px]">
               {notifList && notifList.length > 0
-                ? notifList.slice(0, 3).map((notif: any) => (
+                ? notifList.map((notif: any) => (
                     <Link
                       key={notif._id}
                       href={notif.link}
@@ -223,12 +230,6 @@ const Notification = () => {
                     </Link>
                   ))
                 : "No Notifications!"}
-              <Link
-                className="body-semibold flex justify-center text-center text-blue"
-                href="/notification"
-              >
-                View All Notifications
-              </Link>
             </div>
           </div>
         </div>
