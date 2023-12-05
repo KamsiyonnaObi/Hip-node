@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import FillIcon from "../icons/FillIcon";
 import { useTheme } from "next-themes";
 
@@ -7,7 +8,7 @@ const Popup = ({ username }: { username: string }) => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <div className="md:mr-30 fixed mr-[220px] mt-[300px] flex aspect-square h-[260px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mt-[320px]">
+    <div className="md:mr-30 fixed mr-[220px] mt-[300px] flex aspect-square h-[300px] flex-col rounded-[10px] bg-background dark:bg-dark4 md:mt-[320px]">
       {/* nub */}
       <div className="absolute w-5 translate-x-[800%] translate-y-[-100%] overflow-hidden md:translate-x-[1150%]">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
@@ -24,6 +25,12 @@ const Popup = ({ username }: { username: string }) => {
         <li className="flex flex-row gap-[14px]">
           <FillIcon.Settings className="fill-secondary2 dark:fill-secondary6" />
           <p>Settings</p>
+        </li>
+        <li className="flex flex-row gap-[14px]">
+          <FillIcon.Follow className="fill-red90 stroke-red90 " />
+          <button className="text-red90" onClick={() => signOut()}>
+            Sign out
+          </button>
         </li>
         <hr className="dark:text-secondary3" />
         <li className="flex flex-row justify-between gap-5">
