@@ -13,11 +13,11 @@ const GroupMenu = ({ id }: { id: string }) => {
   };
 
   return (
-    <div className="flex flex-col w-[10.625rem] p-[1.25rem] h-[5.675rem] rounded-[0.625rem] border border-secondary5 bg-background2 dark:bg-dark4 dark:border-secondary2 gap-[.62rem]">
+    <div className="flex h-[5.675rem] w-[10.625rem] flex-col gap-[.62rem] rounded-[0.625rem] border border-secondary5 bg-background2 p-[1.25rem] dark:border-secondary2 dark:bg-dark4">
       <Link href={`/groups/update/${id}`}>
         <div className="flex items-center gap-[0.625rem]">
           <OutlineIcon.Edit className="dark:fill-white" />
-          <p className="text-secondary2 body-semibold dark:text-background2">
+          <p className="body-semibold text-secondary2 dark:text-background2">
             Edit Group Info
           </p>
         </div>
@@ -25,8 +25,8 @@ const GroupMenu = ({ id }: { id: string }) => {
       <div>
         <button onClick={handleDeleteClick}>
           <div className="flex items-center gap-[0.625rem]">
-            <OutlineIcon.Trash className="fill-transparent" />
-            <p className="text-secondary2 body-semibold dark:text-background2">
+            <OutlineIcon.Trash className="fill-transparent stroke-red" />
+            <p className="body-semibold text-secondary2 dark:text-background2">
               Delete Group
             </p>
           </div>
