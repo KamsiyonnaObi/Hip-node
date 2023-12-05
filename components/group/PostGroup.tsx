@@ -55,7 +55,7 @@ const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
         <Image
           src={postImage}
           alt="Post Image"
-          className="w-full rounded-[.625rem] sm:h-[106px] sm:w-[228px]"
+          className="h-full w-full rounded-[.625rem] sm:w-[228px]"
           width={228}
           height={106}
         />
