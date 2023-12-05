@@ -6,7 +6,7 @@ import GroupDropdown from "./GroupDropdown";
 const GroupFilter = () => {
   return (
     <section>
-      <div>
+      <div className="rounded-xl bg-white dark:bg-dark3">
         <GroupDropdown
           name={"Newly Launched"}
           icon={<FillIcon.Growing className="fill-black" />}
