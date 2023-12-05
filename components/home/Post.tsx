@@ -27,7 +27,7 @@ interface Props {
   showEdit: any;
   hasLiked: boolean | false;
   postUser?: string;
-  currentUser: any;
+  currentUser?: any;
 }
 
 const Post = ({
