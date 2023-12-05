@@ -10,6 +10,7 @@ import Link from "next/link";
 import EditDeletePopup from "./EditDeletePopup";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { likePost } from "@/utils/actions/post.action";
+import { createNotification } from "@/utils/actions/notification.action";
 
 interface Props {
   currentUserId?: string;
@@ -25,6 +26,8 @@ interface Props {
   _id: string;
   showEdit: any;
   hasLiked: boolean | false;
+  postUser?: string;
+  currentUser?: any;
 }
 
 const Post = ({
@@ -41,6 +44,8 @@ const Post = ({
   hasLiked,
   _id,
   showEdit,
+  postUser,
+  currentUser,
 }: Props) => {
   const { isOpen: showPopup, ref: menuRef, toggleOpen } = useOutsideClick();
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
@@ -55,6 +60,15 @@ const Post = ({
           userId: currentUserId,
           hasLiked: isLiked,
         });
+        if (!hasLiked) {
+          await createNotification({
+            title,
+            type: "reaction",
+            userTo: postUser,
+            link: `/posts/${_id}`,
+          });
+        }
+
         if (!liked) return;
         setIsLiked(liked.status);
         setNumberLiked(liked.number);
