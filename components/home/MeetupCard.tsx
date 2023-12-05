@@ -30,7 +30,7 @@ const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
           {jobType.map((type, index) => (
             <div
               key={index}
-              className="text-xs-semibold gap-[10px] rounded-[20px] bg-secondary6 px-[8px] py-[2px] text-center text-secondary4"
+              className="text-xs-semibold gap-[10px] rounded-[20px] bg-bkg-3 px-[8px] py-[2px] text-center text-secondary4"
             >
               {type}
             </div>
