@@ -12,9 +12,17 @@ import {
 import { getCurrentUser } from "@/utils/actions/user.action";
 import Link from "next/link";
 
-const Notification = ({ toggle }: any) => {
+const Notification = ({
+  toggle,
+  type,
+}: {
+  toggle?: () => void;
+  type?: string;
+}) => {
   const [select, setSelect] = useState("all");
   const [notifList, setNotifList] = useState<null | any[]>(null);
+
+  const slicedNotifList = type === "page" ? notifList : notifList?.slice(0, 3);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +49,10 @@ const Notification = ({ toggle }: any) => {
   };
 
   const handleClick = async (val: string) => {
-    toggle();
+    if (toggle) {
+      toggle();
+    }
+
     await readPost(val);
   };
 
@@ -52,15 +63,27 @@ const Notification = ({ toggle }: any) => {
   };
   return (
     <>
-      <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
-        <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
-      </div>
-      <article className="fixed right-[10%] flex w-[335px] flex-col rounded-[8px] bg-background text-secondary2 dark:bg-dark4 dark:text-background2 max-md:top-[3.5rem] md:left-[56%] md:w-[589px]">
+      {type !== "page" && (
+        <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
+          <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
+        </div>
+      )}
+      <article
+        className={`${
+          type !== "page"
+            ? "fixed w-[335px] bg-background dark:bg-dark4 md:w-[589px]"
+            : "w-full md:w-[785px]"
+        } right-[10%] flex flex-col rounded-[8px]  text-secondary2  dark:text-background2 max-md:top-[3.5rem] md:left-[56%]`}
+      >
         <div className="mt-2.5 gap-2.5 py-5 md:py-[30px]">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-5 md:gap-[30px]">
               <div className="flex flex-col gap-5 md:gap-[30px]">
-                <div className="flex flex-row justify-center gap-[63px] md:gap-[223px]">
+                <div
+                  className={`flex flex-row ${
+                    type === "page" ? "justify-between" : "justify-center"
+                  } gap-[63px] md:gap-[223px]`}
+                >
                   <p className="display-semibold md:h1-semibold">
                     {notifList?.length || "No"} Notifications
                   </p>
@@ -77,7 +100,11 @@ const Notification = ({ toggle }: any) => {
                 <hr className="border-background2 dark:border-dark3" />
               </div>
               <div className="flex flex-col">
-                <ul className="flex flex-row justify-center gap-[26px] text-secondary2 dark:text-secondary3">
+                <ul
+                  className={`flex flex-row ${
+                    type === "page" ? "justify-start" : "justify-center"
+                  } gap-[26px] text-secondary2 dark:text-secondary3`}
+                >
                   <li
                     className="flex flex-col gap-2.5"
                     onClick={() => toggleSelect("all")}
@@ -204,9 +231,15 @@ const Notification = ({ toggle }: any) => {
                 <hr className="border-background2 dark:border-dark3" />
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center gap-5 md:gap-[30px]">
+            <div
+              className={`flex flex-col ${
+                type === "page"
+                  ? "justify-start"
+                  : "items-center justify-center"
+              } gap-5 md:gap-[30px]`}
+            >
               {notifList && notifList.length > 0
-                ? notifList.slice(0, 3).map((notif: any) => (
+                ? slicedNotifList?.map((notif: any) => (
                     <Link
                       key={notif._id}
                       href={notif.link}
@@ -226,15 +259,17 @@ const Notification = ({ toggle }: any) => {
                     </Link>
                   ))
                 : "No Notifications!"}
-              <Link
-                className="body-semibold flex justify-center text-center text-blue"
-                href="/notification"
-                onClick={() => {
-                  toggle();
-                }}
-              >
-                View All Notifications
-              </Link>
+              {type !== "page" && toggle && (
+                <Link
+                  className="body-semibold flex justify-center text-center text-blue"
+                  href="/notification"
+                  onClick={() => {
+                    toggle();
+                  }}
+                >
+                  View All Notifications
+                </Link>
+              )}
             </div>
           </div>
         </div>

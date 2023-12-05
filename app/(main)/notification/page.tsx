@@ -2,8 +2,8 @@ import Meetups from "@/components/home/Meetups";
 import PinnedGroup from "@/components/home/PinnedGroup";
 import PopularTags from "@/components/home/PopularTags";
 import Sidebar from "@/components/home/Sidebar";
-import NotificationPage from "@/components/navbar/NotificationPage";
 import Podcasts from "@/components/Podcasts";
+import Notification from "@/components/navbar/Notification";
 
 export default async function Home({
   searchParams,
@@ -24,7 +24,7 @@ export default async function Home({
         </div>
       </section>
       <section className="flex flex-col gap-5">
-        <NotificationPage />
+        <Notification type="page" />
       </section>
       <section className="flex flex-col gap-5">
         <Meetups />
