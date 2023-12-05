@@ -59,12 +59,14 @@ const Comment = ({
           commentId,
           hasLiked,
         });
-        await createNotification({
-          title: text,
-          type: "reaction",
-          userTo: userId,
-          link: pathname,
-        });
+        if (!hasLiked) {
+          await createNotification({
+            title: text,
+            type: "reaction",
+            userTo: userId,
+            link: pathname,
+          });
+        }
         if (!liked) return;
         setIsLiked(liked.status);
       });
