@@ -10,7 +10,7 @@ import FillIcon from "../icons/FillIcon";
 import { addComments } from "@/utils/actions/post.action";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-const ChatInput = ({
+const CommentInput = ({
   postId,
   commentId,
   parentId,
@@ -107,4 +107,4 @@ const ChatInput = ({
   );
 };
 
-export default ChatInput;
+export default CommentInput;

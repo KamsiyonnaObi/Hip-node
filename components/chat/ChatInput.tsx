@@ -1,0 +1,40 @@
+import React from "react";
+import FillIcon from "../icons/FillIcon";
+import OutlineIcon from "../icons/OutlineIcon";
+
+const ChatInput = () => {
+  return (
+    <section className="flex items-center gap-5">
+      <section className="relative flex flex-1 ">
+        <div className="flex flex-1 items-center gap-2.5">
+          <div
+            className={
+              "relative flex flex-1 flex-wrap items-center justify-between gap-[15px] rounded-2xl border border-secondary5 bg-background px-[15px] py-2.5 text-contents dark:border-secondary2 dark:bg-dark4 md:w-5"
+            }
+          >
+            <div className=" flex items-center">
+              <button>
+                <OutlineIcon.LinkIcon className="stroke-secondary4" />
+              </button>
+            </div>
+            <textarea
+              className="md:body-regular caption-regular h-[18px] flex-1 resize-none items-center justify-start  bg-background text-secondary4 placeholder:text-secondary4 focus:outline-none dark:bg-dark4 md:h-[22px]"
+              placeholder="Type here your message..."
+            />
+
+            <div className=" flex items-center">
+              <button>
+                <OutlineIcon.Voice className="fill-none stroke-secondary4" />
+              </button>
+            </div>
+          </div>
+          <button className="relative h-8 w-8 shrink-0 rounded-full text-secondary2 dark:text-background">
+            <FillIcon.Send className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 fill-secondary2 dark:fill-background2" />
+          </button>
+        </div>
+      </section>
+    </section>
+  );
+};
+
+export default ChatInput;

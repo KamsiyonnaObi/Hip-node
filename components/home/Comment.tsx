@@ -7,8 +7,8 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
-import { ChatInput } from "@/components";
 import { likeComment } from "@/utils/actions/post.action";
+import { CommentInput } from ".";
 
 interface CommentProps {
   commentId?: string;
@@ -107,7 +107,7 @@ const Comment = ({
           </button>
         </div>
         {showInput && (
-          <ChatInput
+          <CommentInput
             postId={postId}
             commentId={commentId}
             parentId={parentId}
