@@ -19,7 +19,13 @@ export async function createGroup(params: NewGroup) {
     const { title, coverUrl, groupUrl, description, admins, members } = params;
     const parsedAdmins = JSON.parse(admins);
     const parseMembers = JSON.parse(members);
-
+    const activities = [];
+    for (let i = 0; i < parseMembers.length; i++) {
+      activities.push({
+        date: new Date(),
+        activityType: "new_member",
+      });
+    }
     const group = await Group.create({
       title,
       coverUrl,
@@ -28,6 +34,7 @@ export async function createGroup(params: NewGroup) {
       description,
       admins: parsedAdmins,
       members: parseMembers,
+      activity: activities,
     });
     if (group) {
       return JSON.stringify({
@@ -240,3 +247,14 @@ export async function getMostPopularGroups() {
     };
   }
 }
+
+// export async function getFastestGrowingGroups()
+// try {
+//   await dbConnect();
+//   const groups = await Group.find({})
+
+//   return groups
+// } catch (error) {
+//   success: false,
+//   groups: [],
+// }
