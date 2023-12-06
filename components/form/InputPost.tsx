@@ -27,6 +27,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { createPost, updatePost } from "@/utils/actions/post.action";
 import GroupCategory from "../group/GroupCategory";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { toast } from "../ui/use-toast";
 
 export function InputPost({
   editDetail,
@@ -98,6 +99,10 @@ export function InputPost({
       } else {
         await createPost(postData);
       }
+      return toast({
+        title: `${editDetail ? "Edited" : "Created"} Post`,
+        variant: "default",
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);

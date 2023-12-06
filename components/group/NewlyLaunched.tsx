@@ -15,7 +15,7 @@ const NewlyLaunched = async () => {
                 alt="icon"
                 width={34}
                 height={34}
-                className="w-[34px]] mx-auto h-[34px] rounded-full"
+                className="w-[34px]] m-auto h-[34px] rounded-full"
               />
             </div>
             <div className="w-[80%] flex-col sm:w-[90%] md:w-[80%]">

@@ -28,6 +28,7 @@ import {
   createInterview,
   updateInterview,
 } from "@/utils/actions/interview.action";
+import { toast } from "../ui/use-toast";
 
 export function InputInterview({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
@@ -81,6 +82,10 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
       } else {
         await createInterview(interviewData);
       }
+      return toast({
+        title: `${editDetail ? "Edited" : "Created"} Interview`,
+        variant: "default",
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);
