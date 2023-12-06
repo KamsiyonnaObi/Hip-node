@@ -11,6 +11,7 @@ import { ChatInput } from "@/components";
 import { likeComment } from "@/utils/actions/post.action";
 import { createNotification } from "@/utils/actions/notification.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface CommentProps {
   commentId?: string;
@@ -67,8 +68,11 @@ const Comment = ({
             link: pathname,
           });
         }
-        if (!liked) return;
-        setIsLiked(liked.status);
+        if (liked) setIsLiked(liked.status);
+      });
+      return toast({
+        title: `${!isLiked ? "Liked Comment" : "Removed Like"}`,
+        variant: !isLiked ? "default" : "destructive",
       });
     }
   };
