@@ -11,6 +11,7 @@ import { addComments } from "@/utils/actions/post.action";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { createNotification } from "@/utils/actions/notification.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 const ChatInput = ({
   postId,
@@ -56,6 +57,10 @@ const ChatInput = ({
 
     setInputValue("");
     setTimeout(() => setShowInput(false), 500);
+    return toast({
+      title: "Comment Added",
+      variant: "default",
+    });
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {

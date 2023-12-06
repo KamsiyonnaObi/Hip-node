@@ -11,6 +11,7 @@ import EditDeletePopup from "./EditDeletePopup";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { likePost } from "@/utils/actions/post.action";
 import { createNotification } from "@/utils/actions/notification.action";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   currentUserId?: string;
@@ -69,9 +70,14 @@ const Post = ({
           });
         }
 
-        if (!liked) return;
-        setIsLiked(liked.status);
-        setNumberLiked(liked.number);
+        if (liked) {
+          setIsLiked(liked.status);
+          setNumberLiked(liked.number);
+        }
+      });
+      return toast({
+        title: `${!isLiked ? "Liked Post" : "Removed Like"}`,
+        variant: !isLiked ? "default" : "destructive",
       });
     }
   };
