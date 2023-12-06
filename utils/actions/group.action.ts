@@ -8,6 +8,7 @@ import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 import { FilterQuery } from "mongoose";
 import { NewGroup, UpdateGroup } from "./shared.types";
+import { revalidatePath } from "next/cache";
 
 export async function createGroup(params: NewGroup) {
   try {
@@ -76,22 +77,29 @@ export async function getGroupById(groupId: string) {
   }
 }
 
-export async function joinGroup(groupId: any, memberId: any) {
+export async function joinGroup(groupId: string) {
   try {
     await dbConnect();
-
+    const user = await getServerSession();
+    const { email } = user?.user;
+    const userObj = await UserModel.find({ email });
     const group = await Group.findById(groupId);
 
     if (group) {
-      if (group.members.includes(memberId)) {
+      if (group.members.includes(userObj[0]._id)) {
         return { success: false, message: "Member is already in the group." };
       }
 
-      group.members.push(memberId);
+      group.members.push(userObj[0]._id);
+      group.activity.push({
+        date: new Date(),
+        activityType: "new_member",
+      });
 
       await group.save();
+      revalidatePath(`groups/${groupId}`);
 
-      return { success: true, data: group };
+      return { success: true };
     } else {
       throw new Error("Group not found.");
     }
@@ -104,14 +112,34 @@ export async function joinGroup(groupId: any, memberId: any) {
   }
 }
 
-export async function leaveGroup(groupId: string, memberId: string) {
+export async function isMember(groupId: string) {
   try {
     await dbConnect();
+    const user = await getServerSession();
+    const { email } = user?.user;
+    const userObj = await UserModel.find({ email });
+    const group = await Group.findById(groupId);
+    if (group) {
+      const memberIndex = group.members.indexOf(userObj[0]._id);
+      if (memberIndex === -1) {
+        return { success: false };
+      }
+    }
+  } catch (error) {
+    return error;
+  }
+}
 
+export async function leaveGroup(groupId: string) {
+  try {
+    await dbConnect();
+    const user = await getServerSession();
+    const { email } = user?.user;
+    const userObj = await UserModel.find({ email });
     const group = await Group.findById(groupId);
 
     if (group) {
-      const memberIndex = group.members.indexOf(memberId);
+      const memberIndex = group.members.indexOf(userObj[0]._id);
       if (memberIndex === -1) {
         return { success: false, message: "Member is not in the group." };
       }
@@ -119,10 +147,10 @@ export async function leaveGroup(groupId: string, memberId: string) {
       group.members.splice(memberIndex, 1);
 
       await group.save();
-
-      return { success: true, data: group };
+      revalidatePath(`groups/${groupId}`);
+      return { success: true };
     } else {
-      throw new Error("Group not found.");
+      throw new Error("Member not found.");
     }
   } catch (error) {
     console.error(error);
@@ -315,3 +343,36 @@ export async function getMostPopularGroups() {
 //   success: false,
 //   groups: [],
 // }
+
+// In corperate this aggregate into the fastest grouwing groups to find the fastest growing groups
+
+// const startDate = new Date("2023-01-01");
+// const endDate = new Date("2023-12-31");
+
+// Group.aggregate([
+//     {
+//         $unwind: "$activity"
+//     },
+//     {
+//         $match: {
+//             "activity.date": { $gte: startDate, $lte: endDate },
+//             "activity.type": "new_member"
+//         }
+//     },
+//     {
+//         $group: {
+//             _id: "$_id",
+//             newMembers: { $sum: 1 }
+//         }
+//     },
+//     {
+//         $sort: { newMembers: -1 }
+//     }
+// ])
+// .then(groups => {
+//     // groups now contains the list of groups sorted by their growth (number of new members)
+//     console.log(groups);
+// })
+// .catch(err => {
+//     console.error(err);
+// });

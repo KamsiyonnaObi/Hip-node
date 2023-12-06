@@ -1,22 +1,30 @@
+"use client";
 import React from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { leaveGroup } from "@/utils/actions/group.action";
 
 type ModalProps = {
   show: boolean;
   closeModal: () => void;
+  groupId: string;
 };
 
 type Props = ModalProps;
 
-export default function Modal({ show, closeModal }: Props) {
+export default function Modal({ show, closeModal, groupId }: Props) {
   if (!show) return null;
+
+  const submitLeaveGroup = async () => {
+    const response = await leaveGroup(groupId);
+    console.log(response);
+  };
 
   return (
     <>
       {createPortal(
         // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-        <div className="z-[15] fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+        <div className="fixed left-0 top-0 z-[15] flex h-full w-full items-center justify-center bg-gray-500 bg-opacity-50 backdrop-blur-sm">
           <div className="absolute flex items-center justify-center">
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
               <div className="mb-[1.875rem]">
@@ -28,7 +36,7 @@ export default function Modal({ show, closeModal }: Props) {
                 <Link href={"/groups"}>
                   <button
                     className="flex w-[10rem] items-center justify-center gap-[0.625rem] rounded-[0.375rem] bg-blue p-[0.625rem]"
-                    onClick={closeModal}
+                    onClick={submitLeaveGroup}
                   >
                     <p className="h3-semibold text-background">Leave Group</p>
                   </button>

@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
+import { joinGroup } from "@/utils/actions/group.action";
 
 const Cover = ({
   user,
@@ -23,6 +24,7 @@ const Cover = ({
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const [isMember, setIsMember] = useState(false);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
@@ -45,6 +47,12 @@ const Cover = ({
       window.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+
+  const submitJoinGroup = async () => {
+    const response = await joinGroup(groupId);
+    console.log(response);
+  };
+
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -90,14 +98,28 @@ const Cover = ({
         </div>
         <div className="flex items-center gap-[.62rem]">
           <div>
-            <button
-              className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
-              onClick={() => setShow((s) => !s)}
-            >
-              <FillIcon.Leave className="fill-secondary3" />
-              <p className="caption-semibold text-secondary3">Leave</p>
-            </button>
-            <Modal show={show} closeModal={() => setShow(false)} />
+            {isMember ? (
+              <button
+                className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
+                onClick={() => setShow((s) => !s)}
+              >
+                <FillIcon.Leave className="fill-secondary3" />
+                <p className="caption-semibold text-secondary3">Leave</p>
+              </button>
+            ) : (
+              <button
+                className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
+                onClick={submitJoinGroup}
+              >
+                <FillIcon.Leave className="fill-secondary3" />
+                <p>Join</p>
+              </button>
+            )}
+            <Modal
+              show={show}
+              closeModal={() => setShow(false)}
+              groupId={groupId}
+            />
           </div>
           <div className="relative">
             <button ref={buttonRef} onClick={handleButtonClick}>
