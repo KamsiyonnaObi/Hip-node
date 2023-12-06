@@ -7,8 +7,6 @@ const MostPopular = async () => {
     const groups = await getMostPopularGroups();
 
     if (!Array.isArray(groups)) {
-      // Handle the error case here
-      console.error(groups.message); // Log the error message
       return (
         <div>
           <p>Error: {groups.message}</p>

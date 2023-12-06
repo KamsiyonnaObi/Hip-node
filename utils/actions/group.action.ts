@@ -231,7 +231,6 @@ export async function getMostPopularGroups() {
         $in: [...sorted],
       },
     });
-    console.log(groups);
     return groups;
   } catch (error) {
     console.log(error);
