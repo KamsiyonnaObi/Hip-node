@@ -25,10 +25,8 @@ const GroupMenu = ({ id }: { id: string }) => {
       <div>
         <button onClick={handleDeleteClick}>
           <div className="flex items-center gap-[0.625rem]">
-            <OutlineIcon.Trash className="fill-transparent stroke-red" />
-            <p className="body-semibold text-secondary2 dark:text-background2">
-              Delete Group
-            </p>
+            <OutlineIcon.Trash className="fill-transparent stroke-red90" />
+            <p className="body-semibold text-red90">Delete Group</p>
           </div>
         </button>
       </div>
