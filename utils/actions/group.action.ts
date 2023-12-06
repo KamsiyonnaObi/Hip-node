@@ -104,6 +104,35 @@ export async function joinGroup(groupId: any, memberId: any) {
   }
 }
 
+export async function leaveGroup(groupId: string, memberId: string) {
+  try {
+    await dbConnect();
+
+    const group = await Group.findById(groupId);
+
+    if (group) {
+      const memberIndex = group.members.indexOf(memberId);
+      if (memberIndex === -1) {
+        return { success: false, message: "Member is not in the group." };
+      }
+
+      group.members.splice(memberIndex, 1);
+
+      await group.save();
+
+      return { success: true, data: group };
+    } else {
+      throw new Error("Group not found.");
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "An error occurred while leaving the group.",
+    };
+  }
+}
+
 export async function updateGroup(groupId: any, params: UpdateGroup) {
   const { title, coverUrl, groupUrl, description, admins, members } = params;
   const currentUser: any = await getServerSession();
