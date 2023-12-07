@@ -349,25 +349,29 @@ export async function getFastestGrowingGroups() {
       {
         $match: {
           "activity.date": { $gte: startDate, $lte: endDate },
-          "activity.activityType": "new_member", // Adjusted to match your activityType
+          "activity.activityType": "new_member",
         },
       },
       {
         $group: {
           _id: "$_id",
           newMembers: { $sum: 1 },
+          groupUrl: { $first: "$groupUrl" },
+          title: { $first: "$title" },
+          description: { $first: "$description" },
         },
       },
       {
         $sort: { newMembers: -1 },
       },
+      {
+        $limit: 3,
+      },
     ]);
-
-    console.log(result);
 
     return {
       success: true,
-      groups: result, // You might want to return the sorted groups or use them as needed
+      groups: result,
     };
   } catch (error) {
     console.error(error);
