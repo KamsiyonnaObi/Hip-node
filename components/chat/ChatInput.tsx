@@ -4,27 +4,27 @@ import OutlineIcon from "../icons/OutlineIcon";
 
 const ChatInput = () => {
   return (
-    <section className="flex items-center gap-5">
+    <section className="flex h-16 items-center gap-5">
       <section className="relative flex flex-1 ">
         <div className="flex flex-1 items-center gap-2.5">
           <div
             className={
-              "relative flex flex-1 flex-wrap items-center justify-between gap-[15px] rounded-2xl border border-secondary5 bg-background px-[15px] py-2.5 text-contents dark:border-secondary2 dark:bg-dark4 md:w-5"
+              "relative flex flex-1 flex-wrap items-center justify-between gap-[15px] rounded-2xl border border-secondary5 bg-secondary6 px-[15px] py-2.5 text-contents dark:border-secondary2 dark:bg-secondary2 md:w-5"
             }
           >
-            <div className=" flex items-center">
+            <div className="flex items-center">
               <button>
-                <OutlineIcon.LinkIcon className="stroke-secondary4" />
+                <OutlineIcon.LinkIcon className="w-6- h-6 stroke-secondary4" />
               </button>
             </div>
-            <textarea
-              className="md:body-regular caption-regular h-[18px] flex-1 resize-none items-center justify-start  bg-background text-secondary4 placeholder:text-secondary4 focus:outline-none dark:bg-dark4 md:h-[22px]"
+            <input
+              className="md:display-regular caption-regular h-[18px] flex-1 resize-none items-center justify-start bg-secondary6 text-secondary4 placeholder:text-secondary4 focus:outline-none dark:bg-secondary2 md:h-[22px]"
               placeholder="Type here your message..."
             />
 
             <div className=" flex items-center">
               <button>
-                <OutlineIcon.Voice className="fill-none stroke-secondary4" />
+                <OutlineIcon.Voice className="h-6 w-6 fill-none stroke-secondary4" />
               </button>
             </div>
           </div>
