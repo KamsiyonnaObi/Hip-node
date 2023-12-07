@@ -61,7 +61,7 @@ export async function getAllNotification({
       .populate("userIdfrom")
       .sort({ createdAt: -1 })
       .lean();
-    return JSON.stringify(notifications);
+    return notifications;
   } catch (error) {
     console.log(error);
     throw error;

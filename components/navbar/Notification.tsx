@@ -5,12 +5,12 @@ import { Button } from "../ui/Button";
 import OutlineIcon from "../icons/OutlineIcon";
 import NotifCard from "./NotifCard";
 import {
-  getAllNotification,
   readAllNotifications,
   readPost,
 } from "@/utils/actions/notification.action";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import Link from "next/link";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const Notification = ({
   toggle,
@@ -19,30 +19,22 @@ const Notification = ({
   toggle?: () => void;
   type?: string;
 }) => {
+  const { notifications } = useSocketContext();
   const [select, setSelect] = useState("all");
-  const [notifList, setNotifList] = useState<null | any[]>(null);
+  const [notifList, setNotifList] = useState<null | any[]>(notifications);
 
   const slicedNotifList = type === "page" ? notifList : notifList?.slice(0, 3);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const currentUser = await getCurrentUser();
-        const currentUserId = currentUser?._id.toString() || "unknown";
-
-        const notification = await getAllNotification({
-          userId: currentUserId,
-          type: select,
-        });
-
-        setNotifList(JSON.parse(notification));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [select]);
+    if (select === "all") {
+      setNotifList(notifications);
+      return;
+    }
+    const filteredNotif = notifications.filter(
+      (notif) => notif.type === select
+    );
+    setNotifList(filteredNotif);
+  }, [select, notifications]);
 
   const toggleSelect = (val: string) => {
     setSelect(val);

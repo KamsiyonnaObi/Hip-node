@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/navbar/Footer";
 import { getCurrentUser } from "@/utils/actions/user.action";
+import { SocketProvider } from "@/providers/SocketProvider";
 
 export default async function RootLayout({
   children,
@@ -21,11 +22,13 @@ export default async function RootLayout({
 
   return (
     <>
-      <Navbar user={userData} />
-      {children}
-      <div className="sticky bottom-0 md:hidden">
-        <Footer />
-      </div>
+      <SocketProvider>
+        <Navbar user={userData} />
+        {children}
+        <div className="sticky bottom-0 md:hidden">
+          <Footer />
+        </div>
+      </SocketProvider>
     </>
   );
 }
