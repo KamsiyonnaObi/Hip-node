@@ -81,7 +81,7 @@ export async function joinGroup(groupId: string) {
   try {
     await dbConnect();
     const user = await getServerSession();
-    const { email } = user?.user;
+    const { email } = user?.user ?? { email: undefined };
     const userObj = await UserModel.find({ email });
     const group = await Group.findById(groupId);
 
@@ -116,7 +116,7 @@ export async function isMember(groupId: string) {
   try {
     await dbConnect();
     const user = await getServerSession();
-    const { email } = user?.user;
+    const { email } = user?.user ?? { email: undefined };
     const userObj = await UserModel.findOne({ email });
     const group = await Group.findById(groupId);
 
@@ -137,7 +137,7 @@ export async function leaveGroup(groupId: string) {
   try {
     await dbConnect();
     const user = await getServerSession();
-    const { email } = user?.user;
+    const { email } = user?.user ?? { email: undefined };
     const userObj = await UserModel.find({ email });
     const group = await Group.findById(groupId);
 

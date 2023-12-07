@@ -48,24 +48,19 @@ const Cover = ({
     };
   }, []);
   const handleLeaveGroup = () => {
-    // Update the membership status after leaving the group
     setIsMemberSelect(false);
   };
   const submitJoinGroup = async () => {
     try {
       if (isMemberSelect) {
-        // Perform leave group action
         await leaveGroup(groupId);
       } else {
-        // Perform join group action
         await joinGroup(groupId);
       }
 
-      // Update the membership status
       setIsMemberSelect(!isMemberSelect);
     } catch (error) {
       console.error("Error interacting with the group:", error);
-      // Handle error if needed
     }
   };
 
@@ -76,12 +71,11 @@ const Cover = ({
         setIsMemberSelect(response.isMember);
       } catch (error) {
         console.error("Error checking group membership:", error);
-        // Handle error if needed
       }
     };
 
     checkMember();
-  }, [groupId]); // Updated dependency array to re-run the effect when groupId changes
+  }, [groupId]);
 
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">

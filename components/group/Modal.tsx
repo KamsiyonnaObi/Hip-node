@@ -26,7 +26,7 @@ export default function Modal({
       console.log(response);
 
       closeModal();
-      onLeaveGroup(); // Invoke the callback to handle leaving the group in the parent component
+      onLeaveGroup();
     } catch (error) {
       console.error("Error leaving group:", error);
     }
