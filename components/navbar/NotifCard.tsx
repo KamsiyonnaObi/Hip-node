@@ -9,14 +9,29 @@ interface Props {
   comment?: string;
   title: string;
   postedAt: string;
+  read: boolean;
 }
 
-const NotifCard = ({ type, avatar, name, comment, title, postedAt }: Props) => {
+const NotifCard = ({
+  type,
+  avatar,
+  name,
+  comment,
+  title,
+  postedAt,
+  read,
+}: Props) => {
   return (
     <article className="flex w-[295px] flex-row gap-5 text-secondary3 md:w-[529px]">
       <div className="relative flex h-[50px] w-[50px] items-center justify-center md:h-[60px] md:w-[60px]">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary5 dark:bg-secondary6 md:h-[50px] md:w-[50px]">
-          <Image src={avatar} alt="avatar" width={40} height={40} />
+          <Image
+            src={avatar}
+            alt="avatar"
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
         </div>
         <div className="absolute left-6 top-6 h-[26px] w-[26px] rounded-full bg-background2 dark:bg-dark3 md:left-8 md:top-8 md:h-8 md:w-8">
           <div className="mx-auto mt-[5px] flex h-4 w-4 flex-col items-center justify-center md:mt-[6px]  md:h-5 md:w-5 ">
@@ -65,7 +80,13 @@ const NotifCard = ({ type, avatar, name, comment, title, postedAt }: Props) => {
             </div>
           )}
           <div className="flex flex-col gap-1">
-            <h3 className="h3-semibold body-semibold text-red80">{title}</h3>
+            <h3
+              className={`h3-semibold body-semibold ${
+                read ? "text-secondary3" : "text-red80"
+              }`}
+            >
+              {title}
+            </h3>
             <p className="text-sm-regular md:body-regular">{postedAt}</p>
           </div>
         </div>

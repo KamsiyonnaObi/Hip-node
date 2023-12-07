@@ -9,6 +9,7 @@ export interface IGroup extends Document {
   description: string;
   admins: String[];
   members: String[];
+  activity: String[];
 }
 
 const GroupSchema = new Schema({
@@ -20,10 +21,14 @@ const GroupSchema = new Schema({
   description: { type: String, required: true },
   admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  activity: [
+    {
+      date: Date,
+      activityType: String, // e.g., 'new_member', 'new_post'
+    },
+  ],
 });
-
 
 const Group = models.Group || model("Group", GroupSchema);
 
 export default Group;
-

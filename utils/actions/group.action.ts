@@ -201,8 +201,37 @@ export async function getNewestGroups() {
     const groups = await Group.find({})
       .sort({ createdAt: -1 })
       .populate("userId");
+    return { success: true, groups };
+  } catch (error) {
+    console.log(error);
 
-    return JSON.stringify(groups);
+    return {
+      success: false,
+      groups: [],
+    };
+  }
+}
+
+export async function getMostPopularGroups() {
+  try {
+    await dbConnect();
+    const sorted = await Group.aggregate([
+      {
+        $project: {
+          // add a field to the results, called "count" which is the "size" of the "members" array
+          count: { $size: "$members" },
+        },
+      },
+      { $sort: { count: -1 } }, // sort descending
+      { $limit: 3 }, // only grab 3
+    ]);
+
+    const groups = await Group.find({
+      _id: {
+        $in: [...sorted],
+      },
+    });
+    return groups;
   } catch (error) {
     console.log(error);
     return {

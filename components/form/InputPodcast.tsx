@@ -22,6 +22,7 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
 import { createPodcast, updatePodcast } from "@/utils/actions/podcast.action";
+import { toast } from "../ui/use-toast";
 
 export function InputPodcast({ editDetail }: { editDetail?: string }) {
   const { theme } = useTheme();
@@ -73,6 +74,10 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
       } else {
         await createPodcast(podcastData);
       }
+      return toast({
+        title: `${editDetail ? "Edited" : "Created"} Podcast`,
+        variant: "default",
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);
