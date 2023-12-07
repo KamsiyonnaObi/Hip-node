@@ -1,7 +1,10 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { getFastestGrowingGroups } from "@/utils/actions/group.action";
 import React from "react";
 
-const FastestGrowing = () => {
+const FastestGrowing = async () => {
+  const recentMembers = await getFastestGrowingGroups();
+  console.log(recentMembers);
   return (
     <section>
       <div className="bg-white px-[.62rem] dark:bg-dark3">

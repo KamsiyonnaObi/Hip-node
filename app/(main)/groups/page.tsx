@@ -1,6 +1,6 @@
 import React from "react";
 import { PostGroup, CreateGroup } from "@/components/group";
-import { getAllGroups, getGroupPosts } from "@/utils/actions/group.action";
+import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";

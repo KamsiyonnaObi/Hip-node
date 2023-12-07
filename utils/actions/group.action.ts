@@ -336,46 +336,44 @@ export async function getMostPopularGroups() {
   }
 }
 
-// export async function getFastestGrowingGroups()
-// try {
-//   await dbConnect();
-//   const groups = await Group.find({})
+export async function getFastestGrowingGroups() {
+  try {
+    await dbConnect();
+    const startDate = new Date("2023-01-01");
+    const endDate = new Date("2023-12-31");
 
-//   return groups
-// } catch (error) {
-//   success: false,
-//   groups: [],
-// }
+    const result = await Group.aggregate([
+      {
+        $unwind: "$activity",
+      },
+      {
+        $match: {
+          "activity.date": { $gte: startDate, $lte: endDate },
+          "activity.activityType": "new_member", // Adjusted to match your activityType
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          newMembers: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { newMembers: -1 },
+      },
+    ]);
 
-// In corperate this aggregate into the fastest grouwing groups to find the fastest growing groups
+    console.log(result);
 
-// const startDate = new Date("2023-01-01");
-// const endDate = new Date("2023-12-31");
-
-// Group.aggregate([
-//     {
-//         $unwind: "$activity"
-//     },
-//     {
-//         $match: {
-//             "activity.date": { $gte: startDate, $lte: endDate },
-//             "activity.type": "new_member"
-//         }
-//     },
-//     {
-//         $group: {
-//             _id: "$_id",
-//             newMembers: { $sum: 1 }
-//         }
-//     },
-//     {
-//         $sort: { newMembers: -1 }
-//     }
-// ])
-// .then(groups => {
-//     // groups now contains the list of groups sorted by their growth (number of new members)
-//     console.log(groups);
-// })
-// .catch(err => {
-//     console.error(err);
-// });
+    return {
+      success: true,
+      groups: result, // You might want to return the sorted groups or use them as needed
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the group.",
+    };
+  }
+}
