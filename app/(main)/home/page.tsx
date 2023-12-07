@@ -8,7 +8,6 @@ import Podcasts from "@/components/Podcasts";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { Suspense } from "react";
-import ChatPopup from "../../../components/chat/ChatPopup";
 
 export default async function Home({
   searchParams,
@@ -34,7 +33,6 @@ export default async function Home({
         <div className="hidden md:flex lg:hidden">
           <Sidebar small />
         </div>
-        <ChatPopup />
         <CreatePost avatar={currentUser?.profileImage.toString() || ""} />
         <Suspense
           key={JSON.stringify(searchParams)}
