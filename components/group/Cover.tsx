@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
-import { joinGroup, isMember } from "@/utils/actions/group.action";
+import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
 
 const Cover = ({
   user,
@@ -47,19 +47,41 @@ const Cover = ({
       window.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-
+  const handleLeaveGroup = () => {
+    // Update the membership status after leaving the group
+    setIsMemberSelect(false);
+  };
   const submitJoinGroup = async () => {
-    const response = await joinGroup(groupId);
-    console.log(response);
+    try {
+      if (isMemberSelect) {
+        // Perform leave group action
+        await leaveGroup(groupId);
+      } else {
+        // Perform join group action
+        await joinGroup(groupId);
+      }
+
+      // Update the membership status
+      setIsMemberSelect(!isMemberSelect);
+    } catch (error) {
+      console.error("Error interacting with the group:", error);
+      // Handle error if needed
+    }
   };
 
   useEffect(() => {
     const checkMember = async () => {
-      const response = await isMember(groupId);
-      setIsMemberSelect(response.isMember);
+      try {
+        const response = await isMember(groupId);
+        setIsMemberSelect(response.isMember);
+      } catch (error) {
+        console.error("Error checking group membership:", error);
+        // Handle error if needed
+      }
     };
+
     checkMember();
-  }, []);
+  }, [groupId]); // Updated dependency array to re-run the effect when groupId changes
 
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
@@ -119,14 +141,15 @@ const Cover = ({
                 className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
                 onClick={submitJoinGroup}
               >
-                <FillIcon.Leave className="fill-secondary3" />
-                <p>Join</p>
+                <FillIcon.Profile className="fill-secondary3" />
+                <p className="caption-semibold text-secondary3">Join</p>
               </button>
             )}
             <Modal
               show={show}
               closeModal={() => setShow(false)}
               groupId={groupId}
+              onLeaveGroup={handleLeaveGroup}
             />
           </div>
           <div className="relative">

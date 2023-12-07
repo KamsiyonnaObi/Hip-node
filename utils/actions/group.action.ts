@@ -125,6 +125,7 @@ export async function isMember(groupId: string) {
 
       return { success: true, isMember };
     }
+    revalidatePath(`groups/${groupId}`);
 
     return { success: false, isMember: false };
   } catch (error) {
