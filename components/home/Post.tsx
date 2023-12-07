@@ -87,9 +87,9 @@ const Post = ({
         <Image
           src={postImage}
           alt="Post"
-          className="h-[56px] w-[56px] rounded-[16px] md:h-[156px] md:w-[156px]"
-          width={56}
-          height={56}
+          className="h-[56px] w-[56px] rounded-[16px] object-cover md:h-[156px] md:w-[156px]"
+          width={200}
+          height={200}
         />
         <div className="flex w-full flex-col gap-[30px]">
           <div className="flex w-full flex-row justify-between">
@@ -163,15 +163,15 @@ const Post = ({
             </section>
           </div>
           <div className="flex flex-row gap-[10px]">
-            <section className="hidden aspect-square items-center justify-center rounded-full bg-purple10 md:flex md:h-[40px] md:w-[40px]">
+            <div className="hidden shrink-0 overflow-hidden rounded-full bg-purple10 md:flex md:h-10 md:w-10">
               <Image
                 src={avatar}
                 alt="avatar"
-                width={40}
-                height={40}
-                className="rounded-full"
+                width={64}
+                height={64}
+                className="object-cover"
               />
-            </section>
+            </div>
             <section className="flex flex-row justify-between md:w-full">
               <div className="hidden flex-col md:flex">
                 <div className="flex gap-[.25rem]">
