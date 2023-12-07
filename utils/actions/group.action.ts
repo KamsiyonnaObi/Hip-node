@@ -117,16 +117,18 @@ export async function isMember(groupId: string) {
     await dbConnect();
     const user = await getServerSession();
     const { email } = user?.user;
-    const userObj = await UserModel.find({ email });
+    const userObj = await UserModel.findOne({ email });
     const group = await Group.findById(groupId);
+
     if (group) {
-      const memberIndex = group.members.indexOf(userObj[0]._id);
-      if (memberIndex === -1) {
-        return { success: false };
-      }
+      const isMember = group.members.includes(userObj?._id);
+
+      return { success: true, isMember };
     }
+
+    return { success: false, isMember: false };
   } catch (error) {
-    return error;
+    return { success: false, error };
   }
 }
 

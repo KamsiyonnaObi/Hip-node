@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
-import { joinGroup } from "@/utils/actions/group.action";
+import { joinGroup, isMember } from "@/utils/actions/group.action";
 
 const Cover = ({
   user,
@@ -24,7 +24,7 @@ const Cover = ({
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const [isMember, setIsMember] = useState(false);
+  const [isMemberSelect, setIsMemberSelect] = useState(false);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
@@ -52,6 +52,14 @@ const Cover = ({
     const response = await joinGroup(groupId);
     console.log(response);
   };
+
+  useEffect(() => {
+    const checkMember = async () => {
+      const response = await isMember(groupId);
+      setIsMemberSelect(response.isMember);
+    };
+    checkMember();
+  }, []);
 
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
@@ -98,7 +106,7 @@ const Cover = ({
         </div>
         <div className="flex items-center gap-[.62rem]">
           <div>
-            {isMember ? (
+            {isMemberSelect ? (
               <button
                 className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
                 onClick={() => setShow((s) => !s)}
