@@ -10,6 +10,7 @@ interface Props {
   image: string;
   postId: string;
   currentUserImage: string;
+  userId: string;
 }
 
 const OpenedPost = ({
@@ -19,6 +20,7 @@ const OpenedPost = ({
   image,
   postId,
   currentUserImage,
+  userId,
 }: Props) => {
   return (
     <section className="flex flex-col gap-5 rounded-lg bg-background dark:bg-dark3 md:rounded-b-none">
@@ -50,7 +52,12 @@ const OpenedPost = ({
           <Html htmltext={content} />
         </h3>
         <div className="">
-          <CommentInput postId={postId} currentUserImage={currentUserImage} />
+          <CommentInput
+            postId={postId}
+            currentUserImage={currentUserImage}
+            content={content}
+            userId={userId}
+          />
         </div>
       </article>
     </section>

@@ -172,7 +172,7 @@ const ChangeGroup: React.FC<Props> = ({
             </p>
           )}
         </section>
-        <section className="flex flex-col gap-[.62rem]">
+        <section className="my-[1.25rem] flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
             Description
           </label>
@@ -206,7 +206,7 @@ const ChangeGroup: React.FC<Props> = ({
             </p>
           )}
         </section>
-        <section className="flex flex-col gap-[.62rem]">
+        <section className="my-[1.25rem] flex flex-col gap-[.62rem]">
           <label className="caption-semibold text-secondary2 dark:text-background2">
             Add members
           </label>
@@ -229,7 +229,7 @@ const ChangeGroup: React.FC<Props> = ({
           >
             Update
           </button>
-          <Link href={`/groups/${groupId}`}>
+          <Link href={`/groups/${groupId}`} className="my-auto">
             <button className="body-semibold my-auto flex items-center  text-secondary3">
               Cancel
             </button>

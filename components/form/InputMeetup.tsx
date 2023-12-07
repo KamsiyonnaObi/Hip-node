@@ -26,6 +26,7 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { useTheme } from "next-themes";
 import { CldUploadWidget } from "next-cloudinary";
 import { createMeetup } from "@/utils/actions/meetup.action";
+import { toast } from "../ui/use-toast";
 
 export function InputMeetup() {
   const { theme } = useTheme();
@@ -84,7 +85,11 @@ export function InputMeetup() {
         day: day.toString(),
       };
 
-      const id = await createMeetup(meetupData);
+      await createMeetup(meetupData);
+      return toast({
+        title: "Created Meetup",
+        variant: "default",
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);

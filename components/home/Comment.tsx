@@ -9,6 +9,9 @@ import { format } from "date-fns";
 import { VerticalLine } from "../icons/outlineIcons/VerticalLine";
 import { likeComment } from "@/utils/actions/post.action";
 import { CommentInput } from ".";
+import { createNotification } from "@/utils/actions/notification.action";
+import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface CommentProps {
   commentId?: string;
@@ -31,6 +34,7 @@ const Comment = ({
   commentId,
   postId,
   parentId,
+  userId,
   currentUserId,
   currentUserImage,
   name,
@@ -46,6 +50,8 @@ const Comment = ({
   const [showInput, setShowInput] = useState(false);
   const [isPending, startTransition] = useTransition();
 
+  const pathname = usePathname();
+
   const handleLike = async () => {
     if (currentUserId && commentId) {
       startTransition(async () => {
@@ -54,8 +60,19 @@ const Comment = ({
           commentId,
           hasLiked,
         });
-        if (!liked) return;
-        setIsLiked(liked.status);
+        if (!hasLiked) {
+          await createNotification({
+            title: text,
+            type: "reaction",
+            userTo: userId,
+            link: pathname,
+          });
+        }
+        if (liked) setIsLiked(liked.status);
+      });
+      return toast({
+        title: `${!isLiked ? "Liked Comment" : "Removed Like"}`,
+        variant: !isLiked ? "default" : "destructive",
       });
     }
   };
@@ -113,6 +130,8 @@ const Comment = ({
             parentId={parentId}
             currentUserImage={currentUserImage}
             setShowInput={setShowInput}
+            content={text || "unknown"}
+            userId={userId}
           />
         )}
       </section>

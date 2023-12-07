@@ -1,8 +1,9 @@
 import React from "react";
-import { PostGroup, GroupName, CreateGroup } from "@/components/group";
+import { PostGroup, CreateGroup } from "@/components/group";
 import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
+import GroupFilter from "@/components/group/GroupFilter";
 
 const page = async ({ params }: { params: string }) => {
   const groups = await getAllGroups(params);
@@ -17,9 +18,7 @@ const page = async ({ params }: { params: string }) => {
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
-        <div>
-          <GroupName />
-        </div>
+        <GroupFilter />
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>

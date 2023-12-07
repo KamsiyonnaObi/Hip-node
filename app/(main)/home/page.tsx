@@ -49,6 +49,7 @@ export default async function Home({
           <PostRender
             searchParams={searchParams}
             currentUserId={currentUser?._id.toString() || ""}
+            currentUser={currentUser}
           />
         </Suspense>
       </section>

@@ -75,6 +75,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           content={content}
           postId={params.slug}
           currentUserImage={currentUser?.profileImage || ""}
+          userId={userId._id}
         />
         <div className="my-5 flex flex-col gap-5 md:hidden">
           <ActionBar

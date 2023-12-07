@@ -9,24 +9,33 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import { addComments } from "@/utils/actions/post.action";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { createNotification } from "@/utils/actions/notification.action";
+import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 const CommentInput = ({
   postId,
   commentId,
   parentId,
   currentUserImage,
+  userId,
+  content,
   setShowInput = () => {},
 }: {
   postId: string;
   commentId?: string;
   parentId?: string;
   currentUserImage?: string;
+  userId?: string;
+  content: string;
   setShowInput?: (state: boolean) => void;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { theme } = useTheme();
 
   const { ref, isOpen, toggleOpen } = useOutsideClick();
+
+  const pathname = usePathname();
 
   const handleSubmit = async () => {
     if (inputValue.trim() === "") {
@@ -38,9 +47,20 @@ const CommentInput = ({
       commentId,
       parentId,
     });
+    await createNotification({
+      comment: inputValue,
+      title: content,
+      type: "comment",
+      userTo: userId || "unknown",
+      link: pathname,
+    });
 
     setInputValue("");
     setTimeout(() => setShowInput(false), 500);
+    return toast({
+      title: "Comment Added",
+      variant: "default",
+    });
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {

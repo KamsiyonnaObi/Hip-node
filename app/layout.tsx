@@ -9,6 +9,7 @@ import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers/ThemeProvider";
 import { cn } from "@/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const SourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({
         <NextAuthProvider session={session}>
           <Providers>{children}</Providers>
         </NextAuthProvider>
+        <Toaster />
       </body>
     </html>
   );
