@@ -4,12 +4,15 @@ import PopularTags from "@/components/home/PopularTags";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
 import Notification from "@/components/navbar/Notification";
+import { getPopularTags } from "@/utils/actions/post.action";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { search: string };
 }) {
+  const getPopTags = await getPopularTags();
+
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -17,7 +20,7 @@ export default async function Home({
           <Sidebar />
         </div>
         <div className="hidden lg:flex">
-          <PopularTags getPopTags={[]} />
+          <PopularTags getPopTags={getPopTags} />
         </div>
         <div className="hidden lg:flex">
           <PinnedGroup />
