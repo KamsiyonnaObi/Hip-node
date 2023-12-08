@@ -24,7 +24,6 @@ export default function SocketHandler(req, res) {
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);
       });
-      socket.emit("update-input", "Hello from server");
     });
   }
   res.end();

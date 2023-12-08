@@ -11,6 +11,7 @@ import {
 import { getCurrentUser } from "@/utils/actions/user.action";
 import Link from "next/link";
 import { useSocketContext } from "@/providers/SocketProvider";
+import { INotif } from "@/models/notification.model";
 
 const Notification = ({
   toggle,
@@ -21,7 +22,7 @@ const Notification = ({
 }) => {
   const { notifications } = useSocketContext();
   const [select, setSelect] = useState("all");
-  const [notifList, setNotifList] = useState<null | any[]>(notifications);
+  const [notifList, setNotifList] = useState<null | INotif[]>(notifications);
 
   const slicedNotifList = type === "page" ? notifList : notifList?.slice(0, 3);
 
