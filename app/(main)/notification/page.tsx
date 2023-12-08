@@ -17,7 +17,7 @@ export default async function Home({
           <Sidebar />
         </div>
         <div className="hidden lg:flex">
-          <PopularTags />
+          <PopularTags getPopTags={[]} />
         </div>
         <div className="hidden lg:flex">
           <PinnedGroup />
