@@ -13,7 +13,7 @@ import { createNotification } from "@/utils/actions/notification.action";
 import { usePathname } from "next/navigation";
 import { toast } from "../ui/use-toast";
 
-const ChatInput = ({
+const CommentInput = ({
   postId,
   commentId,
   parentId,
@@ -127,4 +127,4 @@ const ChatInput = ({
   );
 };
 
-export default ChatInput;
+export default CommentInput;
