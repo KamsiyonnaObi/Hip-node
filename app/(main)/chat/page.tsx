@@ -4,7 +4,7 @@ import SearchInput from "@/components/chat/SearchInput";
 import TopCard from "@/components/chat/TopCard";
 import RightChatList from "@/components/signin/RightChatList";
 
-const page = ({ isOnline }: { isOnline: boolean }) => {
+const page = () => {
   return (
     <main className="grid bg-background dark:bg-dark2 md:grid-cols-10">
       <section className="flex w-full flex-col md:col-span-3">
@@ -25,7 +25,7 @@ const page = ({ isOnline }: { isOnline: boolean }) => {
       </section>
       <div className="fixed inset-x-0 top-20 z-[1] hidden bg-background  dark:bg-dark4 md:left-[30%] md:block">
         <div className="mx-auto w-full">
-          <TopCard isOnline={isOnline} />
+          <TopCard />
         </div>
       </div>
       <div className="col-span-7 mt-[96px] hidden min-h-screen md:flex">

@@ -1,8 +1,13 @@
+"use clinet";
+
+import { useState } from "react";
+
 import Link from "next/link";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import OutlineIcon from "../icons/OutlineIcon";
 
-const TopCard = ({ isOnline }: { isOnline: boolean }) => {
+const TopCard = () => {
+  // const [isOnline, setIsOnline] = useState(false);
   return (
     <section className="flex justify-between bg-secondary6 px-6 py-5 dark:bg-dark2">
       <div className="justify-centers flex items-center">
@@ -25,11 +30,11 @@ const TopCard = ({ isOnline }: { isOnline: boolean }) => {
               <h2 className="h2-bold text-secondary2 dark:text-background ">
                 Ronald Richards
               </h2>
-              {isOnline ? (
-                <p className="text-sm-semibold text-green">Online</p>
-              ) : (
-                <p className="text-sm-semibold text-red">Offline</p>
-              )}
+              {/* {isOnline ? ( */}
+              <p className="text-sm-semibold text-green">Online</p>
+              {/* ) : ( */}
+              {/* <p className="text-sm-semibold text-red">Offline</p> */}
+              {/* )} */}
             </div>
             <p>@ronald</p>
           </div>
