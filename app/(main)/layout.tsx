@@ -5,6 +5,9 @@ import Footer from "@/components/navbar/Footer";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { SocketProvider } from "@/providers/SocketProvider";
 
+
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: {

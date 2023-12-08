@@ -135,7 +135,7 @@ const InterviewPost = ({
           alt="Interview Image"
           width={280}
           height={180}
-          className="h-[200px] w-[307px] rounded-xl md:h-[180px] md:w-[280px]"
+          className="h-[200px] w-[307px] rounded-xl object-cover md:h-[180px] md:w-[280px]"
         />
       </div>
     </article>

@@ -62,7 +62,7 @@ const Cover = ({
           alt="GroupCover"
           width={780}
           height={174}
-          className="h-[174px] w-[780px] rounded-[1rem]"
+          className="h-[174px] w-[780px] rounded-[1rem] object-cover"
         />
       </div>
       <div className="mt-[.88rem] flex justify-between sm:mt-[1.25rem]">
