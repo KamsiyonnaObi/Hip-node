@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
+import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
 
 const Cover = ({
   user,
@@ -23,6 +24,7 @@ const Cover = ({
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const [isMemberSelect, setIsMemberSelect] = useState(false);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
@@ -45,6 +47,36 @@ const Cover = ({
       window.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+  const handleLeaveGroup = () => {
+    setIsMemberSelect(false);
+  };
+  const submitJoinGroup = async () => {
+    try {
+      if (isMemberSelect) {
+        await leaveGroup(groupId);
+      } else {
+        await joinGroup(groupId);
+      }
+
+      setIsMemberSelect(!isMemberSelect);
+    } catch (error) {
+      console.error("Error interacting with the group:", error);
+    }
+  };
+
+  useEffect(() => {
+    const checkMember = async () => {
+      try {
+        const response = await isMember(groupId);
+        setIsMemberSelect(response.isMember);
+      } catch (error) {
+        console.error("Error checking group membership:", error);
+      }
+    };
+
+    checkMember();
+  }, [groupId]);
+
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -90,14 +122,29 @@ const Cover = ({
         </div>
         <div className="flex items-center gap-[.62rem]">
           <div>
-            <button
-              className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
-              onClick={() => setShow((s) => !s)}
-            >
-              <FillIcon.Leave className="fill-secondary3" />
-              <p className="caption-semibold text-secondary3">Leave</p>
-            </button>
-            <Modal show={show} closeModal={() => setShow(false)} />
+            {isMemberSelect ? (
+              <button
+                className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
+                onClick={() => setShow((s) => !s)}
+              >
+                <FillIcon.Leave className="fill-secondary3" />
+                <p className="caption-semibold text-secondary3">Leave</p>
+              </button>
+            ) : (
+              <button
+                className="flex h-10 items-center gap-[.62rem] self-center bg-background2 p-[.62rem] dark:bg-dark4"
+                onClick={submitJoinGroup}
+              >
+                <FillIcon.Profile className="fill-secondary3" />
+                <p className="caption-semibold text-secondary3">Join</p>
+              </button>
+            )}
+            <Modal
+              show={show}
+              closeModal={() => setShow(false)}
+              groupId={groupId}
+              onLeaveGroup={handleLeaveGroup}
+            />
           </div>
           <div className="relative">
             <button ref={buttonRef} onClick={handleButtonClick}>
