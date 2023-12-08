@@ -52,7 +52,7 @@ const ChatInput = ({
       title: content,
       type: "comment",
       userTo: userId || "unknown",
-      link: pathname,
+      link: pathname || "/",
     });
 
     setInputValue("");
