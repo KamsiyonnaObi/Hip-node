@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/navbar/Footer";
 import { getCurrentUser } from "@/utils/actions/user.action";
-
+export const dynamic = "force-dynamic";
 export default async function RootLayout({
   children,
 }: {
