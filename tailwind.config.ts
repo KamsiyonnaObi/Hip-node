@@ -49,6 +49,7 @@ const config: Config = {
         purple10: "#F0F1FE",
         green80: "#3ED6A4",
         green10: "#E7FAF4",
+        success500: "#12B76A",
         // Divine Domain Classes
         defaultText: "rgb(var(--default-text) / <alpha-value>)",
         bkg: {

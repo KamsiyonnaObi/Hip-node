@@ -1,6 +1,7 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
-import ChatInput from "./ChatInput";
+
 import Html from "../shared/html";
+import CommentInput from "./CommentInput";
 
 interface Props {
   title: string;
@@ -51,7 +52,7 @@ const OpenedPost = ({
           <Html htmltext={content} />
         </h3>
         <div className="">
-          <ChatInput
+          <CommentInput
             postId={postId}
             currentUserImage={currentUserImage}
             content={content}

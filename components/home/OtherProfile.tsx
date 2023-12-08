@@ -48,13 +48,13 @@ const OtherProfile = ({
 
   return (
     <section className="flex flex-col items-center justify-center gap-5 rounded-2xl bg-background px-5 py-[30px] dark:bg-dark3">
-      <div className="relative h-24 w-24 rounded-full bg-yellow30">
+      <div className="h-24 w-24 overflow-hidden rounded-full bg-yellow30">
         <Image
-          className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
+          className="object-cover"
           src={userObj.profileImage}
           alt="profile"
-          width="80"
-          height="80"
+          width="96"
+          height="96"
         />
       </div>
       <div className="flex flex-col items-center justify-center">
