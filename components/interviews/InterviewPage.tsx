@@ -1,5 +1,3 @@
-"use client";
-
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 
@@ -7,6 +5,7 @@ import Html from "../shared/html";
 import { formatNumber } from "@/utils";
 import PageWrapper from "../PageWrapper";
 import OutlineIcon from "../icons/OutlineIcon";
+import Link from "next/link";
 
 interface ResultType {
   image: string;
@@ -45,14 +44,13 @@ const InterviewPage = ({ result }: { result: ResultType }) => {
                 <small className="text-xs text-secondary3">Updates</small>
               </div>
               <div className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6">
-                <p
+                <Link
                   className="cursor-pointer text-sm font-bold"
-                  onClick={() =>
-                    window.open(`https://${result.website}`, "_blank")
-                  }
+                  href={result.website}
+                  target="_blank"
                 >
                   <OutlineIcon.Web className="fill-secondary2 dark:fill-background2" />
-                </p>
+                </Link>
                 <small className="text-xs text-secondary3">Website</small>
               </div>
             </div>

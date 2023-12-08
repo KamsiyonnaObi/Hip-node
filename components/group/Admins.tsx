@@ -9,7 +9,15 @@ const Admins = ({ profileImage, fullName, _id }: Props) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[.62rem]">
-        <Image src={profileImage} alt="avatar" width={30} height={30} />
+        <div className="relative h-8 w-8 overflow-hidden rounded-full">
+          <Image
+            src={profileImage}
+            alt="avatar"
+            width={50}
+            height={50}
+            className="object-cover"
+          />
+        </div>
         <div className="body-semibold text-secondary2 dark:text-background2">
           {fullName}
         </div>

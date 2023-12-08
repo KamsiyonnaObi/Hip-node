@@ -12,9 +12,9 @@ const Meetups = async () => {
 
   return (
     <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2">
-      <section className="display-semibold mb-5 flex flex-row items-center gap-[3px]">
-        <p>Meetups</p>
-        <Link href="./meetups">
+      <section className="display-semibold mb-5">
+        <Link href="./meetups" className="flex flex-row items-center gap-[3px]">
+          <p>Meetups</p>
           <OutlineIcon.ArrowLeft className="stroke-secondary2 dark:stroke-background2" />
         </Link>
       </section>
