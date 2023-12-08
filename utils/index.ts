@@ -17,8 +17,9 @@ export function findProperty(key: string, object: { [x: string]: any }) {
 
 export function formDataToObject(formData: FormData) {
   const object = {};
-  // @ts-ignore
+
   for (const [key, value] of formData.entries()) {
+    // @ts-ignore
     object[key as keyof Object] = value;
   }
   return object;
