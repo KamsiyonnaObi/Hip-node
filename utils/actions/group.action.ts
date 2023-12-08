@@ -339,8 +339,11 @@ export async function getMostPopularGroups() {
 export async function getFastestGrowingGroups() {
   try {
     await dbConnect();
-    const startDate = new Date("2023-01-01");
-    const endDate = new Date("2023-12-31");
+
+    const currentDate = new Date();
+
+    const startDate = new Date(currentDate);
+    startDate.setDate(startDate.getDate() - 7);
 
     const result = await Group.aggregate([
       {
@@ -348,7 +351,7 @@ export async function getFastestGrowingGroups() {
       },
       {
         $match: {
-          "activity.date": { $gte: startDate, $lte: endDate },
+          "activity.date": { $gte: startDate, $lte: currentDate },
           "activity.activityType": "new_member",
         },
       },
