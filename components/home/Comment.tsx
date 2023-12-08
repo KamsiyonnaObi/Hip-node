@@ -65,7 +65,7 @@ const Comment = ({
             title: text,
             type: "reaction",
             userTo: userId,
-            link: pathname,
+            link: pathname || "/",
           });
         }
         if (liked) setIsLiked(liked.status);

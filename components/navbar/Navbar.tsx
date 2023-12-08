@@ -14,6 +14,7 @@ import MessageList from "./MessageList";
 import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const Navbar = ({
   user,
@@ -23,6 +24,7 @@ const Navbar = ({
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isConnected } = useSocketContext();
 
   const [searchText, setSearchText] = useState(
     searchParams?.get("search") || ""
@@ -144,6 +146,9 @@ const Navbar = ({
                         fill
                         className="rounded-full object-fill"
                       />
+                      {isConnected && (
+                        <div className="absolute bottom-0 right-0 flex h-4 w-4 rounded-full border-2 border-white bg-green"></div>
+                      )}
                     </div>
                     {menuExpanded && <Popup username={username} />}
                   </div>
