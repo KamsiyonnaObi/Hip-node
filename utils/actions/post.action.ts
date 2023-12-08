@@ -317,6 +317,39 @@ export async function getPostTagsByGroupId(id: string) {
   }
 }
 
+export async function getPopularTags() {
+  try {
+    await dbConnect();
+    const posts = await Post.find({ tags: { $exists: true } });
+    const tags = posts.reduce((allTags, post) => {
+      allTags.push(...post.tags);
+      return allTags;
+    }, [] as string[]);
+
+    const tagCounts = tags.reduce(
+      (counts: { [key: string]: any }, tag: string) => {
+        counts[tag] = (counts[tag] || 0) + 1;
+        return counts;
+      },
+      {}
+    );
+
+    const tagsWithCount = Object.keys(tagCounts).map((tagName) => ({
+      name: tagName,
+      count: tagCounts[tagName],
+    }));
+
+    tagsWithCount.sort((a, b) => b.count - a.count);
+
+    const topTags = tagsWithCount;
+
+    return topTags;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
 function findCommentOrReply({
   comments,
   commentId,

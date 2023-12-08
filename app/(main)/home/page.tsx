@@ -5,6 +5,7 @@ import PopularTags from "@/components/home/PopularTags";
 import PostRender from "@/components/home/PostRender";
 import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
+import { getPopularTags } from "@/utils/actions/post.action";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { Suspense } from "react";
@@ -15,7 +16,7 @@ export default async function Home({
   searchParams: { search: string };
 }) {
   const currentUser = await getCurrentUser();
-
+  const getPopTags = await getPopularTags();
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -23,7 +24,7 @@ export default async function Home({
           <Sidebar />
         </div>
         <div className="hidden lg:flex">
-          <PopularTags />
+          <PopularTags getPopTags={getPopTags} />
         </div>
         <div className="hidden lg:flex">
           <PinnedGroup />
