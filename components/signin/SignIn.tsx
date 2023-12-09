@@ -80,7 +80,7 @@ const SignIn = () => {
             <Button
               onClick={handleLogIn}
               disabled={!formData.email || !formData.password || isPending}
-              className="px-10 py-2.5"
+              className="flex h-[46px] w-[127px] items-center justify-center"
             >
               Log In
               {isPending && <TailSpin color="#f7f7f7" height={20} width={20} />}
