@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { TailSpin } from "react-loader-spinner";
 
 import Divider from "@/components/signup/Divider";
 import FillIcon from "@/components/icons/FillIcon";
@@ -16,13 +17,14 @@ const SignIn = () => {
     password: "",
   });
   const [failedLogin, setFailedLogin] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleLogIn = async () => {
+  const handleSignIn = async () => {
     try {
       const response = await signIn("credentials", {
         email: formData.email,
@@ -31,16 +33,16 @@ const SignIn = () => {
       });
       if (response?.error) {
         setFailedLogin(true);
-        return false;
       } else {
         router.push("/");
         setFailedLogin(false);
-        return true;
       }
     } catch (error) {
       console.log("error", error);
     }
   };
+  const handleLogIn = () => startTransition(handleSignIn);
+
   return (
     <>
       <article className="mx-auto flex w-[327px] flex-col gap-[29px] sm:w-[442px] md:my-auto">
@@ -56,7 +58,7 @@ const SignIn = () => {
               name="email"
               type="email"
               divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
-              className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+              className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               onChange={handleChange}
               value={formData.email}
               placeholder="hello@gmail.com"
@@ -68,7 +70,7 @@ const SignIn = () => {
               name="password"
               type="password"
               divClassName="bg-background rounded-lg px-5 py-[13px] md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
-              className="bg-transparent w-full md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
+              className="w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
               onChange={handleChange}
               value={formData.password}
               placeholder="uikit.to074#"
@@ -77,10 +79,11 @@ const SignIn = () => {
           <div>
             <Button
               onClick={handleLogIn}
-              disabled={!formData.email || !formData.password}
+              disabled={!formData.email || !formData.password || isPending}
               className="px-10 py-2.5"
             >
               Log In
+              {isPending && <TailSpin color="#f7f7f7" height={20} width={20} />}
             </Button>
           </div>
           <p className="body-regular text-secondary2 dark:text-background2">
