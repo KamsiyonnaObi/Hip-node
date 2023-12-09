@@ -1,6 +1,6 @@
 export { default as ActionBar } from "./ActionBar";
 export { default as CommentInput } from "./CommentInput";
-export { default as Comment } from "./Comment";
+
 export { default as CreatePost } from "./CreatePost";
 export { default as GroupPostDate } from "./GroupPostDate";
 // export { default as MeetupCard } from "./MeetupCard";
