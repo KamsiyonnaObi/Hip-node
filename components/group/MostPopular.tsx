@@ -5,7 +5,6 @@ import React from "react";
 const MostPopular = async () => {
   try {
     const groups = await getMostPopularGroups();
-
     if (!Array.isArray(groups)) {
       return (
         <div>

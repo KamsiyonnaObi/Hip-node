@@ -119,7 +119,7 @@ export async function getAllInterviews(params: {
       .populate("userId")
       .sort({ createdAt: -1 });
 
-    return { interviews };
+    return { interviews: JSON.stringify(interviews) };
   } catch (error) {
     console.log(error);
     throw error;

@@ -1,5 +1,10 @@
 import { Schema, models, model, Document } from "mongoose";
 
+type Activity = {
+  date: Date;
+  activityType: string;
+};
+
 export interface IGroup extends Document {
   title: string;
   coverUrl: string;
@@ -9,7 +14,7 @@ export interface IGroup extends Document {
   description: string;
   admins: String[];
   members: String[];
-  activity: String[];
+  activity: Activity[];
 }
 
 const GroupSchema = new Schema({
@@ -21,12 +26,15 @@ const GroupSchema = new Schema({
   description: { type: String, required: true },
   admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  activity: [
-    {
-      date: Date,
-      activityType: String, // e.g., 'new_member', 'new_post'
-    },
-  ],
+  activity: {
+    type: [
+      {
+        date: Date,
+        activityType: String, // e.g., 'new_member', 'new_post'
+      },
+    ],
+    default: [],
+  },
 });
 
 const Group = models.Group || model("Group", GroupSchema);

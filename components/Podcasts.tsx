@@ -12,9 +12,9 @@ const Podcasts = async () => {
   return (
     <article className="flex w-full flex-col gap-[10px] rounded-[16px] bg-background p-[20px] text-secondary2 dark:bg-dark3 dark:text-background2 md:w-[325px]">
       <div className="gap-[20px]">
-        <section className="display-semibold mb-5 flex flex-row items-center gap-1">
-          <span>Podcasts</span>
-          <Link href="./podcast">
+        <section className="display-semibold mb-5">
+          <Link href="./podcast" className="flex flex-row items-center gap-1">
+            <span>Podcasts</span>
             <OutlineIcon.ArrowLeft className=" stroke-secondary3" />
           </Link>
         </section>
