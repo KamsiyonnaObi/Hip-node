@@ -149,3 +149,26 @@ export async function getCurrentUser() {
     return null;
   }
 }
+
+export async function getUserProfileById(userId: string) {
+  try {
+    await dbConnect();
+
+    const user = await UserModel.findById(userId);
+
+    if (user) {
+      const userObj = {
+        id: user._id.toString(),
+        fullname: user.fullName,
+        username: user.username,
+        profileImage: user.profileImage,
+      };
+      return userObj;
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

@@ -1,10 +1,12 @@
-import ChatCard from "@/components/chat/ChatCard";
 import ChatInput from "@/components/chat/ChatInput";
+import ChatList from "@/components/chat/ChatList";
 import SearchInput from "@/components/chat/SearchInput";
 import TopCard from "@/components/chat/TopCard";
-import RightChatList from "@/components/signin/RightChatList";
+import RightChatList from "@/components/chat/RightChatList";
+import { getAllMessages } from "@/utils/actions/message.action";
 
-const page = () => {
+const page = async () => {
+  const messages = await getAllMessages();
   return (
     <main className="grid bg-background dark:bg-dark2 md:grid-cols-10">
       <section className="flex w-full flex-col md:col-span-3">
@@ -20,7 +22,7 @@ const page = () => {
           <SearchInput />
         </div>
         <section className="min-h-screen">
-          <ChatCard />
+          <ChatList />
         </section>
       </section>
       <div className="fixed inset-x-0 top-20 z-[1] hidden bg-background  dark:bg-dark4 md:left-[30%] md:block">
@@ -29,11 +31,11 @@ const page = () => {
         </div>
       </div>
       <div className="col-span-7 mt-[96px] hidden min-h-screen md:flex">
-        <RightChatList />
+        <RightChatList messages={JSON.stringify(messages)} />
       </div>
       <div className="fixed inset-x-0 bottom-0 left-[30%] hidden bg-background px-8 pb-9 pt-8 dark:bg-dark4 md:block">
         <div className="mx-auto w-full">
-          <ChatInput />
+          <ChatInput userIdTo="65388d2c6c139fbad300219f" />
         </div>
       </div>
     </main>
