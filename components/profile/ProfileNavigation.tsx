@@ -13,6 +13,8 @@ const ProfileNavigation = () => {
       </TabsList>
       <TabsContent value="posts">View your Posts here.</TabsContent>
       <TabsContent value="meetups">View your Meetups here.</TabsContent>
+      <TabsContent value="podcasts">View your Podcasts here.</TabsContent>
+      <TabsContent value="interviews">View your Interviews here.</TabsContent>
       <TabsContent value="history">No recent views</TabsContent>
     </Tabs>
   );
