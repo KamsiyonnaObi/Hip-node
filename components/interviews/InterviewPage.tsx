@@ -26,7 +26,7 @@ const InterviewPage = ({ result }: { result: ResultType }) => {
           alt="Group Meeting"
           width={335}
           height={117}
-          className="h-[117px] w-[335px] rounded-t-lg md:h-[273px] md:w-[785px]"
+          className="h-fit w-fit rounded-t-lg md:w-full"
           priority
         />
         <div className="flex flex-col gap-5 px-5 pb-10 pt-5 sm:px-10">
