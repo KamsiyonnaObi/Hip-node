@@ -7,8 +7,8 @@ const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
 
   return (
-    <Tabs defaultValue="posts" className="w-full">
-      <TabsList className="h-[50px] w-full justify-between gap-x-5 overflow-hidden rounded-[14px] bg-background px-2.5 text-secondary3 hover:overflow-x-auto dark:bg-dark3 dark:text-background lg:h-20 lg:rounded-[20px] lg:px-[30px]">
+    <Tabs defaultValue="posts" className="w-full gap-x-10">
+      <TabsList className="mb-5 h-[50px] w-full justify-between gap-x-5 overflow-hidden rounded-[14px] bg-background px-2.5 text-secondary3 hover:overflow-x-auto dark:bg-dark3 dark:text-background lg:h-20 lg:rounded-[20px] lg:px-[30px]">
         <TabsTrigger value="posts">Posts</TabsTrigger>
         <TabsTrigger value="meetups">Meetups</TabsTrigger>
         <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
