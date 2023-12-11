@@ -98,7 +98,7 @@ const Cover = ({
         />
       </div>
       <div className="mt-[.88rem] flex justify-between sm:mt-[1.25rem]">
-        <div className="flex items-center gap-[.86rem]">
+        <div className="flex items-center gap-[.86rem] lg:pl-[.625rem]">
           <Image
             src={groupUrl}
             alt="GroupCover"
