@@ -4,8 +4,11 @@ import { PostHome } from "@/components/home";
 import { Button } from "../ui/Button";
 import Link from "next/link";
 
-type Props = { userId?: string };
-const RenderProfilePosts = async ({ userId }: Props) => {
+type Props = { JSONUser: string };
+const RenderProfilePosts = async ({ JSONUser }: Props) => {
+  const userData = JSON.parse(JSONUser);
+  const { userId, username, profileImage } = userData;
+
   const userPosts = await getPostsByUserId(userId!);
 
   return (
@@ -19,8 +22,8 @@ const RenderProfilePosts = async ({ userId }: Props) => {
             postImage={post.image}
             title={post.title}
             tags={post.tags}
-            avatar={post.userId?.profileImage}
-            username={post.userId?.username || "unknown"}
+            avatar={profileImage}
+            username={username}
             createdAt={post.createdAt}
             views={post?.views?.length}
             likes={post?.likes?.length}
