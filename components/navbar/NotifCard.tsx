@@ -1,6 +1,7 @@
 import React from "react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import OutlineIcon from "../icons/OutlineIcon";
+import Html from "../shared/html";
 
 interface Props {
   type: string;
@@ -74,9 +75,11 @@ const NotifCard = ({
         <div className="flex flex-col gap-2">
           {type === "comment" && (
             <div className="w-[225px] gap-2.5 rounded-[4px] bg-background2 p-[14px] dark:bg-dark3 md:w-[449px]">
-              <p className="caption-regular md:display-regular">
-                &quot;{comment}&quot;
-              </p>
+              <div className="caption-regular md:display-regular">
+                &quot;
+                <Html htmltext={comment || "No Comment"} />
+                &quot;
+              </div>
             </div>
           )}
           <div className="flex flex-col gap-1">
@@ -85,7 +88,7 @@ const NotifCard = ({
                 read ? "text-secondary3" : "text-red80"
               }`}
             >
-              {title}
+              <Html htmltext={title} />
             </h3>
             <p className="text-sm-regular md:body-regular">{postedAt}</p>
           </div>

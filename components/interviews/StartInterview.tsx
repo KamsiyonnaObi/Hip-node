@@ -1,6 +1,3 @@
-import { ImageFallback as Image } from "@/components/shared/ImageFallback";
-
-import { InterviewIllustration } from "@/utils/images";
 import { ShadButton } from "../ui/ShadButton";
 import Link from "next/link";
 
@@ -15,7 +12,7 @@ const StartInterview = () => {
             you!
           </small>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-center gap-[1.25rem]">
           <ShadButton className="bg-red60 text-red10">
             Code of Conduct
           </ShadButton>
@@ -26,11 +23,6 @@ const StartInterview = () => {
           </Link>
         </div>
       </div>
-      <Image
-        src={InterviewIllustration}
-        alt="Illustration of Man and Woman interview"
-        className="hidden h-28 w-28 sm:block md:hidden"
-      />
     </div>
   );
 };
