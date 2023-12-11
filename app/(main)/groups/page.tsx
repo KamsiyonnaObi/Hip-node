@@ -50,7 +50,7 @@ const page = async ({ params }: { params: string }) => {
         </section>
         <section>
           <div className="flex flex-col gap-5">
-            <div className="sm:w-[325px]">
+            <div className="mt-[1.25rem] sm:mt-0 sm:w-[325px]">
               <CreateGroup
                 title={"Create Group"}
                 desc={
