@@ -81,6 +81,7 @@ const userSchema: Schema = new Schema<IUser>(
     ],
     points: {
       type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
