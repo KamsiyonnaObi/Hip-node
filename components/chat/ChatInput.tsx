@@ -21,13 +21,11 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
   } = useSpeechRecognition();
 
   useEffect(() => {
-    if (!listening) {
-      setInputValue(transcript);
-    }
-  }, [transcript, listening]);
+    console.log(transcript);
+    setInputValue(transcript);
+  }, [transcript]);
 
   const handleSubmit = async () => {
-    console.log(inputValue);
     if (inputValue.trim() === "") {
       return;
     }
@@ -36,6 +34,7 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
       text: inputValue,
     });
     setInputValue("");
+    setUsingSpeech(false);
   };
 
   const handleSpeechInput = async () => {
@@ -80,6 +79,7 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
                 setInputValue(e.target.value);
               }}
               onKeyDown={handleKeyDown}
+              value={inputValue}
             />
 
             <div className=" flex items-center">
@@ -87,7 +87,6 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
                 <button
                   onClick={async () => {
                     await SpeechRecognition.stopListening();
-                    setInputValue(transcript);
                   }}
                 >
                   <OutlineIcon.Voice className="h-6 w-6 fill-none stroke-red" />
