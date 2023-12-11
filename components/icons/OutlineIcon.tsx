@@ -57,6 +57,7 @@ import { ReactNode } from "react";
 import { cn } from "@/utils";
 import { Trash } from "./outlineIcons/Trash";
 import { Copy } from "./outlineIcons/Copy";
+import { Pin } from "./outlineIcons/Pin";
 
 interface Props {
   children?: ReactNode;
@@ -316,6 +317,12 @@ OutlineIcon.Popular = ({ className }: Props) => (
 OutlineIcon.Post = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Post />
+  </OutlineIcon>
+);
+
+OutlineIcon.Pin = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Pin />
   </OutlineIcon>
 );
 
