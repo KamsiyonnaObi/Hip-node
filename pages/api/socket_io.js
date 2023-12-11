@@ -19,7 +19,12 @@ export default function SocketHandler(req, res) {
       const allNotif = await getAllNotification({ userId, type: "all" });
       socket.emit("set-notifications", allNotif);
       const subscriber = Notification.watch([
-        { $match: { operationType: "insert", "fullDocument.userTo": userId } },
+        {
+          $match: {
+            operationType: "insert",
+            "fullDocument.userTo": userId,
+          },
+        },
       ]);
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);

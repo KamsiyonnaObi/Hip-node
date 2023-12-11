@@ -251,8 +251,16 @@ const Notification = ({
                     >
                       <NotifCard
                         type={notif.type}
-                        avatar={notif.userIdfrom.profileImage || "/Avatar.png"}
-                        name={notif.userIdfrom.username || "unknown"}
+                        avatar={
+                          notif.userIdfrom.profileImage ||
+                          notif.image ||
+                          "/Avatar.png"
+                        }
+                        name={
+                          notif.userIdfrom.username ||
+                          notif.username ||
+                          "unknown"
+                        }
                         title={notif.title}
                         postedAt={notif.createdAt}
                         comment={notif.comment}

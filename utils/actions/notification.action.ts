@@ -21,6 +21,8 @@ export async function createNotification(params: Partial<INotif>) {
       userTo,
       comment,
       link,
+      username: userIdfrom?.username,
+      image: userIdfrom?.profileImage,
     });
 
     return notif;

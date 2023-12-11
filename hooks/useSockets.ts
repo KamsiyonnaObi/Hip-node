@@ -31,7 +31,8 @@ const useSockets = () => {
       setNotifications(message);
     });
     socket.on("notification", (message: INotif) => {
-      setNotifications((prev) => [...prev, message]);
+      console.log(message);
+      setNotifications((prev) => [message, ...prev]);
     });
   }, [socket]);
 

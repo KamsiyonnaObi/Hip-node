@@ -9,6 +9,8 @@ export interface INotif extends Document {
   createdAt: string;
   read: boolean;
   link: string;
+  username: string;
+  image: string;
 }
 
 const NotificationSchema = new Schema({
@@ -20,6 +22,8 @@ const NotificationSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   read: { type: Boolean, default: false },
   link: { type: String, required: true },
+  username: { type: String },
+  image: { type: String },
 });
 
 const Notification =
