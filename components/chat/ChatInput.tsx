@@ -1,12 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { createMessage } from "@/utils/actions/message.action";
 
 const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
   const [inputValue, setInputValue] = useState("");
+  const [usingSpeech, setUsingSpeech] = useState(false);
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (!listening) {
+      setInputValue(transcript);
+    }
+  }, [transcript, listening]);
 
   const handleSubmit = async () => {
     console.log(inputValue);
@@ -20,6 +38,15 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
     setInputValue("");
   };
 
+  const handleSpeechInput = async () => {
+    await SpeechRecognition.startListening();
+    setUsingSpeech(true);
+  };
+
+  const handleTextChange = () => {
+    setUsingSpeech(false);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -27,9 +54,9 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
     }
   };
 
-  // const handleVoice = (transcript:string) => {
-  //   setInputValue((prev) => prev + transcript);
-  // };
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn&apos;t support speech recognition.</span>;
+  }
 
   return (
     <section className="flex h-16 items-center gap-5">
@@ -48,14 +75,37 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
             <input
               className="md:display-regular caption-regular h-[18px] flex-1 resize-none items-center justify-start bg-secondary6 text-secondary4 placeholder:text-secondary4 focus:outline-none dark:bg-secondary2 md:h-[22px]"
               placeholder="Type here your message..."
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(e) => {
+                handleTextChange();
+                setInputValue(e.target.value);
+              }}
               onKeyDown={handleKeyDown}
             />
 
             <div className=" flex items-center">
-              <button>
-                <OutlineIcon.Voice className="h-6 w-6 fill-none stroke-secondary4" />
-              </button>
+              {listening ? (
+                <button
+                  onClick={async () => {
+                    await SpeechRecognition.stopListening();
+                    setInputValue(transcript);
+                  }}
+                >
+                  <OutlineIcon.Voice className="h-6 w-6 fill-none stroke-red" />
+                </button>
+              ) : usingSpeech ? (
+                <button
+                  onClick={() => {
+                    resetTranscript();
+                    setUsingSpeech(false);
+                  }}
+                >
+                  <OutlineIcon.Trash className="h-6 w-6 fill-none stroke-secondary4" />
+                </button>
+              ) : inputValue ? null : (
+                <button onClick={handleSpeechInput}>
+                  <OutlineIcon.Voice className="h-6 w-6 fill-none stroke-secondary4" />
+                </button>
+              )}
             </div>
           </div>
           <button
