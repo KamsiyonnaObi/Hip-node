@@ -64,7 +64,7 @@ export async function getAllMessages() {
     const messages = await Message.find(query)
       .populate("userIdFrom")
       .populate("userIdTo")
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .lean();
 
     return messages;
