@@ -1,4 +1,4 @@
-import { Comment } from "@/components";
+import Comment from "@/components/home/Comment";
 import { IComments } from "@/models/post.model";
 import { Curve } from "../icons/outlineIcons/Curve";
 
