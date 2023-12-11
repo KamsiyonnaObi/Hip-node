@@ -35,7 +35,7 @@ const GroupDropDown = ({
           <div className="my-auto md:hidden">
             <button onClick={() => setIsOpen((prev) => !prev)}>
               {!isOpen ? (
-                <OutlineIcon.DownArrow2 />
+                <OutlineIcon.DownArrow className="fill-black" />
               ) : (
                 <OutlineIcon.Close className="fill-black" />
               )}

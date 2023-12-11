@@ -98,7 +98,7 @@ const Cover = ({
         />
       </div>
       <div className="mt-[.88rem] flex justify-between sm:mt-[1.25rem]">
-        <div className="flex items-center gap-[.86rem]">
+        <div className="flex items-center gap-[.86rem] lg:pl-[.625rem]">
           <Image
             src={groupUrl}
             alt="GroupCover"
@@ -107,8 +107,9 @@ const Cover = ({
             className="h-[40px] w-[40px] rounded-full"
           />
           <div className="flex flex-col">
-            <h2 className="display-semibold md:h1-semibold text-secondary2 dark:text-background2">
+            <h2 className="display-semibold md:h1-semibold flex text-secondary2 dark:text-background2">
               {title}
+              <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem]" />
             </h2>
             <div className="flex gap-[.31rem]">
               <p className="text-sm-regular sm:body-regular text-secondary3">
