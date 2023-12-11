@@ -19,8 +19,7 @@ export default async function Profile() {
       </section>
 
       {/* Profile Navigation */}
-
-      <section className=" md:column-start-2 flex flex-col gap-[1.25rem] md:row-auto lg:row-span-2 lg:row-start-1">
+      <section className=" flex flex-col gap-[1.25rem] md:col-start-2 md:row-span-2 md:h-0 lg:row-span-2 lg:row-start-1">
         <ProfileNavigation />
       </section>
 
