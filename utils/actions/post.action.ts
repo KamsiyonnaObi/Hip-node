@@ -58,8 +58,8 @@ export async function getPostById(postId: string) {
 }
 
 export async function getPostsByUserId(
-  userId: ObjectId,
-  excludedPostId: ObjectId
+  userId: ObjectId | string,
+  excludedPostId?: ObjectId
 ) {
   try {
     await dbConnect();
