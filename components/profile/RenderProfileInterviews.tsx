@@ -5,8 +5,10 @@ import { Button } from "../ui/Button";
 import { InterviewPost } from "../interviews/posts";
 import { getInterviewByUserId } from "@/utils/actions/interview.action";
 
-type Props = { userId: string | undefined };
-const RenderProfileInterviews = async ({ userId }: Props) => {
+type Props = { JSONUser: string };
+const RenderProfileInterviews = async ({ JSONUser }: Props) => {
+  const userData = JSON.parse(JSONUser);
+  const { userId, username, profileImage } = userData;
   const userInterviews = await getInterviewByUserId(userId!);
 
   return (
@@ -15,11 +17,11 @@ const RenderProfileInterviews = async ({ userId }: Props) => {
         userInterviews.data!.map((interview) => (
           <InterviewPost
             key={interview._id.toString()}
-            avatar={interview.userId?.profileImage || "unknown"}
+            avatar={profileImage}
             _id={interview._id?.toString() || "unknown"}
             image={interview.image}
             title={interview.title}
-            username={interview.userId?.username || "unknown"}
+            username={username}
             createdAt={new Date(interview.createdAt)}
             revenue={interview.revenue}
             updates={interview.updates}

@@ -9,6 +9,11 @@ import RenderProfileInterviews from "./RenderProfileInterviews";
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
 
+  const user = {
+    userId: profileData?._id,
+    username: profileData?.username,
+    profileImage: profileData?.profileImage,
+  };
   return (
     <Tabs defaultValue="posts" className="w-full gap-x-10">
       <TabsList className="mb-5 h-[50px] w-full justify-between gap-x-5 overflow-hidden rounded-[14px] bg-background px-2.5 text-secondary3 hover:overflow-x-auto dark:bg-dark3 dark:text-background lg:h-20 lg:rounded-[20px] lg:px-[30px]">
@@ -19,7 +24,7 @@ const ProfileNavigation = async () => {
         <TabsTrigger value="history">History</TabsTrigger>
       </TabsList>
       <TabsContent value="posts">
-        <RenderProfilePosts userId={profileData?._id.toString()} />
+        <RenderProfilePosts JSONUser={JSON.stringify(user)} />
       </TabsContent>
       <TabsContent value="meetups">
         <RenderProfileMeetups userId={profileData?._id.toString()} />
@@ -28,7 +33,7 @@ const ProfileNavigation = async () => {
         <RenderProfilePodcasts userId={profileData?._id.toString()} />
       </TabsContent>
       <TabsContent value="interviews">
-        <RenderProfileInterviews userId={profileData?._id.toString()} />
+        <RenderProfileInterviews JSONUser={JSON.stringify(user)} />
       </TabsContent>
       <TabsContent value="history">No recent views</TabsContent>
     </Tabs>
