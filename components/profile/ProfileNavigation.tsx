@@ -4,6 +4,7 @@ import RenderProfilePosts from "./RenderProfilePosts";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import RenderProfileMeetups from "./RenderProfileMeetups";
 import RenderProfilePodcasts from "./RenderProfilePodcasts";
+import RenderProfileInterviews from "./RenderProfileInterviews";
 
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
@@ -26,7 +27,9 @@ const ProfileNavigation = async () => {
       <TabsContent value="podcasts">
         <RenderProfilePodcasts userId={profileData?._id.toString()} />
       </TabsContent>
-      <TabsContent value="interviews">View your Interviews here.</TabsContent>
+      <TabsContent value="interviews">
+        <RenderProfileInterviews userId={profileData?._id.toString()} />
+      </TabsContent>
       <TabsContent value="history">No recent views</TabsContent>
     </Tabs>
   );
