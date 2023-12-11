@@ -22,7 +22,7 @@ const page = async ({ params }: { params: string }) => {
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
-          <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
+          <div className="flex flex-col flex-wrap justify-center gap-5 lg:w-[800px] lg:flex-row">
             {mapGroups
               .reduce((columns: React.JSX.Element[][], group, index) => {
                 const columnIndex = index % numberOfColumns;
@@ -50,7 +50,7 @@ const page = async ({ params }: { params: string }) => {
         </section>
         <section>
           <div className="flex flex-col gap-5">
-            <div className="sm:w-[325px]">
+            <div className="mt-[1.25rem] sm:mt-0 sm:w-[325px]">
               <CreateGroup
                 title={"Create Group"}
                 desc={

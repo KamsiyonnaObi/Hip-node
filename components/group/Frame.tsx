@@ -4,7 +4,7 @@ import OutlineIcon from "../icons/OutlineIcon";
 
 const Frame = () => {
   return (
-    <div className="flex w-auto min-w-[20.9rem] justify-between gap-[.625rem] rounded-[1rem] bg-white p-[.625rem] dark:bg-dark3 sm:w-full">
+    <div className="flex w-auto min-w-[20.9rem] justify-between gap-[.625rem] rounded-[1rem] bg-white p-[.625rem] dark:bg-dark3 sm:w-full lg:p-[1.25rem]">
       <div className="my-auto flex">
         <h3 className="display-semibold text-secondary2 dark:text-white">
           Explore

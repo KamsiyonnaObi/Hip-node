@@ -29,6 +29,11 @@ const NewlyLaunched = async () => {
           </div>
         </div>
       ))}
+      <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
+        <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
+          <p className="text-xs-semibold text-purple">See all</p>
+        </button>
+      </div>
     </section>
   );
 };
