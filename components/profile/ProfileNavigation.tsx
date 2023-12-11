@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RenderProfilePosts from "./RenderProfilePosts";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import RenderProfileMeetups from "./RenderProfileMeetups";
+import RenderProfilePodcasts from "./RenderProfilePodcasts";
 
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
@@ -22,7 +23,9 @@ const ProfileNavigation = async () => {
       <TabsContent value="meetups">
         <RenderProfileMeetups userId={profileData?._id.toString()} />
       </TabsContent>
-      <TabsContent value="podcasts">View your Podcasts here.</TabsContent>
+      <TabsContent value="podcasts">
+        <RenderProfilePodcasts userId={profileData?._id.toString()} />
+      </TabsContent>
       <TabsContent value="interviews">View your Interviews here.</TabsContent>
       <TabsContent value="history">No recent views</TabsContent>
     </Tabs>
