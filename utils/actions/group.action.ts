@@ -371,11 +371,15 @@ export async function getFastestGrowingGroups() {
         $limit: 3,
       },
     ]);
-
-    return {
+    // Stringify result and parse
+    const jsonString = JSON.stringify({
       success: true,
       groups: result,
-    };
+    });
+
+    const parsedResult = JSON.parse(jsonString);
+
+    return parsedResult;
   } catch (error) {
     console.error(error);
     return {
