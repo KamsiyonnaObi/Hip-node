@@ -29,6 +29,7 @@ export async function createPost(params: any) {
       groupId,
     });
 
+    revalidatePath("/profile");
     // return the postID, not the entire Post
     return post._id.toString();
   } catch (error) {
