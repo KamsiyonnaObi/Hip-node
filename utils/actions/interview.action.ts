@@ -52,6 +52,27 @@ export async function getInterview(InterviewId: string) {
   }
 }
 
+export async function getInterviewByUserId(userId: string) {
+  try {
+    await dbConnect();
+    const interview = await Interview.find({
+      userId,
+    });
+
+    if (interview.length > 0) {
+      return { success: true, data: interview };
+    } else {
+      return { success: false, data: [] };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the interview.",
+    };
+  }
+}
+
 export async function updateInterview(params: any) {
   try {
     await dbConnect();

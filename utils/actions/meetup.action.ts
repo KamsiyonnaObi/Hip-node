@@ -54,6 +54,26 @@ export async function getMeetup(meetupId: number) {
   }
 }
 
+export async function getMeetupsByUserId(userId: string) {
+  try {
+    await dbConnect();
+    const meetups = await Meetup.find({
+      userId,
+    });
+
+    if (meetups.length > 0) {
+      return { success: true, data: meetups };
+    } else {
+      return { success: false, data: [] };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the meetups.",
+    };
+  }
+}
 // TODO, might not be needed (no edit functionality in figma)
 export async function updateMeetup(params: Partial<IMeetup>) {
   try {
