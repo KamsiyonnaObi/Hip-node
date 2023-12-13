@@ -46,7 +46,6 @@ const Post = ({
   _id,
   showEdit,
   postUser,
-  currentUser,
 }: Props) => {
   const { isOpen: showPopup, ref: menuRef, toggleOpen } = useOutsideClick();
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);

@@ -29,6 +29,7 @@ export async function createPost(params: any) {
       groupId,
     });
 
+    revalidatePath("/profile");
     // return the postID, not the entire Post
     return post._id.toString();
   } catch (error) {
@@ -58,8 +59,8 @@ export async function getPostById(postId: string) {
 }
 
 export async function getPostsByUserId(
-  userId: ObjectId,
-  excludedPostId: ObjectId
+  userId: ObjectId | string,
+  excludedPostId?: ObjectId
 ) {
   try {
     await dbConnect();

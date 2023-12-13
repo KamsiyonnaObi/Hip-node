@@ -12,6 +12,7 @@ const PostRender = async ({
   currentUser: any;
 }) => {
   const result = await getAllPosts({ ...searchParams });
+
   return (
     <div className="flex flex-col gap-5">
       {result.posts.length > 0
@@ -31,8 +32,7 @@ const PostRender = async ({
               hasLiked={post?.likes?.includes(currentUserId) || false}
               comments={post?.comments?.length}
               showEdit={post.userId?._id.toString() === currentUserId}
-              postUser={post.userId?._id || null}
-              currentUser={currentUser}
+              postUser={post.userId?._id.toString() || null}
             />
           ))
         : "No Posts to Show!"}

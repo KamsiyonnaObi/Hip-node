@@ -64,11 +64,11 @@ const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
             <p className="body-semibold text-secondary2 dark:text-background2">
               {`${profileData?.followers.length} Followers`}
             </p>
-            <p className="body-semibold text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
+            <p className="body-semibold text-secondary2 dark:text-background2">{`${profileData?.points} Points`}</p>
           </div>
           <div className="flex flex-col gap-[15px]">
             <p className="body-semibold text-center text-secondary2 dark:text-background2">
-              Following 47
+              {`Following ${profileData?.following.length} `}
             </p>
             {followers.data!.length &&
               followers.data!.map((follower: userProfileData) => (
