@@ -134,7 +134,7 @@ const Navbar = ({
                 <div className="flex flex-row md:gap-4">
                   <div
                     ref={menuRef}
-                    className="flex aspect-square h-[34px] w-[34px] flex-row items-center justify-center rounded-full border-4 border-yellow"
+                    className="relative aspect-square h-[34px] w-[34px] items-center justify-center rounded-full border-4 border-yellow"
                   >
                     <div
                       className="relative h-full w-full rounded-full"
