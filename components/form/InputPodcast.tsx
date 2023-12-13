@@ -104,7 +104,8 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_audio"
+                      options={{ clientAllowedFormats: ["MP3", "MP4"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -123,9 +124,9 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
                                 onClick={handleOnClick}
                                 className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
                               >
-                                <OutlineIcon.Image1 />
+                                <OutlineIcon.Upload />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                                  Set Cover
+                                  Set Audio
                                 </p>
                               </Button>
                             </div>
