@@ -2,12 +2,14 @@ import ProfileDetails from "./ProfileDetails";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { getServerSession } from "next-auth/next";
 
-import { getUserProfile } from "@/utils/actions/user.action";
+import { getUserProfile, getUserFollowers } from "@/utils/actions/user.action";
 
 export default async function LeftSideBar() {
   const session = await getServerSession();
 
   const profileData = await getUserProfile(session?.user?.email);
+  const followers = await getUserFollowers(profileData?.id);
+
   return (
     <section className="flex-center rounded-2xl bg-background p-5 dark:bg-dark3">
       <article className="flex-center w-[295px] flex-col gap-5 bg-background px-5 py-10 dark:bg-dark3">
@@ -20,7 +22,10 @@ export default async function LeftSideBar() {
             height="80"
           />
         </div>
-        <ProfileDetails JSONProfileData={JSON.stringify(profileData)} />
+        <ProfileDetails
+          JSONProfileData={JSON.stringify(profileData)}
+          JSONFollowers={JSON.stringify(followers)}
+        />
       </article>
     </section>
   );

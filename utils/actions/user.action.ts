@@ -95,6 +95,27 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
   }
 }
 
+export async function getUserFollowers(userId: string | undefined) {
+  try {
+    await dbConnect();
+    const followers = await UserModel.find({
+      userId,
+    }).populate("following");
+    // console.log("full", followers);
+    if (followers.length > 0) {
+      return { success: true, data: followers };
+    } else {
+      return { success: false, data: [] };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the followers.",
+    };
+  }
+}
+
 export async function followAuthor({
   userId,
   hasFollowed,

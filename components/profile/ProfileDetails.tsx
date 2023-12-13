@@ -7,10 +7,12 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
+import { ImageFallback as Image } from "../shared/ImageFallback";
 
-type Props = { JSONProfileData: string };
-const ProfileDetails = ({ JSONProfileData }: Props) => {
+type Props = { JSONProfileData: string; JSONFollowers: string };
+const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
+  const followers = JSON.parse(JSONFollowers);
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
@@ -68,13 +70,20 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             <p className="body-semibold text-center text-secondary2 dark:text-background2">
               Following 47
             </p>
-            <div className="flex flex-wrap gap-2.5">
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-            </div>
+            {followers.data!.length &&
+              followers.data!.map((follower: userProfileData) => (
+                <div key={follower.id} className="flex flex-wrap gap-2.5">
+                  <div className="object-fit flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
+                    <Image
+                      src={follower.profileImage}
+                      alt={follower.name}
+                      fallback="/ExampleAvatar.png"
+                      width={21}
+                      height={25.5}
+                    />
+                  </div>
+                </div>
+              ))}
           </div>
           <div>
             <p className="body-semibold text-center text-secondary3">
