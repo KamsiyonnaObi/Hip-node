@@ -99,11 +99,13 @@ export async function getUserFollowers(userId: string | undefined) {
   try {
     await dbConnect();
     const followers = await UserModel.find({
-      userId,
-    }).populate("following");
-    // console.log("full", followers);
+      _id: userId,
+    })
+      .populate("followers")
+      .lean();
+
     if (followers.length > 0) {
-      return { success: true, data: followers };
+      return { success: true, data: followers[0].followers };
     } else {
       return { success: false, data: [] };
     }

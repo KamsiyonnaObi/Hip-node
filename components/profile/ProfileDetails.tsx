@@ -70,21 +70,23 @@ const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
             <p className="body-semibold text-center text-secondary2 dark:text-background2">
               {`Following ${profileData?.following.length} `}
             </p>
+          </div>
+          <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
             {followers.data!.length &&
-              followers.data!.map((follower: userProfileData) => (
-                <div key={follower.id} className="flex flex-wrap gap-2.5">
-                  <div className="object-fit flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
+              followers.data!.slice(0, 7).map((follower: userProfileData) => (
+                <div key={follower.id} className="flex ">
+                  <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
                     <Image
+                      className="rounded-full"
                       src={follower.profileImage}
                       alt={follower.name}
                       fallback="/ExampleAvatar.png"
-                      width={21}
-                      height={25.5}
+                      fill
                     />
                   </div>
                 </div>
               ))}
-          </div>
+          </section>
           <div>
             <p className="body-semibold text-center text-secondary3">
               {profileData?.bio}
