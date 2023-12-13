@@ -12,7 +12,6 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { likePost } from "@/utils/actions/post.action";
 import { createNotification } from "@/utils/actions/notification.action";
 import { toast } from "../ui/use-toast";
-import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
   currentUserId?: string;
@@ -52,7 +51,6 @@ const Post = ({
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
   const [isPending, startTransition] = useTransition();
-  const { isConnected } = useSocketContext();
 
   const handleLike = async () => {
     if (currentUserId) {
@@ -179,11 +177,7 @@ const Post = ({
                   <p className="md:body-semibold dark:text-secondary6">
                     {username}
                   </p>
-                  <OutlineIcon.Ellipse
-                    className={`${
-                      isConnected ? "fill-green" : "fill-secondary5"
-                    }`}
-                  />
+                  <OutlineIcon.Ellipse className="fill-secondary5" />
                 </div>
                 <p className="md:text-sm-regular text-secondary3 dark:text-secondary5">
                   {getTimestamp(createdAt)}
