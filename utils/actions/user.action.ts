@@ -101,7 +101,7 @@ export async function getUserFollowers(userId: string | undefined) {
     const followers = await UserModel.find({
       _id: userId,
     })
-      .populate("followers")
+      .populate("followers", "profileImage username")
       .lean();
 
     if (followers.length > 0) {
