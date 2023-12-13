@@ -1,5 +1,6 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { getMostPopularGroups } from "@/utils/actions/group.action";
+import Link from "next/link";
 import React from "react";
 
 const MostPopular = async () => {
@@ -41,9 +42,12 @@ const MostPopular = async () => {
           </div>
         ))}
         <div className="rounded-b-[1rem] bg-white py-[.625rem] pl-[1.25rem] dark:bg-dark3">
-          <button className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]">
+          <Link
+            href={"/groups?category=popular"}
+            className="flex h-[.875rem] w-[2.125rem] gap-[.625rem] rounded-[.625rem] bg-purple20 px-[.25rem]"
+          >
             <p className="text-xs-semibold text-purple">See all</p>
-          </button>
+          </Link>
         </div>
       </section>
     );

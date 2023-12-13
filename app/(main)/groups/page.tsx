@@ -5,8 +5,14 @@ import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";
 
-const page = async ({ params }: { params: string }) => {
-  const groups = await getAllGroups(params);
+const page = async ({
+  params,
+  searchParams,
+}: {
+  params: string;
+  searchParams: string;
+}) => {
+  const groups = await getAllGroups(searchParams);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
     title: group.title,
@@ -14,7 +20,6 @@ const page = async ({ params }: { params: string }) => {
     post: group.post,
   }));
   const numberOfColumns = 3;
-
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
       <section>
@@ -22,7 +27,7 @@ const page = async ({ params }: { params: string }) => {
       </section>
       <div className="flex flex-col sm:flex-row sm:gap-[1.25rem]">
         <section>
-          <div className="flex flex-col flex-wrap justify-center gap-5 lg:w-[800px] lg:flex-row">
+          <div className="mx-auto flex flex-col flex-wrap gap-5 lg:w-[800px] lg:flex-row">
             {mapGroups
               .reduce((columns: React.JSX.Element[][], group, index) => {
                 const columnIndex = index % numberOfColumns;
@@ -50,7 +55,7 @@ const page = async ({ params }: { params: string }) => {
         </section>
         <section>
           <div className="flex flex-col gap-5">
-            <div className="mt-[1.25rem] sm:mt-0 sm:w-[325px]">
+            <div className="sm:w-[325px]">
               <CreateGroup
                 title={"Create Group"}
                 desc={

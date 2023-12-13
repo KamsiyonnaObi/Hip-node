@@ -235,10 +235,19 @@ export async function getUsersBySimilarName(name: string) {
 }
 
 export async function getAllGroups(params: string) {
-  const { search } = params;
-
+  const { search, category } = params;
   try {
     await dbConnect();
+
+    const sorted = await Group.aggregate([
+      {
+        $project: {
+          // add a field to the results, called "count" which is the "size" of the "members" array
+          count: { $size: "$members" },
+        },
+      },
+      { $sort: { count: -1 } }, // sort descending
+    ]);
 
     const query: FilterQuery<any> = {};
     if (search) {
@@ -247,10 +256,23 @@ export async function getAllGroups(params: string) {
         { desc: { $regex: search, $options: "i" } },
       ];
     }
+
+    if (category === "popular") {
+      query._id = { $in: [...sorted] };
+    }
+
+    let mainQueryPromise = Group.find(query).populate("userId");
+    let postQueryPromise = Group.find(query);
+
+    if (category === "newest") {
+      mainQueryPromise = mainQueryPromise.sort({ createdAt: -1 });
+      postQueryPromise = postQueryPromise.sort({ createdAt: -1 });
+    }
+
     const [groups, postsResults] = await Promise.all([
-      Group.find(query).populate("userId"),
+      mainQueryPromise,
       Promise.all(
-        (await Group.find(query)).map((group) =>
+        (await postQueryPromise).map((group) =>
           Post.find({ groupId: group._id })
         )
       ),
@@ -260,7 +282,6 @@ export async function getAllGroups(params: string) {
       ...group._doc,
       post: postsResults[index],
     }));
-
     return { groups: returnGroups };
   } catch (error) {
     console.log(error);
