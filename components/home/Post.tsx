@@ -12,6 +12,7 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { likePost } from "@/utils/actions/post.action";
 import { createNotification } from "@/utils/actions/notification.action";
 import { toast } from "../ui/use-toast";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
   currentUserId?: string;
@@ -51,6 +52,7 @@ const Post = ({
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
   const [isPending, startTransition] = useTransition();
+  const { isConnected } = useSocketContext();
 
   const handleLike = async () => {
     if (currentUserId) {
@@ -81,7 +83,7 @@ const Post = ({
     }
   };
   return (
-    <article className="flex w-full flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
+    <article className="flex w-full max-w-[785px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
       <div className="flex w-full flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -90,12 +92,12 @@ const Post = ({
           width={200}
           height={200}
         />
-        <div className="flex w-full flex-col gap-[30px]">
+        <div className="flex w-full flex-col justify-between ">
           <div className="flex w-full flex-row justify-between">
-            <section className="flex w-[187px] flex-col md:w-full">
+            <section className="flex w-[187px] flex-col md:w-full ">
               <Link
                 href={`/posts/${_id}`}
-                className="md:h3-semibold caption-semibold dark:text-background2"
+                className="md:h3-semibold caption-semibold line-clamp-2 break-words dark:text-background2"
               >
                 {title}
               </Link>
@@ -177,7 +179,11 @@ const Post = ({
                   <p className="md:body-semibold dark:text-secondary6">
                     {username}
                   </p>
-                  <OutlineIcon.Ellipse />
+                  <OutlineIcon.Ellipse
+                    className={`${
+                      isConnected ? "fill-green" : "fill-secondary5"
+                    }`}
+                  />
                 </div>
                 <p className="md:text-sm-regular text-secondary3 dark:text-secondary5">
                   {getTimestamp(createdAt)}
