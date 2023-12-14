@@ -256,11 +256,37 @@ export async function getAllGroups(params: {
         {
           $project: {
             count: { $size: "$members" },
+            title: true,
+            coverUrl: true,
+            groupUrl: true,
+            description: true,
+            userId: true, // Make sure to include the userID field here
           },
         },
+        {
+          $lookup: {
+            from: "users", // Replace with the actual name of your user collection
+            localField: "userId", // The field from the 'Group' collection
+            foreignField: "_id", // The field from the 'User' collection
+            as: "userData", // The name of the new array field to hold the joined data
+          },
+        },
+        { $unwind: "$userData" }, // Optional: Unwind the array if you expect one user per group
+        {
+          $lookup: {
+            from: "posts", // Replace with the actual name of your posts collection
+            let: { groupId: "$_id" }, // Define a variable 'groupId' for use in the pipeline
+            pipeline: [
+              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } }, // Match posts with the current group
+              { $limit: 1 }, // Limit to 1 post
+            ],
+            as: "post", // The name of the field to hold the post
+          },
+        },
+        { $unwind: "$post" }, // Optional: Unwind the array if you expect one post per group
         { $sort: { count: -1 } },
       ]);
-      query._id = { $in: [...sorted] };
+      return { groups: sorted };
     } else if (category === "newest") {
       query.createdAt = { $exists: true };
     } else if (category === "fastestgrowing") {
@@ -367,18 +393,17 @@ export async function getMostPopularGroups() {
         $project: {
           // add a field to the results, called "count" which is the "size" of the "members" array
           count: { $size: "$members" },
+          title: true,
+          coverUrl: true,
+          groupUrl: true,
+          description: true,
         },
       },
       { $sort: { count: -1 } }, // sort descending
       { $limit: 3 }, // only grab 3
     ]);
 
-    const groups = await Group.find({
-      _id: {
-        $in: [...sorted],
-      },
-    });
-    return groups;
+    return sorted;
   } catch (error) {
     console.log(error);
     return {
