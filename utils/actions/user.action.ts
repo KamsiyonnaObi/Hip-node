@@ -95,29 +95,6 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
   }
 }
 
-export async function getUserFollowers(userId: string | undefined) {
-  try {
-    await dbConnect();
-    const followers = await UserModel.find({
-      _id: userId,
-    })
-      .populate("followers", "profileImage username")
-      .lean();
-
-    if (followers.length > 0) {
-      return { success: true, data: followers[0].followers };
-    } else {
-      return { success: false, data: [] };
-    }
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      message: "An error occurred while retrieving the followers.",
-    };
-  }
-}
-
 export async function followAuthor({
   userId,
   hasFollowed,
@@ -156,15 +133,18 @@ export async function followAuthor({
   }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(populate?: string[]) {
   try {
     await dbConnect();
 
     // get the current user
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;
-    const User = await UserModel.findOne({ email });
-
+    const query = UserModel.findOne({ email });
+    for (const field of populate ?? []) {
+      query?.populate(field);
+    }
+    const User = await query;
     // Return the user's id
     return User ?? null;
   } catch (error) {
