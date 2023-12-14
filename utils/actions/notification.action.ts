@@ -70,6 +70,23 @@ export async function getAllNotification({
   }
 }
 
+export async function getUserHistory(userId: string | undefined) {
+  try {
+    await dbConnect();
+
+    const query: { userIdfrom?: string } = { userIdfrom: userId };
+    const notifications = await Notification.find(query)
+      .populate("userTo", "username")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return notifications;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function readPost(notifId: string) {
   try {
     await dbConnect();
