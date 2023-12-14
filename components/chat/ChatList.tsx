@@ -1,11 +1,15 @@
 "use client";
 
+import { IUser } from "@/types/mongoose";
 import ChatCard from "./ChatCard";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 const ChatList = () => {
-  const { chatList, setCurrentPartnerId } = useSocketContext();
-  setCurrentPartnerId("aaa");
+  const { chatList, setCurrentPartner } = useSocketContext();
+  const handleChatClick = (partner: IUser) => {
+    setCurrentPartner(partner);
+  };
+
   return (
     <section>
       {chatList.map((chat) => (
@@ -13,6 +17,7 @@ const ChatList = () => {
           key={chat.user._id.toString()}
           user={JSON.stringify(chat.user)}
           lastMessage={chat.lastMessage}
+          onClick={() => handleChatClick(chat.user)}
         />
       ))}
     </section>

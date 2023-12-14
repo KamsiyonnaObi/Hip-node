@@ -1,16 +1,22 @@
 "use client";
+// import { useSocketContext } from "@/providers/SocketProvider";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 const ChatCard = ({
   user,
   lastMessage,
+  onClick,
 }: {
   user: string;
   lastMessage: string;
+  onClick: () => void;
 }) => {
   const userObj = JSON.parse(user);
   return (
-    <main className="border-b-solid flex w-full flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2">
+    <main
+      className="border-b-solid flex w-full flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
+      onClick={onClick}
+    >
       <section className="flex justify-between">
         <div className="flex items-center gap-3">
           <span className="h-2 w-2 rounded bg-red" />
@@ -36,7 +42,7 @@ const ChatCard = ({
           </div>
         </div>
         <p className="body-regular text-secondary4 dark:text-background2">
-          5min ago
+          {userObj.createdAt}
         </p>
       </section>
       <p className="body-regular ml-5 text-secondary4 dark:text-background2">

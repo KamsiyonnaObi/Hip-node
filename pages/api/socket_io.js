@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 import { getSession } from "next-auth/react";
 import Notification from "@/models/notification.model";
 import { getAllNotification } from "@/utils/actions/notification.action";
-import { getAllMessages, getChatList } from "@/utils/actions/message.action";
+import Message from "@/models/message.model";
 import UserModel from "@/models/User";
 
 export default function SocketHandler(req, res) {
@@ -19,11 +19,44 @@ export default function SocketHandler(req, res) {
       const userId = user._id.toString();
       const allNotif = await getAllNotification({ userId, type: "all" });
       socket.emit("set-notifications", allNotif);
-      const allMessages = await getAllMessages();
-      socket.emit("set-messages", allMessages);
-      // const allUsers = await getChatPartners();
-      // socket.emit("set-users", allUsers);
-      const chatList = await getChatList();
+      const query = {
+        $or: [{ userIdFrom: user._id }, { userIdTo: user._id }],
+      };
+      const messages = await Message.find(query)
+        .populate("userIdFrom")
+        .populate("userIdTo")
+        .sort({ createdAt: 1 })
+        .lean();
+      const chatMap = new Map();
+
+      socket.emit("set-messages", messages);
+
+      messages.forEach((msg) => {
+        // Get the other user that is not the current user
+        const otherUser = msg.userIdFrom._id.equals(userId)
+          ? msg.userIdTo
+          : msg.userIdFrom;
+
+        // Check if chat exists
+        let chat = chatMap.get(otherUser._id);
+
+        if (!chat) {
+          // If not, create it
+          chat = {
+            user: otherUser,
+            lastMessage: msg.text,
+          };
+
+          // Add to map
+          chatMap.set(otherUser._id.toString(), chat);
+        } else {
+          // If chat exists, just update last message
+          chat.lastMessage = msg.text;
+        }
+      });
+
+      // Get chats from map values
+      const chatList = [...chatMap.values()];
       socket.emit("set-chatList", chatList);
       const subscriber = Notification.watch([
         { $match: { operationType: "insert", "fullDocument.userTo": userId } },

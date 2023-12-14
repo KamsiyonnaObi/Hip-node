@@ -3,10 +3,12 @@ import ChatList from "@/components/chat/ChatList";
 import SearchInput from "@/components/chat/SearchInput";
 import TopCard from "@/components/chat/TopCard";
 import RightChatList from "@/components/chat/RightChatList";
-import { getAllMessages } from "@/utils/actions/message.action";
+import { getAllMessages, getChatList } from "@/utils/actions/message.action";
 
 const page = async () => {
   const messages = await getAllMessages();
+  // const chatlist = await getChatList();
+  // console.log(chatlist);
   return (
     <main className="grid bg-background dark:bg-dark2 md:grid-cols-10">
       <section className="flex w-full flex-col md:col-span-3">

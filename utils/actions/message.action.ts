@@ -111,12 +111,8 @@ export async function getChatPartners() {
   return partners[0].userIds;
 }
 
-export async function getChatList() {
+export async function getChatList(userId: string) {
   await dbConnect();
-  const currentUser: any = await getServerSession();
-  const { email } = currentUser?.user;
-  const User = await UserModel.findOne({ email });
-  const userId = User?._id;
 
   // Get all messages
   const messages = await getAllMessages();
@@ -141,7 +137,7 @@ export async function getChatList() {
       };
 
       // Add to map
-      chatMap.set(otherUser._id, chat);
+      chatMap.set(otherUser._id.toString(), chat);
     } else {
       // If chat exists, just update last message
       chat.lastMessage = msg.text;

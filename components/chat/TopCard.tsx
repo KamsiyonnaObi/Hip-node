@@ -1,16 +1,12 @@
-"use clinet";
-
+"use client";
 import Link from "next/link";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import OutlineIcon from "../icons/OutlineIcon";
-// import { useSocketContext } from "@/providers/SocketProvider";
-import { getUserProfileById } from "@/utils/actions/user.action";
+import { useSocketContext } from "@/providers/SocketProvider";
 
-const TopCard = async () => {
+const TopCard = () => {
   // const [isOnline, setIsOnline] = useState(false);
-  // const { currentPartnerId } = useSocketContext();
-  const currentPartnerId = "65388d2c6c139fbad300219f";
-  const currentPartner = await getUserProfileById(currentPartnerId);
+  const { currentPartner } = useSocketContext();
 
   return (
     <section className="flex justify-between bg-secondary6 px-6 py-5 dark:bg-dark2">
@@ -32,7 +28,7 @@ const TopCard = async () => {
           <div className="flex flex-col">
             <div className="flex items-center justify-center gap-2">
               <h2 className="h2-bold text-secondary2 dark:text-background ">
-                {currentPartner?.fullname}
+                {currentPartner?.fullName}
               </h2>
               {/* {isOnline ? ( */}
               <p className="text-sm-semibold text-green">Online</p>
@@ -46,7 +42,7 @@ const TopCard = async () => {
       </div>
       <Link
         className="hidden h-11 w-auto items-center justify-center rounded-md bg-red80 px-4 py-3 md:flex"
-        href={`/profile/${currentPartnerId}`}
+        href={`/profile/${currentPartner?._id}`}
       >
         <p className="body-semibold text-background">View Profile</p>
       </Link>

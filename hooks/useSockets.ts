@@ -52,6 +52,7 @@ const useSockets = () => {
     });
     socket.on("set-chatList", (message: IChat[]) => {
       setChatList(message);
+      console.log(message);
     });
     socket.on("chatList", (message: IChat) => {
       setChatList((prev) => [...prev, message]);

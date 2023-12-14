@@ -12,8 +12,8 @@ interface SocketContextType {
   chatList: IChat[];
   users: IUser[];
   isConnected: boolean;
-  currentPartnerId: string;
-  setCurrentPartnerId: any;
+  currentPartner: IUser | null;
+  setCurrentPartner: any;
 }
 
 const SocketContext = createContext<SocketContextType>({} as SocketContextType);
@@ -21,12 +21,14 @@ const SocketContext = createContext<SocketContextType>({} as SocketContextType);
 export function SocketProvider({ children }: { children: React.ReactNode }) {
   const { notifications, messages, chatList, users, isConnected } =
     useSockets();
-  const [currentPartnerId, setCurrentPartnerId] = useState("");
+  const [currentPartner, setCurrentPartner] = useState<IUser | null>(null);
+  console.log("currentPartner:", currentPartner);
+
   useEffect(() => {
-    // update chatlist
-    console.log("currentPartnerId", currentPartnerId);
-    console.log("messages:", messages);
-  }, [currentPartnerId, messages]);
+    if (chatList.length > 0) {
+      setCurrentPartner(chatList[0].user);
+    }
+  }, [chatList]);
 
   return (
     <SocketContext.Provider
@@ -36,8 +38,8 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         messages,
         chatList,
         users,
-        currentPartnerId,
-        setCurrentPartnerId,
+        currentPartner,
+        setCurrentPartner,
       }}
     >
       {children}
