@@ -234,22 +234,16 @@ export async function getUsersBySimilarName(name: string) {
   }
 }
 
-export async function getAllGroups(params: string) {
+export async function getAllGroups(params: {
+  search: string;
+  category: string;
+}) {
   const { search, category } = params;
   try {
     await dbConnect();
 
-    const sorted = await Group.aggregate([
-      {
-        $project: {
-          // add a field to the results, called "count" which is the "size" of the "members" array
-          count: { $size: "$members" },
-        },
-      },
-      { $sort: { count: -1 } }, // sort descending
-    ]);
-
     const query: FilterQuery<any> = {};
+
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: "i" } },
@@ -258,7 +252,44 @@ export async function getAllGroups(params: string) {
     }
 
     if (category === "popular") {
+      const sorted = await Group.aggregate([
+        {
+          $project: {
+            count: { $size: "$members" },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
       query._id = { $in: [...sorted] };
+    } else if (category === "newest") {
+      query.createdAt = { $exists: true };
+    } else if (category === "fastestgrowing") {
+      const currentDate = new Date();
+      const startDate = new Date(currentDate);
+      startDate.setDate(startDate.getDate() - 7);
+
+      const fastestGrowingGroups = await Group.aggregate([
+        {
+          $match: {
+            "activity.date": { $gte: startDate, $lte: currentDate },
+            "activity.activityType": "new_member",
+          },
+        },
+        {
+          $group: {
+            _id: "$_id",
+            newMembers: { $sum: -1 },
+          },
+        },
+        {
+          $sort: { newMembers: 1 },
+        },
+      ]);
+
+      const fastestGrowingGroupIds = fastestGrowingGroups.map(
+        (group) => group._id
+      );
+      query._id = { $in: fastestGrowingGroupIds };
     }
 
     let mainQueryPromise = Group.find(query).populate("userId");
