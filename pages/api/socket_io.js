@@ -70,6 +70,28 @@ export default function SocketHandler(req, res) {
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);
       });
+      const chatSubscriber = Message.watch([
+        {
+          $match: {
+            operationType: "insert",
+            $or: [
+              { "fullDocument.userIdFrom": user._id },
+              { "fullDocument.userIdTo": user._id },
+            ],
+          },
+        },
+      ]);
+
+      chatSubscriber.on("change", async (change) => {
+        // get the full chat:
+        const fullChat = await Message.findOne({
+          _id: change.fullDocument._id,
+        })
+          .populate("userIdFrom")
+          .populate("userIdTo")
+          .lean();
+        socket.emit("message", fullChat);
+      });
     });
   }
   res.end();

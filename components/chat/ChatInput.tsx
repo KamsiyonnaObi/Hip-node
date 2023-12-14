@@ -14,6 +14,7 @@ const ChatInput = () => {
   const { currentPartner } = useSocketContext();
   const [inputValue, setInputValue] = useState("");
   const [usingSpeech, setUsingSpeech] = useState(false);
+  const [support, setSupport] = useState(false);
 
   const {
     transcript,
@@ -25,6 +26,10 @@ const ChatInput = () => {
   useEffect(() => {
     setInputValue(transcript);
   }, [transcript]);
+
+  useEffect(() => {
+    setSupport(browserSupportsSpeechRecognition);
+  }, [browserSupportsSpeechRecognition]);
 
   const handleSubmit = async () => {
     if (inputValue.trim() === "") {
@@ -54,10 +59,6 @@ const ChatInput = () => {
     }
   };
 
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn&apos;t support speech recognition.</span>;
-  }
-
   return (
     <section className="flex h-16 items-center gap-5">
       <section className="relative flex flex-1 ">
@@ -83,7 +84,7 @@ const ChatInput = () => {
               value={inputValue}
             />
 
-            <div className=" flex items-center">
+            <div className={`${!support ? "hidden" : "flex"} items-center`}>
               {listening ? (
                 <button
                   onClick={async () => {

@@ -23,7 +23,7 @@ const page = async () => {
         <div className="px-4 pb-3">
           <SearchInput />
         </div>
-        <section className="min-h-screen">
+        <section className="">
           <ChatList />
         </section>
       </section>
@@ -32,7 +32,7 @@ const page = async () => {
           <TopCard />
         </div>
       </div>
-      <div className="col-span-7 mt-[96px] hidden min-h-screen md:flex">
+      <div className="col-span-7 mt-[96px] hidden h-[70vh] md:flex">
         <RightChatList currentUserId={currentUserId?.toString() || ""} />
       </div>
       <div className="fixed inset-x-0 bottom-0 left-[30%] hidden bg-background px-8 pb-9 pt-8 dark:bg-dark4 md:block">
