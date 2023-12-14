@@ -5,8 +5,12 @@ import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";
 
-const page = async ({ searchParams }: { searchParams: string }) => {
-  const groups = await getAllGroups({ search: searchParams, category: "" });
+interface Props {
+  searchParams: { search: string; category: string };
+}
+
+const page = async ({ searchParams }: Props) => {
+  const groups = await getAllGroups(searchParams);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
     title: group.title,
