@@ -9,11 +9,11 @@ import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 
-type Props = { JSONProfileData: string; JSONFollowers: string };
-const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
+type Props = { JSONProfileData: string };
+const ProfileDetails = ({ JSONProfileData }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
-  const followers = JSON.parse(JSONFollowers);
-
+  const followers = profileData?.followers;
+  console.log(followers);
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
@@ -43,7 +43,7 @@ const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
         <>
           <div className="flex flex-col items-center justify-center">
             <p className="h1-semibold text-secondary2 dark:text-background2">
-              {profileData?.name}
+              {profileData?.username}
             </p>
             <p className="display-regular text-secondary3">
               {profileData?.occupation}
@@ -72,14 +72,14 @@ const ProfileDetails = ({ JSONProfileData, JSONFollowers }: Props) => {
             </p>
           </div>
           <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
-            {followers.data!.length &&
-              followers.data!.slice(0, 7).map((follower: userProfileData) => (
-                <div key={follower.id} className="flex ">
+            {followers.length &&
+              followers.slice(0, 7).map((follower: userProfileData) => (
+                <div key={follower._id} className="flex ">
                   <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
                     <Image
                       className="rounded-full"
                       src={follower.profileImage}
-                      alt={follower.name}
+                      alt={follower.username}
                       fallback="/ExampleAvatar.png"
                       fill
                     />
