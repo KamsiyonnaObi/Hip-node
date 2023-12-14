@@ -253,6 +253,7 @@ export async function getAllGroups(params: {
 
     if (category === "popular") {
       const sorted = await Group.aggregate([
+        { $match: query },
         {
           $project: {
             count: { $size: "$members" },
@@ -260,35 +261,65 @@ export async function getAllGroups(params: {
             coverUrl: true,
             groupUrl: true,
             description: true,
-            userId: true, // Make sure to include the userID field here
+            userId: true,
           },
         },
         {
           $lookup: {
-            from: "users", // Replace with the actual name of your user collection
-            localField: "userId", // The field from the 'Group' collection
-            foreignField: "_id", // The field from the 'User' collection
-            as: "userData", // The name of the new array field to hold the joined data
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "userData",
           },
         },
-        { $unwind: "$userData" }, // Optional: Unwind the array if you expect one user per group
+        { $unwind: "$userData" },
         {
           $lookup: {
-            from: "posts", // Replace with the actual name of your posts collection
-            let: { groupId: "$_id" }, // Define a variable 'groupId' for use in the pipeline
+            from: "posts",
+            let: { groupId: "$_id" },
             pipeline: [
-              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } }, // Match posts with the current group
-              { $limit: 1 }, // Limit to 1 post
+              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } },
+              { $limit: 1 },
             ],
-            as: "post", // The name of the field to hold the post
+            as: "post",
           },
         },
-        { $unwind: "$post" }, // Optional: Unwind the array if you expect one post per group
+        { $unwind: "$post" },
         { $sort: { count: -1 } },
       ]);
+
       return { groups: sorted };
     } else if (category === "newest") {
-      query.createdAt = { $exists: true };
+      const newestGroups = await Group.aggregate([
+        { $match: query },
+        { $match: { createdAt: { $exists: true } } },
+        {
+          $sort: { createdAt: -1 },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "userData",
+          },
+        },
+        { $unwind: "$userData" },
+        {
+          $lookup: {
+            from: "posts",
+            let: { groupId: "$_id" },
+            pipeline: [
+              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } },
+              { $limit: 1 },
+            ],
+            as: "post",
+          },
+        },
+        { $unwind: "$post" },
+      ]);
+
+      return { groups: newestGroups };
     } else if (category === "fastestgrowing") {
       const currentDate = new Date();
       const startDate = new Date(currentDate);
@@ -304,11 +335,14 @@ export async function getAllGroups(params: {
         {
           $group: {
             _id: "$_id",
-            newMembers: { $sum: -1 },
+            newMembers: { $sum: 1 },
           },
         },
         {
-          $sort: { newMembers: 1 },
+          $sort: { newMembers: -1 },
+        },
+        {
+          $limit: 3,
         },
       ]);
 
