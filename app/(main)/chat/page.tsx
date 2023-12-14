@@ -33,11 +33,11 @@ const page = async () => {
         </div>
       </div>
       <div className="col-span-7 mt-[96px] hidden min-h-screen md:flex">
-        <RightChatList currentUserId={currentUserId?.toString()} />
+        <RightChatList currentUserId={currentUserId?.toString() || ""} />
       </div>
       <div className="fixed inset-x-0 bottom-0 left-[30%] hidden bg-background px-8 pb-9 pt-8 dark:bg-dark4 md:block">
         <div className="mx-auto w-full">
-          <ChatInput userIdTo="65388d2c6c139fbad300219f" />
+          <ChatInput />
         </div>
       </div>
     </main>

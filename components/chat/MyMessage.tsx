@@ -6,7 +6,7 @@ const MyMessage = ({ createdAt, text }: { createdAt: Date; text: string }) => {
   });
   return (
     <section className="flex w-full flex-col gap-1.5">
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-2.5">
         <p className="display-semibold text-secondary2 dark:text-background2">
           You
         </p>

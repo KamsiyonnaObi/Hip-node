@@ -16,7 +16,7 @@ const OtherUserMesssage = ({
   const objCurrentPartner = JSON.parse(currentPartner);
   return (
     <section className="flex w-full flex-col gap-1.5">
-      <section className="flex items-center justify-between">
+      <section className="flex items-center justify-between gap-2.5">
         <div className="mr-8 flex items-center gap-3">
           <div className="relative flex items-center gap-3">
             <Image

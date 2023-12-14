@@ -8,8 +8,10 @@ import SpeechRecognition, {
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { createMessage } from "@/utils/actions/message.action";
+import { useSocketContext } from "@/providers/SocketProvider";
 
-const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
+const ChatInput = () => {
+  const { currentPartner } = useSocketContext();
   const [inputValue, setInputValue] = useState("");
   const [usingSpeech, setUsingSpeech] = useState(false);
 
@@ -21,7 +23,6 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
   } = useSpeechRecognition();
 
   useEffect(() => {
-    console.log(transcript);
     setInputValue(transcript);
   }, [transcript]);
 
@@ -30,7 +31,7 @@ const ChatInput = ({ userIdTo }: { userIdTo: string }) => {
       return;
     }
     await createMessage({
-      userIdTo,
+      userIdTo: currentPartner?._id?.toString() || "",
       text: inputValue,
     });
     setInputValue("");
