@@ -47,7 +47,7 @@ const useSockets = () => {
     socket.on("set-users", (message: IUser[]) => {
       setUsers(message);
     });
-    socket.on("user", (message: IUser) => {
+    socket.on("users", (message: IUser) => {
       setUsers((prev) => [...prev, message]);
     });
     socket.on("set-chatList", (message: IChat[]) => {

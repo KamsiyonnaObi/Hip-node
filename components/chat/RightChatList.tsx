@@ -3,30 +3,19 @@
 import { IMessage } from "@/models/message.model";
 import MyMessage from "./MyMessage";
 import OtherUserMesssage from "./OtherUserMessage";
-// import { useSocketContext } from "@/providers/SocketProvider";
+import { useSocketContext } from "@/providers/SocketProvider";
 
-const RightChatList = ({ messages }: { messages: string }) => {
-  // const { messages } = useSocketContext();
-
-  // All message properties are string
-  const objMessages = JSON.parse(messages) as IMessage[];
-  const currentUserId = "6546f04496a572e837bd18e3";
-
-  // Delete later
-  // console.log("objMessages:", objMessages);
-  // console.log("type of createdAt:", typeof objMessages[0].createdAt);
-
+const RightChatList = ({ currentUserId }: { currentUserId: string }) => {
+  const { messages, currentPartner } = useSocketContext();
   return (
     <section className="flex w-full flex-col">
       <div className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-background px-8 pb-8 pt-[21px] dark:bg-dark4">
-        {objMessages.map((message: IMessage) => {
-          if (message.userIdFrom._id === currentUserId.toString()) {
-            return (
-              <div className="flex self-end" key={message._id}>
-                <MyMessage createdAt={message.createdAt} text={message.text} />
-              </div>
-            );
-          } else {
+        {messages.map((message: IMessage) => {
+          console.log("from", message.userIdFrom._id.toString());
+          console.log("curr", currentUserId);
+          if (
+            message.userIdFrom._id.toString() === currentPartner?._id.toString()
+          ) {
             return (
               <div className="flex self-start" key={message._id}>
                 <OtherUserMesssage
@@ -36,7 +25,23 @@ const RightChatList = ({ messages }: { messages: string }) => {
                 />
               </div>
             );
+          } else {
+            if (
+              message.userIdTo._id.toString() ===
+                currentPartner?._id.toString() &&
+              message.userIdFrom._id.toString() === currentUserId
+            ) {
+              return (
+                <div className="flex self-end" key={message._id}>
+                  <MyMessage
+                    createdAt={message.createdAt}
+                    text={message.text}
+                  />
+                </div>
+              );
+            }
           }
+          return null;
         })}
       </div>
     </section>

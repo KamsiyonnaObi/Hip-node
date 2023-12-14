@@ -2,8 +2,8 @@ import { IUser } from "@/types/mongoose";
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IMessage extends Document {
-  userIdFrom: Schema.Types.ObjectId;
-  userIdTo: Schema.Types.ObjectId;
+  userIdFrom: IUser;
+  userIdTo: IUser;
   text: string;
   createdAt: Date;
   read: boolean;

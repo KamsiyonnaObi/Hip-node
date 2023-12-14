@@ -22,7 +22,6 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
   const { notifications, messages, chatList, users, isConnected } =
     useSockets();
   const [currentPartner, setCurrentPartner] = useState<IUser | null>(null);
-  console.log("currentPartner:", currentPartner);
 
   useEffect(() => {
     if (chatList.length > 0) {

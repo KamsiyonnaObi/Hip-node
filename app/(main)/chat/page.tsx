@@ -3,12 +3,12 @@ import ChatList from "@/components/chat/ChatList";
 import SearchInput from "@/components/chat/SearchInput";
 import TopCard from "@/components/chat/TopCard";
 import RightChatList from "@/components/chat/RightChatList";
-import { getAllMessages, getChatList } from "@/utils/actions/message.action";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 const page = async () => {
-  const messages = await getAllMessages();
-  // const chatlist = await getChatList();
-  // console.log(chatlist);
+  const currentUser = await getCurrentUser();
+  const currentUserId = currentUser?._id;
+
   return (
     <main className="grid bg-background dark:bg-dark2 md:grid-cols-10">
       <section className="flex w-full flex-col md:col-span-3">
@@ -33,7 +33,7 @@ const page = async () => {
         </div>
       </div>
       <div className="col-span-7 mt-[96px] hidden min-h-screen md:flex">
-        <RightChatList messages={JSON.stringify(messages)} />
+        <RightChatList currentUserId={currentUserId?.toString()} />
       </div>
       <div className="fixed inset-x-0 bottom-0 left-[30%] hidden bg-background px-8 pb-9 pt-8 dark:bg-dark4 md:block">
         <div className="mx-auto w-full">

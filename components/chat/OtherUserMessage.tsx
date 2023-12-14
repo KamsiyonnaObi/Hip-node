@@ -1,4 +1,4 @@
-// import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 const OtherUserMesssage = ({
@@ -10,9 +10,9 @@ const OtherUserMesssage = ({
   text: string;
   currentPartner: string;
 }) => {
-  // const dateCreatedAt = formatDistanceToNow(new Date(createdAt), {
-  //   addSuffix: true,
-  // });
+  const dateCreatedAt = formatDistanceToNow(new Date(createdAt), {
+    addSuffix: true,
+  });
   const objCurrentPartner = JSON.parse(currentPartner);
   return (
     <section className="flex w-full flex-col gap-1.5">
@@ -32,9 +32,7 @@ const OtherUserMesssage = ({
             </p>
           </div>
         </div>
-        <p className="display-semibold text-secondary4">
-          {createdAt.toString()}
-        </p>
+        <p className="display-semibold text-secondary4">{dateCreatedAt}</p>
       </section>
       <div className="ml-[52px] flex max-w-[255px] flex-1 rounded-r-lg rounded-bl-lg bg-red10 p-3.5 md:max-w-[360px]">
         <p className="md:display-semibold body-semibold whitespace-normal text-red80">
