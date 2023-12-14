@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
+import Tag from "./Tag";
 
 const PinnedGroup = () => {
   return (
@@ -14,6 +15,7 @@ const PinnedGroup = () => {
           {/* {tagList.map((tagData, index) => (
             <Tag />
           ))} */}
+          <Tag />
         </div>
       </div>
     </div>
