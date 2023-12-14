@@ -3,7 +3,6 @@
 import { getServerSession } from "next-auth";
 
 import Group from "@/models/group.model";
-import Post from "@/models/post.model";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/mongooseConnect";
 import { FilterQuery } from "mongoose";
@@ -239,143 +238,76 @@ export async function getAllGroups(params: {
   category: string;
 }) {
   const { search, category } = params;
+
   try {
     await dbConnect();
 
     const query: FilterQuery<any> = {};
-
     if (search) {
       query.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { desc: { $regex: search, $options: "i" } },
+        { title: new RegExp(search, "i") },
+        { desc: new RegExp(search, "i") },
       ];
     }
 
+    const baseAggregation = [
+      { $match: query },
+      {
+        $project: {
+          title: true,
+          coverUrl: true,
+          groupUrl: true,
+          description: true,
+          userId: true,
+          ...(category === "newest" && { createdAt: true }),
+          ...(category === "fastestgrowing" && {
+            newMembers: { $size: "$activity" },
+          }),
+          ...(category === "popular" && { count: { $size: "$members" } }),
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "userData",
+        },
+      },
+      { $unwind: "$userData" },
+      {
+        $lookup: {
+          from: "posts",
+          let: { groupId: "$_id" },
+          pipeline: [
+            { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } },
+            { $limit: 1 },
+          ],
+          as: "post",
+        },
+      },
+      { $unwind: "$post" },
+    ];
+
+    let sortField = {};
     if (category === "popular") {
-      const sorted = await Group.aggregate([
-        { $match: query },
-        {
-          $project: {
-            count: { $size: "$members" },
-            title: true,
-            coverUrl: true,
-            groupUrl: true,
-            description: true,
-            userId: true,
-          },
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-            as: "userData",
-          },
-        },
-        { $unwind: "$userData" },
-        {
-          $lookup: {
-            from: "posts",
-            let: { groupId: "$_id" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } },
-              { $limit: 1 },
-            ],
-            as: "post",
-          },
-        },
-        { $unwind: "$post" },
-        { $sort: { count: -1 } },
-      ]);
-
-      return { groups: sorted };
-    } else if (category === "newest") {
-      const newestGroups = await Group.aggregate([
-        { $match: query },
-        { $match: { createdAt: { $exists: true } } },
-        {
-          $sort: { createdAt: -1 },
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-            as: "userData",
-          },
-        },
-        { $unwind: "$userData" },
-        {
-          $lookup: {
-            from: "posts",
-            let: { groupId: "$_id" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$groupId", "$$groupId"] } } },
-              { $limit: 1 },
-            ],
-            as: "post",
-          },
-        },
-        { $unwind: "$post" },
-      ]);
-
-      return { groups: newestGroups };
-    } else if (category === "fastestgrowing") {
-      const currentDate = new Date();
-      const startDate = new Date(currentDate);
-      startDate.setDate(startDate.getDate() - 7);
-
-      const fastestGrowingGroups = await Group.aggregate([
-        {
-          $match: {
-            "activity.date": { $gte: startDate, $lte: currentDate },
-            "activity.activityType": "new_member",
-          },
-        },
-        {
-          $group: {
-            _id: "$_id",
-            newMembers: { $sum: 1 },
-          },
-        },
-        {
-          $sort: { newMembers: -1 },
-        },
-        {
-          $limit: 3,
-        },
-      ]);
-
-      const fastestGrowingGroupIds = fastestGrowingGroups.map(
-        (group) => group._id
-      );
-      query._id = { $in: fastestGrowingGroupIds };
+      sortField = { count: -1 };
     }
-
-    let mainQueryPromise = Group.find(query).populate("userId");
-    let postQueryPromise = Group.find(query);
-
     if (category === "newest") {
-      mainQueryPromise = mainQueryPromise.sort({ createdAt: -1 });
-      postQueryPromise = postQueryPromise.sort({ createdAt: -1 });
+      sortField = { createdAt: -1 };
+    }
+    if (category === "fastestgrowing") {
+      sortField = { newMembers: -1 };
     }
 
-    const [groups, postsResults] = await Promise.all([
-      mainQueryPromise,
-      Promise.all(
-        (await postQueryPromise).map((group) =>
-          Post.find({ groupId: group._id })
-        )
-      ),
+    const groups = await Group.aggregate([
+      ...baseAggregation,
+      ...(Object.keys(sortField).length ? [{ $sort: sortField }] : []),
     ]);
 
-    const returnGroups = groups.map((group, index) => ({
-      ...group._doc,
-      post: postsResults[index],
-    }));
-    return { groups: returnGroups };
+    return { groups };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
