@@ -62,11 +62,11 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             <p className="body-semibold text-secondary2 dark:text-background2">
               {`${profileData?.followers.length} Followers`}
             </p>
-            <p className="body-semibold text-secondary2 dark:text-background2">{`${dummyProfileData.points} Points`}</p>
+            <p className="body-semibold text-secondary2 dark:text-background2">{`${profileData?.points} Points`}</p>
           </div>
           <div className="flex flex-col gap-[15px]">
             <p className="body-semibold text-center text-secondary2 dark:text-background2">
-              Following 47
+              {`Following ${profileData?.following.length} `}
             </p>
             <div className="flex flex-wrap gap-2.5">
               <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>

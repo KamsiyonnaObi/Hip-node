@@ -60,7 +60,12 @@ export default function SocketHandler(req, res) {
       const chatList = [...chatMap.values()];
       socket.emit("set-chatList", chatList);
       const subscriber = Notification.watch([
-        { $match: { operationType: "insert", "fullDocument.userTo": userId } },
+        {
+          $match: {
+            operationType: "insert",
+            "fullDocument.userTo": userId,
+          },
+        },
       ]);
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);

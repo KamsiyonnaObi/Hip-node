@@ -6,16 +6,22 @@ import Image, { StaticImageData } from "next/image";
 interface Props {
   src: string | StaticImageData | undefined;
   alt: string;
+  fallback?: string;
   [key: string]: any;
 }
 
-export function ImageFallback({ src, alt, ...rest }: Props) {
+export function ImageFallback({
+  src,
+  alt,
+  fallback = "/images/placeholder.png",
+  ...rest
+}: Props) {
   const [error, setError] = useState(false);
-  const [imageUrl, setImageUrl] = useState(src || "/images/placeholder.png");
+  const [imageUrl, setImageUrl] = useState(src || fallback);
 
   const onError = () => {
     if (!error) {
-      setImageUrl("/images/placeholder.png");
+      setImageUrl(fallback);
       setError(true);
     }
   };

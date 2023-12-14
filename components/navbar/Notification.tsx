@@ -58,7 +58,7 @@ const Notification = ({
     <>
       {type !== "page" && (
         <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
-          <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4  "></div>
+          <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4"></div>
         </div>
       )}
       <article
@@ -66,7 +66,7 @@ const Notification = ({
           type !== "page"
             ? "fixed w-[335px] bg-background dark:bg-dark4 md:w-[589px]"
             : "w-full md:w-[785px]"
-        } right-[10%] flex flex-col rounded-[8px]  text-secondary2  dark:text-background2 max-md:top-[3.5rem] md:left-[56%]`}
+        } right-[10%] flex flex-col items-center rounded-[8px] text-secondary2  dark:text-background2  max-md:top-[3.5rem] md:right-[7%]`}
       >
         <div className="mt-2.5 gap-2.5 py-5 md:py-[30px]">
           <div className="flex flex-col gap-5">
@@ -201,34 +201,6 @@ const Notification = ({
                       } cursor-pointer`}
                     />
                   </li>
-                  <li
-                    className="flex flex-col gap-3"
-                    onClick={() => toggleSelect("meetup")}
-                  >
-                    <div className="flex flex-row gap-2">
-                      <OutlineIcon.Post
-                        className={`${
-                          select === "meetup"
-                            ? "fill-blue dark:fill-blue80"
-                            : "fill-secondary2 dark:fill-secondary3"
-                        } cursor-pointer`}
-                      />
-                      <p
-                        className={`display-semibold ${
-                          select === "meetup" && "text-blue dark:text-blue80"
-                        } hidden cursor-pointer md:flex`}
-                      >
-                        Meetup
-                      </p>
-                    </div>
-                    <hr
-                      className={`${
-                        select === "meetup"
-                          ? "border-blue dark:border-blue80"
-                          : "border-background2 dark:border-dark3"
-                      } cursor-pointer`}
-                    />
-                  </li>
                 </ul>
                 <hr className="border-background2 dark:border-dark3" />
               </div>
@@ -251,8 +223,16 @@ const Notification = ({
                     >
                       <NotifCard
                         type={notif.type}
-                        avatar={notif.userIdfrom.profileImage || "/Avatar.png"}
-                        name={notif.userIdfrom.username || "unknown"}
+                        avatar={
+                          notif.userIdfrom.profileImage ||
+                          notif.image ||
+                          "/Avatar.png"
+                        }
+                        name={
+                          notif.userIdfrom.username ||
+                          notif.username ||
+                          "unknown"
+                        }
                         title={notif.title}
                         postedAt={notif.createdAt}
                         comment={notif.comment}

@@ -31,7 +31,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         members={JSON.stringify(members)}
         coverUrl={coverUrl}
         groupUrl={groupUrl}
-        groupId={groupId}
+        groupId={JSON.stringify(groupId)}
       />
     </main>
   );

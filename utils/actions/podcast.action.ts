@@ -44,6 +44,27 @@ export async function getPodcast(podcastId: string) {
   }
 }
 
+export async function getPodcastByUserId(userId: string) {
+  try {
+    await dbConnect();
+    const podcasts = await Podcast.find({
+      userId,
+    });
+
+    if (podcasts.length > 0) {
+      return { success: true, data: podcasts };
+    } else {
+      return { success: false, data: [] };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "An error occurred while retrieving the podcasts.",
+    };
+  }
+}
+
 export async function getAllPodcasts(params: { type: string; search: string }) {
   const { type, search } = params;
   const typeArray = type ? type.split(",") : [];
