@@ -13,7 +13,7 @@ type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
   const followers = profileData?.followers;
-  console.log(followers);
+
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   // format timestamp to months
