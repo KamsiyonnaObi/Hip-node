@@ -2,10 +2,10 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RenderProfilePosts from "./RenderProfilePosts";
 import { getCurrentUser } from "@/utils/actions/user.action";
-import Notification from "@/components/navbar/Notification";
 import RenderProfileMeetups from "./RenderProfileMeetups";
 import RenderProfilePodcasts from "./RenderProfilePodcasts";
 import RenderProfileInterviews from "./RenderProfileInterviews";
+import UserHistory from "./UserHistory";
 
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
@@ -37,7 +37,7 @@ const ProfileNavigation = async () => {
         <RenderProfileInterviews JSONUser={JSON.stringify(user)} />
       </TabsContent>
       <TabsContent value="history">
-        <Notification type="page" />
+        <UserHistory userId={profileData?._id.toString()} />
       </TabsContent>
     </Tabs>
   );
