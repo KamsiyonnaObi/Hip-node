@@ -1,43 +1,19 @@
-"use client";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { getFastestGrowingGroups } from "@/utils/actions/group.action";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
-type Group = {
-  _id: string;
-  groupUrl: string;
-  title: string;
-  description: string;
-};
-
-const FastestGrowing = () => {
-  const [groups, setGroups] = useState<Group[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getFastestGrowingGroups();
-
-        if (response.success) {
-          setGroups(response.groups || []);
-        } else {
-          console.error(
-            "Error fetching fastest-growing groups:",
-            response.message
-          );
-        }
-      } catch (error) {
-        console.error("An unexpected error occurred:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+const FastestGrowing = async () => {
+  const groups = await getFastestGrowingGroups();
+  if (!Array.isArray(groups)) {
+    return (
+      <div>
+        <p>Error: {groups.message}</p>
+      </div>
+    );
+  }
   return (
     <section>
-      {groups.map((group) => (
+      {groups?.map((group) => (
         <div key={group._id}>
           <div className="bg-white px-[.62rem] dark:bg-dark3">
             <div className="flex gap-[.5rem] p-[.62rem]">

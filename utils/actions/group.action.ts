@@ -381,14 +381,13 @@ export async function getMostPopularGroups() {
 
 export async function getFastestGrowingGroups() {
   try {
-    await dbConnect();
+    await dbConnect(); // Connect to the database
 
     const currentDate = new Date();
-
     const startDate = new Date(currentDate);
     startDate.setDate(startDate.getDate() - 7);
 
-    const result = await Group.aggregate([
+    const group = await Group.aggregate([
       {
         $unwind: "$activity",
       },
@@ -414,15 +413,7 @@ export async function getFastestGrowingGroups() {
         $limit: 3,
       },
     ]);
-    // Stringify result and parse
-    const jsonString = JSON.stringify({
-      success: true,
-      groups: result,
-    });
-
-    const parsedResult = JSON.parse(jsonString);
-
-    return parsedResult;
+    return group;
   } catch (error) {
     console.error(error);
     return {
