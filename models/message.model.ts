@@ -11,6 +11,7 @@ export interface IMessage extends Document {
 
 export interface IChat {
   user: IUser;
+  lastCreatedAt: Date;
   lastMessage: string;
 }
 

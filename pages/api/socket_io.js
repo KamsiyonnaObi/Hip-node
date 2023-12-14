@@ -44,13 +44,14 @@ export default function SocketHandler(req, res) {
           // If not, create it
           chat = {
             user: otherUser,
+            lastCreatedAt: msg.createdAt,
             lastMessage: msg.text,
           };
-
           // Add to map
           chatMap.set(otherUser._id.toString(), chat);
         } else {
           // If chat exists, just update last message
+          chat.lastCreatedAt = msg.createdAt;
           chat.lastMessage = msg.text;
         }
       });

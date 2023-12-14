@@ -133,6 +133,7 @@ export async function getChatList(userId: string) {
       // If not, create it
       chat = {
         user: otherUser,
+        lastCreatedAt: msg.createdAt,
         lastMessage: msg.text,
       };
 
@@ -140,6 +141,7 @@ export async function getChatList(userId: string) {
       chatMap.set(otherUser._id.toString(), chat);
     } else {
       // If chat exists, just update last message
+      chat.lastCreatedAt = msg.createdAt;
       chat.lastMessage = msg.text;
     }
   });

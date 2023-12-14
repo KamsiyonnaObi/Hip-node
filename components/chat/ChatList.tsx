@@ -16,6 +16,7 @@ const ChatList = () => {
         <ChatCard
           key={chat.user._id.toString()}
           user={JSON.stringify(chat.user)}
+          lastCreatedAt={chat.lastCreatedAt}
           lastMessage={chat.lastMessage}
           onClick={() => handleChatClick(chat.user)}
         />
