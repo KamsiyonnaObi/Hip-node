@@ -16,12 +16,12 @@ const RightChatList = ({ currentUserId }: { currentUserId: string }) => {
     if (partner !== currentPartner) {
       setPartner(currentPartner);
 
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
   }, [currentPartner, partner]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
   }, [messages]);
 
   return (
