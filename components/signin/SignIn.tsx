@@ -107,7 +107,7 @@ const SignIn = () => {
           >
             <FillIcon.Google className="fill-secondary2 dark:fill-background2" />
 
-            <p>Sign Up With Google</p>
+            <p>Login With Google</p>
           </Button>
           <Button
             onClick={() => signIn("facebook", { callbackUrl: "/" })}
@@ -117,7 +117,7 @@ const SignIn = () => {
           >
             <FillIcon.Facebook className="fill-secondary2 dark:fill-background2" />
 
-            <p>Sign Up With Facebook</p>
+            <p>Login With Facebook</p>
           </Button>
         </div>
       </article>
