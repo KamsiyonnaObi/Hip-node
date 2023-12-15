@@ -33,7 +33,7 @@ const EditProfile = ({
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      username: profileData.name,
+      username: profileData.username,
       occupation: profileData.occupation,
       bio: profileData.bio,
       website: profileData.website,
@@ -45,7 +45,7 @@ const EditProfile = ({
 
   // create onSubmit function
   const onSubmit = async (data: ProfileSchema) => {
-    const res = await updateProfileDetails(profileData.id, data);
+    const res = await updateProfileDetails(profileData._id, data);
     if (res === "DuplicateKey") {
       setError("username", {
         type: "manual",

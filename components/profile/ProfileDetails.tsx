@@ -7,10 +7,12 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
+import { ImageFallback as Image } from "../shared/ImageFallback";
 
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
+  const followers = profileData?.followers;
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
@@ -41,7 +43,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
         <>
           <div className="flex flex-col items-center justify-center">
             <p className="h1-semibold text-secondary2 dark:text-background2">
-              {profileData?.name}
+              {profileData?.username}
             </p>
             <p className="display-regular text-secondary3">
               {profileData?.occupation}
@@ -68,14 +70,23 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
             <p className="body-semibold text-center text-secondary2 dark:text-background2">
               {`Following ${profileData?.following.length} `}
             </p>
-            <div className="flex flex-wrap gap-2.5">
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-              <div className="h-[30px] w-[30px] rounded-full bg-secondary6"></div>
-            </div>
           </div>
+          <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
+            {followers.length &&
+              followers.slice(0, 7).map((follower: userProfileData) => (
+                <div key={follower._id} className="flex ">
+                  <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
+                    <Image
+                      className="rounded-full"
+                      src={follower.profileImage}
+                      alt={follower.username}
+                      fallback="/ExampleAvatar.png"
+                      fill
+                    />
+                  </div>
+                </div>
+              ))}
+          </section>
           <div>
             <p className="body-semibold text-center text-secondary3">
               {profileData?.bio}
