@@ -23,6 +23,7 @@ export interface IUser {
   likedPosts: Schema.Types.ObjectId[];
   commentedPosts: Schema.Types.ObjectId[];
   sharedPosts: Schema.Types.ObjectId[];
+  pinnedGroups: Schema.Types.ObjectId[];
   reportedPosts: Schema.Types.ObjectId[];
   myPosts: Schema.Types.ObjectId[];
 

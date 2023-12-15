@@ -152,3 +152,39 @@ export async function getCurrentUser(populate?: string[]) {
     return null;
   }
 }
+
+// export async function pinAGroup() {
+//   try {
+//     await dbConnect();
+//     const users = await UserModel.find({
+//       username: { $regex: name, $options: "i" },
+//     });
+//     return users;
+//   } catch (error) {
+//     return "[]";
+//   }
+// }
+
+// export async function unPinAGroup() {
+//   try {
+//     await dbConnect();
+//     const users = await UserModel.find({
+//       username: { $regex: name, $options: "i" },
+//     });
+//     return users;
+//   } catch (error) {
+//     return "[]";
+//   }
+// }
+
+// export async function getPinnedGroups() {
+//   try {
+//     await dbConnect();
+//     const users = await UserModel.find({
+//       username: { $regex: name, $options: "i" },
+//     });
+//     return users;
+//   } catch (error) {
+//     return "[]";
+//   }
+// }

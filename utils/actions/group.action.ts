@@ -422,15 +422,3 @@ export async function getFastestGrowingGroups() {
     };
   }
 }
-
-// export async function getPinnedGroups() {
-//   try {
-//     await dbConnect();
-//     const users = await UserModel.find({
-//       username: { $regex: name, $options: "i" },
-//     });
-//     return users;
-//   } catch (error) {
-//     return "[]";
-//   }
-// }
