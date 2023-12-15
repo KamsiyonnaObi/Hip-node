@@ -15,10 +15,10 @@ interface Props {
 
 const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
   const groupPost = JSON.parse(post);
-  const postTitle = groupPost[0]?.title;
-  const postImage = groupPost[0]?.image;
-  const postContent = groupPost[0]?.content;
-  const postDate = groupPost[0]?.createdAt;
+  const postTitle = groupPost?.title;
+  const postImage = groupPost?.image;
+  const postContent = groupPost?.content;
+  const postDate = groupPost?.createdAt;
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const toggleHeartColor = () => {
