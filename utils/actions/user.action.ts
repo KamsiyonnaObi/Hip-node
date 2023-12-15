@@ -6,6 +6,7 @@ import { ProfileSchema } from "@/components/profile/EditProfile";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 import { revalidatePath } from "next/cache";
+import Group from "@/models/group.model";
 
 export async function newUser(user: FormData) {
   try {
@@ -152,64 +153,81 @@ export async function getCurrentUser(populate?: string[]) {
     return null;
   }
 }
-
-<<<<<<< HEAD
-// export async function pinAGroup() {
-//   try {
-//     await dbConnect();
-//     const users = await UserModel.find({
-//       username: { $regex: name, $options: "i" },
-//     });
-//     return users;
-//   } catch (error) {
-//     return "[]";
-//   }
-// }
-
-// export async function unPinAGroup() {
-//   try {
-//     await dbConnect();
-//     const users = await UserModel.find({
-//       username: { $regex: name, $options: "i" },
-//     });
-//     return users;
-//   } catch (error) {
-//     return "[]";
-//   }
-// }
-
-// export async function getPinnedGroups() {
-//   try {
-//     await dbConnect();
-//     const users = await UserModel.find({
-//       username: { $regex: name, $options: "i" },
-//     });
-//     return users;
-//   } catch (error) {
-//     return "[]";
-//   }
-// }
-=======
-export async function getUserProfileById(userId: string) {
+export async function pinAGroup(userId: string, groupId: any) {
   try {
     await dbConnect();
 
     const user = await UserModel.findById(userId);
 
-    if (user) {
-      const userObj = {
-        id: user._id.toString(),
-        fullname: user.fullName,
-        username: user.username,
-        profileImage: user.profileImage,
-      };
-      return userObj;
+    if (!user) {
+      throw new Error("User not found");
     }
 
-    return null;
+    const group = await Group.findById(groupId);
+
+    if (!group) {
+      throw new Error("Group not found");
+    }
+
+    if (!user.pinnedGroups.includes(groupId)) {
+      user.pinnedGroups.push(groupId);
+
+      await user.save();
+    }
+
+    return user;
   } catch (error) {
-    console.log(error);
-    return null;
+    console.error("Error:", error);
+    throw new Error("Failed to pin the group");
   }
 }
->>>>>>> main
+
+export async function unpinAGroup(userId: string, groupId: any) {
+  try {
+    await dbConnect();
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const group = await Group.findById(groupId);
+
+    if (!group) {
+      throw new Error("Group not found");
+    }
+
+    const groupIndex = user.pinnedGroups.indexOf(groupId);
+
+    if (groupIndex !== -1) {
+      user.pinnedGroups.splice(groupIndex, 1);
+
+      await user.save();
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Failed to unpin the group");
+  }
+}
+
+export async function getAllPinnedGroups(userId: string) {
+  try {
+    await dbConnect();
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const pinnedGroups = await Group.find({ _id: { $in: user.pinnedGroups } });
+
+    return pinnedGroups;
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Failed to get pinned groups");
+  }
+}
