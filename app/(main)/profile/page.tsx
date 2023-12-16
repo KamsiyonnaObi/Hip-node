@@ -8,6 +8,7 @@ import React from "react";
 
 export default async function Profile() {
   const profileData = await getCurrentUser(["followers"]);
+
   return (
     <main className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[20%_56%_auto]">
       {/* Profile */}
