@@ -9,18 +9,18 @@ export default async function Profile() {
   return (
     <main className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[15%_56%_auto]">
       {/* Profile */}
-      <section className="md:col-start-1  md:row-start-1">
+      <section className="md:col-start-1 md:row-span-2 md:row-start-1">
         <LeftSideBar />
       </section>
       {/* Start Your interview */}
-      <section className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:mb-5">
+      <section className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:h-0">
         <div>
           <StartInterview />
         </div>
       </section>
 
       {/* Profile Navigation */}
-      <section className=" flex flex-col gap-[1.25rem] md:col-start-2  md:h-0 lg:row-span-2 lg:row-start-1">
+      <section className=" flex flex-col gap-[1.25rem] md:col-start-2 md:row-span-2 md:h-0 lg:row-span-2 lg:row-start-1">
         <ProfileNavigation />
       </section>
 
@@ -30,7 +30,7 @@ export default async function Profile() {
       </section>
 
       {/* Performance */}
-      <section className="h:0 hidden  lg:col-start-3 lg:block">
+      <section className="hidden lg:col-start-3 lg:row-start-2 lg:block">
         <div>
           {/* <div>Performance</div> */}
           <Meetups />
