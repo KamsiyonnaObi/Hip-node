@@ -1,11 +1,11 @@
-import { getUserHistory } from "@/utils/actions/notification.action";
 import React from "react";
 import UserHistoryCard from "./UserHistoryCard";
+import { getUserHistory } from "@/utils/actions/notification.action";
 
 type Props = { userId?: string };
 const UserHistory = async ({ userId }: Props) => {
   const notifications = await getUserHistory(userId);
-  //   console.log(notifications);
+
   return (
     <>
       <section className="flex flex-col gap-2.5">
