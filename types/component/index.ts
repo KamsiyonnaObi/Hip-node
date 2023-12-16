@@ -8,6 +8,7 @@ export interface userProfileData {
   username: string;
   email: string;
   profileImage: string;
+  bannerImage: string;
   occupation: string;
   followers: [];
   following: [];
