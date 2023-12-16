@@ -25,13 +25,15 @@ const UserHistoryCard = ({
           {type === "comment" && (
             <p className="caption-semibold md:body-semibold">
               You commented on{" "}
-              <span className="body-semibold md:h2-bold">{username}</span> post
+              <span className="body-semibold md:h2-bold">{username}</span>
+              &apos;s post
             </p>
           )}
           {type === "reaction" && (
             <p className="caption-semibold md:body-semibold">
               You liked{" "}
-              <span className="body-semibold md:h2-bold">{username}</span> post
+              <span className="body-semibold md:h2-bold">{username}</span>
+              &apos;s post
             </p>
           )}
           {type === "meetup" && (
