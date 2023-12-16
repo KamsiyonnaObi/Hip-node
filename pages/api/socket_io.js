@@ -46,6 +46,11 @@ export default function SocketHandler(req, res) {
             user: otherUser,
             lastCreatedAt: msg.createdAt,
             lastMessage: msg.text,
+            isRead: msg.readBy
+              ? msg.readBy.some(
+                  (readBy) => readBy.user.toString() === userId && readBy.read
+                )
+              : false,
           };
           // Add to map
           chatMap.set(otherUser._id.toString(), chat);
@@ -53,6 +58,9 @@ export default function SocketHandler(req, res) {
           // If chat exists, just update last message
           chat.lastCreatedAt = msg.createdAt;
           chat.lastMessage = msg.text;
+          chat.isRead = msg.readBy.some(
+            (readBy) => readBy.user.toString() === userId && readBy.read
+          );
         }
       });
 

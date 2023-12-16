@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 import UserModel from "@/models/User";
-import Message from "@/models/message.model";
+import Message, { IReadBy } from "@/models/message.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 
@@ -29,6 +29,10 @@ export async function createMessage({
       userIdFrom,
       userIdTo: objuserIdTo,
       text,
+      readBy: [
+        { user: userIdFrom, read: true },
+        { user: objuserIdTo, read: false },
+      ],
     });
 
     return message;
@@ -152,37 +156,48 @@ export async function getChatList(userId: string) {
   return chatList;
 }
 
-export async function readMessage(messageId: string) {
+export async function updateReadBy({ partnerId }: { partnerId: string }) {
   try {
     await dbConnect();
-    const message = await Message.findById(messageId);
-    message.read = true;
-    await message.save();
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const userIdFrom = await UserModel.findOne({ email });
 
-export async function readAllMessages(userId: string) {
-  try {
-    await dbConnect();
+    if (!userIdFrom) {
+      throw new Error("Invalid userIdFrom");
+    }
 
-    // Find all unread messages for a specific user
-    const unreadmessages = await Message.find({
-      userTo: userId,
-      read: false,
+    // Find messages that match the current user and partner
+    const messagesToUpdate = await Message.find({
+      $or: [
+        { userIdFrom: userIdFrom._id, userIdTo: partnerId },
+        { userIdFrom: partnerId, userIdTo: userIdFrom._id },
+      ],
     });
 
-    // Mark all unread messages as read
-    await Promise.all(
-      unreadmessages.map(async (message) => {
-        message.read = true;
-        await message.save();
+    // Update the readBy field for the current user in each message
+    const updatedMessages = await Promise.all(
+      messagesToUpdate.map(async (message) => {
+        // Check if readBy array is empty, and add a new entry for the current user
+        if (!message.readBy || message.readBy.length === 0) {
+          message.readBy = [{ user: userIdFrom._id, read: true }];
+        } else {
+          // Update the readBy array for the current user
+          message.readBy.forEach((readBy: IReadBy) => {
+            if (readBy.user.toString() === userIdFrom._id.toString()) {
+              readBy.read = true;
+            }
+          });
+        }
+
+        // Save the updated message
+        return message.save();
       })
     );
+
+    return updatedMessages;
   } catch (error) {
-    console.error("Error marking messages as read:", error);
+    console.log(error);
     throw error;
   }
 }

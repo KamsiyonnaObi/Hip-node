@@ -6,11 +6,13 @@ const ChatCard = ({
   user,
   lastCreatedAt,
   lastMessage,
+  isRead,
   onClick,
 }: {
   user: string;
   lastCreatedAt: Date;
   lastMessage: string;
+  isRead: boolean;
   onClick: () => void;
 }) => {
   const userObj = JSON.parse(user);
@@ -27,7 +29,7 @@ const ChatCard = ({
     >
       <section className="flex justify-between">
         <div className="flex items-center gap-3">
-          <span className="h-2 w-2 rounded bg-red" />
+          {!isRead && <span className="h-2 w-2 rounded bg-red" />}
           <div className="flex items-center gap-3">
             <div className="relative flex items-center gap-3">
               <Image
