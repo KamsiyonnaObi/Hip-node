@@ -29,7 +29,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
       ) : (
         <>
           <section className="flex-center w-full rounded-2xl bg-background dark:bg-dark3">
-            <article className="flex-center flex-col gap-5 rounded-2xl bg-background pb-10 dark:bg-dark3">
+            <article className="flex-center w-full flex-col gap-5 rounded-2xl bg-background pb-10 dark:bg-dark3">
               <div className="flex w-full flex-col items-center">
                 <div className="relative mb-[36px] h-[106px] w-full">
                   <Image
