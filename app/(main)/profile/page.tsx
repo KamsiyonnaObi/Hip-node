@@ -15,10 +15,8 @@ export default async function Profile() {
         <ProfileDetails JSONProfileData={JSON.stringify(profileData)} />
       </section>
       {/* Start Your interview */}
-      <section className="md:col-start-2 md:row-start-1 lg:col-start-3">
-        <div>
-          <StartInterview />
-        </div>
+      <section className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:h-[168px]">
+        <StartInterview />
       </section>
 
       {/* Profile Navigation */}
@@ -32,7 +30,7 @@ export default async function Profile() {
       </section>
 
       {/* Performance */}
-      <section className="hidden lg:col-start-3 lg:row-start-2 lg:block">
+      <section className="hidden lg:col-start-3 lg:row-span-2 lg:flex">
         <div>
           {/* <div>Performance</div> */}
           <Meetups />
