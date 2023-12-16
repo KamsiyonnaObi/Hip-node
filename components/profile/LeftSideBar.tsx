@@ -11,11 +11,11 @@ export default async function LeftSideBar() {
       <article className="flex-center w-[295px] flex-col gap-5 bg-background px-5 py-10 dark:bg-dark3">
         <div className="relative h-24 w-24 rounded-full border-4 border-dark3 bg-yellow30">
           <Image
-            className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
-            src="/ExampleAvatar.png"
+            className=" rounded-full"
+            src={profileData?.profileImage}
+            fallback="/ExampleAvatar.png"
             alt="profile"
-            width="80"
-            height="80"
+            fill
           />
         </div>
         <ProfileDetails JSONProfileData={JSON.stringify(profileData)} />
