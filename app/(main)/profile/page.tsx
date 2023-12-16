@@ -13,7 +13,7 @@ export default async function Profile() {
         <LeftSideBar />
       </section>
       {/* Start Your interview */}
-      <section className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:h-0">
+      <section className="md:col-start-2 md:row-start-1 lg:col-start-3">
         <div>
           <StartInterview />
         </div>
