@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-// import moment from "moment";
 import { userProfileData } from "@/types/component";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -16,19 +15,6 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
   const followers = profileData?.followers;
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
-
-  // // format timestamp to months
-  // function monthsSinceJoined(joinedDate: Date) {
-  //   return moment().diff(moment(joinedDate), "months");
-  // }
-
-  // Use dummy data for remaining user data
-  // const dummyProfileData = {
-  //   imgUrl: "/ExampleAvatar.png",
-  //   profileUrl: "/",
-  //   joinedDate: "2-28-2023",
-  //   points: 501,
-  // };
 
   const onEdit = () => setIsProfileEdit(true);
   const onCancel = () => setIsProfileEdit(false);
