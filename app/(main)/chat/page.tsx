@@ -4,6 +4,7 @@ import SearchInput from "@/components/chat/SearchInput";
 import TopCard from "@/components/chat/TopCard";
 import RightChatList from "@/components/chat/RightChatList";
 import { getCurrentUser } from "@/utils/actions/user.action";
+import ChatDropDown from "@/components/chat/ChatDropDown";
 
 const page = async () => {
   const currentUser = await getCurrentUser();
@@ -24,7 +25,11 @@ const page = async () => {
           <SearchInput />
         </div>
         <section className="">
-          <ChatList />
+          {currentUserId && (
+            <ChatDropDown currentUserId={currentUserId?.toString()}>
+              <ChatList />
+            </ChatDropDown>
+          )}
         </section>
       </section>
       <div className="fixed inset-x-0 top-20 z-[1] hidden bg-background  dark:bg-dark4 md:left-[30%] md:block">
