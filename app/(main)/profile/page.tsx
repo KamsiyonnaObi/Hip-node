@@ -34,7 +34,8 @@ export default async function Profile() {
       {/* Performance */}
       <section className="hidden lg:col-start-3 lg:row-start-2 lg:block">
         <div>
-          <div>Performance</div>
+          {/* <div>Performance</div> */}
+          <Meetups />
         </div>
       </section>
     </main>
