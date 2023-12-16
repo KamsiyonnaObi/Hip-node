@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import moment from "moment";
-
+// import moment from "moment";
 import { userProfileData } from "@/types/component";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
@@ -9,6 +8,7 @@ import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
+import { getTimestamp } from "@/utils";
 
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
@@ -17,18 +17,18 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
-  // format timestamp to months
-  function monthsSinceJoined(joinedDate: Date) {
-    return moment().diff(moment(joinedDate), "months");
-  }
+  // // format timestamp to months
+  // function monthsSinceJoined(joinedDate: Date) {
+  //   return moment().diff(moment(joinedDate), "months");
+  // }
 
   // Use dummy data for remaining user data
-  const dummyProfileData = {
-    imgUrl: "/ExampleAvatar.png",
-    profileUrl: "/",
-    joinedDate: "2-28-2023",
-    points: 501,
-  };
+  // const dummyProfileData = {
+  //   imgUrl: "/ExampleAvatar.png",
+  //   profileUrl: "/",
+  //   joinedDate: "2-28-2023",
+  //   points: 501,
+  // };
 
   const onEdit = () => setIsProfileEdit(true);
   const onCancel = () => setIsProfileEdit(false);
@@ -148,9 +148,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                 </div>
                 <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>
                 <p className="text-secondary3">
-                  Joined{" "}
-                  {monthsSinceJoined(new Date(dummyProfileData.joinedDate))}{" "}
-                  months ago
+                  Joined {getTimestamp(new Date(profileData?.createdAt))}
                 </p>
                 <Button
                   onClick={onEdit}

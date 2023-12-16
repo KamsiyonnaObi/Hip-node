@@ -18,6 +18,7 @@ export interface userProfileData {
   twitter: string;
   facebook: string;
   instagram: string;
+  createdAt: Date;
 }
 
 export interface ActionBarLink {
