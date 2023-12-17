@@ -15,7 +15,6 @@ const RightChatList = ({ currentUserId }: { currentUserId: string }) => {
   useEffect(() => {
     if (partner !== currentPartner) {
       setPartner(currentPartner);
-
       messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
     }
   }, [currentPartner, partner]);
@@ -25,8 +24,8 @@ const RightChatList = ({ currentUserId }: { currentUserId: string }) => {
   }, [messages]);
 
   return (
-    <section className="flex w-full flex-col">
-      <div className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-background px-8 pb-8 pt-[21px] dark:bg-dark4">
+    <section className="flex h-[350px] flex-col md:h-[850px] md:w-full">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-background px-8 pb-8 pt-[21px] dark:bg-dark2 md:dark:bg-dark4">
         {messages.map((message: IMessage) => {
           if (
             message.userIdFrom._id.toString() === currentPartner?._id.toString()

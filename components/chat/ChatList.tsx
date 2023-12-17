@@ -5,16 +5,23 @@ import ChatCard from "./ChatCard";
 import { useSocketContext } from "@/providers/SocketProvider";
 import { updateReadBy } from "@/utils/actions/message.action";
 
-const ChatList = () => {
+const ChatList = ({
+  onClick,
+  currentUserId,
+}: {
+  onClick?: (e: boolean) => void;
+  currentUserId: string;
+}) => {
   const { chatList, setCurrentPartner } = useSocketContext();
   const handleChatClick = async (partner: IUser) => {
     const partnerId = partner._id.toString();
     setCurrentPartner(partner);
     await updateReadBy({ partnerId });
+    onClick && onClick(true);
   };
 
   return (
-    <section>
+    <section className="w-full max-sm:h-screen">
       {chatList.map((chat) => (
         <ChatCard
           key={chat.user._id.toString()}
@@ -23,6 +30,7 @@ const ChatList = () => {
           lastMessage={chat.lastMessage}
           isRead={chat.isRead}
           onClick={() => handleChatClick(chat.user)}
+          userIdFrom={chat?.userIdFrom?.toString()}
         />
       ))}
     </section>

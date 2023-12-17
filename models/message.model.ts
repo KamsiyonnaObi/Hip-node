@@ -11,14 +11,23 @@ export interface IMessage extends Document {
   userIdTo: IUser;
   text: string;
   createdAt: Date;
-  readBy: IReadBy[];
+  read: boolean;
 }
 
 export interface IChat {
   user: IUser;
   lastCreatedAt: Date;
   lastMessage: string;
+  read: boolean;
+  userIdFrom: IUser;
+}
+
+export interface IChatList {
+  user: IUser;
+  lastCreatedAt: Date;
+  lastMessage: string;
   isRead: boolean;
+  userIdFrom: IUser;
 }
 
 const MessageSchema = new Schema({
@@ -26,12 +35,7 @@ const MessageSchema = new Schema({
   userIdTo: { type: Schema.Types.ObjectId, ref: "User", required: true },
   text: { type: String },
   createdAt: { type: Date, default: Date.now },
-  readBy: [
-    {
-      user: { type: Schema.Types.ObjectId, ref: "User" },
-      read: { type: Boolean, default: false },
-    },
-  ],
+  read: { type: Boolean },
 });
 
 const Message = models.Message || model("Message", MessageSchema);

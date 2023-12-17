@@ -26,10 +26,13 @@ const page = async () => {
         </div>
         <section className="">
           {currentUserId && (
-            <ChatDropDown currentUserId={currentUserId?.toString()}>
-              <ChatList />
-            </ChatDropDown>
+            <ChatDropDown currentUserId={currentUserId?.toString()} />
           )}
+          <div className="hidden md:flex">
+            {currentUserId && (
+              <ChatList currentUserId={currentUserId?.toString()} />
+            )}
+          </div>
         </section>
       </section>
       <div className="fixed inset-x-0 top-20 z-[1] hidden bg-background  dark:bg-dark4 md:left-[30%] md:block">

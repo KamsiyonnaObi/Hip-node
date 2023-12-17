@@ -1,8 +1,7 @@
 "use server";
-import mongoose from "mongoose";
 
 import UserModel from "@/models/User";
-import Message, { IReadBy } from "@/models/message.model";
+import Message from "@/models/message.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
 
@@ -22,17 +21,12 @@ export async function createMessage({
     if (!userIdTo) {
       throw new Error("Invalid userIdTo");
     }
-    const { ObjectId } = mongoose.Types;
-    const objuserIdTo = new ObjectId(userIdTo);
 
     const message = await Message.create({
       userIdFrom,
-      userIdTo: objuserIdTo,
+      userIdTo,
       text,
-      readBy: [
-        { user: userIdFrom, read: true },
-        { user: objuserIdTo, read: false },
-      ],
+      read: false,
     });
 
     return message;
@@ -115,47 +109,6 @@ export async function getChatPartners() {
   return partners[0].userIds;
 }
 
-export async function getChatList(userId: string) {
-  await dbConnect();
-
-  // Get all messages
-  const messages = await getAllMessages();
-
-  // Create a Map to store unique users
-  const chatMap = new Map();
-
-  messages.forEach((msg) => {
-    // Get the other user that is not the current user
-    const otherUser = msg.userIdFrom._id.equals(userId)
-      ? msg.userIdTo
-      : msg.userIdFrom;
-
-    // Check if chat exists
-    let chat = chatMap.get(otherUser._id);
-
-    if (!chat) {
-      // If not, create it
-      chat = {
-        user: otherUser,
-        lastCreatedAt: msg.createdAt,
-        lastMessage: msg.text,
-      };
-
-      // Add to map
-      chatMap.set(otherUser._id.toString(), chat);
-    } else {
-      // If chat exists, just update last message
-      chat.lastCreatedAt = msg.createdAt;
-      chat.lastMessage = msg.text;
-    }
-  });
-
-  // Get chats from map values
-  const chatList = [...chatMap.values()];
-
-  return chatList;
-}
-
 export async function updateReadBy({ partnerId }: { partnerId: string }) {
   try {
     await dbConnect();
@@ -167,35 +120,15 @@ export async function updateReadBy({ partnerId }: { partnerId: string }) {
       throw new Error("Invalid userIdFrom");
     }
 
-    // Find messages that match the current user and partner
-    const messagesToUpdate = await Message.find({
-      $or: [
-        { userIdFrom: userIdFrom._id, userIdTo: partnerId },
-        { userIdFrom: partnerId, userIdTo: userIdFrom._id },
-      ],
-    });
-
-    // Update the readBy field for the current user in each message
-    const updatedMessages = await Promise.all(
-      messagesToUpdate.map(async (message) => {
-        // Check if readBy array is empty, and add a new entry for the current user
-        if (!message.readBy || message.readBy.length === 0) {
-          message.readBy = [{ user: userIdFrom._id, read: true }];
-        } else {
-          // Update the readBy array for the current user
-          message.readBy.forEach((readBy: IReadBy) => {
-            if (readBy.user.toString() === userIdFrom._id.toString()) {
-              readBy.read = true;
-            }
-          });
-        }
-
-        // Save the updated message
-        return message.save();
-      })
+    await Message.updateMany(
+      {
+        userIdFrom: partnerId,
+        userIdTo: userIdFrom._id,
+      },
+      {
+        $set: { read: true },
+      }
     );
-
-    return updatedMessages;
   } catch (error) {
     console.log(error);
     throw error;
