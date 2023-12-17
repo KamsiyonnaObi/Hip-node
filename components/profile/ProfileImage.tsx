@@ -6,19 +6,26 @@ import OutlineIcon from "../icons/OutlineIcon";
 type Props = {
   setParentFormData: (name: string, url: string) => void;
   setImageUrl: (url: string) => void;
+  imgPropName: string;
 };
 
-const ProfileImage = ({ setImageUrl, setParentFormData }: Props) => {
-  const updateForm = (url: any) => {
-    setParentFormData("profileImage", url);
+const ProfileImage = ({
+  setImageUrl,
+  setParentFormData,
+  imgPropName,
+}: Props) => {
+  // update parent form data with new cloudinary image
+  const updateForm = (imgName: string, url: any) => {
+    setParentFormData(imgName, url);
   };
   return (
-    <div className="absolute left-[55%] top-[75%] flex items-center">
+    <div className=" flex items-center">
       <div className="ml-[.62rem]">
         <CldUploadWidget
           uploadPreset="ml_images"
           onUpload={(result: any) => {
-            updateForm(result?.info?.secure_url);
+            // use cloudinary widget to update form and image on edit profile
+            updateForm(imgPropName, result?.info?.secure_url);
             setImageUrl(result?.info?.secure_url);
           }}
         >

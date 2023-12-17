@@ -83,7 +83,7 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
       facebook: data.facebook,
       instagram: data.instagram,
       profileImage: data.profileImage,
-      profileBanner: data.profileBanner,
+      bannerImage: data.bannerImage,
     });
 
     if (!profileData) {

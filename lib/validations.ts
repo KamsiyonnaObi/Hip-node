@@ -164,5 +164,5 @@ export const profileSchema = z.object({
       .url(),
   ]),
   profileImage: z.string(),
-  profileBanner: z.string(),
+  bannerImage: z.string(),
 });

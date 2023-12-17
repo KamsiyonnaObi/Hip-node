@@ -30,6 +30,9 @@ const EditProfile = ({
   const [imageUrl, setImageUrl] = React.useState(
     profileData.profileImage || ""
   );
+  const [bannerImageUrl, setBannerImageUrl] = React.useState(
+    profileData.bannerImage || ""
+  );
   const router = useRouter();
 
   // extract register, handleSubmit from useForm
@@ -50,7 +53,7 @@ const EditProfile = ({
       facebook: profileData.facebook,
       instagram: profileData.instagram,
       profileImage: profileData.profileImage,
-      profileBanner: profileData.bannerImage,
+      bannerImage: profileData.bannerImage,
     },
   });
 
@@ -77,11 +80,18 @@ const EditProfile = ({
             <div className="relative mb-[36px] h-[106px] w-full">
               <Image
                 className="rounded-t-2xl object-fill"
-                src={profileData?.bannerImage}
+                src={bannerImageUrl}
                 alt="profile-banner"
                 fallback="/Profilebg.png"
                 fill
               />
+              <div className="absolute left-[86%] top-[82%]">
+                <ProfileImage
+                  setImageUrl={setBannerImageUrl}
+                  setParentFormData={setValue as any}
+                  imgPropName="bannerImage"
+                />
+              </div>
             </div>
             <div className="absolute mt-[3.33rem] h-24 w-24 items-center justify-center rounded-full border-4 border-dark3 bg-yellow30">
               <Image
@@ -91,10 +101,12 @@ const EditProfile = ({
                 alt="profile"
                 fill
               />
-              <div className="mt-3">
+              {/* Pass function to set new profile picture and set image */}
+              <div className="absolute left-[55%] top-[75%]">
                 <ProfileImage
                   setImageUrl={setImageUrl}
                   setParentFormData={setValue as any}
+                  imgPropName="profileImage"
                 />
               </div>
             </div>
