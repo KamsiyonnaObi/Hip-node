@@ -27,7 +27,11 @@ const EditProfile = ({
   isEdit,
 }: EditProfileProps) => {
   const profileData: userProfileData = JSON.parse(JSONProfileData);
+  const [imageUrl, setImageUrl] = React.useState(
+    profileData.profileImage || ""
+  );
   const router = useRouter();
+
   // extract register, handleSubmit from useForm
   const {
     register,
@@ -82,17 +86,17 @@ const EditProfile = ({
             <div className="absolute mt-[3.33rem] h-24 w-24 items-center justify-center rounded-full border-4 border-dark3 bg-yellow30">
               <Image
                 className="absolute my-auto rounded-full"
-                src={profileData?.profileImage}
+                src={imageUrl}
                 fallback="/ExampleAvatar.png"
                 alt="profile"
                 fill
               />
-            </div>
-            <div className="mt-3">
-              <ProfileImage
-                prevImage={profileData.profileImage}
-                setParentFormData={setValue as any}
-              />
+              <div className="mt-3">
+                <ProfileImage
+                  setImageUrl={setImageUrl}
+                  setParentFormData={setValue as any}
+                />
+              </div>
             </div>
           </div>
           <section className="flex w-full flex-col items-center gap-5 px-5">
