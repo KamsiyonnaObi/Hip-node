@@ -22,14 +22,12 @@ export async function createMessage({
       throw new Error("Invalid userIdTo");
     }
 
-    const message = await Message.create({
+    await Message.create({
       userIdFrom,
       userIdTo,
       text,
       read: false,
     });
-
-    return message;
   } catch (error) {
     console.log(error);
     throw error;
