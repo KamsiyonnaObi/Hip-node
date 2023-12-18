@@ -173,6 +173,7 @@ export async function pinAGroup({ groupId }: { groupId: string }) {
       user.pinnedGroups.push(objGroupId);
       await user.save();
     }
+    revalidatePath(`/home`);
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to pin the group");
@@ -196,6 +197,7 @@ export async function unpinAGroup({ groupId }: { groupId: string }) {
       user.pinnedGroups.splice(groupIndex, 1);
       await user.save();
     }
+    revalidatePath(`/home`);
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to unpin the group");
@@ -211,6 +213,7 @@ export async function getAllPinnedGroups() {
     if (!user) {
       throw new Error("User not found");
     }
+
     return user.pinnedGroups as IGroup[];
   } catch (error) {
     console.error("Error:", error);
