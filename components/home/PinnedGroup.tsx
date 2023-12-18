@@ -1,9 +1,11 @@
-"use client";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import Tag from "./Tag";
+import { getAllPinnedGroups } from "@/utils/actions/user.action";
+import PinnedGroups from "./PinnedGroups";
 
-const PinnedGroup = () => {
+const PinnedGroup = async () => {
+  const getPinnedGroups = await getAllPinnedGroups();
+
   return (
     <div className="flex w-[210px] flex-col gap-[10px] rounded-[16px] bg-background p-[20px] dark:bg-dark3">
       <div className="flex flex-col">
@@ -12,10 +14,15 @@ const PinnedGroup = () => {
           <OutlineIcon.ArrowLeft className=" stroke-secondary3 dark:stroke-background2" />
         </section>
         <div className="flex flex-col gap-[10px] rounded-[16px] dark:bg-dark3">
-          {/* {tagList.map((tagData, index) => (
-            <Tag />
-          ))} */}
-          <Tag />
+          {getPinnedGroups.slice(0 - 6).map((group) => (
+            <div key={group.id}>
+              <PinnedGroups
+                title={group.title}
+                groupUrl={group.groupUrl}
+                description={group.description}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

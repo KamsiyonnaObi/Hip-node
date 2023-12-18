@@ -17,8 +17,7 @@ export default async function Home({
 }) {
   const currentUser = await getCurrentUser();
   const getPopTags = await getPopularTags();
-  // const getPinnedGroups = await getAllPinnedGroups();
-  // console.log(getPinnedGroups);
+
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
