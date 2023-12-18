@@ -6,11 +6,7 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
 import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
-import {
-  getAllPinnedGroups,
-  pinAGroup,
-  unpinAGroup,
-} from "@/utils/actions/user.action";
+import { pinAGroup, unpinAGroup } from "@/utils/actions/user.action";
 import { ObjectId } from "mongoose";
 
 const Cover = ({
@@ -20,6 +16,7 @@ const Cover = ({
   groupUrl,
   groupId,
   userId,
+  pinnedGroup,
 }: {
   user: string;
   title: string;
@@ -27,13 +24,14 @@ const Cover = ({
   groupUrl: string;
   groupId: string;
   userId: ObjectId;
+  pinnedGroup: boolean;
 }) => {
   const [show, setShow] = useState(false);
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [isMemberSelect, setIsMemberSelect] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
+  const [isPinned, setIsPinned] = useState(pinnedGroup);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
@@ -85,19 +83,6 @@ const Cover = ({
 
     checkMember();
   }, [groupId]);
-
-  useEffect(() => {
-    const fetchPinnedGroups = async () => {
-      try {
-        const pinnedGroups = await getAllPinnedGroups();
-        const isPinned = pinnedGroups.includes(groupId);
-        setIsPinned(isPinned);
-      } catch (error) {
-        console.error("Error fetching pinned groups", error);
-      }
-    };
-    fetchPinnedGroups();
-  }, [groupId, userId]);
 
   const handlePinClick = async () => {
     try {
