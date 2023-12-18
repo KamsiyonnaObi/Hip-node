@@ -79,6 +79,13 @@ const userSchema: Schema = new Schema<IUser>(
         ref: "User",
       },
     ],
+    pinnedGroups: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Group",
+      },
+    ],
+
     points: {
       type: Number,
       default: 0,
