@@ -2,7 +2,7 @@
 import React, { MouseEventHandler } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+
 import * as z from "zod";
 
 import { profileSchema } from "@/lib/validations";
@@ -33,7 +33,6 @@ const EditProfile = ({
   const [bannerImageUrl, setBannerImageUrl] = React.useState(
     profileData.bannerImage || ""
   );
-  const router = useRouter();
 
   // extract register, handleSubmit from useForm
   const {
@@ -68,7 +67,7 @@ const EditProfile = ({
 
       return;
     }
-    router.refresh();
+    window.location.reload();
     isEdit(false);
   };
 
