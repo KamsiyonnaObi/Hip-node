@@ -6,7 +6,7 @@ import { ProfileSchema } from "@/components/profile/EditProfile";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 import { revalidatePath } from "next/cache";
-import Group from "@/models/group.model";
+import Group, { IGroup } from "@/models/group.model";
 
 export async function newUser(user: FormData) {
   try {
@@ -206,15 +206,12 @@ export async function getAllPinnedGroups() {
   try {
     await dbConnect();
 
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(["pinnedGroups"]);
 
     if (!user) {
       throw new Error("User not found");
     }
-
-    const pinnedGroups = await Group.find({ _id: { $in: user.pinnedGroups } });
-
-    return pinnedGroups;
+    return user.pinnedGroups as IGroup[];
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to get pinned groups");

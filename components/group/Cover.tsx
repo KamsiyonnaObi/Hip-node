@@ -133,16 +133,16 @@ const Cover = ({
           <div className="flex flex-col">
             <h2 className="display-semibold md:h1-semibold flex text-secondary2 dark:text-background2">
               {title}
-              <div>
+              <div className="ml-[0.125rem]">
                 {isPinned ? (
                   // Show unpin icon if the group is already pinned
                   <div onClick={handleUnpinClick}>
-                    <OutlineIcon.Pin className="w-[.75rem ml-[.125rem] h-[.75rem] cursor-pointer fill-green" />
+                    <OutlineIcon.Pin className="w-[.75rem h-[.75rem] cursor-pointer fill-green" />
                   </div>
                 ) : (
                   // Show pin icon if the group is not pinned
                   <div onClick={handlePinClick}>
-                    <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem] cursor-pointer fill-red" />
+                    <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem] cursor-pointer dark:fill-background" />
                   </div>
                 )}
               </div>

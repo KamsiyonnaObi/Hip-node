@@ -1,3 +1,4 @@
+import { IGroup } from "@/models/group.model";
 import { Schema } from "mongoose";
 
 export interface IUser {
@@ -23,7 +24,7 @@ export interface IUser {
   likedPosts: Schema.Types.ObjectId[];
   commentedPosts: Schema.Types.ObjectId[];
   sharedPosts: Schema.Types.ObjectId[];
-  pinnedGroups: Schema.Types.ObjectId[];
+  pinnedGroups: Schema.Types.ObjectId[] | IGroup[];
   reportedPosts: Schema.Types.ObjectId[];
   myPosts: Schema.Types.ObjectId[];
 
