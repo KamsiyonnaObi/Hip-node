@@ -15,7 +15,6 @@ import GroupError from "@/components/group/GroupError";
 import { getGroupById } from "@/utils/actions/group.action";
 import { getPostTagsByGroupId } from "@/utils/actions/post.action";
 import PostByGroup from "@/components/group/PostByGroup";
-// import { pinAGroup } from "@/utils/actions/user.action";
 interface UserAdmin {
   _id: string;
   fullName?: string;

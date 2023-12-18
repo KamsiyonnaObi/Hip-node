@@ -6,6 +6,7 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
 import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
+import PinGroup from "./PinGroup";
 
 const Cover = ({
   user,
@@ -109,7 +110,7 @@ const Cover = ({
           <div className="flex flex-col">
             <h2 className="display-semibold md:h1-semibold flex text-secondary2 dark:text-background2">
               {title}
-              <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem]" />
+              <PinGroup groupId={groupId} userId={user} />
             </h2>
             <div className="flex gap-[.31rem]">
               <p className="text-sm-regular sm:body-regular text-secondary3">
