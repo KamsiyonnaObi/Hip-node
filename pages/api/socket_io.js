@@ -31,6 +31,7 @@ export default function SocketHandler(req, res) {
 
       socket.emit("set-messages", messages);
 
+      // Create a chat list
       messages.forEach((msg) => {
         // Get the other user that is not the current user
         const otherUser = msg.userIdFrom._id.equals(userId)
@@ -46,6 +47,8 @@ export default function SocketHandler(req, res) {
             user: otherUser,
             lastCreatedAt: msg.createdAt,
             lastMessage: msg.text,
+            isRead: msg.read,
+            userIdFrom: msg.userIdFrom._id,
           };
           // Add to map
           chatMap.set(otherUser._id.toString(), chat);
@@ -53,6 +56,8 @@ export default function SocketHandler(req, res) {
           // If chat exists, just update last message
           chat.lastCreatedAt = msg.createdAt;
           chat.lastMessage = msg.text;
+          chat.isRead = msg.read;
+          chat.userIdFrom = msg.userIdFrom._id;
         }
       });
 
