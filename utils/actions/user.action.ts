@@ -1,5 +1,5 @@
 "use server";
-import mongoose, { ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 import { ProfileSchema } from "@/components/profile/EditProfile";
@@ -153,18 +153,11 @@ export async function getCurrentUser(populate?: string[]) {
     return null;
   }
 }
-export async function pinAGroup({
-  groupId,
-  userId,
-}: {
-  userId: ObjectId;
-  groupId: string;
-}) {
+
+export async function pinAGroup({ groupId }: { groupId: string }) {
   try {
     await dbConnect();
-    // get userId from session
-    const user = await UserModel.findById(userId);
-    console.log(user);
+    const user = await getCurrentUser();
     if (!user) {
       throw new Error("User not found");
     }
@@ -174,63 +167,46 @@ export async function pinAGroup({
     if (!group) {
       throw new Error("Group not found");
     }
-    const objGroupId = new mongoose.Schema.Types.ObjectId(groupId);
+    const objGroupId = group._id;
+
     if (!user.pinnedGroups.includes(objGroupId)) {
       user.pinnedGroups.push(objGroupId);
-
       await user.save();
     }
-
-    return user;
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to pin the group");
   }
 }
 
-export async function unpinAGroup({
-  groupId,
-  userId,
-}: {
-  userId: ObjectId;
-  groupId: string;
-}) {
+export async function unpinAGroup({ groupId }: { groupId: string }) {
   try {
     await dbConnect();
-
-    const user = await UserModel.findById(userId);
-
+    const user = await getCurrentUser();
     if (!user) {
       throw new Error("User not found");
     }
-
     const group = await Group.findById(groupId);
-
     if (!group) {
       throw new Error("Group not found");
     }
-    const objGroupId = new mongoose.Schema.Types.ObjectId(groupId);
-
+    const objGroupId = group._id;
     const groupIndex = user.pinnedGroups.indexOf(objGroupId);
-
     if (groupIndex !== -1) {
       user.pinnedGroups.splice(groupIndex, 1);
-
       await user.save();
     }
-
-    return user;
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Failed to unpin the group");
   }
 }
 
-export async function getAllPinnedGroups({ userId }: { userId: ObjectId }) {
+export async function getAllPinnedGroups() {
   try {
     await dbConnect();
 
-    const user = await UserModel.findById(userId);
+    const user = await getCurrentUser();
 
     if (!user) {
       throw new Error("User not found");

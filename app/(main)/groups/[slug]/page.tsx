@@ -43,9 +43,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     profileImage: member.profileImage,
   }));
   const tags = await getPostTagsByGroupId(params.slug);
-  const pinnedGroup = await getAllPinnedGroups({
-    userId: group.data.userId._id,
-  });
+  const pinnedGroup = await getAllPinnedGroups();
   console.log(pinnedGroup);
   return (
     <main className="mx-auto mt-4 flex max-w-7xl justify-center sm:max-w-[888px] md:min-w-[1143px]  md:max-w-[1250px] ">

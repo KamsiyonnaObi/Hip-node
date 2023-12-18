@@ -89,7 +89,7 @@ const Cover = ({
   useEffect(() => {
     const fetchPinnedGroups = async () => {
       try {
-        const pinnedGroups = await getAllPinnedGroups({ userId });
+        const pinnedGroups = await getAllPinnedGroups();
         const isPinned = pinnedGroups.includes(groupId);
         setIsPinned(isPinned);
       } catch (error) {
@@ -101,7 +101,7 @@ const Cover = ({
 
   const handlePinClick = async () => {
     try {
-      await pinAGroup({ userId, groupId });
+      await pinAGroup({ groupId });
       setIsPinned(true);
     } catch (error) {
       console.error("Failed to pin the group", error);
@@ -110,7 +110,7 @@ const Cover = ({
 
   const handleUnpinClick = async () => {
     try {
-      await unpinAGroup({ userId, groupId });
+      await unpinAGroup({ groupId });
       setIsPinned(false);
     } catch (error) {
       console.error("Failed to unpin the group", error);
@@ -160,7 +160,7 @@ const Cover = ({
                     <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem] cursor-pointer fill-red" />
                   </div>
                 )}
-              </div>{" "}
+              </div>
             </h2>
             <div className="flex gap-[.31rem]">
               <p className="text-sm-regular sm:body-regular text-secondary3">
