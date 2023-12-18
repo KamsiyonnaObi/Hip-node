@@ -4,14 +4,14 @@ import io, { Socket } from "socket.io-client";
 import { useEffect, useState } from "react";
 
 import { INotif } from "@/models/notification.model";
-import { IChat, IMessage } from "@/models/message.model";
+import { IChatList, IMessage } from "@/models/message.model";
 import { IUser } from "@/types/mongoose";
 
 const useSockets = () => {
   const [socket, setSocket] = useState<Socket>();
   const [notifications, setNotifications] = useState<INotif[]>([]);
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [chatList, setChatList] = useState<IChat[]>([]);
+  const [chatList, setChatList] = useState<IChatList[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
@@ -50,10 +50,10 @@ const useSockets = () => {
     socket.on("users", (message: IUser) => {
       setUsers((prev) => [...prev, message]);
     });
-    socket.on("set-chatList", (message: IChat[]) => {
+    socket.on("set-chatList", (message: IChatList[]) => {
       setChatList(message);
     });
-    socket.on("chatList", (message: IChat) => {
+    socket.on("chatList", (message: IChatList) => {
       setChatList((prev) => [...prev, message]);
     });
   }, [socket]);
