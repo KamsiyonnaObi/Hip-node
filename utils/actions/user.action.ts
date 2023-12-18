@@ -83,12 +83,15 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
       twitter: data.twitter,
       facebook: data.facebook,
       instagram: data.instagram,
+      profileImage: data.profileImage,
+      bannerImage: data.bannerImage,
     });
 
     if (!profileData) {
       console.log(profileData);
       return "no user found";
     }
+
     revalidatePath("/profile");
     return "success";
   } catch (error: any) {

@@ -37,7 +37,7 @@ const userSchema: Schema = new Schema<IUser>(
     },
     bannerImage: {
       type: String,
-      default: "/View2.svg",
+      default: "/Profilebg.png",
     },
     businessType: {
       type: String,
