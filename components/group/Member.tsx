@@ -14,6 +14,7 @@ const Member = ({ profileImage, _id }: Props) => {
           height={34}
           alt="Avatar"
           className="m-auto h-[2.5rem] w-[2.5rem] rounded-full object-cover"
+          fallback="/AvatarFallback.svg"
         />
       </Link>
     </div>
