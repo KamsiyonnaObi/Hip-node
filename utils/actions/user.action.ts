@@ -153,7 +153,13 @@ export async function getCurrentUser(populate?: string[]) {
     return null;
   }
 }
-export async function pinAGroup(groupId: string) {
+export async function pinAGroup({
+  groupId,
+  userId,
+}: {
+  userId: string;
+  groupId: string;
+}) {
   try {
     await dbConnect();
     // get userId from session
@@ -182,7 +188,13 @@ export async function pinAGroup(groupId: string) {
   }
 }
 
-export async function unpinAGroup(groupId: string) {
+export async function unpinAGroup({
+  groupId,
+  userId,
+}: {
+  userId: string;
+  groupId: string;
+}) {
   try {
     await dbConnect();
 
@@ -214,7 +226,7 @@ export async function unpinAGroup(groupId: string) {
   }
 }
 
-export async function getAllPinnedGroups() {
+export async function getAllPinnedGroups({ userId }: { userId: string }) {
   try {
     await dbConnect();
 
