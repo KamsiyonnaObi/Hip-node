@@ -10,14 +10,12 @@ interface Props {
 const PinnedGroups = ({ title, groupUrl, description }: Props) => {
   return (
     <article className="flex flex-row items-center gap-[10px] rounded-[6px] text-secondary4">
-      <section className=" w-full">
-        <Image
-          src={groupUrl}
-          alt="Group image"
-          width={20}
-          height={20}
-          className="h-[20px] w-[20px]"
-        />
+      <section
+        className={`flex h-[32px] w-[32px] items-center justify-center gap-[10px] rounded-[6px] p-[6px]`}
+      >
+        <div className="h-[20px] w-[20px]">
+          <Image src={groupUrl} alt="Group image" width={20} height={20} />
+        </div>
       </section>
       <section className="flex flex-col gap-[1px] py-1">
         <p className="caption-semibold dark:text-background2">{title}</p>
