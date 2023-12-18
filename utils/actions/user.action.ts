@@ -157,14 +157,14 @@ export async function pinAGroup({
   groupId,
   userId,
 }: {
-  userId: string;
+  userId: ObjectId;
   groupId: string;
 }) {
   try {
     await dbConnect();
     // get userId from session
     const user = await UserModel.findById(userId);
-
+    console.log(user);
     if (!user) {
       throw new Error("User not found");
     }
@@ -192,7 +192,7 @@ export async function unpinAGroup({
   groupId,
   userId,
 }: {
-  userId: string;
+  userId: ObjectId;
   groupId: string;
 }) {
   try {
@@ -226,7 +226,7 @@ export async function unpinAGroup({
   }
 }
 
-export async function getAllPinnedGroups({ userId }: { userId: string }) {
+export async function getAllPinnedGroups({ userId }: { userId: ObjectId }) {
   try {
     await dbConnect();
 

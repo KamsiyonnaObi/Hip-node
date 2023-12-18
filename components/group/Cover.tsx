@@ -6,7 +6,12 @@ import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
 import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
-import PinGroup from "./PinGroup";
+import {
+  getAllPinnedGroups,
+  pinAGroup,
+  unpinAGroup,
+} from "@/utils/actions/user.action";
+import { ObjectId } from "mongoose";
 
 const Cover = ({
   user,
@@ -14,18 +19,21 @@ const Cover = ({
   coverUrl,
   groupUrl,
   groupId,
+  userId,
 }: {
   user: string;
   title: string;
   coverUrl: string;
   groupUrl: string;
   groupId: string;
+  userId: ObjectId;
 }) => {
   const [show, setShow] = useState(false);
   const [menu, setMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [isMemberSelect, setIsMemberSelect] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
 
   const handleButtonClick = () => {
     setMenu((s) => !s);
@@ -78,6 +86,36 @@ const Cover = ({
     checkMember();
   }, [groupId]);
 
+  useEffect(() => {
+    const fetchPinnedGroups = async () => {
+      try {
+        const pinnedGroups = await getAllPinnedGroups({ userId });
+        const isPinned = pinnedGroups.includes(groupId);
+        setIsPinned(isPinned);
+      } catch (error) {
+        console.error("Error fetching pinned groups", error);
+      }
+    };
+    fetchPinnedGroups();
+  }, [groupId, userId]);
+
+  const handlePinClick = async () => {
+    try {
+      await pinAGroup({ userId, groupId });
+      setIsPinned(true);
+    } catch (error) {
+      console.error("Failed to pin the group", error);
+    }
+  };
+
+  const handleUnpinClick = async () => {
+    try {
+      await unpinAGroup({ userId, groupId });
+      setIsPinned(false);
+    } catch (error) {
+      console.error("Failed to unpin the group", error);
+    }
+  };
   return (
     <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
@@ -110,7 +148,19 @@ const Cover = ({
           <div className="flex flex-col">
             <h2 className="display-semibold md:h1-semibold flex text-secondary2 dark:text-background2">
               {title}
-              <PinGroup groupId={groupId} userId={user} />
+              <div>
+                {isPinned ? (
+                  // Show unpin icon if the group is already pinned
+                  <div onClick={handleUnpinClick}>
+                    <OutlineIcon.Pin className="w-[.75rem ml-[.125rem] h-[.75rem] cursor-pointer fill-green" />
+                  </div>
+                ) : (
+                  // Show pin icon if the group is not pinned
+                  <div onClick={handlePinClick}>
+                    <OutlineIcon.Pin className="ml-[.125rem] h-[.75rem] w-[.75rem] cursor-pointer fill-red" />
+                  </div>
+                )}
+              </div>{" "}
             </h2>
             <div className="flex gap-[.31rem]">
               <p className="text-sm-regular sm:body-regular text-secondary3">
