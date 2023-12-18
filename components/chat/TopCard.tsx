@@ -1,13 +1,13 @@
-"use clinet";
-
-import { useState } from "react";
-
+"use client";
 import Link from "next/link";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import OutlineIcon from "../icons/OutlineIcon";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const TopCard = () => {
   // const [isOnline, setIsOnline] = useState(false);
+  const { currentPartner } = useSocketContext();
+
   return (
     <section className="flex justify-between bg-secondary6 px-6 py-5 dark:bg-dark2">
       <div className="justify-centers flex items-center">
@@ -19,7 +19,7 @@ const TopCard = () => {
         </Link>
         <div className="flex items-center justify-center gap-2">
           <Image
-            src="/ExampleAvatar2.png"
+            src={currentPartner?.profileImage}
             alt="avatar"
             width={20}
             height={20}
@@ -28,7 +28,7 @@ const TopCard = () => {
           <div className="flex flex-col">
             <div className="flex items-center justify-center gap-2">
               <h2 className="h2-bold text-secondary2 dark:text-background ">
-                Ronald Richards
+                {currentPartner?.fullName}
               </h2>
               {/* {isOnline ? ( */}
               <p className="text-sm-semibold text-green">Online</p>
@@ -36,13 +36,13 @@ const TopCard = () => {
               {/* <p className="text-sm-semibold text-red">Offline</p> */}
               {/* )} */}
             </div>
-            <p>@ronald</p>
+            <p> {currentPartner?.username}</p>
           </div>
         </div>
       </div>
       <Link
         className="hidden h-11 w-auto items-center justify-center rounded-md bg-red80 px-4 py-3 md:flex"
-        href="/"
+        href={`/profile/${currentPartner?._id}`}
       >
         <p className="body-semibold text-background">View Profile</p>
       </Link>

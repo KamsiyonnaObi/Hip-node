@@ -133,17 +133,43 @@ export async function followAuthor({
   }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(populate?: string[]) {
   try {
     await dbConnect();
 
     // get the current user
     const currentUser: any = await getServerSession();
     const { email } = currentUser?.user;
-    const User = await UserModel.findOne({ email });
-
+    const query = UserModel.findOne({ email });
+    for (const field of populate ?? []) {
+      query?.populate(field);
+    }
+    const User = await query;
     // Return the user's id
     return User ?? null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getUserProfileById(userId: string) {
+  try {
+    await dbConnect();
+
+    const user = await UserModel.findById(userId);
+
+    if (user) {
+      const userObj = {
+        id: user._id.toString(),
+        fullname: user.fullName,
+        username: user.username,
+        profileImage: user.profileImage,
+      };
+      return userObj;
+    }
+
+    return null;
   } catch (error) {
     console.log(error);
     return null;

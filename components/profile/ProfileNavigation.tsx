@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/utils/actions/user.action";
 import RenderProfileMeetups from "./RenderProfileMeetups";
 import RenderProfilePodcasts from "./RenderProfilePodcasts";
 import RenderProfileInterviews from "./RenderProfileInterviews";
+import UserHistory from "./UserHistory";
 
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
@@ -35,7 +36,9 @@ const ProfileNavigation = async () => {
       <TabsContent value="interviews">
         <RenderProfileInterviews JSONUser={JSON.stringify(user)} />
       </TabsContent>
-      <TabsContent value="history">No recent views</TabsContent>
+      <TabsContent value="history">
+        <UserHistory userId={profileData?._id.toString()} />
+      </TabsContent>
     </Tabs>
   );
 };
