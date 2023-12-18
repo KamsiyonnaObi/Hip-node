@@ -8,7 +8,13 @@ import RightChatList from "./RightChatList";
 import ChatList from "./ChatList";
 import ChatInput from "./ChatInput";
 
-const ChatDropDown = ({ currentUserId }: { currentUserId: string }) => {
+const ChatDropDown = ({
+  currentUserId,
+  searchQuery,
+}: {
+  currentUserId: string;
+  searchQuery: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -36,6 +42,7 @@ const ChatDropDown = ({ currentUserId }: { currentUserId: string }) => {
           <ChatList
             onClick={setIsOpen}
             currentUserId={currentUserId?.toString()}
+            searchQuery={searchQuery}
           />
         </div>
       )}
