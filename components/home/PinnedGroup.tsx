@@ -2,6 +2,7 @@ import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
 import { getAllPinnedGroups } from "@/utils/actions/user.action";
 import PinnedGroups from "./PinnedGroups";
+import Link from "next/link";
 
 const PinnedGroup = async () => {
   const getPinnedGroups = await getAllPinnedGroups();
@@ -16,11 +17,13 @@ const PinnedGroup = async () => {
         <div className="flex flex-col gap-[10px] rounded-[16px] dark:bg-dark3">
           {getPinnedGroups.slice(0 - 6).map((group) => (
             <div key={group.id}>
-              <PinnedGroups
-                title={group.title}
-                groupUrl={group.groupUrl}
-                description={group.description}
-              />
+              <Link href={`/groups/${group._id}`}>
+                <PinnedGroups
+                  title={group.title}
+                  groupUrl={group.groupUrl}
+                  description={group.description}
+                />
+              </Link>
             </div>
           ))}
         </div>
