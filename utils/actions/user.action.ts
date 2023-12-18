@@ -1,5 +1,5 @@
 "use server";
-import { ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 import { ProfileSchema } from "@/components/profile/EditProfile";
@@ -153,10 +153,10 @@ export async function getCurrentUser(populate?: string[]) {
     return null;
   }
 }
-export async function pinAGroup(userId: string, groupId: any) {
+export async function pinAGroup(groupId: string) {
   try {
     await dbConnect();
-
+    // get userId from session
     const user = await UserModel.findById(userId);
 
     if (!user) {
@@ -168,9 +168,9 @@ export async function pinAGroup(userId: string, groupId: any) {
     if (!group) {
       throw new Error("Group not found");
     }
-
-    if (!user.pinnedGroups.includes(groupId)) {
-      user.pinnedGroups.push(groupId);
+    const objGroupId = new mongoose.Schema.Types.ObjectId(groupId);
+    if (!user.pinnedGroups.includes(objGroupId)) {
+      user.pinnedGroups.push(objGroupId);
 
       await user.save();
     }
@@ -182,7 +182,7 @@ export async function pinAGroup(userId: string, groupId: any) {
   }
 }
 
-export async function unpinAGroup(userId: string, groupId: any) {
+export async function unpinAGroup(groupId: string) {
   try {
     await dbConnect();
 
@@ -197,8 +197,9 @@ export async function unpinAGroup(userId: string, groupId: any) {
     if (!group) {
       throw new Error("Group not found");
     }
+    const objGroupId = new mongoose.Schema.Types.ObjectId(groupId);
 
-    const groupIndex = user.pinnedGroups.indexOf(groupId);
+    const groupIndex = user.pinnedGroups.indexOf(objGroupId);
 
     if (groupIndex !== -1) {
       user.pinnedGroups.splice(groupIndex, 1);
@@ -213,7 +214,7 @@ export async function unpinAGroup(userId: string, groupId: any) {
   }
 }
 
-export async function getAllPinnedGroups(userId: string) {
+export async function getAllPinnedGroups() {
   try {
     await dbConnect();
 
