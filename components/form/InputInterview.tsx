@@ -127,7 +127,7 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="rounded-2xl bg-background p-5 dark:bg-dark3"
+        className="rounded-2xl bg-background p-5 shadow-lg dark:bg-dark3"
       >
         <FormField
           control={form.control}

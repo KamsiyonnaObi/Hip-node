@@ -10,7 +10,7 @@ interface Props {
 
 const CreateGroup = ({ title, desc, buttonText }: Props) => {
   return (
-    <article className="flex w-[20.938rem] flex-col gap-2.5 rounded-[16px] bg-[#FF7C4D] p-5 text-background sm:w-full">
+    <article className="flex w-[20.938rem] flex-col gap-2.5 rounded-[16px] bg-[#FF7C4D] p-5 text-background shadow-lg sm:w-full">
       <div className="flex flex-col gap-5">
         <section className="flex flex-col gap-[6px]">
           <h3 className="h3-semibold">{title}</h3>

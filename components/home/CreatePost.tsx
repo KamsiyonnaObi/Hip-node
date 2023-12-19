@@ -13,7 +13,7 @@ const CreatePost = ({ avatar }: { avatar: string }) => {
   };
 
   return (
-    <article className="flex flex-row gap-[10px] rounded-[16px] bg-background p-[14px] dark:bg-dark3 md:p-[20px]">
+    <article className="flex flex-row gap-[10px] rounded-[16px] bg-background p-[14px] shadow-lg dark:bg-dark3 md:p-[20px]">
       <div className="flex flex-row gap-[10px] md:gap-[20px]">
         <div className=" flex h-[30px] w-[30px] items-center justify-center rounded-full bg-yellow30 md:h-[40px] md:w-[40px]">
           <Image

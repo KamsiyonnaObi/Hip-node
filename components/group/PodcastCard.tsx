@@ -11,7 +11,7 @@ interface Props {
 
 const PodcastCard = ({ image, title, author }: Props) => {
   return (
-    <article className="flex flex-row gap-[14px]">
+    <article className="flex flex-row gap-[14px] shadow-lg">
       <Image src={image} alt="" width={58} height={58} className="shadow-md" />
       <div className="flex flex-col gap-[6px]">
         <div className="flex flex-row">

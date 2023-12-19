@@ -54,7 +54,7 @@ const InterviewCategory = ({
   };
 
   return (
-    <div className="w-full rounded-2xl bg-bkg-2 p-5 text-defaultText md:w-52">
+    <div className="w-full rounded-2xl bg-bkg-2 p-5 text-defaultText shadow-lg md:w-52">
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}

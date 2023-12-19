@@ -26,7 +26,7 @@ const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
   };
 
   return (
-    <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] dark:bg-dark3 dark:text-background2 sm:w-[248px]">
+    <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] shadow-lg dark:bg-dark3 dark:text-background2 sm:w-[248px]">
       <div className="mx-auto flex flex-col gap-[10px]">
         <Link href={`/groups/${_id}`}>
           <section className="flex flex-row justify-between sm:gap-[10px]">
