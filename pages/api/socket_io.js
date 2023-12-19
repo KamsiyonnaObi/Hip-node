@@ -61,7 +61,7 @@ export default function SocketHandler(req, res) {
           });
 
           // Handle disconnect with inactivity timeout
-          const inactivityTimeout = 30 * 60 * 1000; // 30 minutes in milliseconds
+          const inactivityTimeout = 30 * 60 * 1000; // 30 minutes
 
           const disconnectIfInactive = () => {
             const userData = userMap.get(userId);
