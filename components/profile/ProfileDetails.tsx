@@ -88,7 +88,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                   </p>
                 </div>
                 <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
-                  {followers.length &&
+                  {followers.length > 0 &&
                     followers.slice(0, 7).map((follower: userProfileData) => (
                       <div key={follower._id} className="flex ">
                         <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
