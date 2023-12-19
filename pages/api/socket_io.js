@@ -31,6 +31,66 @@ export default function SocketHandler(req, res) {
 
       socket.emit("set-messages", messages);
 
+      // Active Users
+      if (res.socket.server.io) {
+        console.log("Socket is already running");
+      } else {
+        console.log("Socket is initializing");
+        const io = new Server(res.socket.server, { addTrailingSlash: false });
+        res.socket.server.io = io;
+        const userMap = new Map();
+        io.on("connection", async (socket) => {
+          const session = await getSession({ req: socket.request });
+          const user = await UserModel.findOne({ email: session.user.email });
+          const userId = user._id.toString();
+          userMap.set(userId, {
+            socketId: socket.id,
+            lastActivity: Date.now(),
+          });
+
+          // Emit initial active users list
+          socket.emit("set-active-users", [...userMap.keys()]);
+          socket.broadcast.emit("set-active-users", [...userMap.keys()]);
+
+          // Handle user activity (update timestamp)
+          socket.on("user-activity", () => {
+            userMap.set(userId, {
+              socketId: socket.id,
+              lastActivity: Date.now(),
+            });
+          });
+
+          // Handle disconnect with inactivity timeout
+          const inactivityTimeout = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+          const disconnectIfInactive = () => {
+            const userData = userMap.get(userId);
+            if (
+              userData &&
+              Date.now() - userData.lastActivity > inactivityTimeout
+            ) {
+              userMap.delete(userId);
+              socket.disconnect(true); // Disconnect the socket
+              socket.broadcast.emit("set-active-users", [...userMap.keys()]);
+            }
+          };
+
+          // Set up a periodic check for inactivity
+          const inactivityCheckInterval = 5 * 60 * 1000; // Check every 5 minutes
+          const inactivityCheckTimer = setInterval(
+            disconnectIfInactive,
+            inactivityCheckInterval
+          );
+
+          // Handle disconnect event
+          socket.on("disconnect", () => {
+            userMap.delete(userId);
+            clearInterval(inactivityCheckTimer); // Clear the inactivity check timer
+            socket.broadcast.emit("set-active-users", [...userMap.keys()]);
+          });
+        });
+      }
+
       // Create a chat list
       messages.forEach((msg) => {
         // Get the other user that is not the current user
