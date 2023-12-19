@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { userProfileData } from "@/types/component";
-import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
 import { Button } from "../ui/Button";
@@ -59,7 +58,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                     {profileData?.occupation}
                   </p>
                 </div>
-                <div className="flex gap-2.5">
+                {/* <div className="flex gap-2.5">
                   <Button
                     className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
                     color="blue"
@@ -69,7 +68,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                   <Button className="flex items-center p-2" color="blackBlue">
                     <FillIcon.Message className="fill-blue" />
                   </Button>
-                </div>
+                </div> */}
                 <div className="flex-center gap-3">
                   <p className="body-semibold text-secondary2 dark:text-background2">
                     {`${profileData?.followers.length} Followers`}
@@ -82,7 +81,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                   </p>
                 </div>
                 <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
-                  {followers.length &&
+                  {followers.length > 0 &&
                     followers.slice(0, 7).map((follower: userProfileData) => (
                       <div key={follower._id} className="flex ">
                         <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
