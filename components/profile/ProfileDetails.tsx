@@ -11,7 +11,11 @@ import { getTimestamp } from "@/utils";
 
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
-  const profileData: userProfileData = JSON.parse(JSONProfileData);
+  const {
+    profileData,
+    myProfile,
+  }: { profileData: userProfileData; myProfile: boolean } =
+    JSON.parse(JSONProfileData);
   const followers = profileData?.followers;
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
@@ -59,17 +63,19 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                     {profileData?.occupation}
                   </p>
                 </div>
-                <div className="flex gap-2.5">
-                  <Button
-                    className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
-                    color="blue"
-                  >
-                    Follow
-                  </Button>
-                  <Button className="flex items-center p-2" color="blackBlue">
-                    <FillIcon.Message className="fill-blue" />
-                  </Button>
-                </div>
+                {!myProfile && (
+                  <div className="flex gap-2.5">
+                    <Button
+                      className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
+                      color="blue"
+                    >
+                      Follow
+                    </Button>
+                    <Button className="flex items-center p-2" color="blackBlue">
+                      <FillIcon.Message className="fill-blue" />
+                    </Button>
+                  </div>
+                )}
                 <div className="flex-center gap-3">
                   <p className="body-semibold text-secondary2 dark:text-background2">
                     {`${profileData?.followers.length} Followers`}
@@ -136,12 +142,14 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                 <p className="text-secondary3">
                   Joined {getTimestamp(new Date(profileData?.createdAt))}
                 </p>
-                <Button
-                  onClick={onEdit}
-                  className="h3-semibold flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-blue text-background"
-                >
-                  Edit Profile
-                </Button>
+                {myProfile && (
+                  <Button
+                    onClick={onEdit}
+                    className="h3-semibold flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+                  >
+                    Edit Profile
+                  </Button>
+                )}
               </section>
             </article>
           </section>
