@@ -216,6 +216,9 @@ export async function getAllPinnedGroups() {
     if (!user) {
       throw new Error("User not found");
     }
+    if (!user.pinnedGroups) {
+      return [];
+    }
 
     return user.pinnedGroups as IGroup[];
   } catch (error) {
