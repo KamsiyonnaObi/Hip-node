@@ -1,13 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import moment from "moment";
-
 import { userProfileData } from "@/types/component";
-// import FillIcon from "../icons/FillIcon";
-import OutlineIcon from "../icons/OutlineIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
+import OutlineIcon from "../icons/OutlineIcon";
+import { getTimestamp } from "@/utils";
 
 type Props = { JSONProfileData: string };
 const ProfileDetails = ({ JSONProfileData }: Props) => {
@@ -16,21 +14,9 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
-  // format timestamp to months
-  function monthsSinceJoined(joinedDate: Date) {
-    return moment().diff(moment(joinedDate), "months");
-  }
-
-  // Use dummy data for remaining user data
-  const dummyProfileData = {
-    imgUrl: "/ExampleAvatar.png",
-    profileUrl: "/",
-    joinedDate: "2-28-2023",
-    points: 501,
-  };
-
   const onEdit = () => setIsProfileEdit(true);
   const onCancel = () => setIsProfileEdit(false);
+
   return (
     <>
       {isProfileEdit ? (
@@ -41,41 +27,10 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
         />
       ) : (
         <>
-          <div className="flex flex-col items-center justify-center">
-            <p className="h1-semibold text-secondary2 dark:text-background2">
-              {profileData?.username}
-            </p>
-            <p className="display-regular text-secondary3">
-              {profileData?.occupation}
-            </p>
-          </div>
-          {/* Comment out until profile page is dynamic */}
-          {/* <div className="flex gap-2.5">
-            <Button
-              className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
-              color="blue"
-            >
-              Follow
-            </Button>
-            <Button className="flex items-center p-2" color="blackBlue">
-              <FillIcon.Message className="fill-blue" />
-            </Button>
-          </div> */}
-          <div className="flex-center gap-3">
-            <p className="body-semibold text-secondary2 dark:text-background2">
-              {`${profileData?.followers.length} Followers`}
-            </p>
-            <p className="body-semibold text-secondary2 dark:text-background2">{`${profileData?.points} Points`}</p>
-          </div>
-          <div className="flex flex-col gap-[15px]">
-            <p className="body-semibold text-center text-secondary2 dark:text-background2">
-              {`Following ${profileData?.following.length} `}
-            </p>
-          </div>
           <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
             {followers.length > 0 &&
               followers.slice(0, 7).map((follower: userProfileData) => (
-                <div key={follower._id} className="flex ">
+                <div key={follower._id} className="flex">
                   <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
                     <Image
                       className="rounded-full"
@@ -93,18 +48,14 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
               {profileData?.bio}
             </p>
           </div>
-          <div className="flex gap-5">
+          <section className="flex gap-5">
             {profileData?.website && (
-              <>
-                <a href={profileData.website} target="_blank">
-                  <div className="flex gap-2.5">
-                    <OutlineIcon.Web />
-                  </div>
-                </a>
-              </>
+              <a href={profileData.website} target="_blank">
+                <div className="flex gap-2.5">
+                  <OutlineIcon.Web />
+                </div>
+              </a>
             )}
-
-            {/* display socials based on user's profile */}
             <div className="flex gap-5">
               {profileData?.twitter && (
                 <a href={profileData.twitter} target="_blank">
@@ -122,11 +73,10 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                 </a>
               )}
             </div>
-          </div>
+          </section>
           <div className="h-[1px] w-[170px] bg-secondary6 dark:bg-secondary3"></div>
           <p className="text-secondary3">
-            Joined {monthsSinceJoined(new Date(dummyProfileData.joinedDate))}{" "}
-            months ago
+            Joined {getTimestamp(new Date(profileData?.createdAt))}
           </p>
           <Button
             onClick={onEdit}
@@ -139,5 +89,4 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
     </>
   );
 };
-
 export default ProfileDetails;
