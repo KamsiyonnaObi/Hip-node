@@ -180,7 +180,7 @@ export function InputPost({
                                 color="blackWhite"
                                 type="button"
                                 onClick={handleOnClick}
-                                className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                                className="items-center justify-between px-[.7rem] py-2 text-secondary2 dark:text-background2"
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
@@ -195,7 +195,7 @@ export function InputPost({
                     <div className="relative" ref={groupRef}>
                       <Button
                         color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
+                        className="items-center justify-between p-[.7rem] text-secondary2 dark:text-background2"
                         type="button"
                         onClick={groupToggle}
                       >
@@ -216,7 +216,7 @@ export function InputPost({
                     <div className="relative">
                       <Button
                         color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
+                        className="items-center justify-between p-[.7rem]"
                         type="button"
                         onClick={toggleCategory}
                       >
