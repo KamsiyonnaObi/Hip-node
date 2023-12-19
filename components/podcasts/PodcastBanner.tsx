@@ -6,6 +6,7 @@ import OutlineIcon from "../icons/OutlineIcon";
 import EditDeletePopup from "./EditDeletePopup";
 import { ShadButton } from "../ui/ShadButton";
 import ShareModal from "../home/ShareModal";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 interface Props {
   image: string;
@@ -17,6 +18,9 @@ interface Props {
   _id: string;
   title: string;
   desc: string;
+  showBottomBar: boolean;
+  playState: boolean;
+  setPlayState: any;
 }
 
 const PodcastBanner = ({
@@ -29,19 +33,14 @@ const PodcastBanner = ({
   _id,
   title,
   desc,
+  showBottomBar,
+  playState,
+  setPlayState,
 }: Props) => {
-  const [showPopup, setShowPopup] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (!menuRef.current) return;
-    if (!menuRef.current.contains(e.target as Node)) {
-      setShowPopup(false);
-    }
-  };
+  const { ref: menuRef, isOpen: showPopup, toggleOpen } = useOutsideClick();
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(playState);
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -49,16 +48,13 @@ const PodcastBanner = ({
     } else {
       audioRef.current?.play();
     }
+    setPlayState(!isPlaying);
     setIsPlaying(!isPlaying);
   };
 
   useEffect(() => {
-    window.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
+    setIsPlaying(playState);
+  }, [playState]);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -106,8 +102,15 @@ const PodcastBanner = ({
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
+
+  const positionCSS = showBottomBar
+    ? "bottom-0"
+    : "top-[90px] md:top-[100px] left-[50%] transform translate-x-[-50%]";
+
   return (
-    <div className="w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background2 md:h-[190px] md:w-[785px] md:p-5">
+    <div
+      className={`${positionCSS} fixed w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background2 md:h-[190px] md:w-[785px] md:p-5`}
+    >
       <div className="flex flex-row gap-5 md:gap-[30px]">
         <section className="h-[50px] w-[80px] md:h-[150px] md:w-[245px]">
           <Image
@@ -126,11 +129,7 @@ const PodcastBanner = ({
               </p>
               <p className="body-semibold md:h3-semibold">by {name}</p>
             </div>
-            <div
-              className="relative"
-              ref={menuRef}
-              onClick={() => setShowPopup(!showPopup)}
-            >
+            <div className="relative" ref={menuRef} onClick={toggleOpen}>
               {showEdit && (
                 <OutlineIcon.VerticalDots className="fill-secondary5" />
               )}

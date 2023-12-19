@@ -1,4 +1,4 @@
-import PodcastBanner from "@/components/podcasts/PodcastBanner";
+import PodcastSetter from "@/components/podcasts/PodcastSetter";
 import Html from "@/components/shared/html";
 import UserModel from "@/models/User";
 import { getPodcast } from "@/utils/actions/podcast.action";
@@ -14,7 +14,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   const currentUserId = User?._id.toString();
   return (
     <main className="flex flex-col items-center gap-5 p-5">
-      <PodcastBanner
+      <PodcastSetter
         image={result.image}
         type={result.type}
         episode={result.episode}
