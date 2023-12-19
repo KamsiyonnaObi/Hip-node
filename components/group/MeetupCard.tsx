@@ -11,7 +11,7 @@ interface Props {
 
 const MeetupCard = ({ month, day, title, desc, jobType }: Props) => {
   return (
-    <article className="flex flex-row gap-4 shadow-lg">
+    <article className="flex flex-row gap-4">
       <section className="flex flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center">
         <p className="body-semibold">{month}</p>
         <h1 className="h1-bold text-blue80">{day}</h1>
