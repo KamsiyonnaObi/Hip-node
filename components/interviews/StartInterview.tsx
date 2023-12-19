@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const StartInterview = () => {
   return (
-    <div className="flex w-full items-center justify-between rounded-2xl bg-[#FF7C4D] p-5 text-white">
+    <div className="flex w-full items-center justify-between rounded-2xl bg-[#FF7C4D] p-5 text-white shadow-lg">
       <div className="flex max-w-[325px] flex-col gap-5">
         <div className="flex flex-col gap-2">
           <p className="text-lg font-semibold">Start Your Interview</p>
