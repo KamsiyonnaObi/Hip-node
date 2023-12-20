@@ -17,7 +17,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
   }: { profileData: userProfileData; myProfile: boolean } =
     JSON.parse(JSONProfileData);
   const followers = profileData?.followers;
-
+  console.log(myProfile);
   const [isProfileEdit, setIsProfileEdit] = useState(false);
 
   const onEdit = () => setIsProfileEdit(true);
