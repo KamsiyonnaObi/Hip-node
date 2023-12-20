@@ -13,6 +13,7 @@ const page = async () => {
       {currentUserId && (
         <LeftChatList currentUserId={currentUserId?.toString()} />
       )}
+
       <div className="fixed inset-x-0 top-20 z-[1] hidden bg-background  dark:bg-dark4 md:left-[30%] md:block">
         <div className="mx-auto w-full">
           <TopCard />
