@@ -48,15 +48,7 @@ export async function getUserProfile(
     // get the current user
     const currentUser: any = await getServerSession();
 
-    const { id } = currentUser?.user;
-
-    // check if the user is viewing their own profile.
-    let myProfile;
-    if (id === profileId) {
-      myProfile = true;
-    } else {
-      myProfile = false;
-    }
+    const { email } = currentUser?.user;
 
     // populate profile with followers
     const query = UserModel.findById(profileId).lean();
@@ -66,7 +58,16 @@ export async function getUserProfile(
 
     const User = await query;
 
-    return { profileData: User, status: myProfile };
+    // check if the user is viewing their own profile.
+    let myProfile;
+    if (email === User?.email) {
+      myProfile = true;
+    } else {
+      myProfile = false;
+    }
+
+    revalidatePath("/profile");
+    return { profileData: User, myProfile };
   } catch (error) {
     console.log(error);
     return null;
