@@ -6,7 +6,7 @@ import MeetupCard from "./MeetupCard";
 
 const Meetups = () => {
   return (
-    <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] dark:bg-dark3">
+    <div className="flex w-[325px] flex-col rounded-[16px] bg-background p-[20px] shadow-lg dark:bg-dark3">
       <section className="display-semibold mb-5 flex flex-row items-center gap-[3px]">
         <p>Meetups</p>
         <OutlineIcon.ArrowLeft />

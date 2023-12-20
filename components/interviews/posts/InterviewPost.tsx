@@ -53,7 +53,7 @@ const InterviewPost = ({
     };
   }, []);
   return (
-    <article className="flex w-full items-center justify-between gap-8 rounded-2xl bg-bkg-2 p-5 text-interviewText md:flex-row">
+    <article className="flex w-full items-center justify-between gap-8 rounded-2xl bg-bkg-2 p-5 text-interviewText shadow-lg md:flex-row">
       <div className="flex w-full flex-col gap-5 lg:max-w-[435px]">
         <div className="flex flex-row justify-between">
           <div className="flex items-center gap-4">

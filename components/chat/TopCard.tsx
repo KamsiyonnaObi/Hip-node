@@ -24,11 +24,7 @@ const TopCard = () => {
               <h2 className="h2-bold text-secondary2 dark:text-background ">
                 {currentPartner?.fullName}
               </h2>
-              {/* {isOnline ? ( */}
               <p className="text-sm-semibold text-green">Online</p>
-              {/* ) : ( */}
-              {/* <p className="text-sm-semibold text-red">Offline</p> */}
-              {/* )} */}
             </div>
             <p> {currentPartner?.username}</p>
           </div>

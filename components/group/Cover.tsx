@@ -102,7 +102,7 @@ const Cover = ({
     }
   };
   return (
-    <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
+    <div className="flex w-[20.9375rem] shrink-0 flex-col gap-[.625rem] rounded-[1rem] bg-background p-[.625rem] shadow-lg dark:bg-dark3 sm:h-[18.375rem] sm:w-full">
       <div className="flex sm:hidden">
         <Image
           src={coverUrl}

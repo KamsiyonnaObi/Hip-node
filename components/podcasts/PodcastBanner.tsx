@@ -42,7 +42,7 @@ const PodcastBanner = ({
     };
   }, []);
   return (
-    <div className="w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background2 md:w-[785px] md:p-5">
+    <div className="w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 shadow-lg dark:bg-dark3 dark:text-background2 md:w-[785px] md:p-5">
       <div className="flex flex-row gap-5 md:gap-[30px]">
         <section className="h-[50px] w-[80px] md:h-[150px] md:w-[245px]">
           <Image
