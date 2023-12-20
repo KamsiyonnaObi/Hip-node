@@ -14,13 +14,20 @@ interface SocketContextType {
   isConnected: boolean;
   currentPartner: IUser | null;
   setCurrentPartner: any;
+  activeUserList: string[];
 }
 
 const SocketContext = createContext<SocketContextType>({} as SocketContextType);
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const { notifications, messages, chatList, users, isConnected } =
-    useSockets();
+  const {
+    notifications,
+    messages,
+    chatList,
+    users,
+    isConnected,
+    activeUserList,
+  } = useSockets();
   const [currentPartner, setCurrentPartner] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -39,6 +46,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         users,
         currentPartner,
         setCurrentPartner,
+        activeUserList,
       }}
     >
       {children}

@@ -9,89 +9,60 @@ export default function SocketHandler(req, res) {
   if (res.socket.server.io) {
     console.log("Socket is already running");
   } else {
+    // Global State
+
     console.log("Socket is initializing");
     const io = new Server(res.socket.server, { addTrailingSlash: false });
     res.socket.server.io = io;
 
+    const userMap = new Map();
+
+    // User State
     io.on("connection", async (socket) => {
       const session = await getSession({ req: socket.request });
       const user = await UserModel.findOne({ email: session.user.email });
       const userId = user._id.toString();
       const allNotif = await getAllNotification({ userId, type: "all" });
       socket.emit("set-notifications", allNotif);
+
       const query = {
         $or: [{ userIdFrom: user._id }, { userIdTo: user._id }],
       };
+
       const messages = await Message.find(query)
         .populate("userIdFrom")
         .populate("userIdTo")
         .sort({ createdAt: 1 })
         .lean();
-      const chatMap = new Map();
 
       socket.emit("set-messages", messages);
 
       // Active Users
-      if (res.socket.server.io) {
-        console.log("Socket is already running");
-      } else {
-        console.log("Socket is initializing");
-        const io = new Server(res.socket.server, { addTrailingSlash: false });
-        res.socket.server.io = io;
-        const userMap = new Map();
-        io.on("connection", async (socket) => {
-          const session = await getSession({ req: socket.request });
-          const user = await UserModel.findOne({ email: session.user.email });
-          const userId = user._id.toString();
-          userMap.set(userId, {
-            socketId: socket.id,
-            lastActivity: Date.now(),
-          });
+      userMap.set(userId, [...userMap.keys()]);
 
-          // Emit initial active users list
-          socket.emit("set-active-users", [...userMap.keys()]);
-          socket.broadcast.emit("set-active-users", [...userMap.keys()]);
+      // Emit initial active users list
+      socket.emit("set-active-users", [...userMap.keys()]);
 
-          // Handle user activity (update timestamp)
-          socket.on("user-activity", () => {
-            userMap.set(userId, {
-              socketId: socket.id,
-              lastActivity: Date.now(),
-            });
-          });
+      const intervalId = setInterval(() => {
+        const currentList = [...userMap.keys()];
+        const lastList = userMap.get(userId) || [];
+        if (
+          currentList.length !== lastList.length ||
+          currentList.some((userId) => !lastList.includes(userId))
+        ) {
+          socket.emit("set-active-users", currentList);
+          userMap.set(userId, currentList);
+        }
+      }, 1000);
 
-          // Handle disconnect with inactivity timeout
-          const inactivityTimeout = 30 * 60 * 1000; // 30 minutes
-
-          const disconnectIfInactive = () => {
-            const userData = userMap.get(userId);
-            if (
-              userData &&
-              Date.now() - userData.lastActivity > inactivityTimeout
-            ) {
-              userMap.delete(userId);
-              socket.disconnect(true); // Disconnect the socket
-              socket.broadcast.emit("set-active-users", [...userMap.keys()]);
-            }
-          };
-
-          // Set up a periodic check for inactivity
-          const inactivityCheckInterval = 5 * 60 * 1000; // Check every 5 minutes
-          const inactivityCheckTimer = setInterval(
-            disconnectIfInactive,
-            inactivityCheckInterval
-          );
-
-          // Handle disconnect event
-          socket.on("disconnect", () => {
-            userMap.delete(userId);
-            clearInterval(inactivityCheckTimer); // Clear the inactivity check timer
-            socket.broadcast.emit("set-active-users", [...userMap.keys()]);
-          });
-        });
-      }
+      // Handle disconnect event
+      socket.on("disconnect", () => {
+        userMap.delete(userId);
+        clearInterval(intervalId);
+      });
 
       // Create a chat list
+      const chatMap = new Map();
       messages.forEach((msg) => {
         // Get the other user that is not the current user
         const otherUser = msg.userIdFrom._id.equals(userId)
@@ -124,6 +95,7 @@ export default function SocketHandler(req, res) {
       // Get chats from map values
       const chatList = [...chatMap.values()];
       socket.emit("set-chatList", chatList);
+
       const subscriber = Notification.watch([
         {
           $match: {
@@ -132,9 +104,11 @@ export default function SocketHandler(req, res) {
           },
         },
       ]);
+
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);
       });
+
       const chatSubscriber = Message.watch([
         {
           $match: {
