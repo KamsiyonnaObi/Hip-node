@@ -9,7 +9,7 @@ import UserHistory from "./UserHistory";
 
 type Props = { JSONProfileData: string };
 const ProfileNavigation = async ({ JSONProfileData }: Props) => {
-  const { profileData } = JSON.parse(JSONProfileData);
+  const { profileData } = JSON.parse(JSONProfileData) || {};
 
   const user = {
     userId: profileData?._id,
