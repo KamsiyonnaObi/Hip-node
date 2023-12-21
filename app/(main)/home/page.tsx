@@ -1,6 +1,6 @@
+import { PinnedGroup } from "@/components";
 import CreatePost from "@/components/home/CreatePost";
 import Meetups from "@/components/home/Meetups";
-import PinnedGroup from "@/components/home/PinnedGroup";
 import PopularTags from "@/components/home/PopularTags";
 import PostRender from "@/components/home/PostRender";
 import Sidebar from "@/components/home/Sidebar";
@@ -17,6 +17,7 @@ export default async function Home({
 }) {
   const currentUser = await getCurrentUser();
   const getPopTags = await getPopularTags();
+
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">

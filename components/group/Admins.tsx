@@ -1,7 +1,6 @@
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import Link from "next/link";
 
 type Props = { fullName: string; profileImage: string; _id: string };
 
@@ -23,9 +22,7 @@ const Admins = ({ profileImage, fullName, _id }: Props) => {
         </div>
       </div>
       <div className="h-[1.875rem] w-[1.875rem] shrink-0 rounded-full bg-blue10">
-        <Link href={`/profile/${_id}`}>
-          <OutlineIcon.Follow className="mx-auto mt-1 fill-blue80" />
-        </Link>
+        <OutlineIcon.Follow className="mx-auto mt-1 fill-blue80" />
       </div>
     </div>
   );

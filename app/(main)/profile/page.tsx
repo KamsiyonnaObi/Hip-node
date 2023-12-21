@@ -1,22 +1,23 @@
-import { StartInterview } from "@/components";
-import Meetups from "@/components/home/Meetups";
-import LeftSideBar from "@/components/profile/LeftSideBar";
-import ProfileNavigation from "@/components/profile/ProfileNavigation";
+import { Meetups, StartInterview } from "@/components";
 
+import ProfileNavigation from "@/components/profile/ProfileNavigation";
+import ProfileDetails from "@/components/profile/ProfileDetails";
+
+import { getCurrentUser } from "@/utils/actions/user.action";
 import React from "react";
 
 export default async function Profile() {
+  const profileData = await getCurrentUser(["followers"]);
+
   return (
     <main className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[20%_56%_auto]">
       {/* Profile */}
       <section className="md:col-start-1 md:row-span-2 md:row-start-1">
-        <LeftSideBar />
+        <ProfileDetails JSONProfileData={JSON.stringify(profileData)} />
       </section>
       {/* Start Your interview */}
-      <section className="md:col-start-2 md:row-start-1 lg:col-start-3">
-        <div>
-          <StartInterview />
-        </div>
+      <section className="md:col-start-2 md:row-start-1 lg:col-start-3 lg:h-[168px]">
+        <StartInterview />
       </section>
 
       {/* Profile Navigation */}
@@ -30,7 +31,7 @@ export default async function Profile() {
       </section>
 
       {/* Performance */}
-      <section className="hidden lg:col-start-3 lg:row-start-2 lg:block">
+      <section className="hidden lg:col-start-3 lg:row-span-2 lg:flex">
         <div>
           {/* <div>Performance</div> */}
           <Meetups />

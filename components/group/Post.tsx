@@ -30,7 +30,7 @@ const Post = ({
 }: Props) => {
   const dateCreatedAt = formatDistanceToNow(createdAt, { addSuffix: true });
   return (
-    <article className="mb-[1.25rem] flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
+    <article className="mb-[1.25rem] flex w-[335px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] shadow-lg dark:bg-dark3 sm:w-full lg:min-w-[49.0625rem] lg:rounded-[16px] lg:p-[20px]">
       <div className="flex flex-row gap-[14px]">
         <Image
           src={postImage}

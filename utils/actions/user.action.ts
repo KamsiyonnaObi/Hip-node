@@ -6,6 +6,7 @@ import { ProfileSchema } from "@/components/profile/EditProfile";
 import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 import { revalidatePath } from "next/cache";
+import Group, { IGroup } from "@/models/group.model";
 
 export async function newUser(user: FormData) {
   try {
@@ -82,12 +83,15 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
       twitter: data.twitter,
       facebook: data.facebook,
       instagram: data.instagram,
+      profileImage: data.profileImage,
+      bannerImage: data.bannerImage,
     });
 
     if (!profileData) {
       console.log(profileData);
       return "no user found";
     }
+
     revalidatePath("/profile");
     return "success";
   } catch (error: any) {
@@ -95,12 +99,15 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
   }
 }
 
+// function to update current User's following & followers
 export async function followAuthor({
-  userId,
+  followedUserId,
   hasFollowed,
+  isFollow,
 }: {
-  userId: ObjectId;
+  followedUserId: ObjectId;
   hasFollowed: boolean;
+  isFollow: boolean;
 }) {
   try {
     dbConnect();
@@ -112,6 +119,7 @@ export async function followAuthor({
       throw new Error("Current user ID is undefined");
     }
 
+    // checks if logged in user has already followed other user
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };
@@ -119,9 +127,27 @@ export async function followAuthor({
       updateQuery = { $addToSet: { followers: currentUserId } };
     }
 
-    const user = await UserModel.findByIdAndUpdate(userId, updateQuery, {
+    // check if other user is already in logged in user's following
+    let updateFollowingQuery = {};
+    if (isFollow) {
+      updateFollowingQuery = { $pull: { following: followedUserId } };
+    } else {
+      updateFollowingQuery = { $addToSet: { following: followedUserId } };
+    }
+
+    await UserModel.findByIdAndUpdate(currentUserId, updateFollowingQuery, {
       new: true,
     });
+
+    const user = await UserModel.findByIdAndUpdate(
+      followedUserId,
+      updateQuery,
+      {
+        new: true,
+      }
+    );
+
+    revalidatePath("/profile");
     const followedStatus = user?.followers.includes(currentUserId);
     if (!user) {
       throw new Error("User not found");
@@ -153,25 +179,72 @@ export async function getCurrentUser(populate?: string[]) {
   }
 }
 
-export async function getUserProfileById(userId: string) {
+export async function pinAGroup({ groupId }: { groupId: string }) {
+  try {
+    await dbConnect();
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const group = await Group.findById(groupId);
+
+    if (!group) {
+      throw new Error("Group not found");
+    }
+    const objGroupId = group._id;
+
+    if (!user.pinnedGroups.includes(objGroupId)) {
+      user.pinnedGroups.push(objGroupId);
+      await user.save();
+    }
+    revalidatePath(`/home`);
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Failed to pin the group");
+  }
+}
+
+export async function unpinAGroup({ groupId }: { groupId: string }) {
+  try {
+    await dbConnect();
+    const user = await getCurrentUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const group = await Group.findById(groupId);
+    if (!group) {
+      throw new Error("Group not found");
+    }
+    const objGroupId = group._id;
+    const groupIndex = user.pinnedGroups.indexOf(objGroupId);
+    if (groupIndex !== -1) {
+      user.pinnedGroups.splice(groupIndex, 1);
+      await user.save();
+    }
+    revalidatePath(`/home`);
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Failed to unpin the group");
+  }
+}
+
+export async function getAllPinnedGroups() {
   try {
     await dbConnect();
 
-    const user = await UserModel.findById(userId);
+    const user = await getCurrentUser(["pinnedGroups"]);
 
-    if (user) {
-      const userObj = {
-        id: user._id.toString(),
-        fullname: user.fullName,
-        username: user.username,
-        profileImage: user.profileImage,
-      };
-      return userObj;
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (!user.pinnedGroups) {
+      return [];
     }
 
-    return null;
+    return user.pinnedGroups as IGroup[];
   } catch (error) {
-    console.log(error);
-    return null;
+    console.error("Error:", error);
+    throw new Error("Failed to get pinned groups");
   }
 }

@@ -11,7 +11,7 @@ interface Tags {
 
 const PopularTags = ({ getPopTags }: Tags) => {
   return (
-    <div className="flex w-[210px] flex-col rounded-[16px] bg-background p-[20px] dark:bg-dark3">
+    <div className="flex w-[210px] flex-col rounded-[16px] bg-background p-[20px] shadow-lg dark:bg-dark3">
       <p className="display-semibold mb-1 dark:text-background2">
         Popular Tags
       </p>
