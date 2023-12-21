@@ -31,7 +31,7 @@ export default async function Home({
           <PinnedGroup />
         </div>
       </section>
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col gap-5 lg:max-w-[800px]">
         <div className="hidden md:flex lg:hidden">
           <Sidebar small />
         </div>
