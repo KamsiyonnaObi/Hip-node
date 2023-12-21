@@ -8,6 +8,7 @@ interface PodcastContextType {
   podcastData: any;
   setPodcastData: any;
   setPlayState: any;
+  hidePodcastBanner: any;
 }
 
 const PodcastContext = createContext<PodcastContextType>(
@@ -18,12 +19,19 @@ export function PodcastProvider({ children }: { children: React.ReactNode }) {
   const [podcastData, setPodcastData] = useState<any>(null);
   const [playState, setPlayState] = useState<boolean>(false);
   const [showBottomBar, setShowBottomBar] = useState<boolean>(false);
+  const [showPodcastBanner, setShowPodcastBanner] = useState(true);
 
   const pathname = usePathname();
+
+  const hidePodcastBanner = () => {
+    setShowPodcastBanner(false);
+    console.log("CLOSED");
+  };
 
   useEffect(() => {
     if (pathname?.startsWith("/podcast/")) {
       setShowBottomBar(false);
+      setShowPodcastBanner(true);
     } else {
       setShowBottomBar(true);
     }
@@ -31,19 +39,23 @@ export function PodcastProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setPlayState(false);
+    setShowPodcastBanner(true);
   }, [podcastData?._id]);
 
   return (
     <PodcastContext.Provider
-      value={{ podcastData, setPodcastData, setPlayState }}
+      value={{ podcastData, setPodcastData, setPlayState, hidePodcastBanner }}
     >
       {children}
-      <PodcastBanner
-        {...podcastData}
-        showBottomBar={showBottomBar}
-        setPlayState={setPlayState}
-        playState={playState}
-      />
+      {podcastData && showPodcastBanner && (
+        <PodcastBanner
+          {...podcastData}
+          showBottomBar={showBottomBar}
+          setPlayState={setPlayState}
+          playState={playState}
+          hidePodcastBanner={hidePodcastBanner}
+        />
+      )}
     </PodcastContext.Provider>
   );
 }

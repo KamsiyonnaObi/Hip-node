@@ -58,6 +58,9 @@ import { cn } from "@/utils";
 import { Trash } from "./outlineIcons/Trash";
 import { Copy } from "./outlineIcons/Copy";
 import { Pin } from "./outlineIcons/Pin";
+import { Play } from "./outlineIcons/Play";
+import { Pause } from "./outlineIcons/Pause";
+import { UpArrow } from "./outlineIcons/UpArrow";
 
 interface Props {
   children?: ReactNode;
@@ -81,6 +84,24 @@ const OutlineIcon = ({ children, className }: Props) => {
 OutlineIcon.Send = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Send />
+  </OutlineIcon>
+);
+
+OutlineIcon.UpArrow = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <UpArrow />
+  </OutlineIcon>
+);
+
+OutlineIcon.Play = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Play />
+  </OutlineIcon>
+);
+
+OutlineIcon.Pause = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Pause />
   </OutlineIcon>
 );
 

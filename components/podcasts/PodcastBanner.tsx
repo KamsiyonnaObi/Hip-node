@@ -21,6 +21,7 @@ interface Props {
   showBottomBar: boolean;
   playState: boolean;
   setPlayState: any;
+  hidePodcastBanner: any;
 }
 
 const PodcastBanner = ({
@@ -36,11 +37,13 @@ const PodcastBanner = ({
   showBottomBar,
   playState,
   setPlayState,
+  hidePodcastBanner,
 }: Props) => {
   const { ref: menuRef, isOpen: showPopup, toggleOpen } = useOutsideClick();
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(playState);
+  const [minimize, setMinimize] = useState(false);
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -55,6 +58,17 @@ const PodcastBanner = ({
   useEffect(() => {
     setIsPlaying(playState);
   }, [playState]);
+
+  const toggleClose = () => {
+    audioRef.current?.pause();
+    setPlayState(false);
+    setIsPlaying(false);
+    hidePodcastBanner();
+  };
+
+  const toggleMinimize = () => {
+    setMinimize(!minimize);
+  };
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -104,76 +118,116 @@ const PodcastBanner = ({
   };
 
   const positionCSS = showBottomBar
-    ? "bottom-0"
+    ? "bottom-[68px] md:bottom-0"
     : "top-[90px] md:top-[100px] left-[50%] transform translate-x-[-50%]";
 
   return (
     <div
-      className={`${positionCSS} fixed w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background2 md:h-[190px] md:w-[785px] md:p-5`}
+      className={`${positionCSS} fixed w-[335px] gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background2 ${
+        !minimize && "md:h-[190px]"
+      } md:w-[785px] md:p-5`}
     >
-      <div className="flex flex-row gap-5 md:gap-[30px]">
-        <section className="h-[50px] w-[80px] md:h-[150px] md:w-[245px]">
-          <Image
-            src={image}
-            alt="image"
-            height={50}
-            width={50}
-            className="h-[50px] w-[50px] rounded-[8px] md:h-[150px] md:w-[150px]"
-          />
-        </section>
+      <div className={`flex flex-row justify-between gap-5 md:gap-[30px]`}>
+        {!minimize && (
+          <section className="h-[50px] w-[80px] md:h-[150px] md:w-[245px]">
+            <Image
+              src={image}
+              alt="image"
+              height={50}
+              width={50}
+              className="h-[50px] w-[50px] rounded-[8px] md:h-[150px] md:w-[150px]"
+            />
+          </section>
+        )}
         <section className="flex flex-col gap-2.5 md:gap-4">
-          <div className="flex w-[207px] flex-row justify-between md:w-[470px]">
+          <div
+            className={`flex w-[207px] flex-row justify-between ${
+              minimize ? "w-[300px] md:w-[745px]" : "md:w-[470px]"
+            }`}
+          >
             <div className="flex flex-col md:gap-[2px]">
               <p className="text-xs-regular md:caption-regular">
                 {type} . Episode {episode}
               </p>
-              <p className="body-semibold md:h3-semibold">by {name}</p>
-            </div>
-            <div className="relative" ref={menuRef} onClick={toggleOpen}>
-              {showEdit && (
-                <OutlineIcon.VerticalDots className="fill-secondary5" />
+              {!minimize && (
+                <p className="body-semibold md:h3-semibold">by {name}</p>
               )}
-              {showPopup && (
-                <div className="absolute right-1 top-6">
-                  <EditDeletePopup podcastId={_id} />
+            </div>
+            {showBottomBar ? (
+              <div
+                className="flex flex-row gap-5"
+                ref={menuRef}
+                onClick={toggleOpen}
+              >
+                <div onClick={toggleMinimize}>
+                  {minimize ? (
+                    <OutlineIcon.UpArrow />
+                  ) : (
+                    <OutlineIcon.DownArrow />
+                  )}
                 </div>
-              )}
-            </div>
+                <div onClick={toggleClose}>
+                  <OutlineIcon.Close />
+                </div>
+              </div>
+            ) : (
+              <div className="relative" ref={menuRef} onClick={toggleOpen}>
+                {showEdit && (
+                  <OutlineIcon.VerticalDots className="fill-secondary5" />
+                )}
+                {showPopup && (
+                  <div className="absolute right-1 top-6">
+                    <EditDeletePopup podcastId={_id} />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-2.5">
+            {!minimize && (
+              <div className="flex flex-row gap-5">
+                <input
+                  type="range"
+                  min="0"
+                  max={duration}
+                  value={currentTime}
+                  onChange={handleSeek}
+                  className="mt-[4px] h-[4px] w-[141px] md:mt-1.5 md:h-2.5 md:w-[375px]"
+                />
+                <span className="md:body-regular text-sm-regular">
+                  {formatTime(currentTime)} | {formatTime(duration)}
+                </span>
+              </div>
+            )}
             <div className="flex flex-row gap-5">
-              <input
-                type="range"
-                min="0"
-                max={duration}
-                value={currentTime}
-                onChange={handleSeek}
-                className="mt-[4px] h-[4px] w-[141px] md:mt-1.5 md:h-2.5 md:w-[375px]"
-              />
-              <span className="md:body-regular text-sm-regular">
-                {formatTime(currentTime)} | {formatTime(duration)}
-              </span>
-            </div>
-            <div className="flex flex-row gap-5">
-              <ShadButton
-                className="md:display-semibold body-semibold w-[110px] gap-2.5 rounded-[20px] bg-blue text-white hover:bg-blue/70 hover:text-white"
-                onClick={togglePlay}
-              >
-                <Image
-                  src="/PlayButton.svg"
-                  alt="play"
-                  width={16}
-                  height={16}
-                  className="h-4 w-4"
-                />{" "}
-                {isPlaying ? "Pause" : "Play"}
-              </ShadButton>
-              <button
-                className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-secondary3"
-                onClick={openShareModal}
-              >
-                <OutlineIcon.Share2 />
-              </button>
+              {!minimize && (
+                <ShadButton
+                  className="md:display-semibold body-semibold w-[110px] gap-2.5 rounded-[20px] bg-blue text-white hover:bg-blue/70 hover:text-white"
+                  onClick={togglePlay}
+                >
+                  {isPlaying ? (
+                    <>
+                      <OutlineIcon.Pause />
+                      Pause
+                    </>
+                  ) : (
+                    <>
+                      <OutlineIcon.Play />
+                      Play
+                    </>
+                  )}
+                </ShadButton>
+              )}
+
+              {!minimize && (
+                <button
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-secondary3"
+                  onClick={openShareModal}
+                >
+                  <OutlineIcon.Share2 />
+                </button>
+              )}
+
               <audio ref={audioRef} src={audioPath} />
             </div>
             {showShareModal && (
