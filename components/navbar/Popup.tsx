@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import FillIcon from "../icons/FillIcon";
 import { useTheme } from "next-themes";
 
-const Popup = ({ username }: { username: string }) => {
+const Popup = ({ id, username }: { id: string; username: string }) => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
@@ -17,7 +17,7 @@ const Popup = ({ username }: { username: string }) => {
         <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
           <p className="flex items-center">{username}</p>
           <hr className="dark:text-secondary3" />
-          <Link href={"/profile"}>
+          <Link href={`/profile/${id}`}>
             <li className="flex flex-row gap-[14px]">
               <FillIcon.Profile className="fill-secondary2 dark:fill-secondary6" />
               <p>Profile</p>

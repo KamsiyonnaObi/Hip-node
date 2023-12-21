@@ -19,7 +19,7 @@ import { useSocketContext } from "@/providers/SocketProvider";
 const Navbar = ({
   user,
 }: {
-  user: { profileImage: string; username: string };
+  user: { id: string; profileImage: string; username: string };
 }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -47,6 +47,7 @@ const Navbar = ({
 
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
+  const id = user?.id || "";
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
@@ -150,7 +151,7 @@ const Navbar = ({
                         <div className="absolute bottom-0 right-0 flex h-4 w-4 rounded-full border-2 border-white bg-green"></div>
                       )}
                     </div>
-                    {menuExpanded && <Popup username={username} />}
+                    {menuExpanded && <Popup username={username} id={id} />}
                   </div>
                 </div>
               </section>
