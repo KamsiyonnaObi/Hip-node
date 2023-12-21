@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { userProfileData } from "@/types/component";
 import OutlineIcon from "../icons/OutlineIcon";
-
-import { Button, Button } from "../ui/Button";
+import FillIcon from "../icons/FillIcon";
+import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
