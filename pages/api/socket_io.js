@@ -9,29 +9,60 @@ export default function SocketHandler(req, res) {
   if (res.socket.server.io) {
     console.log("Socket is already running");
   } else {
+    // Global State
+
     console.log("Socket is initializing");
     const io = new Server(res.socket.server, { addTrailingSlash: false });
     res.socket.server.io = io;
 
+    const userMap = new Map();
+
+    // User State
     io.on("connection", async (socket) => {
       const session = await getSession({ req: socket.request });
       const user = await UserModel.findOne({ email: session.user.email });
       const userId = user._id.toString();
       const allNotif = await getAllNotification({ userId, type: "all" });
       socket.emit("set-notifications", allNotif);
+
       const query = {
         $or: [{ userIdFrom: user._id }, { userIdTo: user._id }],
       };
+
       const messages = await Message.find(query)
         .populate("userIdFrom")
         .populate("userIdTo")
         .sort({ createdAt: 1 })
         .lean();
-      const chatMap = new Map();
 
       socket.emit("set-messages", messages);
 
+      // Active Users
+      userMap.set(userId, [...userMap.keys()]);
+
+      // Emit initial active users list
+      socket.emit("set-active-users", [...userMap.keys()]);
+
+      const intervalId = setInterval(() => {
+        const currentList = [...userMap.keys()];
+        const lastList = userMap.get(userId) || [];
+        if (
+          currentList.length !== lastList.length ||
+          currentList.some((userId) => !lastList.includes(userId))
+        ) {
+          socket.emit("set-active-users", currentList);
+          userMap.set(userId, currentList);
+        }
+      }, 1000);
+
+      // Handle disconnect event
+      socket.on("disconnect", () => {
+        userMap.delete(userId);
+        clearInterval(intervalId);
+      });
+
       // Create a chat list
+      const chatMap = new Map();
       messages.forEach((msg) => {
         // Get the other user that is not the current user
         const otherUser = msg.userIdFrom._id.equals(userId)
@@ -64,6 +95,7 @@ export default function SocketHandler(req, res) {
       // Get chats from map values
       const chatList = [...chatMap.values()];
       socket.emit("set-chatList", chatList);
+
       const subscriber = Notification.watch([
         {
           $match: {
@@ -72,9 +104,11 @@ export default function SocketHandler(req, res) {
           },
         },
       ]);
+
       subscriber.on("change", (change) => {
         socket.emit("notification", change.fullDocument);
       });
+
       const chatSubscriber = Message.watch([
         {
           $match: {

@@ -14,6 +14,7 @@ const useSockets = () => {
   const [chatList, setChatList] = useState<IChatList[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [activeUserList, setActiveUserList] = useState<string[]>([]);
 
   useEffect(() => {
     const socketInitializer = async () => {
@@ -56,6 +57,9 @@ const useSockets = () => {
     socket.on("chatList", (message: IChatList) => {
       setChatList((prev) => [...prev, message]);
     });
+    socket.on("set-active-users", (message: string[]) => {
+      setActiveUserList(message);
+    });
   }, [socket]);
 
   return {
@@ -64,6 +68,7 @@ const useSockets = () => {
     messages,
     chatList,
     users,
+    activeUserList,
   };
 };
 
