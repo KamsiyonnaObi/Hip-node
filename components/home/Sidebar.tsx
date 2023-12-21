@@ -18,7 +18,7 @@ const Sidebar = ({ small }: { small?: boolean }) => {
 
   if (small)
     return (
-      <ul className="flex flex-row gap-[230px] rounded-[16px] bg-background p-2.5 text-secondary2 shadow-lg dark:bg-dark3 dark:text-background">
+      <ul className="flex w-full flex-row justify-evenly gap-[230px] rounded-[16px] bg-background p-2.5 text-secondary2 shadow-lg dark:bg-dark3 dark:text-background">
         <li className={liClass(0)} onClick={() => handleItemClick(0)}>
           <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
             <OutlineIcon.New className="fill-green" textColor="fill-white" />
@@ -46,7 +46,7 @@ const Sidebar = ({ small }: { small?: boolean }) => {
     );
 
   return (
-    <ul className="flex w-[335px] flex-row gap-[10px] rounded-[16px] bg-background p-[10px] text-secondary2 dark:bg-dark3 dark:text-background md:w-[210px] md:flex-col">
+    <ul className="flex w-[385px] flex-row justify-around gap-[10px] rounded-[16px] bg-background p-[10px] text-secondary2 shadow-lg dark:bg-dark3 dark:text-background md:w-[210px] md:flex-col">
       <li className={liClass(0)} onClick={() => handleItemClick(0)}>
         <div className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-secondary6">
           <OutlineIcon.New className="fill-green" textColor="fill-white" />
