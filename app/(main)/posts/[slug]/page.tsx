@@ -149,6 +149,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
               user={JSON.stringify(userId)}
               joinedDate={userId.createdAt}
               hasFollowed={userId.followers?.includes(currentUser?._id)}
+              isFollow={currentUser.following?.includes(userId?._id)}
             />
           ))}{" "}
         {userId?._id && morePosts && (

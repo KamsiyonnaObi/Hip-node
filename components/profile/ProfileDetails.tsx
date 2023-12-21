@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { userProfileData } from "@/types/component";
-import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
 
-import { Button } from "../ui/Button";
+import { Button, Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
@@ -32,7 +31,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
         />
       ) : (
         <>
-          <section className="flex-center w-full rounded-2xl bg-background dark:bg-dark3">
+          <section className="flex-center w-full rounded-2xl bg-background shadow-lg dark:bg-dark3">
             <article className="flex-center w-full flex-col gap-5 rounded-2xl bg-background pb-10 dark:bg-dark3">
               <div className="flex w-full flex-col items-center">
                 <div className="relative mb-[36px] h-[106px] w-full">

@@ -3,7 +3,7 @@ import Members from "./Member";
 
 const ActiveMembers = ({ members }: { members: any }) => {
   return (
-    <div className="flex  w-[20.9375rem]  flex-col gap-[0.625rem] rounded-[1rem] bg-background p-[1.25rem] dark:bg-dark3 sm:w-full md:h-[13.25rem] lg:w-[20.9375rem]">
+    <div className="flex  w-[20.9375rem]  flex-col gap-[0.625rem] rounded-[1rem] bg-background p-[1.25rem] shadow-lg dark:bg-dark3 sm:w-full md:h-[13.25rem] lg:w-[20.9375rem]">
       <div>
         <h2 className="display-semibold text-secondary2 dark:text-background2">
           Active Members

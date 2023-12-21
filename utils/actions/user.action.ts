@@ -103,12 +103,15 @@ export async function updateProfileDetails(id: string, data: ProfileSchema) {
   }
 }
 
+// function to update current User's following & followers
 export async function followAuthor({
-  userId,
+  followedUserId,
   hasFollowed,
+  isFollow,
 }: {
-  userId: ObjectId;
+  followedUserId: ObjectId;
   hasFollowed: boolean;
+  isFollow: boolean;
 }) {
   try {
     dbConnect();
@@ -120,6 +123,7 @@ export async function followAuthor({
       throw new Error("Current user ID is undefined");
     }
 
+    // checks if logged in user has already followed other user
     let updateQuery = {};
     if (hasFollowed) {
       updateQuery = { $pull: { followers: currentUserId } };
@@ -127,9 +131,27 @@ export async function followAuthor({
       updateQuery = { $addToSet: { followers: currentUserId } };
     }
 
-    const user = await UserModel.findByIdAndUpdate(userId, updateQuery, {
+    // check if other user is already in logged in user's following
+    let updateFollowingQuery = {};
+    if (isFollow) {
+      updateFollowingQuery = { $pull: { following: followedUserId } };
+    } else {
+      updateFollowingQuery = { $addToSet: { following: followedUserId } };
+    }
+
+    await UserModel.findByIdAndUpdate(currentUserId, updateFollowingQuery, {
       new: true,
     });
+
+    const user = await UserModel.findByIdAndUpdate(
+      followedUserId,
+      updateQuery,
+      {
+        new: true,
+      }
+    );
+
+    revalidatePath("/profile");
     const followedStatus = user?.followers.includes(currentUserId);
     if (!user) {
       throw new Error("User not found");
