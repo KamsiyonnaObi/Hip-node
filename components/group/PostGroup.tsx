@@ -70,8 +70,9 @@ const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
               className={isHeartClicked ? "fill-red80" : "fill-secondary5"}
             />
           </div>
-
-          <FillIcon.Message className="fill-secondary5" />
+          <Link href={`/posts/${groupPost._id}`}>
+            <FillIcon.Message className="fill-secondary5" />
+          </Link>
           <FillIcon.Share className="fill-secondary5" />
         </section>
         <section className="flex flex-col gap-[10px]">
