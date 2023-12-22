@@ -24,10 +24,6 @@ const Popup = ({ username }: { username: string }) => {
             </li>
           </Link>
           <li className="flex flex-row gap-[14px]">
-            <FillIcon.Settings className="fill-secondary2 dark:fill-secondary6" />
-            <p>Settings</p>
-          </li>
-          <li className="flex flex-row gap-[14px]">
             <FillIcon.Follow className="fill-red90 stroke-red90 " />
             <button className="text-red90" onClick={() => signOut()}>
               Sign out
