@@ -1,5 +1,4 @@
 "use server";
-import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 import { ProfileSchema } from "@/components/profile/EditProfile";
@@ -109,7 +108,7 @@ export async function followAuthor({
   hasFollowed,
   isFollow,
 }: {
-  followedUserId: ObjectId;
+  followedUserId: string;
   hasFollowed: boolean;
   isFollow: boolean;
 }) {

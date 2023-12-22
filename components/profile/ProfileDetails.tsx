@@ -7,9 +7,14 @@ import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
+import { followAuthor } from "@/utils/actions/user.action";
 
-type Props = { JSONProfileData: string };
-const ProfileDetails = ({ JSONProfileData }: Props) => {
+type Props = {
+  JSONProfileData: string;
+  hasFollowed?: boolean;
+  isFollow: boolean;
+};
+const ProfileDetails = ({ JSONProfileData, hasFollowed, isFollow }: Props) => {
   const {
     profileData,
     myProfile,
@@ -18,7 +23,20 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
   const followers = profileData?.followers;
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(hasFollowed || false);
 
+  const handleFollow = async () => {
+    const followed = await followAuthor({
+      followedUserId: profileData._id,
+      hasFollowed: isFollowing,
+      isFollow,
+    });
+
+    if (!followed) return;
+    if (followed.status !== undefined) {
+      setIsFollowing(followed.status);
+    }
+  };
   const onEdit = () => setIsProfileEdit(true);
   const onCancel = () => setIsProfileEdit(false);
   return (
@@ -64,12 +82,24 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                 </div>
                 {!myProfile && (
                   <div className="flex gap-2.5">
-                    <Button
-                      className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
-                      color="blue"
-                    >
-                      Follow
-                    </Button>
+                    {isFollowing ? (
+                      <Button
+                        className="display-semibold flex rounded-md px-[38.5px] py-1.5 text-background"
+                        color="blackWhite"
+                        onClick={handleFollow}
+                      >
+                        Following
+                      </Button>
+                    ) : (
+                      <Button
+                        className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
+                        color="blue"
+                        onClick={handleFollow}
+                      >
+                        Follow
+                      </Button>
+                    )}
+
                     <Button className="flex items-center p-2" color="blackBlue">
                       <FillIcon.Message className="fill-blue" />
                     </Button>
