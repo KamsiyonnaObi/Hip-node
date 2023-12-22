@@ -15,7 +15,7 @@ import { toast } from "../ui/use-toast";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
-  currentUserId?: string;
+  currentUserId: string;
   postImage: string;
   title: string;
   tags: string[];
@@ -28,7 +28,7 @@ interface Props {
   _id: string;
   showEdit: any;
   hasLiked: boolean | false;
-  postUser?: string;
+  postUser: string;
   currentUser?: any;
 }
 
@@ -66,7 +66,7 @@ const Post = ({
           await createNotification({
             title,
             type: "reaction",
-            userTo: postUser,
+            userTo: postUser, // undefined
             link: `/posts/${_id}`,
           });
         }
