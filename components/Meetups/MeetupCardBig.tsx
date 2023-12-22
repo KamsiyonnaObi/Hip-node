@@ -25,7 +25,7 @@ const MeetupCardBig = ({
   _id,
 }: Props) => {
   return (
-    <article className="w-full rounded-[16px] bg-background p-[14px] dark:bg-dark3  md:gap-[10px] md:p-5">
+    <article className="w-full rounded-[16px] bg-background p-[14px] shadow-lg  dark:bg-dark3 md:gap-[10px] md:p-5">
       <div className="flex flex-col gap-[16px] md:gap-[25px]">
         <section className="flex flex-row justify-between md:max-w-[745px]">
           <div className="flex flex-row gap-5">

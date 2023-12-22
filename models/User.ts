@@ -37,7 +37,7 @@ const userSchema: Schema = new Schema<IUser>(
     },
     bannerImage: {
       type: String,
-      default: "/View2.svg",
+      default: "/Profilebg.png",
     },
     businessType: {
       type: String,
@@ -79,6 +79,13 @@ const userSchema: Schema = new Schema<IUser>(
         ref: "User",
       },
     ],
+    pinnedGroups: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Group",
+      },
+    ],
+
     points: {
       type: Number,
       default: 0,

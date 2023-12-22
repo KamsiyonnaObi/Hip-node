@@ -58,6 +58,7 @@ import { cn } from "@/utils";
 import { Trash } from "./outlineIcons/Trash";
 import { Copy } from "./outlineIcons/Copy";
 import { Pin } from "./outlineIcons/Pin";
+import { Content } from "./outlineIcons/Content";
 
 interface Props {
   children?: ReactNode;
@@ -74,6 +75,18 @@ const OutlineIcon = ({ children, className }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       {children}
+    </svg>
+  );
+};
+
+OutlineIcon.Content = ({ className }: Props) => {
+  return (
+    <svg
+      viewBox="0 0 91 91"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <Content />
     </svg>
   );
 };

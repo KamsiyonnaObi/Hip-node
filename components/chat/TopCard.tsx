@@ -9,15 +9,9 @@ const TopCard = () => {
   const { currentPartner } = useSocketContext();
 
   return (
-    <section className="flex justify-between bg-secondary6 px-6 py-5 dark:bg-dark2">
+    <section className="flex justify-between bg-secondary6 px-5 pb-5 dark:bg-dark2 md:px-6 md:pt-5">
       <div className="justify-centers flex items-center">
-        <Link
-          className="relative mr-4 h-7 w-7 items-center justify-center rounded-lg bg-background p-2 dark:bg-dark4 md:hidden"
-          href="/"
-        >
-          <OutlineIcon.Arrow className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rotate-180 stroke-secondary4" />
-        </Link>
-        <div className="flex items-center justify-center gap-2">
+        <div className="ml-[46px] flex items-center justify-center gap-4 md:ml-0">
           <Image
             src={currentPartner?.profileImage}
             alt="avatar"
@@ -30,11 +24,7 @@ const TopCard = () => {
               <h2 className="h2-bold text-secondary2 dark:text-background ">
                 {currentPartner?.fullName}
               </h2>
-              {/* {isOnline ? ( */}
               <p className="text-sm-semibold text-green">Online</p>
-              {/* ) : ( */}
-              {/* <p className="text-sm-semibold text-red">Offline</p> */}
-              {/* )} */}
             </div>
             <p> {currentPartner?.username}</p>
           </div>

@@ -36,7 +36,7 @@ export default function Modal({
     <>
       {createPortal(
         // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-        <div className="fixed left-0 top-0 z-[15] flex h-full w-full items-center justify-center bg-gray-500 bg-opacity-50 backdrop-blur-sm">
+        <div className="fixed left-0 top-0 z-[15] flex h-full w-full items-center justify-center bg-gray-500 bg-opacity-50 shadow-lg backdrop-blur-sm">
           <div className="absolute flex items-center justify-center">
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-8 dark:bg-dark4">
               <div className="mb-[1.875rem]">

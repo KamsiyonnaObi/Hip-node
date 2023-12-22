@@ -10,7 +10,7 @@ type Tag = {
 
 const PopularTagsGroups = ({ tags }: { tags: Tag[] }) => {
   return (
-    <div className="flex w-full flex-col gap-[10px] rounded-[16px] bg-background p-[20px] dark:bg-dark3">
+    <div className="flex w-full flex-col gap-[10px] rounded-[16px] bg-background p-[20px] shadow-lg dark:bg-dark3">
       <p className="display-semibold mb-5 text-secondary2 dark:text-background2">
         Popular Tags
       </p>

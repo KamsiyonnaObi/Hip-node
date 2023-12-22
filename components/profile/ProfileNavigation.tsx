@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/utils/actions/user.action";
 import RenderProfileMeetups from "./RenderProfileMeetups";
 import RenderProfilePodcasts from "./RenderProfilePodcasts";
 import RenderProfileInterviews from "./RenderProfileInterviews";
+import UserHistory from "./UserHistory";
 
 const ProfileNavigation = async () => {
   const profileData = await getCurrentUser();
@@ -15,7 +16,7 @@ const ProfileNavigation = async () => {
     profileImage: profileData?.profileImage,
   };
   return (
-    <Tabs defaultValue="posts" className="w-full gap-x-10">
+    <Tabs defaultValue="posts" className="w-full gap-x-10 shadow-lg">
       <TabsList className="mb-5 h-[50px] w-full justify-between gap-x-5 overflow-hidden rounded-[14px] bg-background px-2.5 text-secondary3 hover:overflow-x-auto dark:bg-dark3 dark:text-background lg:h-20 lg:rounded-[20px] lg:px-[30px]">
         <TabsTrigger value="posts">Posts</TabsTrigger>
         <TabsTrigger value="meetups">Meetups</TabsTrigger>
@@ -35,7 +36,9 @@ const ProfileNavigation = async () => {
       <TabsContent value="interviews">
         <RenderProfileInterviews JSONUser={JSON.stringify(user)} />
       </TabsContent>
-      <TabsContent value="history">No recent views</TabsContent>
+      <TabsContent value="history">
+        <UserHistory userId={profileData?._id.toString()} />
+      </TabsContent>
     </Tabs>
   );
 };

@@ -9,7 +9,7 @@ const PodcastRender = async ({
 }) => {
   const result = await getAllMeetups({ ...searchParams });
   return (
-    <section className="flex w-full flex-col gap-5">
+    <section className="flex w-full flex-col gap-5 shadow-lg">
       {result.meetups.length > 0
         ? result.meetups.map((meetup) => (
             <MeetupCardBig

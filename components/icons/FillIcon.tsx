@@ -30,6 +30,8 @@ import {
   Fire,
   Business,
   Podcast,
+  Grid,
+  User,
 } from "./fillIcons";
 
 import React from "react";
@@ -56,6 +58,25 @@ const FillIcon = ({ children, className }: FillIconProps) => {
   );
 };
 
+const FillIconFit = ({ children, className }: FillIconProps) => {
+  const styles = className || "fill-secondary6 dark:fill-background2 w-4 h-4";
+  return (
+    <svg className={styles} xmlns="http://www.w3.org/2000/svg">
+      {children}
+    </svg>
+  );
+};
+
+FillIcon.User = ({ className }: FillIconProps) => (
+  <FillIconFit className={className}>
+    <User />
+  </FillIconFit>
+);
+FillIcon.Grid = ({ className }: FillIconProps) => (
+  <FillIconFit className={className}>
+    <Grid />
+  </FillIconFit>
+);
 FillIcon.Calendar = ({ className }: FillIconProps) => (
   <FillIcon className={className}>
     <Calendar />

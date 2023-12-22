@@ -12,7 +12,7 @@ interface Props {
 
 const PodcastCardBig = ({ title, desc, name, location, avatar }: Props) => {
   return (
-    <article className="flex w-[335px] flex-col gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 dark:bg-dark3 dark:text-background md:w-[382px] md:p-5">
+    <article className="flex w-[335px] flex-col gap-2.5 rounded-[16px] bg-background p-[14px] text-secondary2 shadow-lg dark:bg-dark3 dark:text-background md:w-[382px] md:p-5">
       <div className="gap-5">
         <div className="gap-2.5">
           <h3 className="md:h3-semibold display-semibold">{title}</h3>
