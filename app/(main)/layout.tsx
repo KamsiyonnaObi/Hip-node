@@ -11,14 +11,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = (await getCurrentUser()) as {
+  const user = (await getCurrentUser()) as unknown as {
+    _id: string;
     username: string;
     profileImage: string;
   };
 
   const userData = {
+    id: user?._id,
     username: user?.username,
-    profileImage: user.profileImage,
+    profileImage: user?.profileImage,
   };
 
   return (
