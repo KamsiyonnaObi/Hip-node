@@ -52,7 +52,6 @@ const ActionBar = ({
       startTransition(async () => {
         const liked = await likePost({
           postId,
-          userId,
           hasLiked: isLiked,
         });
         if (!liked) return;

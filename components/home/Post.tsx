@@ -59,14 +59,13 @@ const Post = ({
       startTransition(async () => {
         const liked = await likePost({
           postId: _id,
-          userId: currentUserId,
           hasLiked: isLiked,
         });
         if (!hasLiked) {
           await createNotification({
             title,
             type: "reaction",
-            userTo: postUser, // un
+            userTo: postUser,
             link: `/posts/${_id}`,
           });
         }

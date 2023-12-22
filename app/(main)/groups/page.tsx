@@ -11,9 +11,10 @@ interface Props {
 }
 
 const page = async ({ searchParams }: Props) => {
-  const user = await getCurrentUser();
-  const userId = user?._id.toString();
+  const currentUser = await getCurrentUser();
+
   const groups = await getAllGroups(searchParams);
+  console.log(groups.groups[0]);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
     title: group.title,
@@ -42,7 +43,11 @@ const page = async ({ searchParams }: Props) => {
                       title={group.title}
                       _id={group._id}
                       groupUrl={group.groupUrl}
-                      userId={userId ?? ""}
+                      body={"body"}
+                      hasLiked={group.post.likes.includes(currentUser?._id)}
+                      likes={group.post.likes.length}
+                      postUser={group.post.userId?._id.toString() || null}
+                      currentUserId={currentUser?._id.toString() || ""}
                     />
                   </div>
                 );

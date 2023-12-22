@@ -1,41 +1,92 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import Link from "next/link";
 import Html from "../shared/html";
 import { likePost } from "@/utils/actions/post.action";
+import ShareModal from "../home/ShareModal";
+import { createNotification } from "@/utils/actions/notification.action";
+import { toast } from "../ui/use-toast";
+import clsx from "clsx";
 
 interface Props {
   title: string;
   _id: string;
   groupUrl: string;
   post: string;
-  userId: string;
+  body: string;
+  hasLiked: boolean | null;
+  likes: number;
+  postUser: string;
+  currentUserId: string;
 }
 
-const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
-  const groupPost = JSON.parse(post);
-  const [isHeartClicked, setIsHeartClicked] = useState(
-    groupPost.likes.includes(userId)
-  );
-  const { createdAt, title: postTitle, image, content } = groupPost;
-  const toggleHeartColor = async () => {
-    const likes = await likePost({
-      postId: groupPost._id,
-      userId,
-      hasLiked: isHeartClicked,
-    });
+const PostGroup = ({
+  title,
+  _id,
+  groupUrl,
+  post,
+  body,
+  hasLiked,
+  likes,
+  postUser,
+  currentUserId,
+}: Props) => {
+  const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
+  const [isPending, startTransition] = useTransition();
+  const [showShareModal, setShowShareModal] = useState(false);
 
-    setIsHeartClicked(likes.status);
+  const groupPost = JSON.parse(post);
+  const { createdAt, title: postTitle, image, content } = groupPost;
+
+  useEffect(() => {
+    if (showShareModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showShareModal]);
+
+  const handleLike = async () => {
+    if (currentUserId) {
+      startTransition(async () => {
+        const liked = await likePost({
+          postId: groupPost._id,
+          hasLiked: isLiked,
+        });
+        if (!hasLiked) {
+          await createNotification({
+            title,
+            type: "reaction",
+            link: `/posts/${_id}`,
+            userTo: postUser,
+          });
+        }
+        if (liked) {
+          setIsLiked(liked.status);
+        }
+      });
+      return toast({
+        title: `${!isLiked ? "Liked Post" : "Removed Like"}`,
+        variant: !isLiked ? "default" : "destructive",
+      });
+    }
+  };
+  const openShareModal = () => {
+    setShowShareModal(true);
+  };
+
+  const closeShareModal = () => {
+    setShowShareModal(false);
   };
 
   return (
     <article className="mx-auto gap-[10px] rounded-[16px] bg-background p-[10px] shadow-lg dark:bg-dark3 dark:text-background2 sm:w-[248px]">
       <div className="mx-auto flex flex-col gap-[10px]">
         <Link href={`/groups/${_id}`}>
-          <section className="flex flex-row justify-between sm:gap-[10px]">
+          <section className="flex flex-row items-center justify-between sm:gap-[10px]">
             <div className="flex h-[34px] flex-row rounded-full">
               <Image
                 src={groupUrl}
@@ -61,15 +112,49 @@ const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
           />
         </Link>
         <section className="flex w-[110px] flex-row gap-[20px]">
-          <div onClick={toggleHeartColor}>
+          <button
+            disabled={isPending}
+            className={clsx("relative hidden h-7 w-7 rounded-2xl md:block")}
+            onClick={handleLike}
+          >
             <FillIcon.Heart
-              className={isHeartClicked ? "fill-red80" : "fill-secondary5"}
+              className={clsx(
+                "left-1/2 top-1/2 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 md:absolute md:block",
+                {
+                  "fill-red80": isLiked,
+                  "fill-secondary5": !isLiked,
+                }
+              )}
             />
+          </button>
+          <div className="flex items-center">
+            <Link href={`/posts/${groupPost._id}`}>
+              <FillIcon.Message className="fill-secondary3" />
+            </Link>
           </div>
-          <Link href={`/posts/${groupPost._id}`}>
-            <FillIcon.Message className="fill-secondary5" />
-          </Link>
-          <FillIcon.Share className="fill-secondary5" />
+          <div className="flex gap-[14px] rounded-md">
+            <button
+              disabled={isPending}
+              className="h-7 w-7 rounded-md bg-background2 p-1 dark:bg-dark4"
+              onClick={openShareModal}
+            >
+              <FillIcon.Share className="fill-secondary3" />
+            </button>
+          </div>
+          {showShareModal && (
+            <>
+              <div
+                className="fixed inset-0 z-10 bg-black opacity-50"
+                onClick={closeShareModal}
+              ></div>
+              <ShareModal
+                url={window.location.href}
+                close={closeShareModal}
+                title={title}
+                body={body}
+              />
+            </>
+          )}
         </section>
         <section className="flex flex-col gap-[10px]">
           <div className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">

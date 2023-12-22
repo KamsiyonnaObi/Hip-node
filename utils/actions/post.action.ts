@@ -140,36 +140,35 @@ export async function getAllPosts(params: { search: string }) {
 
 export async function likePost({
   postId,
+
   hasLiked,
 }: {
   postId: string;
+
   hasLiked: boolean | null;
 }) {
   try {
-    dbConnect();
     const user = await getCurrentUser();
-    if (!user) {
-      throw new Error("User not found");
-    }
+
+    await dbConnect();
     const { ObjectId } = mongoose.Types;
     const id = new ObjectId(postId);
     let updateQuery = {};
     // Remove like if it is already liked
     if (hasLiked) {
-      updateQuery = { $pull: { likes: user } };
+      updateQuery = { $pull: { likes: user?._id.toString() } };
     } else {
-      updateQuery = { $addToSet: { likes: user } };
+      updateQuery = { $addToSet: { likes: user?._id.toString() } };
     }
 
     const post = await Post.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
-    const likedStatus = post.likes.includes(user);
+    const likedStatus = post.likes.includes(user?._id.toString());
 
     if (!post) {
       throw new Error("Post not found");
     }
-
     return { status: likedStatus, number: post.likes.length };
   } catch (error) {
     console.log(error);
