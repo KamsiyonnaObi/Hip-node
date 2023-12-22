@@ -30,7 +30,6 @@ const PostGroup = ({
   post,
   body,
   hasLiked,
-  likes,
   postUser,
   currentUserId,
 }: Props) => {
@@ -111,25 +110,24 @@ const PostGroup = ({
             height={106}
           />
         </Link>
-        <section className="flex w-[110px] flex-row gap-[20px]">
+        <section className="flex w-[110px] flex-row items-center gap-[20px]">
           <button
             disabled={isPending}
-            className={clsx("relative hidden h-7 w-7 rounded-2xl md:block")}
+            className={clsx(
+              "my-auto flex h-7 w-7 items-center justify-center rounded-2xl pt-[3px]"
+            )}
             onClick={handleLike}
           >
             <FillIcon.Heart
-              className={clsx(
-                "left-1/2 top-1/2 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 md:absolute md:block",
-                {
-                  "fill-red80": isLiked,
-                  "fill-secondary5": !isLiked,
-                }
-              )}
+              className={clsx("flex", {
+                "fill-red80": isLiked,
+                "fill-secondary5": !isLiked,
+              })}
             />
           </button>
           <div className="flex items-center">
             <Link href={`/posts/${groupPost._id}`}>
-              <FillIcon.Message className="fill-secondary3" />
+              <FillIcon.Comment className="fill-secondary5" />
             </Link>
           </div>
           <div className="flex gap-[14px] rounded-md">
@@ -138,7 +136,7 @@ const PostGroup = ({
               className="h-7 w-7 rounded-md bg-background2 p-1 dark:bg-dark4"
               onClick={openShareModal}
             >
-              <FillIcon.Share className="fill-secondary3" />
+              <FillIcon.Share className="fill-secondary5" />
             </button>
           </div>
           {showShareModal && (
