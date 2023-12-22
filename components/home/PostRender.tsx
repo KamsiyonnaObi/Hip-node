@@ -33,6 +33,7 @@ const PostRender = async ({
               comments={post?.comments?.length}
               showEdit={post.userId?._id.toString() === currentUserId}
               postUser={post.userId?._id.toString() || null}
+              currentUser={currentUser}
             />
           ))
         : "No Posts to Show!"}
