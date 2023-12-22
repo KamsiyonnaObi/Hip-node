@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
-import OutlineIcon from "../icons/OutlineIcon";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 const TopCard = () => {
-  // const [isOnline, setIsOnline] = useState(false);
   const { currentPartner } = useSocketContext();
+  const activeUserList = useSocketContext().activeUserList;
 
   return (
     <section className="flex justify-between bg-secondary6 px-5 pb-5 dark:bg-dark2 md:px-6 md:pt-5">
@@ -19,12 +18,17 @@ const TopCard = () => {
             height={20}
             className="h-14 w-14 shrink-0 rounded-full"
           />
+
           <div className="flex flex-col">
             <div className="flex items-center justify-center gap-2">
               <h2 className="h2-bold text-secondary2 dark:text-background ">
                 {currentPartner?.fullName}
               </h2>
-              <p className="text-sm-semibold text-green">Online</p>
+              {activeUserList.includes(currentPartner?.toString()!) ? (
+                <p className="text-sm-semibold text-green">Online</p>
+              ) : (
+                <p className="text-sm-semibold fill-secondary5">Online</p>
+              )}
             </div>
             <p> {currentPartner?.username}</p>
           </div>
