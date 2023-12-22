@@ -1,10 +1,11 @@
-import { Meetups, StartInterview } from "@/components";
+import { StartInterview } from "@/components";
 
 import ProfileNavigation from "@/components/profile/ProfileNavigation";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import React from "react";
+import Meetups from "@/components/home/Meetups";
 
 export default async function Profile() {
   const profileData = await getCurrentUser(["followers"]);
