@@ -17,14 +17,10 @@ interface Props {
 
 const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
   const groupPost = JSON.parse(post);
-  const postTitle = groupPost?.title;
-  const postImage = groupPost?.image;
-  const postContent = groupPost?.content;
-  const postDate = groupPost?.createdAt;
   const [isHeartClicked, setIsHeartClicked] = useState(
     groupPost.likes.includes(userId)
   );
-  // const { createdAt, title, image, content } = groupPost;
+  const { createdAt, title: postTitle, image, content } = groupPost;
   const toggleHeartColor = async () => {
     const likes = await likePost({
       postId: groupPost._id,
@@ -57,7 +53,7 @@ const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
         </Link>
         <Link href={`/groups/${_id}`}>
           <Image
-            src={postImage}
+            src={image}
             alt="Post Image"
             className="h-full w-full rounded-[.625rem] sm:w-[228px]"
             width={228}
@@ -77,9 +73,9 @@ const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
         </section>
         <section className="flex flex-col gap-[10px]">
           <div className="body-semibold line-clamp-2 w-[315px] sm:w-[228px]">
-            <Html htmltext={postContent} />
+            <Html htmltext={content} />
           </div>
-          <div className="caption-regular text-secondary3">{postDate}</div>
+          <div className="caption-regular text-secondary3">{createdAt}</div>
         </section>
       </div>
     </article>
