@@ -25,7 +25,7 @@ const PostByGroup = async ({ groupId }: { groupId: string }) => {
           hasLiked={post?.likes?.includes(userId) || false}
           currentUserId={userId}
           postUser={post.userId?._id.toString() || null}
-          currentUser={undefined}
+          currentUser={currentUser}
         />
       ))}
     </div>
