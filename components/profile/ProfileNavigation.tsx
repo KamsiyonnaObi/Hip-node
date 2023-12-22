@@ -1,14 +1,15 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RenderProfilePosts from "./RenderProfilePosts";
-import { getCurrentUser } from "@/utils/actions/user.action";
+
 import RenderProfileMeetups from "./RenderProfileMeetups";
 import RenderProfilePodcasts from "./RenderProfilePodcasts";
 import RenderProfileInterviews from "./RenderProfileInterviews";
 import UserHistory from "./UserHistory";
 
-const ProfileNavigation = async () => {
-  const profileData = await getCurrentUser();
+type Props = { JSONProfileData: string };
+const ProfileNavigation = async ({ JSONProfileData }: Props) => {
+  const { profileData } = JSON.parse(JSONProfileData) || {};
 
   const user = {
     userId: profileData?._id,
