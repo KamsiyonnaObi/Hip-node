@@ -5,24 +5,34 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import Link from "next/link";
 import Html from "../shared/html";
+import { likePost } from "@/utils/actions/post.action";
 
 interface Props {
   title: string;
   _id: string;
   groupUrl: string;
   post: string;
+  userId: string;
 }
 
-const PostGroup = ({ title, _id, groupUrl, post }: Props) => {
+const PostGroup = ({ title, _id, groupUrl, post, userId }: Props) => {
   const groupPost = JSON.parse(post);
   const postTitle = groupPost?.title;
   const postImage = groupPost?.image;
   const postContent = groupPost?.content;
   const postDate = groupPost?.createdAt;
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(
+    groupPost.likes.includes(userId)
+  );
+  // const { createdAt, title, image, content } = groupPost;
+  const toggleHeartColor = async () => {
+    const likes = await likePost({
+      postId: groupPost._id,
+      userId,
+      hasLiked: isHeartClicked,
+    });
 
-  const toggleHeartColor = () => {
-    setIsHeartClicked((prevIsHeartClicked) => !prevIsHeartClicked);
+    setIsHeartClicked(likes.status);
   };
 
   return (

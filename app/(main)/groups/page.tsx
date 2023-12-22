@@ -4,12 +4,15 @@ import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";
+import { getCurrentUser } from "@/utils/actions/user.action";
 
 interface Props {
   searchParams: { search: string; category: string };
 }
 
 const page = async ({ searchParams }: Props) => {
+  const user = await getCurrentUser();
+  const userId = user?._id.toString();
   const groups = await getAllGroups(searchParams);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
@@ -39,6 +42,7 @@ const page = async ({ searchParams }: Props) => {
                       title={group.title}
                       _id={group._id}
                       groupUrl={group.groupUrl}
+                      userId={userId ?? ""}
                     />
                   </div>
                 );
