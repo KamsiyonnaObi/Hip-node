@@ -15,7 +15,7 @@ import { toast } from "../ui/use-toast";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
-  currentUserId?: string;
+  currentUserId: string;
   postImage: string;
   title: string;
   tags: string[];
@@ -28,8 +28,8 @@ interface Props {
   _id: string;
   showEdit: any;
   hasLiked: boolean | false;
-  postUser?: string;
-  currentUser?: any;
+  postUser: string;
+  currentUser: any;
 }
 
 const Post = ({
@@ -53,8 +53,6 @@ const Post = ({
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
   const [isPending, startTransition] = useTransition();
   const activeUserList = useSocketContext().activeUserList;
-
-  console.log(postUser);
 
   const handleLike = async () => {
     if (currentUserId) {

@@ -166,6 +166,7 @@ export async function likePost({
     if (!post) {
       throw new Error("Post not found");
     }
+
     return { status: likedStatus, number: post.likes.length };
   } catch (error) {
     console.log(error);
