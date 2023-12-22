@@ -14,7 +14,6 @@ const page = async ({ searchParams }: Props) => {
   const currentUser = await getCurrentUser();
 
   const groups = await getAllGroups(searchParams);
-  console.log(groups.groups[0]);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
     title: group.title,
