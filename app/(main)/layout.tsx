@@ -18,7 +18,7 @@ export default async function RootLayout({
 
   const userData = {
     username: user?.username,
-    profileImage: user.profileImage,
+    profileImage: user?.profileImage,
   };
 
   return (

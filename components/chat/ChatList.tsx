@@ -8,11 +8,9 @@ import { updateReadBy } from "@/utils/actions/message.action";
 const ChatList = ({
   onClick,
   searchQuery,
-  currentUserId,
 }: {
   onClick?: (e: boolean) => void;
   searchQuery?: string;
-  currentUserId?: string;
 }) => {
   const { chatList, setCurrentPartner } = useSocketContext();
   const handleChatClick = async (partner: IUser) => {

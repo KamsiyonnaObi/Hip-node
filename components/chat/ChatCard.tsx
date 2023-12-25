@@ -1,6 +1,7 @@
 "use client";
 import { formatDistanceToNow } from "date-fns";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const ChatCard = ({
   user,
@@ -17,6 +18,7 @@ const ChatCard = ({
   onClick: () => void;
   userIdFrom: string;
 }) => {
+  const { activeUserList } = useSocketContext();
   const userObj = JSON.parse(user);
   const dateCreatedAt = formatDistanceToNow(
     new Date(lastCreatedAt.toString()),
@@ -43,7 +45,9 @@ const ChatCard = ({
                 height={20}
                 className="h-10 w-10 shrink-0 rounded-full"
               />
-              <span className="absolute left-[20%] top-3/4 h-2.5 w-2.5 rounded border border-white bg-success500" />
+              {activeUserList.includes(userObj?._id.toString()!) && (
+                <span className="absolute left-[20%] top-3/4 h-2.5 w-2.5 rounded border border-white bg-success500" />
+              )}
               <div className="flex flex-col">
                 <p className="body-bold text-secondary2 dark:text-background">
                   {userObj.fullName}

@@ -4,8 +4,7 @@ import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 const TopCard = () => {
-  const { currentPartner } = useSocketContext();
-  const activeUserList = useSocketContext().activeUserList;
+  const { currentPartner, activeUserList } = useSocketContext();
 
   return (
     <section className="flex justify-between bg-secondary6 px-5 pb-5 dark:bg-dark2 md:px-6 md:pt-5">
@@ -24,10 +23,10 @@ const TopCard = () => {
               <h2 className="h2-bold text-secondary2 dark:text-background ">
                 {currentPartner?.fullName}
               </h2>
-              {activeUserList.includes(currentPartner?.toString()!) ? (
+              {activeUserList.includes(currentPartner?._id.toString()!) ? (
                 <p className="text-sm-semibold text-green">Online</p>
               ) : (
-                <p className="text-sm-semibold fill-secondary5">Online</p>
+                <p className="text-sm-semibold fill-secondary5">Offline</p>
               )}
             </div>
             <p> {currentPartner?.username}</p>
