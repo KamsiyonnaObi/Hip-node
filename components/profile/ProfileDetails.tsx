@@ -2,19 +2,42 @@
 import React, { useState } from "react";
 import { userProfileData } from "@/types/component";
 import OutlineIcon from "../icons/OutlineIcon";
-
+import FillIcon from "../icons/FillIcon";
 import { Button } from "../ui/Button";
 import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
+import { followAuthor } from "@/utils/actions/user.action";
+import { profileData } from "@/constants/dummy";
 
-type Props = { JSONProfileData: string };
-const ProfileDetails = ({ JSONProfileData }: Props) => {
-  const profileData: userProfileData = JSON.parse(JSONProfileData);
+type Props = {
+  JSONProfileData: string;
+  hasFollowed?: boolean;
+  isFollow: boolean;
+};
+const ProfileDetails = ({ JSONProfileData, hasFollowed, isFollow }: Props) => {
+  const {
+    profileData,
+    myProfile,
+  }: { profileData: userProfileData; myProfile: boolean } =
+    JSON.parse(JSONProfileData) || {};
   const followers = profileData?.followers;
 
   const [isProfileEdit, setIsProfileEdit] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(hasFollowed || false);
 
+  const handleFollow = async () => {
+    const followed = await followAuthor({
+      followedUserId: profileData._id,
+      hasFollowed: isFollowing,
+      isFollow,
+    });
+
+    if (!followed) return;
+    if (followed.status !== undefined) {
+      setIsFollowing(followed.status);
+    }
+  };
   const onEdit = () => setIsProfileEdit(true);
   const onCancel = () => setIsProfileEdit(false);
   return (
@@ -58,17 +81,31 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                     {profileData?.occupation}
                   </p>
                 </div>
-                {/* <div className="flex gap-2.5">
-                  <Button
-                    className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
-                    color="blue"
-                  >
-                    Follow
-                  </Button>
-                  <Button className="flex items-center p-2" color="blackBlue">
-                    <FillIcon.Message className="fill-blue" />
-                  </Button>
-                </div> */}
+                {!myProfile && (
+                  <div className="flex gap-2.5">
+                    {isFollowing ? (
+                      <Button
+                        className="display-semibold flex rounded-md px-[38.5px] py-1.5 text-background"
+                        color="blackWhite"
+                        onClick={handleFollow}
+                      >
+                        Following
+                      </Button>
+                    ) : (
+                      <Button
+                        className="display-semibold flex rounded-md bg-blue px-[38.5px] py-1.5 text-background"
+                        color="blue"
+                        onClick={handleFollow}
+                      >
+                        Follow
+                      </Button>
+                    )}
+
+                    <Button className="flex items-center p-2" color="blackBlue">
+                      <FillIcon.Message className="fill-blue" />
+                    </Button>
+                  </div>
+                )}
                 <div className="flex-center gap-3">
                   <p className="body-semibold text-secondary2 dark:text-background2">
                     {`${profileData?.followers.length} Followers`}
@@ -81,7 +118,7 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                   </p>
                 </div>
                 <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
-                  {followers.length > 0 &&
+                  {followers?.length > 0 &&
                     followers.slice(0, 7).map((follower: userProfileData) => (
                       <div key={follower._id} className="flex ">
                         <div className="relative flex h-[30px] w-[30px] items-center justify-center rounded-full bg-secondary6">
@@ -135,12 +172,14 @@ const ProfileDetails = ({ JSONProfileData }: Props) => {
                 <p className="text-secondary3">
                   Joined {getTimestamp(new Date(profileData?.createdAt))}
                 </p>
-                <Button
-                  onClick={onEdit}
-                  className="h3-semibold flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-blue text-background"
-                >
-                  Edit Profile
-                </Button>
+                {myProfile && (
+                  <Button
+                    onClick={onEdit}
+                    className="h3-semibold flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-blue text-background"
+                  >
+                    Edit Profile
+                  </Button>
+                )}
               </section>
             </article>
           </section>

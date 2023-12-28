@@ -1,5 +1,4 @@
 "use server";
-import { ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 
 import { ProfileSchema } from "@/components/profile/EditProfile";
@@ -38,32 +37,36 @@ export async function newUser(user: FormData) {
 }
 
 // user action to fetch logged in user profile details
-export async function getUserProfile(email: string | null | undefined) {
+export async function getUserProfile(
+  profileId: string | null | undefined,
+  populate?: string[]
+) {
   try {
     await dbConnect();
 
-    const loggedInUser = await UserModel.findOne({ email });
+    // get the current user
+    const currentUser: any = await getServerSession();
 
-    if (loggedInUser) {
-      const userObj = {
-        id: loggedInUser._id.toString(),
-        name: loggedInUser.username,
-        email: loggedInUser.email,
-        profileImage: loggedInUser.profileImage,
-        occupation: loggedInUser.occupation,
-        followers: loggedInUser.followers,
-        following: loggedInUser.following,
-        points: loggedInUser.points,
-        bio: loggedInUser.bio,
-        website: loggedInUser.website,
-        twitter: loggedInUser.twitter,
-        facebook: loggedInUser.facebook,
-        instagram: loggedInUser.instagram,
-      };
-      return userObj;
+    const { email } = currentUser?.user;
+
+    // populate profile with followers
+    const query = UserModel.findById(profileId).lean();
+    for (const field of populate ?? []) {
+      query?.populate(field);
     }
 
-    return null;
+    const User = await query;
+
+    // check if the user is viewing their own profile.
+    let myProfile;
+    if (email === User?.email) {
+      myProfile = true;
+    } else {
+      myProfile = false;
+    }
+
+    revalidatePath("/profile");
+    return { profileData: User, myProfile };
   } catch (error) {
     console.log(error);
     return null;
@@ -105,7 +108,7 @@ export async function followAuthor({
   hasFollowed,
   isFollow,
 }: {
-  followedUserId: ObjectId;
+  followedUserId: string;
   hasFollowed: boolean;
   isFollow: boolean;
 }) {

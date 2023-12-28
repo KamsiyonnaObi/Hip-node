@@ -176,9 +176,11 @@ const Post = ({
             <section className="flex flex-row justify-between md:w-full">
               <div className="hidden flex-col md:flex">
                 <div className="flex gap-[.25rem]">
-                  <p className="md:body-semibold dark:text-secondary6">
-                    {username}
-                  </p>
+                  <Link href={`/profile/${postUser}`}>
+                    <p className="md:body-semibold dark:text-secondary6">
+                      {username}
+                    </p>
+                  </Link>
                   {activeUserList.includes(postUser!) ? (
                     <OutlineIcon.Ellipse className="fill-green" />
                   ) : (
