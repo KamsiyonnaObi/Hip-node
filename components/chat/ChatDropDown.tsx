@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import OutlineIcon from "@/components/icons/OutlineIcon";
 import TopCard from "./TopCard";
@@ -8,6 +8,10 @@ import RightChatList from "./RightChatList";
 import ChatList from "./ChatList";
 import ChatInput from "./ChatInput";
 import SearchInput from "./SearchInput";
+import SearchResults from "./SearchResults";
+import ChatCard from "./ChatCard";
+import { useSocketContext } from "@/providers/SocketProvider";
+import { IUser } from "@/types/mongoose";
 
 const ChatDropDown = ({
   currentUserId,
@@ -18,10 +22,33 @@ const ChatDropDown = ({
   searchQuery: string;
   setSearchQuery: (e: string) => void;
 }) => {
+  const { setCurrentPartner } = useSocketContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const handleBlur = () => {
+    setShowResults(false);
+  };
+  // set chat partner to display in the dropdown
+  const [chatPartner, setChatPartner] = useState<IUser | null>(null);
+
+  // set chat partner to display in the chatlist
+  const handleUserClick = (user: IUser) => {
+    console.log("handleUserClick is fired");
+    setChatPartner(user);
+    setIsOpen((prev) => !prev);
+  };
+
+  // useEffect(() => {
+  //   console.log(chatPartner);
+  // }, [chatPartner]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+    setShowResults(true);
+  };
+
+  const handleChatClick = async (partner: IUser) => {
+    setCurrentPartner(partner);
   };
 
   return (
@@ -38,7 +65,13 @@ const ChatDropDown = ({
           </div>
 
           <div className="px-4 pb-3">
-            <SearchInput onSearch={handleSearch} />
+            <SearchInput onSearch={handleSearch} onBlur={handleBlur} />
+            {showResults && searchQuery && (
+              <SearchResults
+                searchQuery={searchQuery}
+                onUserClick={handleUserClick}
+              />
+            )}
           </div>
         </>
       )}
@@ -66,11 +99,17 @@ const ChatDropDown = ({
         )}
         {!isOpen && (
           <div className="md:hidden">
-            <ChatList
-              onClick={setIsOpen}
-              currentUserId={currentUserId?.toString()}
-              searchQuery={searchQuery}
-            />
+            {chatPartner && (
+              <ChatCard
+                key={chatPartner?._id.toString()}
+                user={JSON.stringify(chatPartner)}
+                lastMessage=""
+                isRead={false}
+                onClick={() => handleChatClick(chatPartner)}
+                userIdFrom={currentUserId}
+              />
+            )}
+            {!chatPartner && <ChatList onClick={setIsOpen} />}
           </div>
         )}
       </div>

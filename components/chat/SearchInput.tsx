@@ -3,11 +3,11 @@ import OutlineIcon from "../icons/OutlineIcon";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
+  onBlur: () => void;
 }
 
-const SearchInput = ({ onSearch }: SearchInputProps) => {
+const SearchInput = ({ onSearch, onBlur }: SearchInputProps) => {
   const [inputValue, setInputValue] = useState("");
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
@@ -21,6 +21,7 @@ const SearchInput = ({ onSearch }: SearchInputProps) => {
         placeholder="Type here to search..."
         value={inputValue}
         onChange={handleChange}
+        onBlur={onBlur}
       />
 
       <button className="flex items-center">

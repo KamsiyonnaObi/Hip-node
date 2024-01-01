@@ -12,7 +12,7 @@ const ChatCard = ({
   userIdFrom,
 }: {
   user: string;
-  lastCreatedAt: Date;
+  lastCreatedAt?: Date;
   lastMessage: string;
   isRead: boolean;
   onClick: () => void;
@@ -20,12 +20,11 @@ const ChatCard = ({
 }) => {
   const { activeUserList } = useSocketContext();
   const userObj = JSON.parse(user);
-  const dateCreatedAt = formatDistanceToNow(
-    new Date(lastCreatedAt.toString()),
-    {
-      addSuffix: true,
-    }
-  );
+  const dateCreatedAt = lastCreatedAt?.toString()
+    ? formatDistanceToNow(new Date(lastCreatedAt?.toString()), {
+        addSuffix: true,
+      })
+    : "";
   return (
     <main
       className="border-b-solid flex w-full flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
