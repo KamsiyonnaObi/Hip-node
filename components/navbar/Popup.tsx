@@ -13,7 +13,7 @@ const Popup = ({ id, username }: { id: string; username: string }) => {
       <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4"></div>
       </div>
-      <div className="fixed right-[10%] flex aspect-square h-[300px] flex-col rounded-[10px] bg-background shadow-lg dark:bg-dark4 max-md:top-[3.5rem] md:right-[2.5%]">
+      <div className="fixed right-[10%] flex aspect-square h-fit flex-col rounded-[10px] bg-background shadow-lg dark:bg-dark4 max-md:top-[3.5rem] md:right-[2.5%]">
         <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
           <p className="flex items-center">{username}</p>
           <hr className="dark:text-secondary3" />
@@ -30,7 +30,7 @@ const Popup = ({ id, username }: { id: string; username: string }) => {
             </button>
           </li>
           <hr className="dark:text-secondary3" />
-          <li className="flex flex-row justify-between gap-5">
+          <li className="flex flex-row items-center justify-between gap-5">
             <p>Interface</p>
             <div className="gap-2.5 rounded-[15px] bg-background2 p-[3px] dark:bg-dark3">
               <div className=" flex flex-row gap-[6px]">
