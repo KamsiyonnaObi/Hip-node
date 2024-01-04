@@ -16,6 +16,7 @@ const RenderProfilePosts = async ({ JSONUser }: Props) => {
       {userPosts?.data!.length > 0 ? (
         userPosts?.data!.map((post) => (
           <PostHome
+            currentUser={userData}
             key={post._id}
             _id={post._id.toString()}
             currentUserId={userId}

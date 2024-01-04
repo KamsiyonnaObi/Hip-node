@@ -4,6 +4,7 @@ import ProfileNavigation from "@/components/profile/ProfileNavigation";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 
 import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
+import Meetups from "@/components/home/Meetups";
 import React from "react";
 
 export default async function Profile({ params }: { params: { id: string } }) {
