@@ -9,6 +9,13 @@ import { getPopularTags } from "@/utils/actions/post.action";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Explore the latest posts on Hipnode a social media forum for developers",
+};
 
 export default async function Home({
   searchParams,
