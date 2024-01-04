@@ -15,7 +15,7 @@ import { toast } from "../ui/use-toast";
 import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
-  currentUserId?: string;
+  currentUserId: string;
   postImage: string;
   title: string;
   tags: string[];
@@ -28,8 +28,8 @@ interface Props {
   _id: string;
   showEdit: any;
   hasLiked: boolean | false;
-  postUser?: string;
-  currentUser?: any;
+  postUser: string;
+  currentUser: any;
 }
 
 const Post = ({
@@ -59,7 +59,6 @@ const Post = ({
       startTransition(async () => {
         const liked = await likePost({
           postId: _id,
-          userId: currentUserId,
           hasLiked: isLiked,
         });
         if (!hasLiked) {
