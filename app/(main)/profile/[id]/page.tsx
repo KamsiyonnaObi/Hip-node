@@ -5,6 +5,13 @@ import ProfileDetails from "@/components/profile/ProfileDetails";
 
 import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description:
+    "Hipnode profile page where you can see your profile details and navigate to other pages",
+};
 
 export default async function Profile({ params }: { params: { id: string } }) {
   const profileData = await getUserProfile(params.id, ["followers"]);

@@ -16,6 +16,7 @@ const SourceSansPro = Source_Sans_3({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Hipnode",
   description: "Modern Social Media Forum Web App",
+  keywords: ["Next.js", "React", "JavaScript", "Developer"],
 };
 
 export default async function RootLayout({

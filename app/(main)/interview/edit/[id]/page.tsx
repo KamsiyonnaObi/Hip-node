@@ -1,6 +1,12 @@
 import { InputInterview } from "@/components/form/InputInterview";
 import { getInterview } from "@/utils/actions/interview.action";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Interview",
+  description: "Edit your interview to share your journey in the tech industry",
+};
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getInterview(params.id);

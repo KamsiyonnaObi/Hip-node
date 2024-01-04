@@ -4,6 +4,13 @@ import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Groups",
+  description:
+    "Explore the latest groups on Hipnode a social media forum for developers",
+};
 
 interface Props {
   searchParams: { search: string; category: string };
