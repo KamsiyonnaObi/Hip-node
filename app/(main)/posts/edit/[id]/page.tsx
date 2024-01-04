@@ -1,6 +1,13 @@
 import { InputPost } from "@/components/form";
 import { getPostById } from "@/utils/actions/post.action";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Posts",
+  description:
+    "Discover posts from other users and share your journey in the tech industry",
+};
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getPostById(params.id);

@@ -3,6 +3,13 @@ import HostCard from "@/components/Meetups/HostCard";
 import RenderMeetup from "@/components/Meetups/RenderMeetup";
 import Podcasts from "@/components/Podcasts";
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Meetups",
+  description:
+    "Find other Hipnoders in your area so you can learn, share, and work together.",
+};
 
 export default async function Meetup({
   searchParams,

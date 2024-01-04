@@ -3,13 +3,6 @@ import TopCard from "@/components/chat/TopCard";
 import RightChatList from "@/components/chat/RightChatList";
 import { getCurrentUser } from "@/utils/actions/user.action";
 import LeftChatList from "@/components/chat/LeftChatList";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Chat",
-  description:
-    "Chat with other users on Hipnode a social media forum for developers",
-};
 
 const page = async () => {
   const currentUser = await getCurrentUser();

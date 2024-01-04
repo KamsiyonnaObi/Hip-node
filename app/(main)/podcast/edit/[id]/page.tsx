@@ -1,6 +1,13 @@
 import { InputPodcast } from "@/components/form/InputPodcast";
 import { getPodcast } from "@/utils/actions/podcast.action";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Podcasts",
+  description:
+    "Listen to podcasts from indie hackers, makers, and bootstrappers",
+};
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getPodcast(params.id);

@@ -3,6 +3,13 @@ import Meetups from "@/components/home/Meetups";
 import HostCard from "@/components/Meetups/HostCard";
 import React, { Suspense } from "react";
 import PodcastRender from "@/components/interviews/podcasts/PodcastRender";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Podcasts",
+  description:
+    "Listen to podcasts from indie hackers, makers, and bootstrappers",
+};
 
 export default async function Home({
   searchParams,
