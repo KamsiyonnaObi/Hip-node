@@ -6,14 +6,30 @@ import ProfileDetails from "@/components/profile/ProfileDetails";
 import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
 import Meetups from "@/components/home/Meetups";
 import React from "react";
-import type { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Profile | Hipnode",
-  description:
-    "Hipnode profile page where you can see your profile details and navigate to other pages",
-  keywords: ["Hipnode", "profile", "community", "forum", "developers"],
-};
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // grab which group id
+
+  const currentUser = await getCurrentUser();
+  return {
+    title: currentUser?.username,
+    keywords: currentUser?.businessType,
+    description: currentUser?.username,
+    openGraph: {
+      images: [
+        {
+          url: currentUser?.profileImage as string,
+          height: 630,
+          alt: "Hipnode",
+        },
+      ],
+    },
+  };
+}
 
 export default async function Profile({ params }: { params: { id: string } }) {
   const profileData = await getUserProfile(params.id, ["followers"]);
