@@ -12,7 +12,6 @@ export async function generateMetadata(
   // grab which group id
 
   const result = await getInterview(params.slug);
-  console.log("result" + result);
   return {
     title: result.title,
     keywords: result.title,
