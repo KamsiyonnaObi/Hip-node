@@ -28,7 +28,6 @@ export async function generateMetadata(
   const tags = await getPostTagsByGroupId(params.slug);
   const tagName = tags.map((tag) => tag.name);
 
-  console.log("tags", tagName);
   return {
     title: group.data.title,
     keywords: tagName,
