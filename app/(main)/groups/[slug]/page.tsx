@@ -16,6 +16,35 @@ import { getGroupById } from "@/utils/actions/group.action";
 import { getPostTagsByGroupId } from "@/utils/actions/post.action";
 import PostByGroup from "@/components/group/PostByGroup";
 import { getAllPinnedGroups } from "@/utils/actions/user.action";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // grab which group id
+
+  const group = await getGroupById(params.slug);
+  const tags = await getPostTagsByGroupId(params.slug);
+  const tagName = tags.map((tag) => tag.name);
+
+  return {
+    title: group.data.title,
+    keywords: tagName,
+    description: group.data.description,
+    openGraph: {
+      images: [
+        {
+          url: group.data.coverUrl,
+          width: 1200,
+          height: 630,
+          alt: "Hipnode",
+        },
+      ],
+    },
+  };
+}
+
 interface UserAdmin {
   _id: string;
   fullName?: string;

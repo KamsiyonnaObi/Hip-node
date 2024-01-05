@@ -8,9 +8,10 @@ import { getCurrentUser } from "@/utils/actions/user.action";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Groups",
+  title: "Groups | Hipnode",
   description:
     "Explore the latest groups on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "groups", "community", "forum", "developers"],
 };
 
 interface Props {

@@ -6,9 +6,10 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Meetups",
+  title: "Meetups | Hipnode",
   description:
     "Find other Hipnoders in your area so you can learn, share, and work together.",
+  keywords: ["Hipnode", "meetups", "community", "forum", "developers"],
 };
 
 export default async function Meetup({

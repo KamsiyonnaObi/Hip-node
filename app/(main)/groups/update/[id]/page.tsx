@@ -5,7 +5,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Update Group",
+  title: "Update Group | Hipnode",
   description:
     "Update your Hipnode group to make it more appealing to other users",
 };

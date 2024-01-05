@@ -12,6 +12,34 @@ import {
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { reportReasons } from "@/lib/constants";
 import { IComments } from "@/models/post.model";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // grab which post id
+  const postId = params.slug;
+
+  // grab the post
+  const post = await getPostById(postId);
+
+  return {
+    title: post.data.title,
+    keywords: post.data.tags,
+    description: post.data.content,
+    openGraph: {
+      images: [
+        {
+          url: post.data.image,
+          width: 1200,
+          height: 630,
+          alt: "Hipnode",
+        },
+      ],
+    },
+  };
+}
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const currentUser = await getCurrentUser();

@@ -6,9 +6,10 @@ import PodcastRender from "@/components/interviews/podcasts/PodcastRender";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Podcasts",
+  title: "Podcasts | Hipnode",
   description:
     "Listen to podcasts from indie hackers, makers, and bootstrappers",
+  keywords: ["Hipnode", "podcasts", "community", "forum", "developers"],
 };
 
 export default async function Home({
