@@ -11,7 +11,7 @@ import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Interview",
+  title: "Interview | Hipnode",
   description:
     "Interview with developers and learn about their journey in the tech industry",
   keywords: ["Hipnode", "interview", "community", "forum", "developers"],

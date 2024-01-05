@@ -3,7 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Posts",
+  title: "Posts | Hipnode",
   description:
     "Discover posts from other users and share your journey in the tech industry",
   keywords: ["Hipnode", "posts", "community", "forum", "developers"],

@@ -9,7 +9,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "Profile | Hipnode",
   description:
     "Hipnode profile page where you can see your profile details and navigate to other pages",
   keywords: ["Hipnode", "profile", "community", "forum", "developers"],

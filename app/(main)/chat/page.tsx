@@ -6,7 +6,7 @@ import LeftChatList from "@/components/chat/LeftChatList";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Chat",
+  title: "Chat | Hipnode",
   description:
     "Chat with other users on Hipnode a social media forum for developers",
   keywords: ["Hipnode", "chat", "community", "forum", "developers"],
