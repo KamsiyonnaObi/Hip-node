@@ -34,7 +34,6 @@ const SearchResults = ({
           className="flex cursor-pointer flex-col gap-0"
           onClick={() => {
             handleClick(user);
-            console.log("handleClick triggered");
           }}
         >
           <p className="body-bold text-secondary2 dark:text-background">
