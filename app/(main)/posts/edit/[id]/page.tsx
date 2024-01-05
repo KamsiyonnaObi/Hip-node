@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Edit Posts",
   description:
     "Discover posts from other users and share your journey in the tech industry",
+  keywords: ["Hipnode", "posts", "community", "forum", "developers"],
 };
 
 const page = async ({ params }: { params: { id: string } }) => {

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Home",
   description:
     "Explore the latest posts on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "posts", "community", "forum", "developers"],
 };
 
 export default async function Home({

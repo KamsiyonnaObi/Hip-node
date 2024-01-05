@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "New Interview",
   description:
     "Create a new interview to share your journey in the tech industry",
+  keywords: ["Hipnode", "interviews", "community", "forum", "developers"],
 };
 
 const page = () => {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "New Podcasts",
   description:
     "Listen to podcasts from indie hackers, makers, and bootstrappers",
+  keywords: ["Hipnode", "podcasts", "community", "forum", "developers"],
 };
 
 const page = () => {

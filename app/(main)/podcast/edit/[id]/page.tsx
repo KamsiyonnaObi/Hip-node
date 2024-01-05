@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Edit Podcasts",
   description:
     "Listen to podcasts from indie hackers, makers, and bootstrappers",
+  keywords: ["Hipnode", "podcasts", "community", "forum", "developers"],
 };
 
 const page = async ({ params }: { params: { id: string } }) => {

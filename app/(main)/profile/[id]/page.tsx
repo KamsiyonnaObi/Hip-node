@@ -7,12 +7,12 @@ import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
 import Meetups from "@/components/home/Meetups";
 import React from "react";
 import type { Metadata } from "next";
-import Meetups from "@/components/home/Meetups";
 
 export const metadata: Metadata = {
   title: "Profile",
   description:
     "Hipnode profile page where you can see your profile details and navigate to other pages",
+  keywords: ["Hipnode", "profile", "community", "forum", "developers"],
 };
 
 export default async function Profile({ params }: { params: { id: string } }) {

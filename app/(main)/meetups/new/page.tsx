@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "New Meetups",
   description: "Create a new meetup to share your journey in the tech industry",
+  keywords: ["Hipnode", "meetups", "community", "forum", "developers"],
 };
 
 const page = () => {

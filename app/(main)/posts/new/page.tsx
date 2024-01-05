@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Posts",
   description:
     "Discover posts from other users and share your journey in the tech industry",
+  keywords: ["Hipnode", "posts", "community", "forum", "developers"],
 };
 
 const page = ({ searchParams }: { searchParams: { title: string } }) => {

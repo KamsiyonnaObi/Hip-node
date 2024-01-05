@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Create Group",
   description:
     "Create a new Hipnode group to share your interests with other users",
+  keywords: ["Hipnode", "groups", "community", "forum", "developers"],
 };
 
 type Props = {};

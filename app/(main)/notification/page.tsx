@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Notifications",
   description:
     "Get notified when someone interacts with your posts or comments on Hipnode",
+  keywords: ["Hipnode", "notifications", "community", "forum", "developers"],
 };
 
 export default async function Home({
