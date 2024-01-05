@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Chat",
   description:
     "Chat with other users on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "chat", "community", "forum", "developers"],
 };
 
 const page = async () => {

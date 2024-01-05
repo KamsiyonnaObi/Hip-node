@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Groups",
   description:
     "Explore the latest groups on Hipnode a social media forum for developers",
+  keywords: ["Next.js", "React", "JavaScript", "Developer"],
 };
 
 interface Props {
