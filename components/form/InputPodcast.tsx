@@ -316,24 +316,19 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/podcast">
-            <Button
-              type="submit"
-              color="blue"
-              className="md:display-semibold body-semibold px-10 py-2.5"
-              disabled={isSubmitting}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {isSubmitting ? <>Posting...</> : <>Publish</>}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            color="blue"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
+          </Button>
           <Button
             type="button"
             color="gray"
             className="md:display-semibold body-semibold px-10 py-2.5"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/podcast")}
           >
             <p className="text-secondary3">Cancel</p>
           </Button>

@@ -26,9 +26,9 @@ const page = async ({ params }: { params: { id: string } }) => {
         desc={result.desc}
       />
       <div className="w-[335px] rounded-[16px] bg-background p-5 dark:bg-dark3 md:w-[785px]">
-        <div className="gap-5">
+        <div className="gap-5 max-sm:mt-32">
           <h1 className="h1-semibold dark:text-background2">{result.title}</h1>
-          <div className="display-regular text-secondary3">
+          <div className="display-regular text-secondary3 ">
             <Html htmltext={result.desc} />
           </div>
         </div>

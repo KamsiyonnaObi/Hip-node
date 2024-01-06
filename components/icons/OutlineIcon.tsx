@@ -61,6 +61,7 @@ import { Pin } from "./outlineIcons/Pin";
 import { Play } from "./outlineIcons/Play";
 import { Pause } from "./outlineIcons/Pause";
 import { UpArrow } from "./outlineIcons/UpArrow";
+import { Volume } from "./outlineIcons/Volume";
 
 interface Props {
   children?: ReactNode;
@@ -84,6 +85,12 @@ const OutlineIcon = ({ children, className }: Props) => {
 OutlineIcon.Send = ({ className }: Props) => (
   <OutlineIcon className={className}>
     <Send />
+  </OutlineIcon>
+);
+
+OutlineIcon.Volume = ({ className }: Props) => (
+  <OutlineIcon className={className}>
+    <Volume />
   </OutlineIcon>
 );
 

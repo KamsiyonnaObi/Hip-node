@@ -25,7 +25,6 @@ export function PodcastProvider({ children }: { children: React.ReactNode }) {
 
   const hidePodcastBanner = () => {
     setShowPodcastBanner(false);
-    console.log("CLOSED");
   };
 
   useEffect(() => {
@@ -34,6 +33,13 @@ export function PodcastProvider({ children }: { children: React.ReactNode }) {
       setShowPodcastBanner(true);
     } else {
       setShowBottomBar(true);
+    }
+
+    if (
+      pathname?.startsWith("/podcast/new") ||
+      pathname?.startsWith("/podcast/edit")
+    ) {
+      setShowPodcastBanner(false);
     }
   }, [pathname]);
 
