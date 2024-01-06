@@ -14,7 +14,7 @@ const PostRender = async ({
   const result = await getAllPosts({ ...searchParams });
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 shadow-lg">
       {result.posts.length > 0
         ? result.posts.map((post) => (
             <Post
@@ -33,6 +33,7 @@ const PostRender = async ({
               comments={post?.comments?.length}
               showEdit={post.userId?._id.toString() === currentUserId}
               postUser={post.userId?._id.toString() || null}
+              currentUser={currentUser}
             />
           ))
         : "No Posts to Show!"}

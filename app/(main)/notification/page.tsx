@@ -5,6 +5,14 @@ import Sidebar from "@/components/home/Sidebar";
 import Podcasts from "@/components/Podcasts";
 import Notification from "@/components/navbar/Notification";
 import { getPopularTags } from "@/utils/actions/post.action";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Notifications | Hipnode",
+  description:
+    "Get notified when someone interacts with your posts or comments on Hipnode",
+  keywords: ["Hipnode", "notifications", "community", "forum", "developers"],
+};
 
 export default async function Home({
   searchParams,

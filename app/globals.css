@@ -9,7 +9,6 @@
 
 /* Add styles for react-datepicker */
 
-
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;

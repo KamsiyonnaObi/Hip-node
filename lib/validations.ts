@@ -163,4 +163,6 @@ export const profileSchema = z.object({
       .includes("instagram", { message: "invalid instagram profile" })
       .url(),
   ]),
+  profileImage: z.string(),
+  bannerImage: z.string(),
 });

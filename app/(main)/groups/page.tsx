@@ -4,12 +4,23 @@ import { getAllGroups } from "@/utils/actions/group.action";
 import Podcasts from "@/components/Podcasts";
 import Meetups from "@/components/home/Meetups";
 import GroupFilter from "@/components/group/GroupFilter";
+import { getCurrentUser } from "@/utils/actions/user.action";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Groups | Hipnode",
+  description:
+    "Explore the latest groups on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "groups", "community", "forum", "developers"],
+};
 
 interface Props {
   searchParams: { search: string; category: string };
 }
 
 const page = async ({ searchParams }: Props) => {
+  const currentUser = await getCurrentUser();
+
   const groups = await getAllGroups(searchParams);
   const mapGroups = groups.groups.map((group) => ({
     _id: group._id.toString(),
@@ -39,6 +50,11 @@ const page = async ({ searchParams }: Props) => {
                       title={group.title}
                       _id={group._id}
                       groupUrl={group.groupUrl}
+                      body={"body"}
+                      hasLiked={group.post.likes.includes(currentUser?._id)}
+                      likes={group.post.likes.length}
+                      postUser={group.post.userId?._id.toString() || null}
+                      currentUserId={currentUser?._id.toString() || ""}
                     />
                   </div>
                 );

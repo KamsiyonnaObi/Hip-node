@@ -4,6 +4,31 @@ import UserModel from "@/models/User";
 import { getPodcast } from "@/utils/actions/podcast.action";
 import { getServerSession } from "next-auth";
 import React from "react";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // grab which group id
+
+  const podcast = await getPodcast(params.id);
+  return {
+    title: podcast.title,
+    keywords: podcast.title,
+    description: podcast.desc,
+    openGraph: {
+      images: [
+        {
+          url: podcast.image,
+          width: 1200,
+          height: 630,
+          alt: "Hipnode",
+        },
+      ],
+    },
+  };
+}
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getPodcast(params.id);

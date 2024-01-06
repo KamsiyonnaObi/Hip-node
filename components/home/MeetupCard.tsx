@@ -14,7 +14,7 @@ interface Props {
 const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
   return (
     <article className="flex flex-row gap-4 ">
-      <section className="flex flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center dark:border-dark3 dark:bg-dark4">
+      <section className="flex min-w-[50px] flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center dark:border-dark3 dark:bg-dark4">
         <p className="body-semibold">{month}</p>
         <h1 className="h1-bold text-blue80">{day}</h1>
       </section>

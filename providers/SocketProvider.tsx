@@ -3,24 +3,31 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import useSockets from "@/hooks/useSockets";
 
 import { INotif } from "@/models/notification.model";
-import { IChat, IMessage } from "@/models/message.model";
+import { IChatList, IMessage } from "@/models/message.model";
 import { IUser } from "@/types/mongoose";
 
 interface SocketContextType {
   notifications: INotif[];
   messages: IMessage[];
-  chatList: IChat[];
+  chatList: IChatList[];
   users: IUser[];
   isConnected: boolean;
   currentPartner: IUser | null;
   setCurrentPartner: any;
+  activeUserList: string[];
 }
 
 const SocketContext = createContext<SocketContextType>({} as SocketContextType);
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const { notifications, messages, chatList, users, isConnected } =
-    useSockets();
+  const {
+    notifications,
+    messages,
+    chatList,
+    users,
+    isConnected,
+    activeUserList,
+  } = useSockets();
   const [currentPartner, setCurrentPartner] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -39,6 +46,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         users,
         currentPartner,
         setCurrentPartner,
+        activeUserList,
       }}
     >
       {children}

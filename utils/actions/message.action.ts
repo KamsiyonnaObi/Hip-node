@@ -1,5 +1,4 @@
 "use server";
-import mongoose from "mongoose";
 
 import UserModel from "@/models/User";
 import Message from "@/models/message.model";
@@ -22,16 +21,13 @@ export async function createMessage({
     if (!userIdTo) {
       throw new Error("Invalid userIdTo");
     }
-    const { ObjectId } = mongoose.Types;
-    const objuserIdTo = new ObjectId(userIdTo);
 
-    const message = await Message.create({
+    await Message.create({
       userIdFrom,
-      userIdTo: objuserIdTo,
+      userIdTo,
       text,
+      read: false,
     });
-
-    return message;
   } catch (error) {
     console.log(error);
     throw error;
@@ -111,78 +107,28 @@ export async function getChatPartners() {
   return partners[0].userIds;
 }
 
-export async function getChatList(userId: string) {
-  await dbConnect();
+export async function updateReadBy({ partnerId }: { partnerId: string }) {
+  try {
+    await dbConnect();
+    const currentUser: any = await getServerSession();
+    const { email } = currentUser?.user;
+    const userIdFrom = await UserModel.findOne({ email });
 
-  // Get all messages
-  const messages = await getAllMessages();
-
-  // Create a Map to store unique users
-  const chatMap = new Map();
-
-  messages.forEach((msg) => {
-    // Get the other user that is not the current user
-    const otherUser = msg.userIdFrom._id.equals(userId)
-      ? msg.userIdTo
-      : msg.userIdFrom;
-
-    // Check if chat exists
-    let chat = chatMap.get(otherUser._id);
-
-    if (!chat) {
-      // If not, create it
-      chat = {
-        user: otherUser,
-        lastCreatedAt: msg.createdAt,
-        lastMessage: msg.text,
-      };
-
-      // Add to map
-      chatMap.set(otherUser._id.toString(), chat);
-    } else {
-      // If chat exists, just update last message
-      chat.lastCreatedAt = msg.createdAt;
-      chat.lastMessage = msg.text;
+    if (!userIdFrom) {
+      throw new Error("Invalid userIdFrom");
     }
-  });
 
-  // Get chats from map values
-  const chatList = [...chatMap.values()];
-
-  return chatList;
-}
-
-export async function readMessage(messageId: string) {
-  try {
-    await dbConnect();
-    const message = await Message.findById(messageId);
-    message.read = true;
-    await message.save();
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
-export async function readAllMessages(userId: string) {
-  try {
-    await dbConnect();
-
-    // Find all unread messages for a specific user
-    const unreadmessages = await Message.find({
-      userTo: userId,
-      read: false,
-    });
-
-    // Mark all unread messages as read
-    await Promise.all(
-      unreadmessages.map(async (message) => {
-        message.read = true;
-        await message.save();
-      })
+    await Message.updateMany(
+      {
+        userIdFrom: partnerId,
+        userIdTo: userIdFrom._id,
+      },
+      {
+        $set: { read: true },
+      }
     );
   } catch (error) {
-    console.error("Error marking messages as read:", error);
+    console.log(error);
     throw error;
   }
 }

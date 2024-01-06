@@ -8,6 +8,14 @@ import ArticleSkeleton from "@/components/interviews/skeleton/ArticleSkeleton";
 import { getAllInterviews } from "@/utils/actions/interview.action";
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Interview | Hipnode",
+  description:
+    "Interview with developers and learn about their journey in the tech industry",
+  keywords: ["Hipnode", "interview", "community", "forum", "developers"],
+};
 
 const InterviewHomePage = async ({
   searchParams,
