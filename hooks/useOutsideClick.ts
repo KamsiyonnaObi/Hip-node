@@ -10,7 +10,7 @@ export const useOutsideClick = () => {
   };
 
   const handleOutsideClick = (e: MouseEvent) => {
-    if (!ref.current.contains(e.target as Node)) {
+    if (!ref?.current?.contains(e.target as Node)) {
       setIsOpen(false);
     }
   };

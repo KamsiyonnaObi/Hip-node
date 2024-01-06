@@ -17,9 +17,7 @@ const LeftChatList = ({ currentUserId }: { currentUserId: string }) => {
             currentUserId={currentUserId?.toString()}
           />
         )}
-        <div className="hidden md:flex">
-          {currentUserId && <ChatList searchQuery={searchQuery} />}
-        </div>
+        <div className="hidden md:flex">{currentUserId && <ChatList />}</div>
       </section>
     </section>
   );
