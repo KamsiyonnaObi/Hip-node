@@ -18,13 +18,14 @@ const NavChatCard = ({
   onClick: () => void;
   userIdFrom: string;
 }) => {
-  const { activeUserList } = useSocketContext();
+  const { activeUserList, isChatPopUpOpen } = useSocketContext();
   const userObj = JSON.parse(user);
   const dateCreatedAt = lastCreatedAt?.toString()
     ? formatDistanceToNow(new Date(lastCreatedAt?.toString()), {
         addSuffix: true,
       })
     : "";
+  console.log(isChatPopUpOpen);
   return (
     <main
       className="flex w-full cursor-pointer flex-col gap-3 bg-background p-4 dark:bg-dark4"

@@ -17,11 +17,18 @@ interface SocketContextType {
   activeUserList: string[];
   isChatPopUpOpen: boolean;
   setIsChatPopUpOpen: any;
+  userId: string;
 }
 
 const SocketContext = createContext<SocketContextType>({} as SocketContextType);
 
-export function SocketProvider({ children }: { children: React.ReactNode }) {
+export function SocketProvider({
+  children,
+  userId,
+}: {
+  children: React.ReactNode;
+  userId: string;
+}) {
   const {
     notifications,
     messages,
@@ -52,6 +59,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         activeUserList,
         isChatPopUpOpen,
         setIsChatPopUpOpen,
+        userId,
       }}
     >
       {children}

@@ -35,8 +35,6 @@ export default function SocketHandler(req, res) {
         .sort({ createdAt: 1 })
         .lean();
 
-      socket.emit("set-messages", messages);
-
       // Active Users
       userMap.set(userId, [...userMap.keys()]);
 

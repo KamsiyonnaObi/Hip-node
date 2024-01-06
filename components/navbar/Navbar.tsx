@@ -15,6 +15,7 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useSocketContext } from "@/providers/SocketProvider";
+import NavMessagePopup from "./NavMessagePopup";
 
 const Navbar = ({
   user,
@@ -48,6 +49,7 @@ const Navbar = ({
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
   const id = user?.id || "";
+  const { isChatPopUpOpen } = useSocketContext();
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
@@ -159,6 +161,7 @@ const Navbar = ({
           </div>
         </div>
       </div>
+      {isChatPopUpOpen && <NavMessagePopup />}
     </article>
   );
 };
