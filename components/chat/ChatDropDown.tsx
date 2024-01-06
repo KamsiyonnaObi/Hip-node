@@ -8,6 +8,10 @@ import RightChatList from "./RightChatList";
 import ChatList from "./ChatList";
 import ChatInput from "./ChatInput";
 import SearchInput from "./SearchInput";
+import SearchResults from "./SearchResults";
+import { useSocketContext } from "@/providers/SocketProvider";
+import { IUser } from "@/types/mongoose";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 const ChatDropDown = ({
   currentUserId,
@@ -18,16 +22,29 @@ const ChatDropDown = ({
   searchQuery: string;
   setSearchQuery: (e: string) => void;
 }) => {
+  const { setCurrentPartner } = useSocketContext();
+  const { isOpen: searchIsOpen, toggleOpen: toggle, ref } = useOutsideClick();
   const [isOpen, setIsOpen] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+
+  // set chat partner to display in the chatlist
+  const handleUserClick = (user: IUser) => {
+    setCurrentPartner(user);
+    setIsOpen((prev) => !prev);
+  };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+    setShowResults(true);
+    if (!searchIsOpen) {
+      toggle();
+    }
   };
 
   return (
     <section>
       {!isOpen && (
-        <>
+        <div className="md:hidden">
           <div className="flex items-center justify-start gap-2 p-6">
             <h2 className="h2-bold text-secondary2 dark:text-background">
               Messages
@@ -37,11 +54,37 @@ const ChatDropDown = ({
             </div>
           </div>
 
-          <div className="px-4 pb-3">
+          <div className="px-4 pb-3" ref={ref}>
             <SearchInput onSearch={handleSearch} />
+            {showResults && searchQuery && searchIsOpen && (
+              <SearchResults
+                searchQuery={searchQuery}
+                onUserClick={handleUserClick}
+              />
+            )}
           </div>
-        </>
+        </div>
       )}
+      <div className="max-md:hidden">
+        <div className="flex items-center justify-start gap-2 p-6">
+          <h2 className="h2-bold text-secondary2 dark:text-background">
+            Messages
+          </h2>
+          <div className="flex h-5 w-6 items-center justify-center rounded-full bg-red10">
+            <p className="caption-regular text-red90">2</p>
+          </div>
+        </div>
+
+        <div className="px-4 pb-3" ref={ref}>
+          <SearchInput onSearch={handleSearch} />
+          {showResults && searchQuery && searchIsOpen && (
+            <SearchResults
+              searchQuery={searchQuery}
+              onUserClick={handleUserClick}
+            />
+          )}
+        </div>
+      </div>
       <div className="w-full">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
@@ -66,11 +109,7 @@ const ChatDropDown = ({
         )}
         {!isOpen && (
           <div className="md:hidden">
-            <ChatList
-              onClick={setIsOpen}
-              currentUserId={currentUserId?.toString()}
-              searchQuery={searchQuery}
-            />
+            <ChatList onClick={setIsOpen} />
           </div>
         )}
       </div>

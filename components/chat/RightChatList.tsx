@@ -25,7 +25,7 @@ const RightChatList = ({ currentUserId }: { currentUserId: string }) => {
 
   return (
     <section className="flex h-[350px] flex-col md:h-[calc(100vh-170px)] md:w-full">
-      <div className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-background px-8 pb-8 pt-[21px] dark:bg-dark2 md:dark:bg-dark4">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-scroll bg-background px-8 pb-8 pt-[21px] dark:bg-dark2 md:pb-[130px] md:dark:bg-dark4">
         {messages.map((message: IMessage) => {
           if (
             message.userIdFrom._id.toString() === currentPartner?._id.toString()
