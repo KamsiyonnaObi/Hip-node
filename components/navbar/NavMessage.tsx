@@ -18,7 +18,7 @@ const NavMessage = ({ avatar, name, sentAt, message, count }: Props) => {
       <div className="flex flex-row items-center gap-[50px]">
         <div className="flex w-[178px] flex-col">
           <p className="display-semibold">
-            {name}{" "}
+            {name}
             <span className="caption-regular text-secondary3">{sentAt}</span>
           </p>
           <p className="caption-regular text-secondary3">{message}</p>
