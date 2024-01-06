@@ -53,7 +53,9 @@ const page = async ({ searchParams }: Props) => {
                       groupUrl={group.groupUrl}
                       body={"body"}
                       hasLiked={group.post.likes
-                        .map((likes) => likes.toString())
+                        .map((likes: { toString: () => any }) =>
+                          likes.toString()
+                        )
                         .includes(currentUser?._id.toString())}
                       likes={group.post.likes.length}
                       postUser={group.post.userId?._id.toString() || null}
