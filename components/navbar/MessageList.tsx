@@ -1,7 +1,10 @@
-import React from "react";
+import { IMessage } from "@/models/message.model";
 import NavMessage from "./NavMessage";
+import { getAllMessages } from "@/utils/actions/message.action";
 
-const MessageList = () => {
+const MessageList = async () => {
+  const allMessages = await getAllMessages();
+  const objAllMessages = JSON.parse(allMessages);
   return (
     <>
       <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
@@ -12,6 +15,16 @@ const MessageList = () => {
           <div className="flex flex-col gap-5">
             <ul className="flex flex-col gap-5">
               <li className="h3-semibold flex justify-start">Messages</li>
+              {objAllMessages.map((message: IMessage) => (
+                <NavMessage
+                  key={message._id}
+                  avatar={message.userIdFrom.profileImage}
+                  name={message.userIdFrom.fullName}
+                  sentAt="20 minutes ago"
+                  message={message.text}
+                  count={2}
+                />
+              ))}
               <NavMessage
                 avatar="/Avatar.png"
                 name="Wade Warren"
