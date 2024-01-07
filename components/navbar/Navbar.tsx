@@ -15,8 +15,8 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useSocketContext } from "@/providers/SocketProvider";
-import NavMessagePopup from "./NavChatPopup";
 import { createPortal } from "react-dom";
+import NavChatPopup from "./NavChatPopup";
 
 const Navbar = ({
   user,
@@ -121,7 +121,9 @@ const Navbar = ({
                   </Button>
                 </div>
 
-                {messageExpanded && <MessageList />}
+                {messageExpanded && (
+                  <MessageList toggleMessage={toggleMessage} />
+                )}
               </div>
 
               <div ref={notifRef} className="relative">
@@ -163,10 +165,7 @@ const Navbar = ({
         </div>
       </div>
       {isChatPopUpOpen &&
-        createPortal(
-          <NavMessagePopup currentUserId={user.id} />,
-          document.body
-        )}
+        createPortal(<NavChatPopup currentUserId={user.id} />, document.body)}
     </article>
   );
 };

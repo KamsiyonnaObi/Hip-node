@@ -28,6 +28,7 @@ const NavTopCard = ({
       <div className="justify-centers flex items-center">
         <div className="flex items-center justify-center gap-4">
           <Image
+            key={currentPartner?.profileImage}
             src={currentPartner?.profileImage}
             alt="avatar"
             width={20}

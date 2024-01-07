@@ -5,7 +5,13 @@ import { updateReadBy } from "@/utils/actions/message.action";
 import { IUser } from "@/types/mongoose";
 import NavChatCard from "./NavChatCard";
 
-const MessageList = ({ onClick }: { onClick?: (e: boolean) => void }) => {
+const MessageList = ({
+  onClick,
+  toggleMessage,
+}: {
+  onClick?: (e: boolean) => void;
+  toggleMessage: () => void;
+}) => {
   const { chatList, setCurrentPartner, setIsChatPopUpOpen } =
     useSocketContext();
   const handleChatClick = async (partner: IUser) => {
@@ -32,7 +38,10 @@ const MessageList = ({ onClick }: { onClick?: (e: boolean) => void }) => {
                   lastCreatedAt={chat.lastCreatedAt}
                   lastMessage={chat.lastMessage}
                   isRead={chat.isRead}
-                  onClick={() => handleChatClick(chat.user)}
+                  onClick={() => {
+                    handleChatClick(chat.user);
+                    toggleMessage();
+                  }}
                   userIdFrom={chat?.userIdFrom?.toString()}
                 />
               ))}
