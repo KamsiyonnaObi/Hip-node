@@ -25,7 +25,10 @@ const Popup = ({ id, username }: { id: string; username: string }) => {
           </Link>
           <li className="flex flex-row gap-[14px]">
             <FillIcon.Follow className="fill-red90 stroke-red90 " />
-            <button className="text-red90" onClick={() => signOut()}>
+            <button
+              className="text-red90"
+              onClick={() => signOut({ callbackUrl: "/sign-in" })}
+            >
               Sign out
             </button>
           </li>
