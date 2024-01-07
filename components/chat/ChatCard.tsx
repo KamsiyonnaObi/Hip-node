@@ -27,7 +27,7 @@ const ChatCard = ({
     : "";
   return (
     <main
-      className="border-b-solid flex w-full flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
+      className="border-b-solid flex w-full cursor-pointer flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
       onClick={onClick}
     >
       <section className="flex justify-between">
