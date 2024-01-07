@@ -24,8 +24,8 @@ const NavChatList = ({ currentUserId }: { currentUserId: string }) => {
   }, [messages]);
 
   return (
-    <section className="flex h-full w-full flex-col">
-      <div className="flex flex-1 flex-col gap-4 overflow-y-scroll px-8 pb-8 pt-[21px] md:pb-[130px] ">
+    <section className="flex h-[55%] w-full flex-col">
+      <div className="flex flex-1 flex-col gap-5 overflow-y-scroll pt-[21px]">
         {messages.map((message: IMessage) => {
           if (
             message.userIdFrom._id.toString() === currentPartner?._id.toString()

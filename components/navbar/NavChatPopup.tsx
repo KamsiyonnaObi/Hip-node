@@ -32,7 +32,7 @@ const NavChatPopup = ({ currentUserId }: { currentUserId: string }) => {
       {isNavChatListOpen && (
         <>
           <NavChatList currentUserId={currentUserId || ""} />
-          <div className="pb-5 pt-8">
+          <div className="pb-5">
             <ChatInput />
           </div>
         </>
