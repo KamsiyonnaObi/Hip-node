@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
@@ -15,7 +15,8 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useSocketContext } from "@/providers/SocketProvider";
-import NavMessagePopup from "./NavMessagePopup";
+import NavMessagePopup from "./NavChatPopup";
+import { createPortal } from "react-dom";
 
 const Navbar = ({
   user,
@@ -161,7 +162,11 @@ const Navbar = ({
           </div>
         </div>
       </div>
-      {isChatPopUpOpen && <NavMessagePopup />}
+      {isChatPopUpOpen &&
+        createPortal(
+          <NavMessagePopup currentUserId={user.id} />,
+          document.body
+        )}
     </article>
   );
 };

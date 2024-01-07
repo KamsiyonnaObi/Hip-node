@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import { useSocketContext } from "@/providers/SocketProvider";
 import { formatDistanceToNow } from "date-fns";
@@ -25,7 +25,6 @@ const NavChatCard = ({
         addSuffix: true,
       })
     : "";
-  console.log(isChatPopUpOpen);
   return (
     <main
       className="flex w-full cursor-pointer flex-col gap-3 bg-background p-4 dark:bg-dark4"
