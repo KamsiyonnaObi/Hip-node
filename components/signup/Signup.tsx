@@ -79,14 +79,12 @@ const SignUp = () => {
       const data = await newUser(newFormData);
 
       if (data.status === "success") {
-        const response = await signIn("credentials", {
+       await signIn("credentials", {
           email: formData.email,
           password: formData.password,
-          redirect: false,
+          callbackUrl: "/home",
         });
-        if (!response?.error) {
-          router.push("/");
-        }
+
       }
     } catch (error) {
       console.log(error);
