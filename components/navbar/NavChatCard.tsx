@@ -18,7 +18,7 @@ const NavChatCard = ({
   onClick: () => void;
   userIdFrom: string;
 }) => {
-  const { activeUserList, isChatPopUpOpen } = useSocketContext();
+  const { activeUserList } = useSocketContext();
   const userObj = JSON.parse(user);
   const dateCreatedAt = lastCreatedAt?.toString()
     ? formatDistanceToNow(new Date(lastCreatedAt?.toString()), {

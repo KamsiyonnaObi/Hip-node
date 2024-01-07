@@ -15,7 +15,7 @@ const NavChatPopup = ({ currentUserId }: { currentUserId: string }) => {
   return (
     <main
       className={clsx(
-        "fixed bottom-5 right-5 z-10 flex h-96 w-80 flex-col rounded-2xl bg-background px-5 dark:bg-dark4 md:bottom-[30px] md:right-10 md:w-96",
+        "fixed bottom-5 right-5 z-10 flex h-96 w-80 flex-col rounded-2xl bg-background px-5 shadow-lg dark:bg-dark4 md:bottom-[30px] md:right-10 md:w-96",
         {
           "h-96": isNavChatListOpen,
           "h-[90px]": !isNavChatListOpen,
