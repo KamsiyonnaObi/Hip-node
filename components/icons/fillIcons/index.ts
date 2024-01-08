@@ -5,6 +5,7 @@ export { Rocket } from "./Rocket";
 export { Message } from "./Message";
 export { Profile } from "./Profile";
 export { Facebook } from "./Facebook";
+export { GitHub } from "./GitHub";
 export { Twitter } from "./Twitter";
 export { Google } from "./Google";
 export { Thunderbolt } from "./Thunderbolt";

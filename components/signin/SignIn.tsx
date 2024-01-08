@@ -110,14 +110,15 @@ const SignIn = () => {
             <p>Sign In With Google</p>
           </Button>
           <Button
-            onClick={() => signIn("facebook", { callbackUrl: "/" })}
+            onClick={() => signIn("github", { callbackUrl: "/" })}
             full
             color="gray"
             className="display-semibold items-center justify-center py-3 md:bg-secondary6"
           >
-            <FillIcon.Facebook className="fill-secondary2 dark:fill-background2" />
+            <FillIcon.GitHub className="fill-secondary2 dark:fill-background2" />
 
             <p>Sign In With Github</p>
+
           </Button>
         </div>
       </article>
