@@ -22,7 +22,11 @@ const PostByGroup = async ({ groupId }: { groupId: string }) => {
           comments={post.comments.length}
           _id={post._id.toString()}
           showEdit={post?.userId?._id.toString() === userId}
-          hasLiked={post?.likes?.includes(userId) || false}
+          hasLiked={
+            post?.likes
+              ?.map((likes: { _id: string }) => likes._id.toString())
+              .includes(userId.toString()) || false
+          }
           currentUserId={userId}
           postUser={post.userId?._id.toString() || null}
           currentUser={currentUser}

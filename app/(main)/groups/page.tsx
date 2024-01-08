@@ -28,6 +28,7 @@ const page = async ({ searchParams }: Props) => {
     groupUrl: group.groupUrl,
     post: group.post,
   }));
+  console.log(mapGroups[1].post);
   const numberOfColumns = 3;
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">
@@ -51,7 +52,9 @@ const page = async ({ searchParams }: Props) => {
                       _id={group._id}
                       groupUrl={group.groupUrl}
                       body={"body"}
-                      hasLiked={group.post.likes.includes(currentUser?._id)}
+                      hasLiked={group.post.likes
+                        .map((likes: string) => likes.toString())
+                        .includes(currentUser?._id.toString())}
                       likes={group.post.likes.length}
                       postUser={group.post.userId?._id.toString() || null}
                       currentUserId={currentUser?._id.toString() || ""}
