@@ -16,12 +16,6 @@ const NavTopCard = ({
   const handleUserClick = () => {
     setIsChatPopUpOpen(false);
   };
-  const handleDownArrowClick = () => {
-    onDownArrowClick();
-  };
-  const handleExpandClick = () => {
-    onExpandClick();
-  };
 
   return (
     <section className="flex justify-between border-b  border-b-secondary6 pb-[15px] dark:border-b-secondary2">
@@ -59,12 +53,12 @@ const NavTopCard = ({
           <OutlineIcon.Close className="fill-secondary2 dark:fill-background2" />
         </button>
         {isNavChatListOpen && (
-          <button onClick={handleDownArrowClick}>
+          <button onClick={onDownArrowClick}>
             <OutlineIcon.DownArrow className="fill-none stroke-secondary2 dark:stroke-background2" />
           </button>
         )}
         {!isNavChatListOpen && (
-          <button onClick={handleExpandClick}>
+          <button onClick={onExpandClick}>
             <OutlineIcon.Expand className="fill-none stroke-secondary2 dark:stroke-background2" />
           </button>
         )}
