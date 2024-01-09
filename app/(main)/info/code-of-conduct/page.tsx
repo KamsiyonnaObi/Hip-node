@@ -71,7 +71,7 @@ const page = () => {
           <li>
             <strong>No Spam or Malicious Activity:</strong> Do not engage in
             spamming, phishing, or any other form of malicious activity. Respect
-            the platform's integrity and the well-being of its users.
+            the platform&apos;s integrity and the well-being of its users.
           </li>
 
           <li>
@@ -96,8 +96,8 @@ const page = () => {
 
         <p>
           Failure to adhere to this Code of Conduct may result in warnings,
-          temporary suspension, or permanent removal from Hipnode. Let's work
-          together to create a positive, inclusive, and enjoyable space for
+          temporary suspension, or permanent removal from Hipnode. Let&apos;s
+          work together to create a positive, inclusive, and enjoyable space for
           everyone in the Hipnode community.
         </p>
       </div>
