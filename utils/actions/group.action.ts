@@ -387,7 +387,7 @@ export async function getFastestGrowingGroups() {
     const startDate = new Date(currentDate);
     startDate.setDate(startDate.getDate() - 7);
 
-    const group = await Group.aggregate([
+    const groupsWithNewMembers = await Group.aggregate([
       {
         $unwind: "$activity",
       },
@@ -413,7 +413,30 @@ export async function getFastestGrowingGroups() {
         $limit: 3,
       },
     ]);
-    return group;
+
+    const groupsWithoutNewMembers = await Group.aggregate([
+      {
+        $match: {
+          "activity.date": { $not: { $gte: startDate, $lte: currentDate } },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          newMembers: { $sum: 0 },
+          groupUrl: { $first: "$groupUrl" },
+          title: { $first: "$title" },
+          description: { $first: "$description" },
+        },
+      },
+      {
+        $limit: 3,
+      },
+    ]);
+
+    const allGroups = groupsWithNewMembers.concat(groupsWithoutNewMembers);
+
+    return allGroups.slice(0, 3); // Return the top 3 groups
   } catch (error) {
     console.error(error);
     return {
