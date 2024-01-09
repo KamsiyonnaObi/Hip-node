@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -100,6 +101,15 @@ const page = () => {
           work together to create a positive, inclusive, and enjoyable space for
           everyone in the Hipnode community.
         </p>
+        <div className="flex justify-center gap-[1.25rem] border-t-[1px]">
+          <Link href="/info/privacy-policy">
+            <p>Privacy Policy</p>
+          </Link>
+          <span>|</span>
+          <Link href="/info/terms-of-service">
+            <p>Terms of Service</p>
+          </Link>
+        </div>
       </div>
     </section>
   );
