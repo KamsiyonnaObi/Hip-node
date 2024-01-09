@@ -6,12 +6,12 @@ import { StartInterview, Podcasts } from "@/components";
 import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } },
+  { params }: { params: { id: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // grab which group id
 
-  const result = await getInterview(params.slug);
+  const result = await getInterview(params.id);
   return {
     title: result.title,
     keywords: result.title,
@@ -46,6 +46,7 @@ const InterviewArticle = async ({ params }: { params: { id: string } }) => {
       </section>
     );
   } catch (e) {
+    console.log(e);
     notFound();
   }
 };
