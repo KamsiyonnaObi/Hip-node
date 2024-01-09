@@ -100,7 +100,6 @@ export default function UserSelect({
       {showList && (
         <div className="caption-regular mb-[.62rem] flex flex-wrap gap-[.62rem]">
           {suggestedUsers.slice(0, 5).map((user: User) => {
-            console.log("suggestedUsers", suggestedUsers);
             return (
               <div
                 key={user._id}
