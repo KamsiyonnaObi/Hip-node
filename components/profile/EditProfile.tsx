@@ -34,7 +34,6 @@ const EditProfile = ({ profileData, onCancel, isEdit }: EditProfileProps) => {
     register,
     handleSubmit,
     setError,
-    getValues,
     setValue,
     formState: { errors },
   } = useForm<ProfileSchema>({
@@ -113,7 +112,6 @@ const EditProfile = ({ profileData, onCancel, isEdit }: EditProfileProps) => {
                 <Input
                   name="username"
                   type="text"
-                  value={getValues("username")}
                   divClassName="bg-background rounded-md px-3 py-[5px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
                   className="body-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                   placeholder="Name"
