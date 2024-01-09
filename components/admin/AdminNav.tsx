@@ -1,17 +1,23 @@
+"use client";
+
 import Link from "next/link";
 
 import { Logo } from "../icons/Logo";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 import FillIcon from "../icons/FillIcon";
 import OutlineIcon from "../icons/OutlineIcon";
+import { usePathname } from "next/navigation";
+import { cn } from "@/utils";
 
 const AdminNav = ({
   user,
 }: {
   user: { profileImage: string; username: string };
 }) => {
+  const currentPath = usePathname();
+
   return (
-    <nav className="flex h-screen w-60 shrink-0 flex-col items-center gap-8 py-8 dark:bg-d-dark-900">
+    <nav className="sticky top-0 flex h-screen w-60 shrink-0 flex-col items-center gap-8 py-8 dark:bg-d-dark-900">
       <Link href="/">
         <Logo />
       </Link>
@@ -33,21 +39,60 @@ const AdminNav = ({
         <li className="w-full">
           <Link
             href="/admin"
-            className="flex items-center gap-4 border-r-2 border-primary text-primary"
+            className={cn(
+              "flex items-center gap-4",
+              currentPath === "/admin" &&
+                "border-r-2 border-primary text-primary"
+            )}
           >
-            <FillIcon.Grid className="h-4 w-4 fill-primary" />
+            <FillIcon.Grid
+              className={cn(
+                "h-4 w-4",
+                currentPath === "/admin"
+                  ? "fill-primary"
+                  : "fill-gray-800 dark:fill-white"
+              )}
+            />
             Overview
           </Link>
         </li>
         <li className="w-full">
-          <Link href="/admin" className="flex items-center gap-4">
-            <FillIcon.User className="h-4 w-4 fill-white" />
+          <Link
+            href="/admin/users"
+            className={cn(
+              "flex items-center gap-4",
+              currentPath === "/admin/users" &&
+                "border-r-2 border-primary text-primary"
+            )}
+          >
+            <FillIcon.User
+              className={cn(
+                "h-4 w-4",
+                currentPath === "/admin/users"
+                  ? "fill-primary"
+                  : "fill-gray-800 dark:fill-white"
+              )}
+            />
             Users
           </Link>
         </li>
         <li className="w-full">
-          <Link href="/admin" className="flex items-center gap-4">
-            <OutlineIcon.Content className="h-4 w-4 fill-white" />
+          <Link
+            href="/admin/content"
+            className={cn(
+              "flex items-center gap-4",
+              currentPath === "/admin/content" &&
+                "border-r-2 border-primary text-primary"
+            )}
+          >
+            <OutlineIcon.Content
+              className={cn(
+                "h-4 w-4",
+                currentPath === "/admin/content"
+                  ? "fill-primary"
+                  : "fill-gray-800 dark:fill-white"
+              )}
+            />
             Content
           </Link>
         </li>

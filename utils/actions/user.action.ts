@@ -6,6 +6,20 @@ import dbConnect from "../mongooseConnect";
 import UserModel from "@/models/User";
 import { revalidatePath } from "next/cache";
 import Group, { IGroup } from "@/models/group.model";
+import { UserData } from "@/types/mongoose";
+
+export async function getAlLUsers() {
+  try {
+    await dbConnect();
+
+    const users = await UserModel.find();
+
+    return users as unknown as UserData[];
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
 
 export async function newUser(user: FormData) {
   try {
