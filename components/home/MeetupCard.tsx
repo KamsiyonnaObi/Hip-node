@@ -14,7 +14,7 @@ interface Props {
 
 const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
   return (
-    <main>
+    <article>
       <Link href={"/meetups"}>
         <article className="flex flex-row gap-4 ">
           <section className="flex min-w-[50px] flex-col rounded-[6px] border-[1px] border-secondary6 bg-background px-2 py-[3px] text-center dark:border-dark3 dark:bg-dark4">
@@ -47,7 +47,7 @@ const MeetupCard = ({ month, day, title, desc, jobType, _id }: Props) => {
           </section>
         </article>
       </Link>
-    </main>
+    </article>
   );
 };
 
