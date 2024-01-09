@@ -18,9 +18,11 @@ const HostCard = ({ title, desc, buttonText, buttonLink }: Props) => {
           <small className="text-xs">{desc}</small>
         </div>
         <div className="flex justify-between">
-          <ShadButton className="bg-red60 text-red10">
-            Code of Conduct
-          </ShadButton>
+          <Link href="/info/code-of-conduct">
+            <ShadButton className="bg-red60 text-red10">
+              Code of Conduct
+            </ShadButton>
+          </Link>
           <Link href={`${buttonLink}`}>
             <ShadButton className="bg-white text-red80 hover:text-white">
               {buttonText}
