@@ -106,6 +106,10 @@ const page = () => {
             <p>Privacy Policy</p>
           </Link>
           <span>|</span>
+          <Link href="/info/cookie-policy">
+            <p>Cookie Policy</p>
+          </Link>
+          <span>|</span>
           <Link href="/info/terms-of-service">
             <p>Terms of Service</p>
           </Link>

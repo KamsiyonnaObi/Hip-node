@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const route = () => {
@@ -578,6 +579,19 @@ const route = () => {
               </a>
             </li>
           </ul>
+        </div>
+        <div className="flex justify-center gap-[1.25rem] border-t-[1px]">
+          <Link href="/info/terms-of-service">
+            <p>Terms of Service</p>
+          </Link>
+          <span>|</span>
+          <Link href="/info/code-of-conduct">
+            <p>Code of Conduct</p>
+          </Link>
+          <span>|</span>
+          <Link href="/info/cookie-policy">
+            <p>Cookie Policy</p>
+          </Link>
         </div>
       </div>
     </section>
