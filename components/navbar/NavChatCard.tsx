@@ -1,9 +1,9 @@
-"use client";
-import { formatDistanceToNow } from "date-fns";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
-import { useSocketContext } from "@/providers/SocketProvider";
 
-const ChatCard = ({
+import { useSocketContext } from "@/providers/SocketProvider";
+import { formatDistanceToNow } from "date-fns";
+
+const NavChatCard = ({
   user,
   lastCreatedAt,
   lastMessage,
@@ -27,10 +27,10 @@ const ChatCard = ({
     : "";
   return (
     <main
-      className="border-b-solid flex w-full cursor-pointer flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
+      className="flex w-full cursor-pointer flex-col gap-5 bg-background dark:bg-dark4"
       onClick={onClick}
     >
-      <section className="flex justify-between">
+      <section className="flex justify-start">
         <div className="flex items-center gap-3">
           {!isRead && userIdFrom === userObj._id && (
             <span className="h-2 w-2 rounded bg-red" />
@@ -48,25 +48,24 @@ const ChatCard = ({
                 <span className="absolute left-[20%] top-3/4 h-2.5 w-2.5 rounded border border-white bg-success500" />
               )}
               <div className="flex flex-col">
-                <p className="body-bold text-secondary2 dark:text-background">
-                  {userObj.fullName}
-                </p>
-                <p className="body-regular text-secondary4 dark:text-background2">
-                  @{userObj.username}
+                <div className="flex items-end gap-3">
+                  <p className="display-semibold text-secondary2 dark:text-background2">
+                    {userObj.fullName}
+                  </p>
+                  <p className="caption-regular text-secondary3">
+                    {dateCreatedAt}
+                  </p>
+                </div>
+                <p className="caption-regular line-clamp-1 text-secondary3">
+                  {lastMessage}
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <p className="body-regular text-secondary4 dark:text-background2">
-          {dateCreatedAt}
-        </p>
       </section>
-      <p className="body-regular ml-5 text-secondary4 dark:text-background2">
-        {lastMessage}
-      </p>
     </main>
   );
 };
 
-export default ChatCard;
+export default NavChatCard;

@@ -9,7 +9,7 @@ interface Props {
   count: number;
 }
 
-const NavMessage = ({ avatar, name, sentAt, message, count }: Props) => {
+const NavChat = ({ avatar, name, sentAt, message, count }: Props) => {
   return (
     <div className="flex flex-row gap-2.5">
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary6 dark:bg-background">
@@ -18,7 +18,7 @@ const NavMessage = ({ avatar, name, sentAt, message, count }: Props) => {
       <div className="flex flex-row items-center gap-[50px]">
         <div className="flex w-[178px] flex-col">
           <p className="display-semibold">
-            {name}{" "}
+            {name}
             <span className="caption-regular text-secondary3">{sentAt}</span>
           </p>
           <p className="caption-regular text-secondary3">{message}</p>
@@ -33,4 +33,4 @@ const NavMessage = ({ avatar, name, sentAt, message, count }: Props) => {
   );
 };
 
-export default NavMessage;
+export default NavChat;
