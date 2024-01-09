@@ -238,7 +238,7 @@ export function InputMeetup() {
             <FormItem>
               <div className="flex">
                 <Link
-                  href="/"
+                  href="/info/code-of-conduct"
                   className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
                 >
                   Code of Conduct
