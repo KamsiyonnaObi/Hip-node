@@ -43,7 +43,7 @@ const ProfileDetails = ({ JSONProfileData, hasFollowed, isFollow }: Props) => {
     <>
       {isProfileEdit ? (
         <EditProfile
-          JSONProfileData={JSONProfileData}
+          profileData={profileData}
           onCancel={onCancel}
           isEdit={setIsProfileEdit}
         />

@@ -17,16 +17,11 @@ import ProfileImage from "./ProfileImage";
 export type ProfileSchema = z.infer<typeof profileSchema>;
 
 interface EditProfileProps {
-  JSONProfileData: string;
+  profileData: userProfileData;
   onCancel: MouseEventHandler<HTMLButtonElement>;
   isEdit: any;
 }
-const EditProfile = ({
-  JSONProfileData,
-  onCancel,
-  isEdit,
-}: EditProfileProps) => {
-  const profileData: userProfileData = JSON.parse(JSONProfileData);
+const EditProfile = ({ profileData, onCancel, isEdit }: EditProfileProps) => {
   const [imageUrl, setImageUrl] = React.useState(
     profileData.profileImage || ""
   );
@@ -39,21 +34,12 @@ const EditProfile = ({
     register,
     handleSubmit,
     setError,
+    getValues,
     setValue,
     formState: { errors },
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
-      username: profileData.username,
-      occupation: profileData.occupation,
-      bio: profileData.bio,
-      website: profileData.website,
-      twitter: profileData.twitter,
-      facebook: profileData.facebook,
-      instagram: profileData.instagram,
-      profileImage: profileData.profileImage,
-      bannerImage: profileData.bannerImage,
-    },
+    defaultValues: profileData,
   });
 
   // create onSubmit function
@@ -127,6 +113,7 @@ const EditProfile = ({
                 <Input
                   name="username"
                   type="text"
+                  value={getValues("username")}
                   divClassName="bg-background rounded-md px-3 py-[5px] border border-secondary2 md:bg-background2 md:dark:bg-dark2 dark:bg-dark3"
                   className="body-regular w-full bg-transparent md:text-secondary2 md:placeholder:text-secondary2 md:dark:text-background2 "
                   placeholder="Name"
