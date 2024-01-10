@@ -49,7 +49,7 @@ export interface interviewData {
   desc: string;
   userId: {
     username: any;
-    _id: { toString: () => string | undefined };
+    _id: string;
     profileImage: string;
   };
   createdAt: Date;

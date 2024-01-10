@@ -69,7 +69,7 @@ const InterviewPost = ({
             </div>
           </div>
           <div
-            className="relative"
+            className="relative cursor-pointer"
             ref={menuRef}
             onClick={() => setShowPopup(!showPopup)}
           >
@@ -77,7 +77,7 @@ const InterviewPost = ({
               <OutlineIcon.VerticalDots className="fill-secondary5" />
             )}
             {showPopup && (
-              <div className="absolute right-1 top-6">
+              <div className="absolute right-1 top-6 ">
                 <EditDeletePopup interviewId={_id} />
               </div>
             )}
@@ -109,7 +109,9 @@ const InterviewPost = ({
                   <small className="text-xs text-secondary3">Updates</small>
                 </div>
                 <a
-                  href={`https://${website}`}
+                  href={
+                    website.includes("http") ? website : `https://${website}`
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex flex-col items-center border-l-2 border-solid border-gray-500 pl-6"

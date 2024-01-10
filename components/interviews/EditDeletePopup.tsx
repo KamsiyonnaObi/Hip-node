@@ -33,7 +33,7 @@ const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
     <ul className=" w-[170px] gap-2.5 rounded-[10px] border border-secondary5 bg-background p-4 shadow-lg dark:border-secondary2 dark:bg-dark4">
       <ul className="flex flex-col gap-2.5">
         <li
-          className={`flex w-[98px] cursor-pointer flex-row justify-start gap-2.5 ${
+          className={`flex w-full cursor-pointer flex-row justify-start gap-2.5 ${
             selected === 1
               ? "text-red80"
               : "text-secondary2 dark:text-background2"
@@ -51,7 +51,7 @@ const EditDeletePopup = ({ interviewId }: { interviewId: string }) => {
           <h3 className="caption-semibold">Edit Post</h3>
         </li>
         <li
-          className={`flex w-[98px] cursor-pointer flex-row justify-start gap-2.5 ${
+          className={`flex w-full cursor-pointer flex-row justify-start gap-2.5 ${
             selected === 2
               ? "text-red80"
               : "text-secondary2 dark:text-background2"
