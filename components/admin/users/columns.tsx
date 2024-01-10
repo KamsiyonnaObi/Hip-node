@@ -41,16 +41,6 @@ export type UserDataTable = {
   updatedAt: Date;
 };
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <th>Full Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Joined</th>
-            <th>Actions</th> */
-}
-
 export const columns: ColumnDef<UserDataTable>[] = [
   {
     id: "select",
