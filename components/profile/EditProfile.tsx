@@ -17,16 +17,11 @@ import ProfileImage from "./ProfileImage";
 export type ProfileSchema = z.infer<typeof profileSchema>;
 
 interface EditProfileProps {
-  JSONProfileData: string;
+  profileData: userProfileData;
   onCancel: MouseEventHandler<HTMLButtonElement>;
   isEdit: any;
 }
-const EditProfile = ({
-  JSONProfileData,
-  onCancel,
-  isEdit,
-}: EditProfileProps) => {
-  const profileData: userProfileData = JSON.parse(JSONProfileData);
+const EditProfile = ({ profileData, onCancel, isEdit }: EditProfileProps) => {
   const [imageUrl, setImageUrl] = React.useState(
     profileData.profileImage || ""
   );
@@ -43,17 +38,7 @@ const EditProfile = ({
     formState: { errors },
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
-      username: profileData.username,
-      occupation: profileData.occupation,
-      bio: profileData.bio,
-      website: profileData.website,
-      twitter: profileData.twitter,
-      facebook: profileData.facebook,
-      instagram: profileData.instagram,
-      profileImage: profileData.profileImage,
-      bannerImage: profileData.bannerImage,
-    },
+    defaultValues: profileData,
   });
 
   // create onSubmit function
