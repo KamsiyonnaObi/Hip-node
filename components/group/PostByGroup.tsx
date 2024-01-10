@@ -29,7 +29,6 @@ const PostByGroup = async ({ groupId }: { groupId: string }) => {
           }
           currentUserId={userId}
           postUser={post.userId?._id.toString() || null}
-          currentUser={currentUser}
         />
       ))}
     </div>
