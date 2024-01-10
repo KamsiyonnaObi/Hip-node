@@ -242,7 +242,7 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
                       editor.ui.registry.addButton("codeofconduct", {
                         text: "Code of Conduct",
                         onAction: () => {
-                          window.open("/codeofconduct", "_blank");
+                          window.open("/info/code-of-conduct", "_blank");
                         },
                       });
                     },
