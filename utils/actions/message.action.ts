@@ -62,8 +62,7 @@ export async function getAllMessages() {
       .populate("userIdTo")
       .sort({ createdAt: 1 })
       .lean();
-
-    return messages;
+    return JSON.stringify(messages);
   } catch (error) {
     console.log(error);
     throw error;

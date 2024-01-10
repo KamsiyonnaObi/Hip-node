@@ -1,7 +1,26 @@
-import React from "react";
-import NavMessage from "./NavMessage";
+import Link from "next/link";
 
-const MessageList = () => {
+import { useSocketContext } from "@/providers/SocketProvider";
+import { updateReadBy } from "@/utils/actions/message.action";
+import { IUser } from "@/types/mongoose";
+import NavChatCard from "./NavChatCard";
+
+const MessageList = ({
+  onClick,
+  toggleMessage,
+}: {
+  onClick?: (e: boolean) => void;
+  toggleMessage: () => void;
+}) => {
+  const { chatList, setCurrentPartner, setIsChatPopUpOpen } =
+    useSocketContext();
+  const handleChatClick = async (partner: IUser) => {
+    const partnerId = partner._id.toString();
+    setCurrentPartner(partner);
+    await updateReadBy({ partnerId });
+    onClick && onClick(true);
+    setIsChatPopUpOpen(true);
+  };
   return (
     <>
       <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
@@ -12,45 +31,27 @@ const MessageList = () => {
           <div className="flex flex-col gap-5">
             <ul className="flex flex-col gap-5">
               <li className="h3-semibold flex justify-start">Messages</li>
-              <NavMessage
-                avatar="/Avatar.png"
-                name="Wade Warren"
-                sentAt="20 minutes ago"
-                message="Congrats on your work anniversary!"
-                count={2}
-              />
-              <NavMessage
-                avatar="/Avatar.png"
-                name="Wade Warren"
-                sentAt="20 minutes ago"
-                message="Congrats on your work anniversary!"
-                count={2}
-              />
-              <NavMessage
-                avatar="/Avatar.png"
-                name="Wade Warren"
-                sentAt="20 minutes ago"
-                message="Congrats on your work anniversary!"
-                count={2}
-              />
-              <NavMessage
-                avatar="/Avatar.png"
-                name="Wade Warren"
-                sentAt="20 minutes ago"
-                message="Congrats on your work anniversary!"
-                count={3}
-              />
-              <NavMessage
-                avatar="/Avatar.png"
-                name="Wade Warren"
-                sentAt="20 minutes ago"
-                message="Congrats on your work anniversary!"
-                count={0}
-              />
+              {chatList.slice(0, 5).map((chat) => (
+                <NavChatCard
+                  key={chat.user._id.toString()}
+                  user={JSON.stringify(chat.user)}
+                  lastCreatedAt={chat.lastCreatedAt}
+                  lastMessage={chat.lastMessage}
+                  isRead={chat.isRead}
+                  onClick={() => {
+                    handleChatClick(chat.user);
+                    toggleMessage();
+                  }}
+                  userIdFrom={chat?.userIdFrom?.toString()}
+                />
+              ))}
             </ul>
-            <p className="body-semibold flex justify-center text-blue">
+            <Link
+              className="body-semibold flex justify-center text-blue"
+              href="/chat"
+            >
               See all in Messenger
-            </p>
+            </Link>
           </div>
         </div>
       </article>

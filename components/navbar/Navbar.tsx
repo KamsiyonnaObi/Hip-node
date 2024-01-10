@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
@@ -15,6 +15,8 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useSocketContext } from "@/providers/SocketProvider";
+import { createPortal } from "react-dom";
+import NavChatPopup from "./NavChatPopup";
 
 const Navbar = ({
   user,
@@ -48,6 +50,7 @@ const Navbar = ({
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
   const id = user?.id || "";
+  const { isChatPopUpOpen } = useSocketContext();
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
@@ -118,7 +121,9 @@ const Navbar = ({
                   </Button>
                 </div>
 
-                {messageExpanded && <MessageList />}
+                {messageExpanded && (
+                  <MessageList toggleMessage={toggleMessage} />
+                )}
               </div>
 
               <div ref={notifRef} className="relative">
@@ -159,6 +164,8 @@ const Navbar = ({
           </div>
         </div>
       </div>
+      {isChatPopUpOpen &&
+        createPortal(<NavChatPopup currentUserId={user.id} />, document.body)}
     </article>
   );
 };

@@ -28,7 +28,7 @@ const page = async ({ searchParams }: Props) => {
     groupUrl: group.groupUrl,
     post: group.post,
   }));
-  console.log(mapGroups[1].post);
+
   const numberOfColumns = 3;
   return (
     <main className="page-formatting xs:max-w-[320px] mx-auto sm:max-w-[550px] md:max-w-[700px] xl:max-w-[1100px] lg:max-w-[950px]">

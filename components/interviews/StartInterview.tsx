@@ -13,9 +13,11 @@ const StartInterview = () => {
           </small>
         </div>
         <div className="flex justify-center gap-[1.25rem]">
-          <ShadButton className="bg-red60 text-red10">
-            Code of Conduct
-          </ShadButton>
+          <Link href="/info/code-of-conduct">
+            <ShadButton className="bg-red60 text-red10">
+              Code of Conduct
+            </ShadButton>
+          </Link>
           <Link href="/interview/new">
             <ShadButton className="bg-white text-red80 hover:text-white">
               Submit a Story

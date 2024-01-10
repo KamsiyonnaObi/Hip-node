@@ -10,6 +10,7 @@ export const config = {
     "/podcasts",
     "/interviews",
     "/profile/:path*",
+    "/info",
     "/",
   ],
 };
