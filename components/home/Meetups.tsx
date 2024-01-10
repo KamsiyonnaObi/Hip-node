@@ -1,8 +1,8 @@
 import React from "react";
 import OutlineIcon from "../icons/OutlineIcon";
-import MeetupCard from "./MeetupCard";
 import { getAllMeetups } from "@/utils/actions/meetup.action";
 import Link from "next/link";
+import MeetupCard from "./MeetupCard";
 
 const Meetups = async () => {
   const result = await getAllMeetups({

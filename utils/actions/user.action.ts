@@ -265,3 +265,24 @@ export async function getAllPinnedGroups() {
     throw new Error("Failed to get pinned groups");
   }
 }
+
+export async function getAllUserByQuery(searchQuery: string) {
+  try {
+    await dbConnect();
+
+    if (!searchQuery.trim()) {
+      return;
+    }
+
+    const allUsers = await UserModel.find({
+      $or: [
+        { fullName: { $regex: searchQuery, $options: "i" } },
+        { username: { $regex: searchQuery, $options: "i" } },
+      ],
+    });
+    return JSON.stringify(allUsers);
+  } catch (error) {
+    console.log(error);
+    throw new Error("User not found");
+  }
+}

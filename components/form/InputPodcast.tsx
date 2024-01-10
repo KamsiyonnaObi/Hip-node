@@ -35,9 +35,14 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
   const parsedDetail = editDetail && JSON.parse(editDetail || "");
 
   const [coverUrl, setCoverUrl] = useState(parsedDetail?.image || "");
+  const [audioUrl, setAudioUrl] = useState(parsedDetail?.audioPath || "");
 
   const updateForm = (url: string) => {
     setCoverUrl(url);
+  };
+
+  const updateAudio = (url: string) => {
+    setAudioUrl(url);
   };
 
   // 1. Define your form.
@@ -61,7 +66,7 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
         title: values.title,
         desc: values.desc,
         image: coverUrl,
-        audioPath: "this is an audio path",
+        audioPath: audioUrl,
         type: values.type,
         episode: values.episode,
         location: values.location,
@@ -104,7 +109,39 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
                   />
                   <div className="flex justify-between md:justify-start md:gap-5">
                     <CldUploadWidget
-                      uploadPreset="bl8ltxxe"
+                      uploadPreset="ml_audio"
+                      options={{ clientAllowedFormats: ["mp3", "mp4"] }}
+                      onUpload={(result: any) => {
+                        updateAudio(result?.info?.secure_url);
+                      }}
+                    >
+                      {({ open }) => {
+                        function handleOnClick(e: React.MouseEvent) {
+                          e.preventDefault();
+                          open();
+                        }
+                        return (
+                          <div className="mb-[1.25rem]">
+                            <div className="flex">
+                              <Button
+                                color="blackWhite"
+                                type="button"
+                                onClick={handleOnClick}
+                                className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                              >
+                                <OutlineIcon.Upload />
+                                <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
+                                  Set Audio
+                                </p>
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      }}
+                    </CldUploadWidget>
+                    <CldUploadWidget
+                      uploadPreset="ml_images"
+                      options={{ clientAllowedFormats: ["png", "jpg", "jpeg"] }}
                       onUpload={(result: any) => {
                         updateForm(result?.info?.secure_url);
                       }}
@@ -125,7 +162,7 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
-                                  Set Cover
+                                  Set Image
                                 </p>
                               </Button>
                             </div>
@@ -148,7 +185,7 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
             <FormItem>
               <div className="flex">
                 <Link
-                  href="/"
+                  href="/info/code-of-conduct"
                   className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
                 >
                   Code of Conduct
@@ -279,24 +316,19 @@ export function InputPodcast({ editDetail }: { editDetail?: string }) {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/podcast">
-            <Button
-              type="submit"
-              color="blue"
-              className="md:display-semibold body-semibold px-10 py-2.5"
-              disabled={isSubmitting}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {isSubmitting ? <>Posting...</> : <>Publish</>}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            color="blue"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
+          </Button>
           <Button
             type="button"
             color="gray"
             className="md:display-semibold body-semibold px-10 py-2.5"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/podcast")}
           >
             <p className="text-secondary3">Cancel</p>
           </Button>

@@ -188,7 +188,7 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
             <FormItem>
               <div className="flex">
                 <Link
-                  href="/"
+                  href="/info/code-of-conduct"
                   className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
                 >
                   Code of Conduct
@@ -245,7 +245,7 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
                       editor.ui.registry.addButton("codeofconduct", {
                         text: "Code of Conduct",
                         onAction: () => {
-                          window.open("/codeofconduct", "_blank");
+                          window.open("/info/code-of-conduct", "_blank");
                         },
                       });
                     },
@@ -360,25 +360,20 @@ export function InputInterview({ editDetail }: { editDetail?: string }) {
         />
 
         <div className="flex justify-start gap-5">
-          <Link href="/interview">
-            <Button
-              type="submit"
-              color="blue"
-              className="md:display-semibold body-semibold px-10 py-2.5"
-              disabled={isSubmitting}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {isSubmitting ? <>Posting...</> : <>Publish</>}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            color="blue"
+            className="md:display-semibold body-semibold px-10 py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>Posting...</> : <>Publish</>}
+          </Button>
 
           <Button
             type="button"
             color="gray"
             className="md:display-semibold body-semibold px-10 py-2.5"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/interview")}
           >
             <p className="text-secondary3">Cancel</p>
           </Button>

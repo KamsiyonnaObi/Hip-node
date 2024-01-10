@@ -6,6 +6,7 @@ import {
   Message,
   Profile,
   Facebook,
+  GitHub,
   Google,
   Twitter,
   Send,
@@ -110,6 +111,11 @@ FillIcon.Profile = ({ className }: FillIconProps) => (
 FillIcon.Facebook = ({ className }: FillIconProps) => (
   <FillIcon className={className}>
     <Facebook />
+  </FillIcon>
+);
+FillIcon.GitHub = ({ className }: FillIconProps) => (
+  <FillIcon className={className}>
+    <GitHub />
   </FillIcon>
 );
 FillIcon.Google = ({ className }: FillIconProps) => (

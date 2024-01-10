@@ -15,6 +15,8 @@ interface SocketContextType {
   currentPartner: IUser | null;
   setCurrentPartner: any;
   activeUserList: string[];
+  isChatPopUpOpen: boolean;
+  setIsChatPopUpOpen: any;
 }
 
 const SocketContext = createContext<SocketContextType>({} as SocketContextType);
@@ -29,6 +31,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     activeUserList,
   } = useSockets();
   const [currentPartner, setCurrentPartner] = useState<IUser | null>(null);
+  const [isChatPopUpOpen, setIsChatPopUpOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (chatList.length > 0) {
@@ -47,6 +50,8 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         currentPartner,
         setCurrentPartner,
         activeUserList,
+        isChatPopUpOpen,
+        setIsChatPopUpOpen,
       }}
     >
       {children}

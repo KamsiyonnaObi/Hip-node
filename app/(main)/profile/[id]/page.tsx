@@ -1,10 +1,35 @@
-import { Meetups, StartInterview } from "@/components";
+import { StartInterview } from "@/components";
 
 import ProfileNavigation from "@/components/profile/ProfileNavigation";
 import ProfileDetails from "@/components/profile/ProfileDetails";
 
 import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
+import Meetups from "@/components/home/Meetups";
 import React from "react";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // grab which group id
+
+  const currentUser = await getCurrentUser();
+  return {
+    title: currentUser?.username,
+    keywords: currentUser?.businessType,
+    description: currentUser?.username,
+    openGraph: {
+      images: [
+        {
+          url: currentUser?.profileImage as string,
+          height: 630,
+          alt: "Hipnode",
+        },
+      ],
+    },
+  };
+}
 
 export default async function Profile({ params }: { params: { id: string } }) {
   const profileData = await getUserProfile(params.id, ["followers"]);

@@ -5,15 +5,7 @@ import ChatCard from "./ChatCard";
 import { useSocketContext } from "@/providers/SocketProvider";
 import { updateReadBy } from "@/utils/actions/message.action";
 
-const ChatList = ({
-  onClick,
-  searchQuery,
-  currentUserId,
-}: {
-  onClick?: (e: boolean) => void;
-  searchQuery?: string;
-  currentUserId?: string;
-}) => {
+const ChatList = ({ onClick }: { onClick?: (e: boolean) => void }) => {
   const { chatList, setCurrentPartner } = useSocketContext();
   const handleChatClick = async (partner: IUser) => {
     const partnerId = partner._id.toString();
@@ -22,28 +14,9 @@ const ChatList = ({
     onClick && onClick(true);
   };
 
-  const filteredChatList = chatList.filter((chat) => {
-    const userFullName = chat?.user?.fullName?.toLowerCase();
-    const userName = chat?.user?.username?.toLowerCase();
-    const searchLower = searchQuery?.toLowerCase();
-
-    if (!searchLower) {
-      return true;
-    }
-
-    if (!chat?.user) {
-      return false;
-    }
-
-    return (
-      (searchLower && userFullName?.includes(searchLower)) ||
-      (searchLower && userName?.includes(searchLower))
-    );
-  });
-
   return (
     <section className="w-full max-sm:h-screen">
-      {filteredChatList.map((chat) => (
+      {chatList.map((chat) => (
         <ChatCard
           key={chat.user._id.toString()}
           user={JSON.stringify(chat.user)}

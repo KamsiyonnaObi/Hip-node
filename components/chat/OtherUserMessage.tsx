@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const OtherUserMesssage = ({
   createdAt,
@@ -14,6 +15,7 @@ const OtherUserMesssage = ({
     addSuffix: true,
   });
   const objCurrentPartner = JSON.parse(currentPartner);
+  const activeUserList = useSocketContext().activeUserList;
   return (
     <section className="flex w-full gap-3">
       <div className="relative">
@@ -24,7 +26,9 @@ const OtherUserMesssage = ({
           height={20}
           className="h-7 w-7 shrink-0 rounded-full md:h-10 md:w-10"
         />
-        <span className="absolute left-[70%] top-1/3 h-2.5 w-2.5 rounded border border-white bg-success500" />
+        {activeUserList.includes(objCurrentPartner) && (
+          <span className="absolute left-[70%] top-1/3 h-2.5 w-2.5 rounded border border-white bg-success500" />
+        )}
       </div>
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between gap-2.5">

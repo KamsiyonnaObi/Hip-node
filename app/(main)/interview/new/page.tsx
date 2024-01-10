@@ -1,5 +1,13 @@
 import { InputInterview } from "@/components/form/InputInterview";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "New Interview | Hipnode",
+  description:
+    "Create a new interview to share your journey in the tech industry",
+  keywords: ["Hipnode", "interviews", "community", "forum", "developers"],
+};
 
 const page = () => {
   return (

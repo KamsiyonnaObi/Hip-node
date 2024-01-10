@@ -1,6 +1,7 @@
 "use client";
 import { formatDistanceToNow } from "date-fns";
 import { ImageFallback as Image } from "@/components/shared/ImageFallback";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 const ChatCard = ({
   user,
@@ -11,22 +12,22 @@ const ChatCard = ({
   userIdFrom,
 }: {
   user: string;
-  lastCreatedAt: Date;
+  lastCreatedAt?: Date;
   lastMessage: string;
   isRead: boolean;
   onClick: () => void;
   userIdFrom: string;
 }) => {
+  const { activeUserList } = useSocketContext();
   const userObj = JSON.parse(user);
-  const dateCreatedAt = formatDistanceToNow(
-    new Date(lastCreatedAt.toString()),
-    {
-      addSuffix: true,
-    }
-  );
+  const dateCreatedAt = lastCreatedAt?.toString()
+    ? formatDistanceToNow(new Date(lastCreatedAt?.toString()), {
+        addSuffix: true,
+      })
+    : "";
   return (
     <main
-      className="border-b-solid flex w-full flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
+      className="border-b-solid flex w-full cursor-pointer flex-col gap-3 border-b border-b-secondary6 bg-background p-4 dark:border-b-dark4 dark:bg-dark2"
       onClick={onClick}
     >
       <section className="flex justify-between">
@@ -43,7 +44,9 @@ const ChatCard = ({
                 height={20}
                 className="h-10 w-10 shrink-0 rounded-full"
               />
-              <span className="absolute left-[20%] top-3/4 h-2.5 w-2.5 rounded border border-white bg-success500" />
+              {activeUserList.includes(userObj?._id.toString()!) && (
+                <span className="absolute left-[20%] top-3/4 h-2.5 w-2.5 rounded border border-white bg-success500" />
+              )}
               <div className="flex flex-col">
                 <p className="body-bold text-secondary2 dark:text-background">
                   {userObj.fullName}

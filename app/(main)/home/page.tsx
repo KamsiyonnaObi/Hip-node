@@ -9,6 +9,26 @@ import { getPopularTags } from "@/utils/actions/post.action";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
+export const metadata: Metadata = {
+  title: "Hipnode",
+  description:
+    "Explore the latest posts on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "posts", "community", "forum", "developers"],
+  openGraph: {
+    images: [
+      {
+        url: `${baseURL}/home/Logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Hipnode",
+      },
+    ],
+  },
+};
 
 export default async function Home({
   searchParams,
