@@ -30,7 +30,7 @@ const RenderProfilePosts = async ({ JSONUser }: Props) => {
             hasLiked={post?.likes?.includes(userId) || false}
             comments={post?.comments?.length}
             showEdit={post.userId?._id.toString() === userId}
-            postUser={post.userId?._id || null}
+            postUser={post.userId?._id.toString() || null}
           />
         ))
       ) : (
