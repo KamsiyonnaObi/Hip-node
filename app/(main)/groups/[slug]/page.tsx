@@ -109,7 +109,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
             <PostByGroup groupId={params.slug} />
           </div>
         </section>
-        <section className="md:col-start-2 md:row-start-2 lg:col-start-3 lg:mt-[-1rem]">
+        <section className="md:col-start-2 md:row-start-2 lg:col-start-3">
           <ActiveMembers members={members} />
         </section>
         <section className="md:col-start-2 lg:col-start-3 lg:row-start-3">
