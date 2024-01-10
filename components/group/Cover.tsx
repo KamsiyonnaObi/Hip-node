@@ -7,7 +7,6 @@ import OutlineIcon from "../icons/OutlineIcon";
 import GroupMenu from "./GroupMenu";
 import { joinGroup, isMember, leaveGroup } from "@/utils/actions/group.action";
 import { pinAGroup, unpinAGroup } from "@/utils/actions/user.action";
-import { ObjectId } from "mongoose";
 
 const Cover = ({
   user,
@@ -15,7 +14,7 @@ const Cover = ({
   coverUrl,
   groupUrl,
   groupId,
-  userId,
+
   pinnedGroup,
 }: {
   user: string;
@@ -23,7 +22,7 @@ const Cover = ({
   coverUrl: string;
   groupUrl: string;
   groupId: string;
-  userId: ObjectId;
+
   pinnedGroup: boolean;
 }) => {
   const [show, setShow] = useState(false);
