@@ -7,6 +7,8 @@ import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
 import Meetups from "@/components/home/Meetups";
 import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
+import { isIdInFollowers } from "@/utils";
+import { userProfileData } from "@/types/component";
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -34,6 +36,7 @@ export async function generateMetadata(
 export default async function Profile({ params }: { params: { id: string } }) {
   const profileData = await getUserProfile(params.id, ["followers"]);
   const currentUser = await getCurrentUser();
+
   return (
     <main className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[20%_56%_auto]">
       {/* Profile */}
@@ -41,8 +44,10 @@ export default async function Profile({ params }: { params: { id: string } }) {
         {profileData && profileData.profileData ? (
           <ProfileDetails
             JSONProfileData={JSON.stringify(profileData)}
-            hasFollowed={profileData.profileData.followers?.includes(
-              currentUser?.id
+            hasFollowed={isIdInFollowers(
+              currentUser?.id,
+              profileData?.profileData
+                ?.followers as unknown as userProfileData[]
             )}
             isFollow={currentUser!.following?.includes(
               profileData.profileData._id
