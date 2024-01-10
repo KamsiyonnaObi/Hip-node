@@ -12,9 +12,10 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { likePost } from "@/utils/actions/post.action";
 import { createNotification } from "@/utils/actions/notification.action";
 import { toast } from "../ui/use-toast";
+import { useSocketContext } from "@/providers/SocketProvider";
 
 interface Props {
-  currentUserId?: string;
+  currentUserId: string;
   postImage: string;
   title: string;
   tags: string[];
@@ -27,8 +28,7 @@ interface Props {
   _id: string;
   showEdit: any;
   hasLiked: boolean | false;
-  postUser?: string;
-  currentUser?: any;
+  postUser: string;
 }
 
 const Post = ({
@@ -51,13 +51,13 @@ const Post = ({
   const [isLiked, setIsLiked] = useState<boolean | null>(hasLiked || null);
   const [numberLiked, setNumberLiked] = useState<number>(likes || 0);
   const [isPending, startTransition] = useTransition();
+  const activeUserList = useSocketContext().activeUserList;
 
   const handleLike = async () => {
     if (currentUserId) {
       startTransition(async () => {
         const liked = await likePost({
           postId: _id,
-          userId: currentUserId,
           hasLiked: isLiked,
         });
         if (!hasLiked) {
@@ -81,7 +81,7 @@ const Post = ({
     }
   };
   return (
-    <article className="flex w-full max-w-[785px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
+    <article className="flex w-full flex-row gap-[30px] rounded-[10px] bg-background p-[14px] shadow-lg dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
       <div className="flex w-full flex-row gap-[14px]">
         <Image
           src={postImage}
@@ -174,10 +174,16 @@ const Post = ({
             <section className="flex flex-row justify-between md:w-full">
               <div className="hidden flex-col md:flex">
                 <div className="flex gap-[.25rem]">
-                  <p className="md:body-semibold dark:text-secondary6">
-                    {username}
-                  </p>
-                  <OutlineIcon.Ellipse className="fill-secondary5" />
+                  <Link href={`/profile/${postUser}`}>
+                    <p className="md:body-semibold dark:text-secondary6">
+                      {username}
+                    </p>
+                  </Link>
+                  {activeUserList.includes(postUser!) ? (
+                    <OutlineIcon.Ellipse className="fill-green" />
+                  ) : (
+                    <OutlineIcon.Ellipse className="fill-secondary5" />
+                  )}
                 </div>
                 <p className="md:text-sm-regular text-secondary3 dark:text-secondary5">
                   {getTimestamp(createdAt)}

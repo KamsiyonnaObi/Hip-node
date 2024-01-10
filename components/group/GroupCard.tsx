@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/Button";
+import Link from "next/link";
 
 interface Props {
   title: string;
@@ -16,9 +17,11 @@ const GroupCard = ({ title, desc, buttonText }: Props) => {
           <p className="caption-regular line-clamp-2">{desc}</p>
         </section>
         <section className="flex flex-row gap-[21px]">
-          <Button className="body-semibold rounded-[6px] bg-red60 px-4 py-[9px]">
-            Code of Conduct
-          </Button>
+          <Link href="/info/code-of-conduct">
+            <Button className="body-semibold rounded-[6px] bg-red60 px-4 py-[9px]">
+              Code of Conduct
+            </Button>
+          </Link>
           <Button
             color="white"
             className="body-semibold w-[132px] justify-center rounded-[6px] py-[9px] text-red80 "

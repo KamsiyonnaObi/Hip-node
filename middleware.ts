@@ -9,7 +9,8 @@ export const config = {
     "/groups",
     "/podcasts",
     "/interviews",
-    "/profile",
+    "/profile/:path*",
+    "/info",
     "/",
   ],
 };

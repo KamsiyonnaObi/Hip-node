@@ -64,8 +64,8 @@ const Notification = ({
       <article
         className={`${
           type !== "page"
-            ? "fixed w-[335px] bg-background dark:bg-dark4 md:w-[589px]"
-            : "w-full md:w-[785px]"
+            ? "fixed w-[335px] bg-background dark:bg-dark4 max-md:left-[50%] max-md:translate-x-[-50%] md:w-[589px]"
+            : "w-full md:w-[785px] "
         } right-[10%] flex flex-col items-center rounded-[8px] text-secondary2  dark:text-background2  max-md:top-[3.5rem] md:right-[7%]`}
       >
         <div className="mt-2.5 gap-2.5 py-5 md:py-[30px]">

@@ -6,8 +6,6 @@ export { default as Cover } from "./Cover";
 export { default as CreateGroup } from "./CreateGroup";
 export { default as FastestGrowing } from "./FastestGrowing";
 export { default as GroupCard } from "./GroupCard";
-export { default as MeetupCard } from "./MeetupCard";
-export { default as Meetups } from "./Meetups";
 export { default as MostPopular } from "./MostPopular";
 export { default as NewlyLaunched } from "./NewlyLaunched";
 export { default as PodcastCard } from "./PodcastCard";

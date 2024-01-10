@@ -1,5 +1,13 @@
 import { InputPodcast } from "@/components/form/InputPodcast";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "New Podcasts",
+  description:
+    "Listen to podcasts from indie hackers, makers, and bootstrappers",
+  keywords: ["Hipnode", "podcasts", "community", "forum", "developers"],
+};
 
 const page = () => {
   return (

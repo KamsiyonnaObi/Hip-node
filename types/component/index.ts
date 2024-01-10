@@ -8,6 +8,7 @@ export interface userProfileData {
   username: string;
   email: string;
   profileImage: string;
+  bannerImage: string;
   occupation: string;
   followers: [];
   following: [];
@@ -17,6 +18,7 @@ export interface userProfileData {
   twitter: string;
   facebook: string;
   instagram: string;
+  createdAt: Date;
 }
 
 export interface ActionBarLink {

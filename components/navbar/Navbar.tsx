@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { ImageFallback as Image } from "@/components/shared/ImageFallback";
 
 import FillIcon from "../icons/FillIcon";
 import { Input } from "../form/Input";
@@ -15,11 +15,13 @@ import Notification from "./Notification";
 import NavbarLink from "./NavbarLink";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useSocketContext } from "@/providers/SocketProvider";
+import { createPortal } from "react-dom";
+import NavChatPopup from "./NavChatPopup";
 
 const Navbar = ({
   user,
 }: {
-  user: { profileImage: string; username: string };
+  user: { id: string; profileImage: string; username: string };
 }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -47,6 +49,8 @@ const Navbar = ({
 
   const avatar = user?.profileImage || "";
   const username = user?.username || "";
+  const id = user?.id || "";
+  const { isChatPopUpOpen } = useSocketContext();
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
@@ -64,7 +68,7 @@ const Navbar = ({
   };
 
   return (
-    <article className="sticky top-0 z-10 flex h-[60px] justify-center bg-background px-[27px] py-3 dark:bg-dark3 md:h-[80px] md:px-[40px] md:py-[20px] lg:px-0">
+    <article className="sticky top-0 z-10 flex h-[60px] justify-center bg-background px-[27px] py-3 shadow-lg dark:bg-dark3 md:h-[80px] md:px-[40px] md:py-[20px] lg:px-0">
       <div className="flex w-[335px] flex-row justify-between gap-2.5 md:w-[1130px] md:gap-0 lg:w-[1360px]">
         <section className="flex flex-row items-center justify-center gap-5 md:gap-2.5">
           <div className="flex h-[30px] items-center justify-center gap-2.5 rounded-[6px] bg-secondary1 p-1 dark:bg-background">
@@ -117,7 +121,9 @@ const Navbar = ({
                   </Button>
                 </div>
 
-                {messageExpanded && <MessageList />}
+                {messageExpanded && (
+                  <MessageList toggleMessage={toggleMessage} />
+                )}
               </div>
 
               <div ref={notifRef} className="relative">
@@ -150,7 +156,7 @@ const Navbar = ({
                         <div className="absolute bottom-0 right-0 flex h-4 w-4 rounded-full border-2 border-white bg-green"></div>
                       )}
                     </div>
-                    {menuExpanded && <Popup username={username} />}
+                    {menuExpanded && <Popup username={username} id={id} />}
                   </div>
                 </div>
               </section>
@@ -158,6 +164,8 @@ const Navbar = ({
           </div>
         </div>
       </div>
+      {isChatPopUpOpen &&
+        createPortal(<NavChatPopup currentUserId={user.id} />, document.body)}
     </article>
   );
 };

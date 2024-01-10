@@ -1,5 +1,12 @@
 import { InputMeetup } from "@/components/form/InputMeetup";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "New Meetups | Hipnode",
+  description: "Create a new meetup to share your journey in the tech industry",
+  keywords: ["Hipnode", "meetups", "community", "forum", "developers"],
+};
 
 const page = () => {
   return (

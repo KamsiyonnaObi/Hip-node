@@ -145,7 +145,7 @@ export function InputPost({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="rounded-2xl bg-background p-5 dark:bg-dark3"
+        className="rounded-2xl bg-background p-5 shadow-lg dark:bg-dark3"
       >
         <FormField
           control={form.control}
@@ -180,7 +180,7 @@ export function InputPost({
                                 color="blackWhite"
                                 type="button"
                                 onClick={handleOnClick}
-                                className="items-center justify-between px-2.5 py-2 text-secondary2 dark:text-background2"
+                                className="items-center justify-between px-[.7rem] py-2 text-secondary2 dark:text-background2"
                               >
                                 <OutlineIcon.Image1 />
                                 <p className="text-xs-regular md:text-xs-semibold text-secondary2 dark:text-background2">
@@ -195,7 +195,7 @@ export function InputPost({
                     <div className="relative" ref={groupRef}>
                       <Button
                         color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
+                        className="items-center justify-between p-[.7rem] text-secondary2 dark:text-background2"
                         type="button"
                         onClick={groupToggle}
                       >
@@ -216,7 +216,7 @@ export function InputPost({
                     <div className="relative">
                       <Button
                         color="blackWhite"
-                        className="items-center justify-between px-2.5 py-2"
+                        className="items-center justify-between p-[.7rem]"
                         type="button"
                         onClick={toggleCategory}
                       >
@@ -246,7 +246,7 @@ export function InputPost({
             <FormItem>
               <div className="flex">
                 <Link
-                  href="/"
+                  href="/info/code-of-conduct"
                   className="body-semibold md:display-semibold px-3.5 text-secondary2 dark:text-background2 md:hidden"
                 >
                   Code of Conduct

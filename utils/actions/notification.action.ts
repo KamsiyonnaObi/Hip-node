@@ -4,6 +4,7 @@ import UserModel from "@/models/User";
 import Notification, { INotif } from "@/models/notification.model";
 import dbConnect from "@/utils/mongooseConnect";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export async function createNotification(params: Partial<INotif>) {
   try {
@@ -63,6 +64,23 @@ export async function getAllNotification({
       .populate("userIdfrom")
       .sort({ createdAt: -1 })
       .lean();
+    return notifications;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserHistory(userId: string | undefined) {
+  try {
+    await dbConnect();
+
+    const query: { userIdfrom?: string } = { userIdfrom: userId };
+    const notifications = await Notification.find(query)
+      .populate("userTo", "username")
+      .sort({ createdAt: -1 })
+      .lean();
+    revalidatePath("/profile");
     return notifications;
   } catch (error) {
     console.log(error);

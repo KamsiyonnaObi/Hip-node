@@ -1,6 +1,6 @@
+import { PinnedGroup } from "@/components";
 import CreatePost from "@/components/home/CreatePost";
 import Meetups from "@/components/home/Meetups";
-import PinnedGroup from "@/components/home/PinnedGroup";
 import PopularTags from "@/components/home/PopularTags";
 import PostRender from "@/components/home/PostRender";
 import Sidebar from "@/components/home/Sidebar";
@@ -9,6 +9,26 @@ import { getPopularTags } from "@/utils/actions/post.action";
 
 import { getCurrentUser } from "@/utils/actions/user.action";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
+export const metadata: Metadata = {
+  title: "Hipnode",
+  description:
+    "Explore the latest posts on Hipnode a social media forum for developers",
+  keywords: ["Hipnode", "posts", "community", "forum", "developers"],
+  openGraph: {
+    images: [
+      {
+        url: `${baseURL}/home/Logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Hipnode",
+      },
+    ],
+  },
+};
 
 export default async function Home({
   searchParams,
@@ -17,6 +37,7 @@ export default async function Home({
 }) {
   const currentUser = await getCurrentUser();
   const getPopTags = await getPopularTags();
+
   return (
     <main className="page-formatting">
       <section className="flex flex-col md:gap-5">
@@ -30,7 +51,7 @@ export default async function Home({
           <PinnedGroup />
         </div>
       </section>
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col gap-5 lg:max-w-[800px]">
         <div className="hidden md:flex lg:hidden">
           <Sidebar small />
         </div>

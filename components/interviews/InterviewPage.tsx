@@ -20,7 +20,7 @@ interface ResultType {
 const InterviewPage = ({ result }: { result: ResultType }) => {
   return (
     <PageWrapper>
-      <article className="mx-auto w-full max-w-[785px] rounded-2xl bg-bkg-2">
+      <article className="mx-auto w-full max-w-[785px] rounded-2xl bg-bkg-2 shadow-lg">
         <Image
           src={result.image}
           alt="Group Meeting"

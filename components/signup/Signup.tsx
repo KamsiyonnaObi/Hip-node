@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { newUser } from "@/utils/actions/user.action";
@@ -27,7 +26,6 @@ const STAGES = {
 };
 
 const SignUp = () => {
-  const router = useRouter();
   // set initial stage to sign up
   const [flag, setFlag] = useState(true);
   const { currentStage, setCurrentStage } = useStageStore();
@@ -79,7 +77,11 @@ const SignUp = () => {
       const data = await newUser(newFormData);
 
       if (data.status === "success") {
-        router.push("/");
+        await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          callbackUrl: "/home",
+        });
       }
     } catch (error) {
       console.log(error);
@@ -238,14 +240,14 @@ const SignUp = () => {
               <p>Sign Up With Google</p>
             </Button>
             <Button
-              onClick={() => signIn("facebook", { callbackUrl: "/" })}
+              onClick={() => signIn("github", { callbackUrl: "/" })}
               full
               color="gray"
               className="display-semibold items-center justify-center py-3 md:bg-secondary6"
             >
-              <FillIcon.Facebook className="fill-secondary2 dark:fill-background2" />
+              <FillIcon.GitHub className="fill-secondary2 dark:fill-background2" />
 
-              <p>Sign Up With Facebook</p>
+              <p>Sign Up With GitHub</p>
             </Button>
           </div>
         </article>

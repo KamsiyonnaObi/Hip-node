@@ -22,10 +22,12 @@ const OtherProfile = ({
   user,
   joinedDate,
   hasFollowed,
+  isFollow,
 }: {
   user: string;
   joinedDate: Date;
   hasFollowed: boolean;
+  isFollow: boolean;
 }) => {
   const [isFollowing, setIsFollowing] = useState(hasFollowed || false);
   const [isPending, startTransition] = useTransition();
@@ -35,8 +37,9 @@ const OtherProfile = ({
     if (userObj._id) {
       startTransition(async () => {
         const followed = await followAuthor({
-          userId: userObj._id,
+          followedUserId: userObj._id,
           hasFollowed: isFollowing,
+          isFollow,
         });
         if (!followed) return;
         if (followed.status !== undefined) {

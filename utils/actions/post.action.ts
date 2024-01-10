@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 import UserModel from "@/models/User";
+import { getCurrentUser } from "./user.action";
 
 export async function createPost(params: any) {
   try {
@@ -139,29 +140,31 @@ export async function getAllPosts(params: { search: string }) {
 
 export async function likePost({
   postId,
-  userId,
+
   hasLiked,
 }: {
   postId: string;
-  userId: string;
+
   hasLiked: boolean | null;
 }) {
   try {
-    dbConnect();
+    const user = await getCurrentUser();
+
+    await dbConnect();
     const { ObjectId } = mongoose.Types;
     const id = new ObjectId(postId);
     let updateQuery = {};
     // Remove like if it is already liked
     if (hasLiked) {
-      updateQuery = { $pull: { likes: userId } };
+      updateQuery = { $pull: { likes: user?._id.toString() } };
     } else {
-      updateQuery = { $addToSet: { likes: userId } };
+      updateQuery = { $addToSet: { likes: user?._id.toString() } };
     }
 
     const post = await Post.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
-    const likedStatus = post.likes.includes(userId);
+    const likedStatus = post.likes.includes(user?._id.toString());
 
     if (!post) {
       throw new Error("Post not found");
