@@ -81,7 +81,7 @@ const Post = ({
     }
   };
   return (
-    <article className="flex w-full flex-row gap-[30px] rounded-[10px] bg-background p-[14px] shadow-lg dark:bg-dark3 md:rounded-[16px] md:p-[20px]">
+    <article className="flex w-[350px] flex-row gap-[30px] rounded-[10px] bg-background p-[14px] shadow-lg dark:bg-dark3 md:w-full md:rounded-[16px] md:p-[20px]">
       <div className="flex w-full flex-row gap-[14px]">
         <Image
           src={postImage}
