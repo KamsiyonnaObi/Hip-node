@@ -5,7 +5,7 @@ import GroupDropdown from "./GroupDropdown";
 
 const GroupFilter = () => {
   return (
-    <section className="shadow-lg	">
+    <section className="shadow-lg">
       <div className="rounded-xl bg-white dark:bg-dark3">
         <GroupDropdown
           name={"Fastest Growing"}
