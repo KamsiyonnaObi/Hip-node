@@ -6,6 +6,7 @@ import ProfileDetails from "@/components/profile/ProfileDetails";
 import { getCurrentUser, getUserProfile } from "@/utils/actions/user.action";
 import Meetups from "@/components/home/Meetups";
 import React from "react";
+import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 import { isIdInFollowers } from "@/utils";
 import { userProfileData } from "@/types/component";
@@ -37,25 +38,31 @@ export default async function Profile({ params }: { params: { id: string } }) {
   const profileData = await getUserProfile(params.id, ["followers"]);
   const currentUser = await getCurrentUser();
 
+  // Error handling if profile does not exist
+  if (!profileData?.profileData) {
+    notFound();
+  }
+
+  // Check if current user is included in profile user's followers
+  const hasFollowed = isIdInFollowers(
+    currentUser?.id,
+    profileData?.profileData?.followers as unknown as userProfileData[]
+  );
+
+  // Check if profile user is included in current user's following
+  const isFollow = currentUser!.following?.includes(
+    profileData.profileData._id
+  );
+
   return (
     <main className="xs:max-w-[320px] mx-auto mt-5 grid w-full max-w-[335px] grid-cols-1 justify-center gap-[1.25rem] sm:max-w-[550px] md:max-w-[1100px] md:grid-cols-[30%_auto] lg:max-w-[1400px] lg:grid-cols-[20%_56%_auto]">
       {/* Profile */}
       <section className="md:col-start-1 md:row-span-2 md:row-start-1">
-        {profileData && profileData.profileData ? (
-          <ProfileDetails
-            JSONProfileData={JSON.stringify(profileData)}
-            hasFollowed={isIdInFollowers(
-              currentUser?.id,
-              profileData?.profileData
-                ?.followers as unknown as userProfileData[]
-            )}
-            isFollow={currentUser!.following?.includes(
-              profileData.profileData._id
-            )}
-          />
-        ) : (
-          <p>User signed out</p>
-        )}
+        <ProfileDetails
+          JSONProfileData={JSON.stringify(profileData)}
+          hasFollowed={hasFollowed}
+          isFollow={isFollow}
+        />
       </section>
 
       {/* Start Your interview */}
