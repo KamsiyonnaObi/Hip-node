@@ -19,7 +19,7 @@ export default async function RootLayout({
   };
 
   const userData = {
-    id: user?._id,
+    id: user?._id.toString(),
     username: user?.username,
     profileImage: user?.profileImage,
   };

@@ -90,7 +90,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
               groupUrl={groupUrl}
               groupId={params.slug}
               pinnedGroup={isPinned}
-              userId={group.data.userId._id}
             />
           </div>
         </section>
