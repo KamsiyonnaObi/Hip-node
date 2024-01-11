@@ -13,7 +13,7 @@ const Popup = ({ id, username }: { id: string; username: string }) => {
       <div className="relative w-5 translate-x-[50%] overflow-hidden max-md:hidden">
         <div className=" h-3 w-3 origin-bottom-left rotate-45 rounded-md bg-background dark:bg-dark4"></div>
       </div>
-      <div className="fixed flex aspect-square h-[300px] flex-col rounded-[10px] bg-background dark:bg-dark4 max-md:left-[50%] max-md:top-[3.5rem] max-md:translate-x-[-50%] md:translate-x-[-80%]">
+      <div className="fixed flex aspect-square h-fit w-[250px] flex-col rounded-[10px] bg-background dark:bg-dark4 max-md:left-[50%] max-md:top-[3.5rem] max-md:translate-x-[-50%] md:translate-x-[-80%]">
         <ul className="display-semibold mx-5 my-[30px] flex flex-col gap-5 text-secondary2 dark:text-secondary6">
           <p className="flex items-center">{username}</p>
           <hr className="dark:text-secondary3" />
