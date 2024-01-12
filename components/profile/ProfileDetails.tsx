@@ -8,6 +8,7 @@ import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
 import { followAuthor } from "@/utils/actions/user.action";
+import { profileData } from "@/constants/dummy";
 
 type Props = {
   JSONProfileData: string;
@@ -109,13 +110,12 @@ const ProfileDetails = ({ JSONProfileData, hasFollowed, isFollow }: Props) => {
                   <p className="body-semibold text-secondary2 dark:text-background2">
                     {`${profileData?.followers.length} Followers`}
                   </p>
-                  <p className="body-semibold text-secondary2 dark:text-background2">{`${profileData?.points} Points`}</p>
-                </div>
-                <div className="flex flex-col gap-[15px]">
+                  {/* <p className="body-semibold text-secondary2 dark:text-background2">{`${profileData?.points} Points`}</p> */}
                   <p className="body-semibold text-center text-secondary2 dark:text-background2">
                     {`Following ${profileData?.following.length} `}
                   </p>
                 </div>
+
                 <section className="flex max-h-[70px] w-[270px] flex-wrap justify-center gap-2.5 lg:w-[170px]">
                   {followers?.length > 0 &&
                     followers.slice(0, 7).map((follower: userProfileData) => (

@@ -1,3 +1,5 @@
+import { userProfileData } from "@/types/component";
+
 export const getTimestamp = (createdAt: Date): string => {
   const now = new Date();
   const diffInMilliseconds = now.getTime() - createdAt.getTime();
@@ -44,4 +46,13 @@ export const formatNumber = (num: number): string => {
     return (num / 1000).toFixed(1) + "K";
   }
   return num.toString();
+};
+
+export const isIdInFollowers = (
+  currentUserId: string,
+  followersArray: userProfileData[]
+) => {
+  return followersArray.some(
+    (follower) => follower._id.toString() === currentUserId
+  );
 };
