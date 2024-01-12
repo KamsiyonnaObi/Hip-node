@@ -14,7 +14,7 @@ const PostRender = async ({
   const result = await getAllPosts({ ...searchParams });
 
   return (
-    <div className="flex flex-col gap-5 shadow-lg">
+    <div className="mx-auto flex w-[350px] flex-col gap-5 shadow-lg md:w-full">
       {result.posts.length > 0
         ? result.posts.map((post) => (
             <Post

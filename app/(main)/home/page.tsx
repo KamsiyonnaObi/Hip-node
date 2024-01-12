@@ -40,7 +40,7 @@ export default async function Home({
 
   return (
     <main className="page-formatting">
-      <section className="flex flex-col md:gap-5">
+      <section className="flex w-[350px] flex-col md:w-fit md:gap-5">
         <div className="flex md:hidden lg:flex">
           <Sidebar />
         </div>
@@ -51,7 +51,7 @@ export default async function Home({
           <PinnedGroup />
         </div>
       </section>
-      <section className="flex flex-col gap-5 lg:max-w-[800px]">
+      <section className="flex w-[350px] flex-col gap-5 md:w-[700px] lg:w-[800px]">
         <div className="hidden md:flex lg:hidden">
           <Sidebar small />
         </div>
