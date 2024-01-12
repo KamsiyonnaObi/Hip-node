@@ -8,6 +8,7 @@ import EditProfile from "./EditProfile";
 import { ImageFallback as Image } from "../shared/ImageFallback";
 import { getTimestamp } from "@/utils";
 import { followAuthor } from "@/utils/actions/user.action";
+import { profileData } from "@/constants/dummy";
 
 type Props = {
   JSONProfileData: string;

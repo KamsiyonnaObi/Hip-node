@@ -30,3 +30,27 @@ export interface IUser {
 
   checkPassword: (password: string | Buffer) => Promise<boolean>;
 }
+
+export interface UserData {
+  _id: Schema.Types.ObjectId;
+  fullName: string;
+  username: string;
+  email: string;
+  password: string;
+  occupation: string;
+  profileImage: string;
+  bannerImage: string;
+  businessType: string;
+  businessStage: string;
+  codingLevel: string;
+  website: string;
+  twitter: string;
+  facebook: string;
+  instagram: string;
+  followers: Schema.Types.ObjectId[];
+  following: Schema.Types.ObjectId[];
+  pinnedGroups: Schema.Types.ObjectId[];
+  points: 0;
+  createdAt: Date;
+  updatedAt: Date;
+}

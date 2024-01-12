@@ -30,3 +30,5 @@ export { Follow } from "./Follow";
 export { Fire } from "./Fire";
 export { Business } from "./Business";
 export { Podcast } from "./Podcast";
+export { Grid } from "./Grid";
+export { User } from "./User";
