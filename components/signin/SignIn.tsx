@@ -118,7 +118,6 @@ const SignIn = () => {
             <FillIcon.GitHub className="fill-secondary2 dark:fill-background2" />
 
             <p>Sign In With Github</p>
-
           </Button>
         </div>
       </article>
