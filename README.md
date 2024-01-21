@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+📢 Hi everyone,
 
-## Getting Started
+Thrilled to share the completion of my latest project, the Hipnode Social Media Platform! 🌐✨
 
-First, run the development server:
+Hipnode is a sleek Modern Social Media Forum, designed to organize and elevate your social media interactions. With a team of talented developers, we brought the Figma design to life using Next.js, MongoDB, and socket.io. 🚀🔧
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Key Features:
+✅ Authentication and survey-driven sign-up
+✅ Dynamic homepage with feeds, post details, and creation pages
+✅ Meetups, Groups, and Podcasts sections for diverse content
+✅ Profile showcasing user posts, meetups, and podcasts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Bonus Features:
+🌙⚡ Dark and light theme switch
+🔄 Multiple sign-in options (Email, Google, GitHub)
+💬 Integrated chat and real-time notifications
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tech Stack:
+🧑‍💻  Next.js, Node.js, MongoDB, Cloudinary, Next-Auth, socket.io
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Kudos to Austin Margarone Asako Hayase Matthew Gajo Lushi Liu for their hard work and dedication! 🙌 
 
-## Learn More
+Live Demo: https://hipnode-xk0v.onrender.com/home
+GitHub: https://github.com/KamsiyonnaObi/Hip-node
 
-To learn more about Next.js, take a look at the following resources:
+Special thanks to Christopher Soltis, Brandon Etter and JavaScript Mastery for the guidance and tutorials. 📚❤️ Excited to dive into more projects; let's see where the React journey takes me! 🚀💡
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I also rebuilt my portfolio. check it out 🔥 https://www.kamsiyonna.site
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#Hipnode #WebDevelopment #NextJS #JavaScriptMastery #React #TechInnovation 🚀
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Hipnode_demo](https://github.com/KamsiyonnaObi/Hip-node/assets/86691010/7db528eb-c756-4c68-8674-9d014b19f508)
