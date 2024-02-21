@@ -1,3 +1,5 @@
+![Hipnode_demo](https://github.com/KamsiyonnaObi/Hip-node/assets/86691010/7db528eb-c756-4c68-8674-9d014b19f508)
+
 📢 Hi everyone,
 
 Thrilled to share the completion of my latest project, the Hipnode Social Media Platform! 🌐✨
@@ -29,4 +31,3 @@ I also rebuilt my portfolio. check it out 🔥 https://www.kamsiyonna.site
 
 #Hipnode #WebDevelopment #NextJS #JavaScriptMastery #React #TechInnovation 🚀
 
-![Hipnode_demo](https://github.com/KamsiyonnaObi/Hip-node/assets/86691010/7db528eb-c756-4c68-8674-9d014b19f508)
